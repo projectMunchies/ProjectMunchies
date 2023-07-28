@@ -14,6 +14,16 @@
 		77E3831E2A7225490084B8A6 /* ProjectMunchiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3831D2A7225490084B8A6 /* ProjectMunchiesTests.swift */; };
 		77E383282A7225490084B8A6 /* ProjectMunchiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383272A7225490084B8A6 /* ProjectMunchiesUITests.swift */; };
 		77E3832A2A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383292A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift */; };
+		77E383372A7226290084B8A6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383362A7226290084B8A6 /* HomeView.swift */; };
+		77E383392A7229AD0084B8A6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383382A7229AD0084B8A6 /* CardView.swift */; };
+		77E3833B2A7229B80084B8A6 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833A2A7229B80084B8A6 /* CardsView.swift */; };
+		77E3833D2A7229DC0084B8A6 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833C2A7229DC0084B8A6 /* EventView.swift */; };
+		77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833E2A7229E50084B8A6 /* EventsView.swift */; };
+		77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383402A7242A40084B8A6 /* SearchBar.swift */; };
+		77E383432A7244C60084B8A6 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383422A7244C60084B8A6 /* EventModel.swift */; };
+		77E383452A7247460084B8A6 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383442A7247460084B8A6 /* MockService.swift */; };
+		77E383492A7388F50084B8A6 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* CardModel.swift */; };
+		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +54,16 @@
 		77E383232A7225490084B8A6 /* ProjectMunchiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectMunchiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E383272A7225490084B8A6 /* ProjectMunchiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesUITests.swift; sourceTree = "<group>"; };
 		77E383292A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		77E383362A7226290084B8A6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		77E383382A7229AD0084B8A6 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		77E3833A2A7229B80084B8A6 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
+		77E3833C2A7229DC0084B8A6 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		77E3833E2A7229E50084B8A6 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		77E383402A7242A40084B8A6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		77E383422A7244C60084B8A6 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		77E383442A7247460084B8A6 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
+		77E383482A7388F50084B8A6 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +118,12 @@
 				77E3830E2A7225470084B8A6 /* ContentView.swift */,
 				77E383102A7225490084B8A6 /* Assets.xcassets */,
 				77E383122A7225490084B8A6 /* Preview Content */,
+				77E383362A7226290084B8A6 /* HomeView.swift */,
+				77E383402A7242A40084B8A6 /* SearchBar.swift */,
+				77E383472A7248CB0084B8A6 /* Cards */,
+				77E383462A7248BC0084B8A6 /* Events */,
+				77E383442A7247460084B8A6 /* MockService.swift */,
+				77E3834A2A738D480084B8A6 /* Extensions.swift */,
 			);
 			path = ProjectMunchies;
 			sourceTree = "<group>";
@@ -125,6 +151,26 @@
 				77E383292A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift */,
 			);
 			path = ProjectMunchiesUITests;
+			sourceTree = "<group>";
+		};
+		77E383462A7248BC0084B8A6 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				77E383422A7244C60084B8A6 /* EventModel.swift */,
+				77E3833E2A7229E50084B8A6 /* EventsView.swift */,
+				77E3833C2A7229DC0084B8A6 /* EventView.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		77E383472A7248CB0084B8A6 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				77E3833A2A7229B80084B8A6 /* CardsView.swift */,
+				77E383382A7229AD0084B8A6 /* CardView.swift */,
+				77E383482A7388F50084B8A6 /* CardModel.swift */,
+			);
+			path = Cards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +303,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
+				77E383492A7388F50084B8A6 /* CardModel.swift in Sources */,
+				77E383432A7244C60084B8A6 /* EventModel.swift in Sources */,
+				77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */,
+				77E3833B2A7229B80084B8A6 /* CardsView.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
+				77E3833D2A7229DC0084B8A6 /* EventView.swift in Sources */,
+				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
+				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
+				77E383392A7229AD0084B8A6 /* CardView.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
+				77E383452A7247460084B8A6 /* MockService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
