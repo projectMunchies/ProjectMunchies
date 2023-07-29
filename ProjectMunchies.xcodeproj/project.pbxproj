@@ -24,6 +24,7 @@
 		77E383452A7247460084B8A6 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383442A7247460084B8A6 /* MockService.swift */; };
 		77E383492A7388F50084B8A6 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* CardModel.swift */; };
 		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
+		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		77E383442A7247460084B8A6 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		77E383482A7388F50084B8A6 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
 		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				77E383462A7248BC0084B8A6 /* Events */,
 				77E383442A7247460084B8A6 /* MockService.swift */,
 				77E3834A2A738D480084B8A6 /* Extensions.swift */,
+				77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */,
 			);
 			path = ProjectMunchies;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
 				77E383492A7388F50084B8A6 /* CardModel.swift in Sources */,
 				77E383432A7244C60084B8A6 /* EventModel.swift in Sources */,
+				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */,
 				77E3833B2A7229B80084B8A6 /* CardsView.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,

@@ -8,19 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        GeometryReader { geoReader in
+            switch viewRouter.currentPage {
+            case .homePage :
+                TabView {
+                    HomeView()
+                        .tabItem {
+                            Label("", systemImage: "house")
+                        }
+                    CardsView()
+                        .tabItem {
+                            Label("", systemImage: "takeoutbag.and.cup.and.straw")
+                        }
+                    CardsView()
+                        .tabItem {
+                            Label("", systemImage: "person")
+                        }
+                }
+            }
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(ViewRouter())
     }
 }

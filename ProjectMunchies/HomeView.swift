@@ -11,10 +11,17 @@ struct HomeView: View {
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
-              
-                CardsView()
-                headerSection(for: geoReader)
+                Color.white
+                    .ignoresSafeArea()
+                
+                ZStack{
+                    CardsView()
+                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.52)
+                    headerSection(for: geoReader)
+                    subHeaderSection(for: geoReader)
+                }
             }
+          
             
         }
       
@@ -22,7 +29,6 @@ struct HomeView: View {
     }
     
     private func headerSection(for geoReader: GeometryProxy) -> some View {
-        
         HStack{
             Spacer()
             HStack(spacing: 10){
@@ -34,6 +40,7 @@ struct HomeView: View {
                 
                 Text("Munchies")
                     .bold()
+                    .foregroundColor(.black)
                     .font(.title2)
             }
             
@@ -56,6 +63,22 @@ struct HomeView: View {
             Spacer()
         }
         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+    }
+    
+    private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
+        HStack{
+            Text("Preferences")
+                .bold()
+                .foregroundColor(.black)
+                .font(.largeTitle)
+            
+            Image(systemName: "line.3.horizontal.circle")
+                .resizable()
+                .frame(width: 35, height: 35)
+                .font(.system(size: 35))
+                .foregroundColor(.black)
+        }
+        .position(x:geoReader.size.width * 0.35, y:geoReader.size.height * 0.1)
     }
 }
 
