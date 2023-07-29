@@ -12,3 +12,13 @@ extension DragGesture.Value {
         abs(translation.width / geometry.size.width)
     }
 }
+
+extension Array where Element == CardModel {
+    func cardOffset(cardId: Int) -> CGFloat {
+        CGFloat(count - 1 - cardId) * 8
+    }
+    
+    func cardWidth(in geometry: GeometryProxy, cardId: Int) -> CGFloat {
+        geometry.size.width - cardOffset(cardId: cardId)
+    }
+}

@@ -10,6 +10,7 @@ import SwiftUI
 struct CardView: View {
     @State
     private var translation: CGSize = .zero
+    private var geoReader: GeometryProxy
     private var card: CardModel
     private var index: Int
     private var onRemove: (_ card: CardModel) -> Void
@@ -21,80 +22,82 @@ struct CardView: View {
     
     @State private var swipeStatus: LikeDislike = .none
     
-    init(card: CardModel, index: Int, onRemove: @escaping (_ card: CardModel)
+    init(geoReader: GeometryProxy, card: CardModel, index: Int, onRemove: @escaping (_ card: CardModel)
          -> Void) {
+        self.geoReader = geoReader
         self.card = card
         self.index = index
         self.onRemove = onRemove
     }
     
-    
-    
-    
-    
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
-                Rectangle()
-                    .foregroundColor(.gray)
-                    .cornerRadius(40)
-                    .frame(width: 350, height: 500)
-                
+//                Rectangle()
+//                    .foregroundColor(.gray)
+//                    .cornerRadius(40)
+//                    .frame(width: 350, height: geoReader.size.height * 1.1)
+//
                 overlayss()
                 
                 VStack{
                     ZStack{
                         Image("Guy")
                             .resizable()
-                            .frame(width: 380, height: 500)
+                            .frame(width: 380, height: geoReader.size.height * 0.7)
                             .cornerRadius(30)
                         
                         ZStack{
                             Text("")
-                                .frame(width: 350,height: 100)
-                                .background(.white)
+                                .frame(width: 380,height: 220)
+                                .background(
+                                    LinearGradient(gradient: Gradient(colors: [.clear,.black,.black]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .opacity(0.7)
                                 .cornerRadius(30)
-                                .position(x:200 , y:560)
+                                .position(x:geoReader.size.width * 0.5,  y:geoReader.size.height * 0.71)
                             
                             
-                            VStack{
-                                ZStack{
-                                    Text("")
-                                        .frame(width: 120, height: 30)
-                                        .background(.blue)
-                                        .cornerRadius(25)
+                            ZStack{
+//                                    ZStack{
+//                                        Text("")
+//                                            .frame(width: 120, height: 30)
+//                                            .background(.blue)
+//                                            .cornerRadius(25)
+//
+//
+//                                        Text("Italian food")
+//                                            .foregroundColor(.white)
+//
+//                                    }
+                                   // .position(x:100 , y:180)
                                     
                                     
-                                    Text("Italian food")
+                                    Text("Ashely Bega, 23")
                                         .foregroundColor(.white)
+                                        .bold()
+                                        .font(.system(size: 20))
+                                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.66)
+                                        .padding(.leading)
                                     
-                                }
-                                .position(x:100 , y:180)
+                                    
+                                    Text("Tampa,FL")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 15))
+                                .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.7)
+                             
                                 
-                                
-                                Text("Ashely, 23")
-                                    .foregroundColor(.black)
-                                    .bold()
-                                    .font(.system(size: 20))
-                                    .position(x:200 , y:280)
-                                
-                                
-                                Text("Tampa,FL")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 20))
-                                    .position(x:200 , y:70)
+                                buttons()
+                                    //.padding(.bottom,800)
+                                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.79)
                             }
                             
                         }
-                        
-                        
-                        buttons()
-                           // .padding(.top,20)
-                            .position(x:300, y:470)
                     }
                 }
                // .position(x:196 , y:510)
             }
+            .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
             .animation(.spring())
             .offset(x: translation.width, y: 0)
             .rotationEffect(.degrees(
@@ -130,34 +133,6 @@ struct CardView: View {
         
     }
     
-    private func buttons() -> some View {
-        HStack(spacing: 10){
-            ZStack{
-                Text("")
-                    .frame(width: 60, height: 50)
-                    .background(Color.gray)
-                    .cornerRadius(20)
-                    .foregroundColor(.gray)
-                
-                Image(systemName: "xmark")
-                    .font(.system(size: 35))
-                    .foregroundColor(.blue)
-            }
-            
-            ZStack{
-                Text("")
-                    .frame(width: 60, height: 50)
-                    .background(.pink)
-                    .cornerRadius(20)
-                   // .foregroundColor(.gray)
-                
-                Image(systemName: "fork.knife")
-                    .font(.system(size: 35))
-                    .foregroundColor(.red)
-            }
-        }
-    }
-    
     private func overlayss() -> some View {
         ZStack{
             if self.translation.width < -10 {
@@ -191,10 +166,53 @@ struct CardView: View {
             }
         }
     }
+    
+    private func buttons() -> some View {
+        HStack(spacing: 20){
+            ZStack{
+                Text("")
+                    .frame(width: 160, height: 60)
+                    .background(Color.white)
+                    .cornerRadius(40)
+                    .foregroundColor(.gray)
+                
+                Image(systemName: "xmark")
+                    .font(.system(size: 25))
+                    .foregroundColor(.black)
+            }
+            
+            ZStack{
+                Text("")
+                    .frame(width: 160, height: 60)
+                    .background(.pink)
+                    .cornerRadius(40)
+                   // .foregroundColor(.gray)
+                
+                Image(systemName: "fork.knife")
+                    .font(.system(size: 25))
+                    .foregroundColor(.white)
+            }
+            
+//            ZStack{
+//                Text("")
+//                    .frame(width: 80, height: 60)
+//                    .background(.pink)
+//                    .cornerRadius(40)
+//                   // .foregroundColor(.gray)
+//
+//                Image(systemName: "arrow.counterclockwise")
+//                    .font(.system(size: 30))
+//                    .foregroundColor(.white)
+//            }
+        }
+    }
 }
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(card: MockService.cardSampleData, index: 18, onRemove: {_ in})
+        GeometryReader { proxy in
+            CardView(geoReader: proxy, card: MockService.cardSampleData, index: 18, onRemove: {_ in})
+        }
+      
     }
 }

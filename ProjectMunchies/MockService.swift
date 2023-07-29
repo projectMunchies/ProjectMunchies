@@ -54,6 +54,35 @@ enum MockService {
         description: ""
        )
     }
+    
+    static var cardsSampleData: [CardModel] {
+        [
+            CardModel(
+             id: "",
+             fullName: "fgdg",
+             location: "",
+             description: ""
+            ),
+            CardModel(
+             id: "",
+             fullName: "ww",
+             location: "",
+             description: ""
+            ),
+            CardModel(
+             id: "",
+             fullName: "gadf",
+             location: "",
+             description: ""
+            ),
+            CardModel(
+             id: "",
+             fullName: "gdf",
+             location: "",
+             description: ""
+            )
+        ]
+    }
 }
 
 
