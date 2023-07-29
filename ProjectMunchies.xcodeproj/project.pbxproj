@@ -25,6 +25,7 @@
 		77E383492A7388F50084B8A6 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* CardModel.swift */; };
 		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
+		77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834E2A751D9E0084B8A6 /* EventEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		77E383482A7388F50084B8A6 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
 		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		77E3834E2A751D9E0084B8A6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				77E383422A7244C60084B8A6 /* EventModel.swift */,
 				77E3833E2A7229E50084B8A6 /* EventsView.swift */,
 				77E3833C2A7229DC0084B8A6 /* EventView.swift */,
+				77E3834E2A751D9E0084B8A6 /* EventEditView.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
 				77E3833D2A7229DC0084B8A6 /* EventView.swift in Sources */,
 				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
+				77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
 				77E383392A7229AD0084B8A6 /* CardView.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
