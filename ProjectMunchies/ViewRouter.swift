@@ -6,20 +6,30 @@
 //
 
 import SwiftUI
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class ViewRouter: ObservableObject {
     static let shared = ViewRouter()
-    @Published var currentPage: Route = .homePage
+    @Published var currentPage: Route = .signupPage
     
     init(){
         run()
     }
     
     func run(){
-        self.currentPage = .homePage
+        
+        Auth.auth().addStateDidChangeListener{ auth, user in
+            if auth.currentUser != nil {
+                self.currentPage = .homePage
+            }
+        }
     }
 }
 
 enum Route {
     case homePage
+    case signinPage
+    case signupPage
 }

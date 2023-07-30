@@ -18,15 +18,19 @@ struct ContentView: View {
                         .tabItem {
                             Label("", systemImage: "house")
                         }
-                    CardsView(geoReader: geoReader)
+                    EventsView()
                         .tabItem {
                             Label("", systemImage: "takeoutbag.and.cup.and.straw")
                         }
-                    CardsView(geoReader: geoReader)
+                    SettingsView()
                         .tabItem {
                             Label("", systemImage: "person")
                         }
                 }
+            case .signinPage :
+                SignInView()
+            case .signupPage :
+                SignUpView()
             }
         }
     }
