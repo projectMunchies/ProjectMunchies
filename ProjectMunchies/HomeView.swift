@@ -19,26 +19,33 @@ struct HomeView: View {
     let locations = ["Tampa","American"]
     
     var body: some View {
-        GeometryReader{ geoReader in
-            ZStack{
-                Color.white
-                    .ignoresSafeArea()
-                
+        NavigationView {
+            
+            GeometryReader{ geoReader in
                 ZStack{
-                    if isLoading {
-                        ProgressView()
-                    } else {
-                        CardsView()
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.52)
+                    Color.white
+                        .ignoresSafeArea()
+                    
+                    ZStack{
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            CardsView(geoReader: geoReader)
+                                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.52)
+                        }
+                        
+                     
                     }
                     
                     headerSection(for: geoReader)
                     subHeaderSection(for: geoReader)
                 }
+                //.ignoresSafeArea()
+                
+                
             }
-            
-            
         }
+   
         
         
     }
@@ -53,7 +60,7 @@ struct HomeView: View {
                     .font(.system(size: 35))
                     .foregroundColor(.black)
                 
-                Text("Munchies")
+                Text("Crunch Bunch")
                     .bold()
                     .foregroundColor(.black)
                     .font(.title2)

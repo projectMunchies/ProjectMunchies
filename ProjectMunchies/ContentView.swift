@@ -18,11 +18,11 @@ struct ContentView: View {
                         .tabItem {
                             Label("", systemImage: "house")
                         }
-                    CardsView()
+                    CardsView(geoReader: geoReader)
                         .tabItem {
                             Label("", systemImage: "takeoutbag.and.cup.and.straw")
                         }
-                    CardsView()
+                    CardsView(geoReader: geoReader)
                         .tabItem {
                             Label("", systemImage: "person")
                         }
