@@ -18,7 +18,7 @@ struct SearchBar: View {
         HStack{
             TextField("Search...", text: $searchText)
                 .frame(width: 380, height: 50)
-                .background(Color(.systemGray5))
+                .background(Color(red: 0.949, green: 0.949, blue: 0.97))
                 .cornerRadius(15)
               //  .shadow(radius: 5, x:5 , y: 5)
                 .overlay(

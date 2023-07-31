@@ -11,43 +11,55 @@ import Firebase
 
 struct SettingsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @State private var showHamburgerMenu: Bool = false
     
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
                 Color.white
                     .ignoresSafeArea()
-                
-                VStack{
-                    Button(action: {
-                        signOutUser()
-                    }) {
-                        Text("Sign Out")
-                            .frame(width: 400, height: 60)
-                            .background(Color.gray)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
+                ZStack{
+                    VStack{
+                        Button(action: {
+                            signOutUser()
+                        }) {
+                            Text("Sign Out")
+                                .frame(width: 400, height: 60)
+                                .background(Color.gray)
+                                .cornerRadius(40)
+                                .foregroundColor(.white)
+                        }
+                        
+                        Button(action: {
+                           deleteUser()
+                        }) {
+                            Text("Delete Account")
+                                .frame(width: 400, height: 60)
+                                .background(Color.gray)
+                                .cornerRadius(40)
+                                .foregroundColor(.white)
+                        }
                     }
+           
                     
-                    Button(action: {
-                       deleteUser()
-                    }) {
-                        Text("Delete Account")
-                            .frame(width: 400, height: 60)
-                            .background(Color.gray)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                    }
+                    Text("Settings")
+                        .bold()
+                        .foregroundColor(.black)
+                        .font(.largeTitle)
+                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
+                    
+                    headerSection(for: geoReader)
                 }
-               // .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
-                
-                Text("Settings")
-                    .bold()
-                    .foregroundColor(.black)
-                    .font(.largeTitle)
-                    .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
-                
-                headerSection(for: geoReader)
+                .disabled(self.showHamburgerMenu ? true : false)
+               
+            }
+            
+            
+            //Display HamburgerMenu
+            if self.showHamburgerMenu {
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                    .frame(width: geoReader.size.width/2)
+                    .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
     
@@ -57,12 +69,17 @@ struct SettingsView: View {
         HStack{
             Spacer()
             HStack(spacing: 10){
-                Image(systemName: "line.3.horizontal")
-                    .resizable()
-                    .frame(width: 25, height: 20)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
-                
+                Button(action: {
+                    self.showHamburgerMenu.toggle()
+                }) {
+                    Image(systemName: "line.3.horizontal")
+                        .resizable()
+                        .frame(width: 25, height: 20)
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                    
+                }
+             
                 Text("Crunch Bunch")
                     .bold()
                     .foregroundColor(.black)
@@ -70,7 +87,7 @@ struct SettingsView: View {
             }
             
             Spacer()
-                .frame(width: geoReader.size.width * 0.35)
+                .frame(width: geoReader.size.width * 0.25)
             
             HStack(spacing: 20){
                 Image(systemName: "magnifyingglass")

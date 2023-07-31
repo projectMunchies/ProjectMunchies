@@ -42,6 +42,9 @@
 		770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
 		770AD0982A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
 		770AD0992A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
+		770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
+		770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
+		770AD09D2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
 		77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */; };
 		77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830E2A7225470084B8A6 /* ContentView.swift */; };
 		77E383112A7225490084B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E383102A7225490084B8A6 /* Assets.xcassets */; };
@@ -86,6 +89,7 @@
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		770AD0962A76D0BE004CA5D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
 		77E383092A7225470084B8A6 /* ProjectMunchies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectMunchies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesApp.swift; sourceTree = "<group>"; };
 		77E3830E2A7225470084B8A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */,
 				77E383512A75BB840084B8A6 /* ProfileView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
+				770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */,
 			);
 			path = ProjectMunchies;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 			files = (
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
 				77E383492A7388F50084B8A6 /* CardModel.swift in Sources */,
+				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 				77E383432A7244C60084B8A6 /* EventModel.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
@@ -454,6 +460,7 @@
 			files = (
 				77E3831E2A7225490084B8A6 /* ProjectMunchiesTests.swift in Sources */,
 				770AD0982A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
+				770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				770AD09D2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 				770AD0992A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3832A2A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift in Sources */,
 				77E383282A7225490084B8A6 /* ProjectMunchiesUITests.swift in Sources */,

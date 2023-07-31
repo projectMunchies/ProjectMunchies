@@ -176,29 +176,49 @@ struct CardView: View {
     
     private func buttons() -> some View {
         HStack(spacing: 20){
-            ZStack{
-                Text("")
-                    .frame(width: 160, height: 60)
-                    .background(Color.white)
-                    .cornerRadius(40)
-                    .foregroundColor(.gray)
-                
-                Image(systemName: "xmark")
-                    .font(.system(size: 25))
-                    .foregroundColor(.black)
+            
+            Button(action: {
+                self.translation.width = -350
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.swipeStatus = .dislike
+                    onRemove(self.card)
+                }
+            }) {
+                ZStack{
+                    Text("")
+                        .frame(width: 160, height: 60)
+                        .background(Color.white)
+                        .cornerRadius(40)
+                        .foregroundColor(.gray)
+                    
+                    Image(systemName: "xmark")
+                        .font(.system(size: 25))
+                        .foregroundColor(.black)
+                }
+            }
+           
+            Button(action: {
+                self.translation.width = 350
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.swipeStatus = .like
+                    onRemove(self.card)
+                }
+               
+            }) {
+                ZStack{
+                    Text("")
+                        .frame(width: 160, height: 60)
+                        .background(.pink)
+                        .cornerRadius(40)
+                       // .foregroundColor(.gray)
+                    
+                    Image(systemName: "fork.knife")
+                        .font(.system(size: 25))
+                        .foregroundColor(.white)
+                }
             }
             
-            ZStack{
-                Text("")
-                    .frame(width: 160, height: 60)
-                    .background(.pink)
-                    .cornerRadius(40)
-                   // .foregroundColor(.gray)
-                
-                Image(systemName: "fork.knife")
-                    .font(.system(size: 25))
-                    .foregroundColor(.white)
-            }
+            
             
 //            ZStack{
 //                Text("")

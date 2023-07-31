@@ -14,55 +14,58 @@ struct SignInView: View {
     @State private var password: String = ""
     
     var body: some View {
-        ZStack{
-            Color.white
-                .ignoresSafeArea()
-            
-            VStack{
-                Text("CrunchBunch")
-                    .bold()
-                    .font(.system(size: 40))
-                    .foregroundColor(.black)
+        GeometryReader{ geoReader in
+            ZStack{
+                Color.white
+                    .ignoresSafeArea()
                 
-                            Text("Never Eat alone again")
-                                .font(.system(size: 15))
-                                .foregroundColor(.black)
-            
+                VStack{
+                    Text("CrunchBunch")
+                        .bold()
+                        .font(.system(size: 40))
+                        .foregroundColor(.black)
+                    
+                                Text("Never Eat alone again")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.black)
                 
-                TextField("Email", text: $email)
-                    .frame(width: 360, height: 60)
-                    .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                    .cornerRadius(30)
-                    .foregroundColor(.black)
-                 
-                TextField("Password", text: $password)
-                    .frame(width: 360, height: 60)
-                    .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                    .cornerRadius(30)
-                    .foregroundColor(.black)
-                
-                Button(action: {
-                    login()
-                }) {
-                    Text("Sign In")
-                        .frame(width: 400, height: 60)
-                        .background(Color.gray)
-                        .cornerRadius(40)
-                        .foregroundColor(.white)
-                }
-                .padding()
-                
-                Text("Don't have an account?")
-                    .foregroundColor(.black)
-                
-                NavigationLink(destination: SignUpView()){
-                    Text("sign up here")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 20))
+                    
+                    TextField("Email", text: $email)
+                        .frame(width: 360, height: 60)
+                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))
+                        .cornerRadius(30)
+                        .foregroundColor(.black)
+                     
+                    TextField("Password", text: $password)
+                        .frame(width: 360, height: 60)
+                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))
+                        .cornerRadius(30)
+                        .foregroundColor(.black)
+                    
+                    Button(action: {
+                        login()
+                    }) {
+                        Text("Sign In")
+                            .frame(width: 400, height: 60)
+                            .background(Color.gray)
+                            .cornerRadius(40)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    
+                    Text("Don't have an account?")
+                        .foregroundColor(.black)
+                    
+                    NavigationLink(destination: SignUpView()){
+                        Text("sign up here")
+                            .foregroundColor(.blue)
+                            .font(.system(size: 20))
+                    }
                 }
             }
+            .navigationBarBackButtonHidden(true)
+            .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
         }
-        .navigationBarBackButtonHidden(true)
     }
     
    private func login(){
@@ -72,7 +75,6 @@ struct SignInView: View {
             }else{
                 print("success")
             }
-            
         }
     }
 }

@@ -12,6 +12,7 @@ struct HomeView: View {
     @State private var showPrefPopover: Bool = false
     @State private var input1: String = ""
     @State private var isLoading: Bool = false
+    @State private var showHamburgerMenu: Bool = false
     @State private var selection = "Pick fav food"
     let foodTypes = ["Chinese","American","Mexican"]
     let gender = ["Guy","Girl"]
@@ -19,8 +20,6 @@ struct HomeView: View {
     let locations = ["Tampa","American"]
     
     var body: some View {
-        NavigationView {
-            
             GeometryReader{ geoReader in
                 ZStack{
                     Color.white
@@ -33,41 +32,47 @@ struct HomeView: View {
                             CardsView(geoReader: geoReader)
                                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.52)
                         }
-                        
-                     
                     }
+                    .disabled(self.showHamburgerMenu ? true: false)
                     
                     headerSection(for: geoReader)
                     subHeaderSection(for: geoReader)
                 }
-                //.ignoresSafeArea()
                 
-                
+                //Display HamburgerMenu
+                if self.showHamburgerMenu {
+                    HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                        .frame(width: geoReader.size.width/2)
+                        .padding(.trailing, geoReader.size.width * 0.5)
+                }
             }
-        }
-   
-        
-        
     }
     
     private func headerSection(for geoReader: GeometryProxy) -> some View {
         HStack{
             Spacer()
             HStack(spacing: 10){
-                Image(systemName: "line.3.horizontal")
-                    .resizable()
-                    .frame(width: 25, height: 20)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
+                Button(action: {
+                    withAnimation{
+                        self.showHamburgerMenu.toggle()
+                    }
+                }) {
+                    Image(systemName: "line.3.horizontal")
+                        .resizable()
+                        .frame(width: 25, height: 20)
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                }
+           
                 
-                Text("Crunch Bunch")
+                Text("CrunchBunch")
                     .bold()
                     .foregroundColor(.black)
                     .font(.title2)
             }
             
             Spacer()
-                .frame(width: geoReader.size.width * 0.35)
+                .frame(width: geoReader.size.width * 0.25)
             
             HStack(spacing: 20){
                 Image(systemName: "magnifyingglass")
@@ -105,39 +110,6 @@ struct HomeView: View {
             }
             .popover(isPresented: $showPrefPopover) {
                 VStack{
-                    //                    HStack{
-                    //                        Text("Input1: ")
-                    //                            .font(.system(size: 20))
-                    //
-                    //                        TextField("", text: $input1)
-                    //                            .frame(width: 260, height: 50)
-                    //                            .background(.black)
-                    //                            .cornerRadius(20)
-                    //                    }
-                    //
-                    //                    HStack{
-                    //                        Text("Fav Food: ")
-                    //                            .font(.system(size: 20))
-                    //                        Menu {
-                    //                            Picker(selection: $selection) {
-                    //                                ForEach(foods, id: \.self) {
-                    //                                    Text($0)
-                    //                                }
-                    //                            } label: {}
-                    //                        } label: {
-                    //
-                    //                            Text("\(selection)")
-                    //                        }
-                    //                        .foregroundColor(.black)
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //                    }
-                    
-                    
                     Form {
                         Section {
                             Picker("Strength", selection: $selection) {

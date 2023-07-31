@@ -66,7 +66,6 @@ struct EventEditView: View {
                     .foregroundColor(.white)
             }
         }
-     
     }
 }
 
