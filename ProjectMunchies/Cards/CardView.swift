@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct CardView: View {
+    @StateObject private var viewModel = CardViewModel()
     @State
     private var translation: CGSize = .zero
     private var geoReader: GeometryProxy
-    private var card: CardModel
+    private var card: ProfileModel
     private var index: Int
-    private var onRemove: (_ card: CardModel) -> Void
+    private var onRemove: (_ card: ProfileModel) -> Void
     private var threshold: CGFloat = 0.1
     
     enum LikeDislike: Int {
@@ -22,7 +23,7 @@ struct CardView: View {
     
     @State private var swipeStatus: LikeDislike = .none
     
-    init(geoReader: GeometryProxy, card: CardModel, index: Int, onRemove: @escaping (_ card: CardModel)
+    init(geoReader: GeometryProxy, card: ProfileModel, index: Int, onRemove: @escaping (_ card: ProfileModel)
          -> Void) {
         self.geoReader = geoReader
         self.card = card
@@ -33,111 +34,91 @@ struct CardView: View {
     var body: some View {
       //  NavigationView {
             GeometryReader{ geoReader in
-                NavigationLink(destination: ProfileView()) {
-                ZStack{
-                    //                Rectangle()
-                    //                    .foregroundColor(.gray)
-                    //                    .cornerRadius(40)
-                    //                    .frame(width: 350, height: geoReader.size.height * 1.1)
-                    //
-                    overlayss()
-                    
-                    VStack{
-                        ZStack{
-                            Image("Guy")
-                                .resizable()
-                                .frame(width: 380, height: geoReader.size.height * 0.7)
-                                .cornerRadius(30)
-                                .scaledToFill()
-                            
+                NavigationLink(destination: ProfileView(card: card, profileImage: viewModel.profileImage)) {
+                    ZStack{
+                        overlayss()
+                        
+                        VStack{
                             ZStack{
-                                Text("")
-                                    .frame(width: 380,height: 220)
-                                    .background(
-                                        LinearGradient(gradient: Gradient(colors: [.clear,.black,.black]), startPoint: .top, endPoint: .bottom)
-                                    )
-                                    .opacity(0.7)
+                                Image(uiImage: viewModel.profileImage)
+                                    .resizable()
+                                    .frame(width: 380, height: geoReader.size.height * 0.7)
                                     .cornerRadius(30)
-                                    .position(x:geoReader.size.width * 0.5,  y:geoReader.size.height * 0.71)
-                                
+                                    .scaledToFill()
                                 
                                 ZStack{
-                                    //                                    ZStack{
-                                    //                                        Text("")
-                                    //                                            .frame(width: 120, height: 30)
-                                    //                                            .background(.blue)
-                                    //                                            .cornerRadius(25)
-                                    //
-                                    //
-                                    //                                        Text("Italian food")
-                                    //                                            .foregroundColor(.white)
-                                    //
-                                    //                                    }
-                                    // .position(x:100 , y:180)
+                                    Text("")
+                                        .frame(width: 380,height: 220)
+                                        .background(
+                                            LinearGradient(gradient: Gradient(colors: [.clear,.black,.black]), startPoint: .top, endPoint: .bottom)
+                                        )
+                                        .opacity(0.7)
+                                        .cornerRadius(30)
+                                        .position(x:geoReader.size.width * 0.5,  y:geoReader.size.height * 0.71)
                                     
                                     
-                                    Text("Ashely Bega, 23")
-                                        .foregroundColor(.white)
-                                        .bold()
-                                        .font(.system(size: 20))
-                                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.66)
-                                        .padding(.leading)
+                                    ZStack{
+                                        
+                                        Text("Ashely Bega, 23")
+                                            .foregroundColor(.white)
+                                            .bold()
+                                            .font(.system(size: 20))
+                                            .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.66)
+                                            .padding(.leading)
+                                        
+                                        
+                                        Text("Tampa,FL")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 15))
+                                            .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.7)
+                                        
+                                        
+                                        buttons()
+                                        //.padding(.bottom,800)
+                                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.79)
+                                    }
                                     
-                                    
-                                    Text("Tampa,FL")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 15))
-                                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.7)
-                                    
-                                    
-                                    buttons()
-                                    //.padding(.bottom,800)
-                                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.79)
                                 }
-                                
                             }
                         }
                     }
-                    // .position(x:196 , y:510)
+                    .onAppear{
+                        viewModel.getStorageFile(profileId: card.id)
+                    }
+                    .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
+                    .animation(.spring())
+                    .offset(x: translation.width, y: 0)
+                    .rotationEffect(.degrees(
+                        Double(self.translation.width /
+                               geoReader.size.width)
+                        * 20), anchor: .bottom)
+                    .gesture(
+                        DragGesture()
+                            .onChanged{
+                                //transaltion changes as you swipe card
+                                translation = $0.translation
+                                
+                                //if card gets dragged a certain distance, set it to like/dislike
+                                if $0.percentage(in: geoReader) >= threshold && translation.width < -110 {
+                                    self.swipeStatus = .dislike
+                                } else if $0.percentage(in: geoReader) >= threshold && translation.width > 110 {
+                                    self.swipeStatus = .like
+                                } else {
+                                    self.swipeStatus = .none
+                                }
+                                
+                            }.onEnded{_ in
+                                if self.swipeStatus == .like {
+                                    onRemove(self.card)
+                                } else if self.swipeStatus == .dislike {
+                                    onRemove(self.card)
+                                }
+                                //snap back to default position
+                                translation = .zero
+                            }
+                    )
                 }
-                .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
-                .animation(.spring())
-                .offset(x: translation.width, y: 0)
-                .rotationEffect(.degrees(
-                    Double(self.translation.width /
-                           geoReader.size.width)
-                    * 20), anchor: .bottom)
-                .gesture(
-                    DragGesture()
-                        .onChanged{
-                            //transaltion changes as you swipe card
-                            translation = $0.translation
-                            
-                            //if card gets dragged a certain distance, set it to like/dislike
-                            if $0.percentage(in: geoReader) >= threshold && translation.width < -110 {
-                                self.swipeStatus = .dislike
-                            } else if $0.percentage(in: geoReader) >= threshold && translation.width > 110 {
-                                self.swipeStatus = .like
-                            } else {
-                                self.swipeStatus = .none
-                            }
-                            
-                        }.onEnded{_ in
-                            if self.swipeStatus == .like {
-                                onRemove(self.card)
-                            } else if self.swipeStatus == .dislike {
-                                onRemove(self.card)
-                            }
-                            //snap back to default position
-                            translation = .zero
-                        }
-                )
             }
-            
-        }
-       // }
-      
-        
     }
     
     private func overlayss() -> some View {

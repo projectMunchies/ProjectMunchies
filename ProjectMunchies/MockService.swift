@@ -46,47 +46,67 @@ enum MockService {
         ]
     }
     
-    static var cardSampleData: CardModel {
-       CardModel(
+    static var cardSampleData: ProfileModel {
+        ProfileModel(
         id: "",
         fullName: "",
         location: "",
-        description: ""
+        description: "",
+        gender: "",
+        fcmTokens: []
        )
     }
     
-    static var cardsSampleData: [CardModel] {
+    static var profilesSampleData: [ProfileModel] {
         [
-            CardModel(
-             id: "0",
+            ProfileModel(
+             id: "8ff57448-387d-41f4-be45-bc879be23fbf",
              fullName: "fgdg",
              location: "",
-             description: ""
+             description: "",
+             gender: "",
+             fcmTokens: []
             ),
-            CardModel(
-             id: "1",
+            ProfileModel(
+             id: "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
              fullName: "ww",
              location: "",
-             description: ""
+             description: "",
+             gender: "",
+             fcmTokens: []
             ),
-            CardModel(
-             id: "2",
+            ProfileModel(
+             id: "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
              fullName: "gadf",
              location: "",
-             description: ""
+             description: "",
+             gender: "",
+             fcmTokens: []
             ),
-            CardModel(
-             id: "3",
+            ProfileModel(
+             id: "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
              fullName: "gdf",
              location: "",
-             description: ""
+             description: "",
+             gender: "",
+             fcmTokens: []
             ),
-            CardModel(
-             id: "4",
+            ProfileModel(
+             id: "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
              fullName: "gdf",
              location: "",
-             description: ""
-            )
+             description: "",
+             gender: "",
+             fcmTokens: []
+            ),
+            ProfileModel(
+                id: "f244f9a3-1f31-4d02-a509-99cb00bd1481",
+                fullName: "gdf",
+                location: "",
+                description: "",
+                gender: "",
+                fcmTokens: []
+               )
         ]
     }
 }

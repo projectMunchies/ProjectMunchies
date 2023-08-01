@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let card: ProfileModel
+    let profileImage: UIImage
+    
     var body: some View {
         GeometryReader { geoReader in
             ZStack{
@@ -16,7 +19,7 @@ struct ProfileView: View {
                 
                 
                 ZStack{
-                    Image("Guy")
+                    Image(uiImage: profileImage)
                         .resizable()
                         .frame(width: 450, height: geoReader.size.height * 0.7)
                         .cornerRadius(30)
@@ -107,6 +110,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(card: MockService.profilesSampleData[0], profileImage: UIImage())
     }
 }

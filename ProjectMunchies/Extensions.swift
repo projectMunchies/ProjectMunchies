@@ -13,7 +13,7 @@ extension DragGesture.Value {
     }
 }
 
-extension Array where Element == CardModel {
+extension Array where Element == ProfileModel {
     func cardOffset(cardId: Int) -> CGFloat {
         CGFloat(count - 1 - cardId) * 8
     }

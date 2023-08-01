@@ -45,6 +45,9 @@
 		770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
 		770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
 		770AD09D2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
+		770AD09F2A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
+		770AD0A02A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
+		770AD0A12A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
 		77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */; };
 		77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830E2A7225470084B8A6 /* ContentView.swift */; };
 		77E383112A7225490084B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E383102A7225490084B8A6 /* Assets.xcassets */; };
@@ -60,7 +63,7 @@
 		77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383402A7242A40084B8A6 /* SearchBar.swift */; };
 		77E383432A7244C60084B8A6 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383422A7244C60084B8A6 /* EventModel.swift */; };
 		77E383452A7247460084B8A6 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383442A7247460084B8A6 /* MockService.swift */; };
-		77E383492A7388F50084B8A6 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* CardModel.swift */; };
+		77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* ProfileModel.swift */; };
 		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
 		77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834E2A751D9E0084B8A6 /* EventEditView.swift */; };
@@ -90,6 +93,7 @@
 		770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		770AD0962A76D0BE004CA5D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
+		770AD09E2A78C046004CA5D2 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		77E383092A7225470084B8A6 /* ProjectMunchies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectMunchies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesApp.swift; sourceTree = "<group>"; };
 		77E3830E2A7225470084B8A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,7 +112,7 @@
 		77E383402A7242A40084B8A6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		77E383422A7244C60084B8A6 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		77E383442A7247460084B8A6 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
-		77E383482A7388F50084B8A6 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		77E383482A7388F50084B8A6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		77E3834E2A751D9E0084B8A6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
@@ -262,7 +266,8 @@
 			children = (
 				77E3833A2A7229B80084B8A6 /* CardsView.swift */,
 				77E383382A7229AD0084B8A6 /* CardView.swift */,
-				77E383482A7388F50084B8A6 /* CardModel.swift */,
+				77E383482A7388F50084B8A6 /* ProfileModel.swift */,
+				770AD09E2A78C046004CA5D2 /* CardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -433,9 +438,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
-				77E383492A7388F50084B8A6 /* CardModel.swift in Sources */,
+				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 				77E383432A7244C60084B8A6 /* EventModel.swift in Sources */,
+				770AD09F2A78C046004CA5D2 /* CardViewModel.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */,
@@ -458,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				770AD0A02A78C046004CA5D2 /* CardViewModel.swift in Sources */,
 				77E3831E2A7225490084B8A6 /* ProjectMunchiesTests.swift in Sources */,
 				770AD0982A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
@@ -472,6 +479,7 @@
 				770AD0992A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3832A2A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift in Sources */,
 				77E383282A7225490084B8A6 /* ProjectMunchiesUITests.swift in Sources */,
+				770AD0A12A78C046004CA5D2 /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

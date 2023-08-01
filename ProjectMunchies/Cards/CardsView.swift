@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct CardsView: View {
+    @StateObject public var viewModel = CardViewModel()
     @State
-    private var cards: [CardModel] = MockService.cardsSampleData
+    private var cards: [ProfileModel] = MockService.profilesSampleData
     
     let geoReader: GeometryProxy
     
@@ -23,9 +24,6 @@ struct CardsView: View {
                     ZStack{
                         ForEach(Array(self.cards.enumerated()), id: \.offset){ index, card in
                             if index > self.cards.count - 4 {
-                              
-                                
-                            
                                     CardView(geoReader: geoReader, card: card, index: index, onRemove: { removedUser in
                                         self.cards.removeAll {$0.id == removedUser.id}
 
@@ -34,8 +32,11 @@ struct CardsView: View {
                                   // .frame(width: self.cards.cardWidth(in: geoReader, cardId: index), height: geoReader.size.height * 1.1)
                                     .offset(x: 0, y: self.cards.cardOffset(cardId: index))
                                 }
-                
+
                         }
+                    }
+                    .onAppear{
+                        viewModel.getCardImages(cardImages: MockService.profilesSampleData)
                     }
                   
                }
