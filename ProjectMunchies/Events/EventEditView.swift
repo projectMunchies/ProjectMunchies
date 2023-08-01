@@ -8,12 +8,26 @@
 import SwiftUI
 
 struct EventEditView: View {
+    @State private var eventTitle: String = ""
+    @State private var eventDescription: String = ""
+    @State private var eventDate: String = ""
+    @State private var eventLocation: String = ""
+    
+    let event: EventModel
+    let viewModel: CardViewModel
+    
     var body: some View {
         VStack{
             Form{
                
                 Section{
-                    Text("gdsg")
+                   
+                    
+                    TextField(event.title, text: $eventTitle)
+//                        .frame(width: 360, height: 60)
+//                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))
+//                        .cornerRadius(30)
+//                        .foregroundColor(.black)
                 } header: {
                     Text("Title")
                         .foregroundColor(.black)
@@ -21,31 +35,31 @@ struct EventEditView: View {
                 }
                 
                 Section{
-                    Text("gdsg")
+                    TextField(event.description, text: $eventDescription)
                 } header: {
                     Text("Description")
                         .foregroundColor(.black)
                         .font(.system(size: 20))
                 }
                 
-                Section{
-                    Text("gdsg")
-                } header: {
-                    Text("Date")
-                        .foregroundColor(.black)
-                        .font(.system(size: 20))
-                }
+//                Section{
+//                    TextField(String(event.eventDate), text: $eventDate)
+//                } header: {
+//                    Text("Date")
+//                        .foregroundColor(.black)
+//                        .font(.system(size: 20))
+//                }
+//
+//                Section{
+//                    Text("\(event.eventDate, style: .time)")
+//                } header: {
+//                    Text("Time")
+//                        .foregroundColor(.black)
+//                        .font(.system(size: 20))
+//                }
                 
                 Section{
-                    Text("gdsg")
-                } header: {
-                    Text("Time")
-                        .foregroundColor(.black)
-                        .font(.system(size: 20))
-                }
-                
-                Section{
-                    Text("gdsg")
+                    TextField(event.location, text: $eventLocation)
                 } header: {
                     Text("Location")
                         .foregroundColor(.black)
@@ -71,6 +85,6 @@ struct EventEditView: View {
 
 struct EventEditView_Previews: PreviewProvider {
     static var previews: some View {
-        EventEditView()
+        EventEditView(event: MockService.eventsSampleData[0],viewModel: CardViewModel())
     }
 }

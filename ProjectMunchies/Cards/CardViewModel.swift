@@ -12,6 +12,7 @@ import UIKit
 class CardViewModel: ObservableObject {
     @Published var profileImages: [UIImage] = []
     @Published var profileImage: UIImage = UIImage()
+    @Published var userProfileImage: UIImage = UIImage()
     
     let storage = Storage.storage()
     //
@@ -38,7 +39,7 @@ class CardViewModel: ObservableObject {
         }
     }
     
-    public func getCardImages(cardImages: [ProfileModel]){
+    public func getStorageFiles(cardImages: [ProfileModel]){
         for profile in cardImages {
             let imageRef = storage.reference().child("\(String(describing: profile.id))"+"/images/image.jpg")
             

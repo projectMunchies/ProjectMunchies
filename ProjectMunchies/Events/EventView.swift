@@ -11,6 +11,9 @@ struct EventView: View {
     @State private var showHamburgerMenu: Bool = false
     @State private var inviteSentAlert: Bool = false
     
+    let event: EventModel
+    let viewModel: CardViewModel
+    
     var body: some View {
         GeometryReader { geoReader in
             ZStack{
@@ -24,66 +27,77 @@ struct EventView: View {
                         .font(.largeTitle)
                         .position(x:geoReader.size.width * 0.35, y:geoReader.size.height * 0.1)
                     
-                    Text("Italian Date Night")
+                    Text("\(event.title)")
                         .bold()
                         .foregroundColor(.black)
                         .font(.system(size: 25))
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.15)
                     
-                    Text("with")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.system(size: 25))
-                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.18)
+//                    Text("with")
+//                        .bold()
+//                        .foregroundColor(.black)
+//                        .font(.system(size: 25))
+//                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.18)
                     
                     Image("Guy")
                         .resizable()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 170, height: 170)
                         .cornerRadius(300)
-                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                        .position(x:geoReader.size.width * 0.6, y:geoReader.size.height * 0.35)
+                    
+                    Image("Girl")
+                        .resizable()
+                        .frame(width: 170, height: 170)
+                        .cornerRadius(300)
+                        .position(x:geoReader.size.width * 0.4, y:geoReader.size.height * 0.35)
                     
                     
-                    Text("June 2nd, 2024 (3 days)")
+                    Text("\(event.eventDate, style: .date)")
                         .bold()
                         .foregroundColor(.black)
                         .font(.system(size: 25))
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.55)
                     
-                    Text("3:00 pm")
+                    Text("\(event.eventDate, style: .time)")
                         .bold()
                         .foregroundColor(.black)
                         .font(.system(size: 15))
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.58)
 
-                    Text("Magginos, Tampa, Fl")
+                    Text("\(event.location)")
                         .bold()
                         .foregroundColor(.black)
                         .font(.system(size: 25))
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.65)
+                    VStack{
+                        Text("Description")
+                            .bold()
+                            .foregroundColor(.black)
+                            .font(.system(size: 25))
+                            //.position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
 
-                    Text("Description")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.system(size: 25))
-                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
-    //
-    //                Text("blah blah blah ablah blah ablah blah")
-    //                    .bold()
-    //                    .foregroundColor(.black)
-    //                    .font(.largeTitle)
-    //                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.1)
+                        Text("\(event.description)")
+                            .foregroundColor(.black)
+                            .font(.system(size: 22))
+                            //.position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
+                    }
+                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.73)
+                  
                     
                     HStack{
-                        NavigationLink(destination: EventEditView()) {
-                            Text("Edit")
-                                .frame(width: 180, height: 60)
-                                .background(Color.gray)
-                                .cornerRadius(40)
-                                .foregroundColor(.white)
-                        }
+//                        NavigationLink(destination: EventEditView(event: event, viewModel: viewModel)) {
+//                            Text("Edit")
+//                                .frame(width: 180, height: 60)
+//                                .background(Color.gray)
+//                                .cornerRadius(40)
+//                                .foregroundColor(.white)
+//                        }
                         
                         Button(action: {
-                            self.inviteSentAlert.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                self.inviteSentAlert.toggle()
+                            }
+                           
                         }) {
                             Text("Send Invite")
                                 .frame(width: 180, height: 60)
@@ -96,8 +110,6 @@ struct EventView: View {
                                }
                     }
                     .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.9)
-
-                   // headerSection(for: geoReader)
                 }
                 .disabled(self.showHamburgerMenu ? true: false)
             }
@@ -108,56 +120,13 @@ struct EventView: View {
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
-       
         }
        
-    }
-    
-    private func headerSection(for geoReader: GeometryProxy) -> some View {
-        HStack{
-            Spacer()
-            HStack(spacing: 10){
-                Button(action: {
-                    self.showHamburgerMenu.toggle()
-                }) {
-                    Image(systemName: "line.3.horizontal")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
-                }
-             
-                
-                Text("CrunchBunch")
-                    .bold()
-                    .foregroundColor(.black)
-                    .font(.title2)
-            }
-            
-            Spacer()
-                .frame(width: geoReader.size.width * 0.25)
-            
-            HStack(spacing: 20){
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
-                
-                Image(systemName: "bell")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
-            }
-            Spacer()
-        }
-        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
     }
 }
 
 struct EventView_Previews: PreviewProvider {
     static var previews: some View {
-        EventView()
+        EventView(event: MockService.eventsSampleData[0], viewModel: CardViewModel())
     }
 }

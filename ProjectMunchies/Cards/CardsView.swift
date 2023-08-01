@@ -36,7 +36,7 @@ struct CardsView: View {
                         }
                     }
                     .onAppear{
-                        viewModel.getCardImages(cardImages: MockService.profilesSampleData)
+                        viewModel.getStorageFiles(cardImages: MockService.profilesSampleData)
                     }
                   
                }

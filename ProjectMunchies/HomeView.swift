@@ -75,17 +75,22 @@ struct HomeView: View {
                 .frame(width: geoReader.size.width * 0.25)
             
             HStack(spacing: 20){
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
+//                Image(systemName: "person")
+//                    .resizable()
+//                    .frame(width: 25, height: 25)
+//                    .font(.system(size: 35))
+//                    .foregroundColor(.black)
+                Spacer()
+                    .frame(width: 50)
                 
-                Image(systemName: "bell")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
+                NavigationLink(destination: NotificationsView() ) {
+                    Image(systemName: "bell")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                }
+              
             }
             Spacer()
         }

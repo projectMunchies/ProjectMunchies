@@ -59,7 +59,7 @@ struct CardView: View {
                                     
                                     ZStack{
                                         
-                                        Text("Ashely Bega, 23")
+                                        Text("\(card.fullName)")
                                             .foregroundColor(.white)
                                             .bold()
                                             .font(.system(size: 20))
@@ -67,7 +67,7 @@ struct CardView: View {
                                             .padding(.leading)
                                         
                                         
-                                        Text("Tampa,FL")
+                                        Text("\(card.location)")
                                             .foregroundColor(.white)
                                             .font(.system(size: 15))
                                             .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.7)
@@ -219,7 +219,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { proxy in
-            CardView(geoReader: proxy, card: MockService.cardSampleData, index: 18, onRemove: {_ in})
+            CardView(geoReader: proxy, card: MockService.profilesSampleData[0], index: 18, onRemove: {_ in})
         }
       
     }

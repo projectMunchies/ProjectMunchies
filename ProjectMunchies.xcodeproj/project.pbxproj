@@ -68,6 +68,7 @@
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
 		77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834E2A751D9E0084B8A6 /* EventEditView.swift */; };
 		77E383522A75BB840084B8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383512A75BB840084B8A6 /* ProfileView.swift */; };
+		77F3E0A32A79065700BC3791 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0A22A79065700BC3791 /* NotificationsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		77E3834E2A751D9E0084B8A6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 		77E383502A75B78F0084B8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77E383512A75BB840084B8A6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		77F3E0A22A79065700BC3791 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 				77E383512A75BB840084B8A6 /* ProfileView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
 				770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */,
+				77F3E0A22A79065700BC3791 /* NotificationsView.swift */,
 			);
 			path = ProjectMunchies;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
 				77E383452A7247460084B8A6 /* MockService.swift in Sources */,
+				77F3E0A32A79065700BC3791 /* NotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,7 +631,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProjectMunchies/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CrunchBunch;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -660,7 +664,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProjectMunchies/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CrunchBunch;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

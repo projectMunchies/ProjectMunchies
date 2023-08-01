@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EventsView: View {
+    @StateObject private var viewModel = CardViewModel()
     @State private var searchText: String = ""
     @State private var events: [EventModel] = MockService.eventsSampleData
     @State private var showHamburgerMenu: Bool = false
@@ -26,7 +27,7 @@ struct EventsView: View {
                         ScrollView{
                             VStack{
                                 ForEach(self.events.filter({searchText.isEmpty ? true: $0.title.contains(searchText)})) { event in
-                                    NavigationLink(destination: EventView()) {
+                                    NavigationLink(destination: EventView(event: event, viewModel: viewModel)) {
                                         
                                         ZStack{
                                             Text("")
@@ -37,42 +38,58 @@ struct EventsView: View {
                                             VStack{
                                                 HStack{
                                                     Spacer()
-                                                    Text("Italian Night with Greg")
+                                                    Text("\(event.title)")
                                                         .font(.system(size: 30))
                                                         .foregroundColor(.white)
                                                     
                                                     Spacer()
                                                     
-                                                    Image(systemName: "ellipsis")
-                                                        .resizable()
-                                                        .scaledToFill()
-                                                        .frame(width: 10, height: 5)
-                                                        .font(.system(size: 35))
-                                                        .foregroundColor(.white)
-                                                    Spacer()
+//                                                    Image(systemName: "ellipsis")
+//                                                        .resizable()
+//                                                        .scaledToFill()
+//                                                        .frame(width: 10, height: 5)
+//                                                        .font(.system(size: 35))
+//                                                        .foregroundColor(.white)
+                                                   // Spacer()
                                                 }
                                               
                                                 Spacer()
                                                     .frame(height: 50)
                                                 HStack{
                                                     Spacer()
-                                                    Text("8:00pm - 12:ooam")
+                                                    Text("\(event.eventDate, style: .date)")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.white)
                                                     Spacer()
+//
+//                                                    ForEach(event.participants, id: \.self) { participant in
+//                                                        ZStack{
+//                                                            Image("Guy")
+//                                                                .resizable()
+//                                                                .scaledToFill()
+//                                                                .frame(width: 50, height: 50)
+//                                                                .cornerRadius(20)
+//                                                                .foregroundColor(.white)
+//
+//                                                        }
+//
+//                                                    }
                                                     
-                                                    ForEach(0..<3) { participant in
-                                                        ZStack{
-                                                            Image("Guy")
+                                                    Image("Guy")
                                                                 .resizable()
                                                                 .scaledToFill()
                                                                 .frame(width: 50, height: 50)
                                                                 .cornerRadius(20)
                                                                 .foregroundColor(.white)
-                                                              
-                                                        }
-                                                       
-                                                    }
+                                                    
+                                                    Image("Girl")
+                                                                .resizable()
+                                                                .scaledToFill()
+                                                                .frame(width: 50, height: 50)
+                                                                .cornerRadius(20)
+                                                                .foregroundColor(.white)
+
+
                                              
                                                     Spacer()
                                                 }
@@ -80,7 +97,6 @@ struct EventsView: View {
                                                
                                             }
                                         }
-                                    
                                     }
                                 }
                             }
@@ -138,17 +154,21 @@ struct EventsView: View {
                 .frame(width: geoReader.size.width * 0.25)
             
             HStack(spacing: 20){
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
+//                Image(systemName: "magnifyingglass")
+//                    .resizable()
+//                    .frame(width: 25, height: 25)
+//                    .font(.system(size: 35))
+//                    .foregroundColor(.black)
+                Spacer()
+                    .frame(width: 50)
                 
-                Image(systemName: "bell")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .font(.system(size: 35))
-                    .foregroundColor(.black)
+                NavigationLink(destination: NotificationsView() ) {
+                    Image(systemName: "bell")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                }
             }
             Spacer()
         }
