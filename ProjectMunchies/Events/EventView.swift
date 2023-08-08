@@ -116,7 +116,7 @@ struct EventView: View {
             
             //Display HamburgerMenu
             if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }

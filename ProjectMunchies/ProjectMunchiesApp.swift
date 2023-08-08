@@ -16,7 +16,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-
 @main
 struct ProjectMunchiesApp: App {
     init() {
@@ -28,6 +27,7 @@ struct ProjectMunchiesApp: App {
             NavigationView{
                 ContentView().environmentObject(viewRouter)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

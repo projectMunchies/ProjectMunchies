@@ -19,6 +19,8 @@ struct HomeView: View {
     let foodOrDrinks = ["Food","HappyHour"]
     let locations = ["Tampa","American"]
     
+   // let geoReader: GeometryProxy
+    
     var body: some View {
             GeometryReader{ geoReader in
                 ZStack{
@@ -32,16 +34,16 @@ struct HomeView: View {
                             CardsView(geoReader: geoReader)
                                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.52)
                         }
+                        
+                        subHeaderSection(for: geoReader)
+                        headerSection(for: geoReader)
                     }
-                    .disabled(self.showHamburgerMenu ? true: false)
-                    
-                    headerSection(for: geoReader)
-                    subHeaderSection(for: geoReader)
+                    .disabled(self.showHamburgerMenu ? true : false)
                 }
                 
                 //Display HamburgerMenu
                 if self.showHamburgerMenu {
-                    HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                    HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
                         .frame(width: geoReader.size.width/2)
                         .padding(.trailing, geoReader.size.width * 0.5)
                 }
@@ -168,6 +170,7 @@ struct HomeView: View {
                             .pickerStyle(.automatic)
                         }
                     }
+                    .frame(width: geoReader.size.width * 0.75, height: geoReader.size.height * 0.75)
                     
                     Button(action: {
                         showPrefPopover.toggle()

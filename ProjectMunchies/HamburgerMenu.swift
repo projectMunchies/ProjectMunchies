@@ -9,9 +9,9 @@ import SwiftUI
 
 struct HamburgerMenu: View {
     @Binding var showHamburgerMenu: Bool
-    
+    let geoReader : GeometryProxy
     var body: some View {
-        GeometryReader{ geoReader in
+        //GeometryReader{ geoReader in
             ZStack{
                 Color.white
                     .ignoresSafeArea()
@@ -48,13 +48,16 @@ struct HamburgerMenu: View {
                 }
                 .position(x: geoReader.size.width * 0.18, y: geoReader.size.height * 0.03)
             }
-        }
+       // }
       
     }
 }
 
 struct HamburgerMenu_Previews: PreviewProvider {
     static var previews: some View {
-        HamburgerMenu(showHamburgerMenu: .constant(true))
+        GeometryReader{ proxy in
+            HamburgerMenu(showHamburgerMenu: .constant(true), geoReader: proxy)
+        }
+       
     }
 }

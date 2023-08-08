@@ -27,25 +27,39 @@ struct SignUpView: View {
                                 Text("Never Eat alone again")
                                     .font(.system(size: 15))
                                     .foregroundColor(.black)
+                                    .padding(.bottom,geoReader.size.height * 0.05)
         
+                    Text("Email:")
+                        .font(.system(size: 15))
+                        .foregroundColor(.black)
+                        .padding(.trailing,geoReader.size.width * 0.8)
+                        .opacity(0.6)
                     
                     TextField("Email", text: $email)
                         .frame(width: 360, height: 60)
+                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
                         .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                        .cornerRadius(30)
                         .foregroundColor(.black)
+                        .cornerRadius(30)
                      
+                    Text("Password:")
+                        .font(.system(size: 15))
+                        .foregroundColor(.black)
+                        .padding(.trailing,geoReader.size.width * 0.75)
+                        .opacity(0.6)
+                    
                     TextField("Password", text: $password)
                         .frame(width: 360, height: 60)
+                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
                         .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                        .cornerRadius(30)
                         .foregroundColor(.black)
+                        .cornerRadius(30)
                     
                     Button(action: {
                         signUp()
                     }) {
                         Text("Sign Up")
-                            .frame(width: 400, height: 60)
+                            .frame(width: 380, height: 60)
                             .background(Color.gray)
                             .cornerRadius(40)
                             .foregroundColor(.white)

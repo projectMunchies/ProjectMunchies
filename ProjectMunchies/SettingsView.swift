@@ -46,18 +46,20 @@ struct SettingsView: View {
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)
-                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
+                        .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.1)
                     
                     headerSection(for: geoReader)
+                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
+               // .position(x:geoReader.frame(in: .global).midX, y:geoReader.frame(in: .global).midY)
                
             }
             
             
             //Display HamburgerMenu
             if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
@@ -109,7 +111,6 @@ struct SettingsView: View {
             }
             Spacer()
         }
-        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
     }
     
     private func deleteUser(){

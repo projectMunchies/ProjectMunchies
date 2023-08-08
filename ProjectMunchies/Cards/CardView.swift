@@ -32,19 +32,19 @@ struct CardView: View {
     }
     
     var body: some View {
-      //  NavigationView {
             GeometryReader{ geoReader in
-                NavigationLink(destination: ProfileView(card: card, profileImage: viewModel.profileImage)) {
                     ZStack{
                         overlayss()
                         
                         VStack{
                             ZStack{
-                                Image(uiImage: viewModel.profileImage)
-                                    .resizable()
-                                    .frame(width: 380, height: geoReader.size.height * 0.7)
-                                    .cornerRadius(30)
-                                    .scaledToFill()
+                                NavigationLink(destination: ProfileView(card: card, profileImage: viewModel.profileImage)) {
+                                    Image(uiImage: viewModel.profileImage)
+                                        .resizable()
+                                        .frame(width: 380, height: geoReader.size.height * 0.7)
+                                        .cornerRadius(30)
+                                        .scaledToFill()
+                                }
                                 
                                 ZStack{
                                     Text("")
@@ -117,7 +117,7 @@ struct CardView: View {
                                 translation = .zero
                             }
                     )
-                }
+                
             }
     }
     

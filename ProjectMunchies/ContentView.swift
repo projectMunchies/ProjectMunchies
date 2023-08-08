@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
-        GeometryReader { geoReader in
             switch viewRouter.currentPage {
             case .homePage :
                 TabView {
@@ -32,7 +31,6 @@ struct ContentView: View {
             case .signupPage :
                 SignUpView()
             }
-        }
     }
 }
 

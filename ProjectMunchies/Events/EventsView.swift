@@ -21,7 +21,6 @@ struct EventsView: View {
                 
                 ZStack{
                     VStack{
-                     
                         SearchBar(searchText: $searchText)
                         
                         ScrollView{
@@ -56,11 +55,12 @@ struct EventsView: View {
                                                 Spacer()
                                                     .frame(height: 50)
                                                 HStack{
-                                                    Spacer()
+                                                  //  Spacer()
                                                     Text("\(event.eventDate, style: .date)")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.white)
                                                     Spacer()
+                                                        .frame(width: geoReader.size.width * 0.1)
 //
 //                                                    ForEach(event.participants, id: \.self) { participant in
 //                                                        ZStack{
@@ -91,37 +91,34 @@ struct EventsView: View {
 
 
                                              
-                                                    Spacer()
+                                                  //  Spacer()
                                                 }
-                                              
-                                               
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        
-                
                     }
                         .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
-                    
                     
                     Text("Events")
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)
-                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
+                       .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.1)
                     
                     headerSection(for: geoReader)
+                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
+                //.position(x:geoReader.frame(in: .global).midX, y:geoReader.frame(in: .global).midY)
                
             }
             
             //Display HamburgerMenu
             if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu)
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
@@ -172,7 +169,6 @@ struct EventsView: View {
             }
             Spacer()
         }
-        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
     }
 }
 
