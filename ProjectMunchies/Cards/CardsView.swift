@@ -25,10 +25,9 @@ struct CardsView: View {
                                 NavigationLink(destination: ProfileView(card: card)) {
                                     CardView(geoReader: geoReader, card: card, index: index, onRemove: { removedUser in
                                         self.cards.removeAll {$0.id == removedUser.id}
-                                        
-                                        
                                     })
                                 }
+                                .buttonStyle(MyButtonStyle())
                                     .animation(.spring())
                                     .offset(x: 0, y: self.cards.cardOffset(cardId: index))
                                 }
@@ -41,6 +40,18 @@ struct CardsView: View {
                   
                }
     }
+    
+    
+}
+
+struct MyButtonStyle: ButtonStyle {
+ public func makeBody(configuration: MyButtonStyle.Configuration) -> some View {
+     configuration.label
+         .opacity(configuration.isPressed ? 1 : 1)
+
+         // You can also add other animated properties
+         .scaleEffect(configuration.isPressed ? 0.97 : 1)
+ }
 }
 
 struct CardsView_Previews: PreviewProvider {

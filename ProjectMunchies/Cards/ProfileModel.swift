@@ -14,5 +14,6 @@ struct ProfileModel: Identifiable, Codable {
     var description: String
     var gender: String
     var fcmTokens: [String]
+    var messageThreadIds: [String]
 }
 

@@ -121,7 +121,6 @@ struct EventView: View {
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
-       
     }
 }
 

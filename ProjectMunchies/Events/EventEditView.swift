@@ -65,9 +65,6 @@ struct EventEditView: View {
                         .foregroundColor(.black)
                         .font(.system(size: 20))
                 }
-                
-             
-            
             }
             
             Button(action: {

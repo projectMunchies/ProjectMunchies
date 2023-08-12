@@ -31,7 +31,7 @@ struct SettingsView: View {
                         }
                         
                         Button(action: {
-                           deleteUser()
+                            deleteUser()
                         }) {
                             Text("Delete Account")
                                 .frame(width: 400, height: 60)
@@ -40,7 +40,6 @@ struct SettingsView: View {
                                 .foregroundColor(.white)
                         }
                     }
-           
                     
                     Text("Settings")
                         .bold()
@@ -48,14 +47,10 @@ struct SettingsView: View {
                         .font(.largeTitle)
                         .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.1)
                     
-                    headerSection(for: geoReader)
-                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false))
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
-               // .position(x:geoReader.frame(in: .global).midX, y:geoReader.frame(in: .global).midY)
-               
             }
-            
             
             //Display HamburgerMenu
             if self.showHamburgerMenu {
@@ -63,53 +58,6 @@ struct SettingsView: View {
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
-        }
-    
-    }
-    
-    private func headerSection(for geoReader: GeometryProxy) -> some View {
-        HStack{
-            Spacer()
-            HStack(spacing: 10){
-                Button(action: {
-                    self.showHamburgerMenu.toggle()
-                }) {
-                    Image(systemName: "line.3.horizontal")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
-                    
-                }
-             
-                Text("Crunch Bunch")
-                    .bold()
-                    .foregroundColor(.black)
-                    .font(.title2)
-            }
-            
-            Spacer()
-                .frame(width: geoReader.size.width * 0.25)
-            
-            HStack(spacing: 20){
-//                Image(systemName: "magnifyingglass")
-//                    .resizable()
-//                    .frame(width: 25, height: 25)
-//                    .font(.system(size: 35))
-//                    .foregroundColor(.black)
-                
-                Spacer()
-                    .frame(width: 50)
-                
-                NavigationLink(destination: NotificationsView() ) {
-                    Image(systemName: "bell")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
-                }
-            }
-            Spacer()
         }
     }
     
@@ -122,9 +70,7 @@ struct SettingsView: View {
                 
             }else {
                 viewRouter.currentPage = .signinPage
-                
             }
-            
         }
     }
     

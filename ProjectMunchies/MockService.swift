@@ -19,30 +19,30 @@ enum MockService {
                 participants: ["dasfdsfweefcae","fdsafdsfessfd"],
                 eventDate: Date.now
             ),
-//            EventModel(
-//                id: "jkhblhjkbkjbjkblk",
-//                title: "Taco Tuesdays",
-//                location: "Mugelitos, Tampa,Fl",
-//                description: "Taco tuesdays youj already know what it be",
-//                participants: ["fer3f4f3f34","faee43434343"],
-//                eventDate: Date.now
-//            )
-//            EventModel(
-//                id: "",
-//                title: "",
-//                location: "",
-//                description: "",
-//                participants: [],
-//                eventDate: Date.now
-//            ),
-//            EventModel(
-//                id: "",
-//                title: "",
-//                location: "",
-//                description: "",
-//                participants: [],
-//                eventDate: Date.now
-//            ),
+            EventModel(
+                id: "jkhblhjkbkjbjkblk",
+                title: "Taco Tuesdays",
+                location: "Mugelitos, Tampa,Fl",
+                description: "Taco tuesdays youj already know what it be",
+                participants: ["fer3f4f3f34","faee43434343"],
+                eventDate: Date.now
+            ),
+            EventModel(
+                id: "jkhblhjkbkjbjkblk",
+                title: "Taco Tuesdays",
+                location: "Mugelitos, Tampa,Fl",
+                description: "Taco tuesdays youj already know what it be",
+                participants: ["fer3f4f3f34","faee43434343"],
+                eventDate: Date.now
+            ),
+            EventModel(
+                id: "jkhblhjkbkjbjkblk",
+                title: "Taco Tuesdays",
+                location: "Mugelitos, Tampa,Fl",
+                description: "Taco tuesdays youj already know what it be",
+                participants: ["fer3f4f3f34","faee43434343"],
+                eventDate: Date.now
+            )
         ]
     }
     
@@ -53,7 +53,8 @@ enum MockService {
         location: "",
         description: "",
         gender: "",
-        fcmTokens: []
+        fcmTokens: [],
+        messageThreadIds: []
        )
     }
     
@@ -65,7 +66,8 @@ enum MockService {
              location: "Tampa,Fl",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
@@ -73,7 +75,8 @@ enum MockService {
              location: "Tampa,Fl",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
@@ -81,7 +84,8 @@ enum MockService {
              location: "St.Pete,Fl",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
@@ -89,7 +93,8 @@ enum MockService {
              location: "Tampa,Fl",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
@@ -97,7 +102,8 @@ enum MockService {
              location: "Tampa,Fl",
              description: "",
              gender: "female",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
                 id: "f244f9a3-1f31-4d02-a509-99cb00bd1481",
@@ -105,7 +111,8 @@ enum MockService {
                 location: "Clearwater,Fl",
                 description: "",
                 gender: "female",
-                fcmTokens: []
+                fcmTokens: [],
+                messageThreadIds: []
                )
         ]
     }
@@ -118,7 +125,8 @@ enum MockService {
              location: "",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
@@ -126,7 +134,8 @@ enum MockService {
              location: "",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
@@ -134,7 +143,8 @@ enum MockService {
              location: "",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
             ProfileModel(
              id: "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
@@ -142,7 +152,8 @@ enum MockService {
              location: "",
              description: "",
              gender: "",
-             fcmTokens: []
+             fcmTokens: [],
+             messageThreadIds: []
             ),
 //            ProfileModel(
 //             id: "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",

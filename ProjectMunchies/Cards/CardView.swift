@@ -38,12 +38,13 @@ struct CardView: View {
                     //  NavigationLink(destination: ProfileView(card: card, profileImage: viewModel.profileImage)) {
                     Image(uiImage: viewModel.profileImage)
                         .resizable()
-                        .frame(width: 380, height: geoReader.size.height * 0.7)
+                        .frame(width: 380, height: geoReader.size.height * 0.75)
                         .cornerRadius(30)
                         .scaledToFill()
                     //  }
                     
                     ZStack{
+                        //gradient
                         Text("")
                             .frame(width: 380,height: 220)
                             .background(
@@ -51,7 +52,7 @@ struct CardView: View {
                             )
                             .opacity(0.7)
                             .cornerRadius(30)
-                            .position(x:geoReader.size.width * 0.5,  y:geoReader.size.height * 0.71)
+                            .position(x:geoReader.size.width * 0.5,  y:geoReader.size.height * 0.73)
                         
                         
                         ZStack{
@@ -72,7 +73,7 @@ struct CardView: View {
                             
                             buttons()
                             //.padding(.bottom,800)
-                                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.79)
+                                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.82)
                         }
                         
                     }
@@ -188,7 +189,7 @@ struct CardView: View {
                 ZStack{
                     Text("")
                         .frame(width: 160, height: 60)
-                        .background(.pink)
+                        .background(Color("MainColor"))
                         .cornerRadius(40)
                     // .foregroundColor(.gray)
                     
