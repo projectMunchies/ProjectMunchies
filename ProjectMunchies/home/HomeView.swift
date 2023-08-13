@@ -54,6 +54,7 @@ struct HomeView: View {
                 }
                 .popover(isPresented: $showAddImagePopover) {
                     addImagePopover(for: geoReader)
+                        .interactiveDismissDisabled()
                 }
             }
             

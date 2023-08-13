@@ -14,14 +14,14 @@ struct Header: View {
     @State private var showIntroPopover: Bool = false
    // @State private var showHamburgerMenu: Bool = false
     
-    @State private var foodFilterCategory = "Pick"
+    @State private var foodFilterCategory = "Cuisine"
     @State private var foodFilterType = "Pick"
     @State private var foodFilterGender = "Pick"
     @State private var foodFilterLocation = "Pick"
-    @State private var foodFilterAgeRangeFrom = "Pick"
-    @State private var foodFilterAgeRangeTo = "Pick"
+    @State private var foodFilterAgeRangeFrom: Int = 18
+    @State private var foodFilterAgeRangeTo: Int = 70
     
-    let cuisineTypes = ["Chinese","American","Mexican","Japanese","","Indian","Italian","Thai","French"]
+    let cuisineTypes = ["Chinese","American","Mexican","Japanese","Indian","Italian","Thai","French"]
     let drinkTypes = ["Juice","Smoothies","Soda","Tea","Coffee","Hot Chocolate"]
     let happHourTypes = ["Liquor","Beer","Wine","Margaritas","Cocktails"]
     let gender = ["Guy","Girl"]
@@ -121,6 +121,7 @@ struct Header: View {
                                                 .pickerStyle(.automatic)
                                             } label: {
                                                 Text("\(self.foodFilterType)")
+                                                    .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
                                         }
@@ -145,6 +146,7 @@ struct Header: View {
                                                 .pickerStyle(.automatic)
                                             } label: {
                                                 Text("\(self.foodFilterGender)")
+                                                    .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
                                          
@@ -170,6 +172,7 @@ struct Header: View {
                                                 .pickerStyle(.automatic)
                                             } label: {
                                                 Text("\(self.foodFilterLocation)")
+                                                    .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
                                        
@@ -189,14 +192,16 @@ struct Header: View {
                                                 Picker("", selection: $foodFilterAgeRangeFrom) {
                                                     ForEach(Array(stride(from: 18, to: 100, by: 1)), id: \.self) { index in
                                                         Text("\(index)")
-                                                            .tint(.orange)
                                                     }
                                                 }
                                                 .pickerStyle(.automatic)
                                             } label: {
                                                 Text("\(self.foodFilterAgeRangeFrom)")
+                                                    .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
+                                                
                                             }
+                                            
                                           
                                         }
                                     }
@@ -220,6 +225,7 @@ struct Header: View {
                                                 .pickerStyle(.automatic)
                                             } label: {
                                                 Text("\(self.foodFilterAgeRangeTo)")
+                                                    .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
                                         }
@@ -244,7 +250,6 @@ struct Header: View {
                     
                     }
             }
-            
         }
     }
     
@@ -263,7 +268,6 @@ struct Header: View {
             }
             .popover(isPresented: $showIntroPopover) {
                 introPopover(for: geoReader)
-                    .interactiveDismissDisabled()
             }
             
         }

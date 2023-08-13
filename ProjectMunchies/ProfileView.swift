@@ -20,6 +20,7 @@ struct ProfileView: View {
                 ZStack{
                     Image(uiImage: viewModel.profileImage)
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 450, height: geoReader.size.height * 0.7)
                         .cornerRadius(30)
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.2)

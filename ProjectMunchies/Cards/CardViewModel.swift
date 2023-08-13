@@ -28,7 +28,7 @@ class CardViewModel: ObservableObject {
     public func getStorageFile(profileId: String) {
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
         
-        imageRef.getData(maxSize: Int64(1 * 1024 * 1024)) {data, error in
+        imageRef.getData(maxSize: Int64(10 * 1024 * 1024)) {data, error in
             if let error = error {
                 print("Error getting file: ",error)
             } else {
@@ -43,16 +43,14 @@ class CardViewModel: ObservableObject {
         for profile in cardImages {
             let imageRef = storage.reference().child("\(String(describing: profile.id))"+"/images/image.jpg")
             
-            imageRef.getData(maxSize: Int64(1 * 1024 * 1024)) {data, error in
+            imageRef.getData(maxSize: Int64(10 * 1024 * 1024)) {data, error in
                 if let error = error {
                     print("Error getting file: ",error)
                 } else {
                     let image = UIImage(data: data!)
                     self.profileImages.append(image!)
                 }
-                
             }
         }
     }
-    
 }
