@@ -18,66 +18,72 @@ struct SignInView: View {
                 Color.white
                     .ignoresSafeArea()
                 
-                VStack{
-                    Text("CrunchBunch")
-                        .bold()
-                        .font(.system(size: 40))
-                        .foregroundColor(.black)
+                ZStack{
+                    Image("SignInLogo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geoReader.size.height * 0.5, height: geoReader.size.height * 0.5)
+                        .position(x: geoReader.frame(in: .local).midX, y:geoReader.size.height * 0.24)
+                        
+                    VStack{
+    //                    Text("Never Eat alone again")
+    //                        .font(.system(size: 15))
+    //                        .foregroundColor(.black)
+    //                        .padding(.bottom,geoReader.size.height * 0.05)
+                        
+                        Text("Email:")
+                            .font(.system(size: 15))
+                            .foregroundColor(.black)
+                            .padding(.trailing,geoReader.size.width * 0.8)
+                            .opacity(0.6)
                     
-                    Text("Never Eat alone again")
-                        .font(.system(size: 15))
-                        .foregroundColor(.black)
-                        .padding(.bottom,geoReader.size.height * 0.05)
-                    
-                    Text("Email:")
-                        .font(.system(size: 15))
-                        .foregroundColor(.black)
-                        .padding(.trailing,geoReader.size.width * 0.8)
-                        .opacity(0.6)
-                
-                    TextField("Email", text: $email)
-                        .frame(width: 360, height: 60)
-                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
-                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                        .foregroundColor(.black)
-                        .cornerRadius(30)
-                    
-                    Text("Password:")
-                        .font(.system(size: 15))
-                        .foregroundColor(.black)
-                        .padding(.trailing,geoReader.size.width * 0.75)
-                        .opacity(0.6)
-                    
-                    TextField("Password", text: $password)
-                        .frame(width: 360, height: 60)
-                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
-                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))
-                        .foregroundColor(.black)
-                        .cornerRadius(30)
-                    
-                    Button(action: {
-                        login()
-                    }) {
-                        Text("Sign In")
-                            .frame(width: 380, height: 60)
-                            .background(Color.gray)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
+                        TextField("Email", text: $email)
+                            .frame(width: 360, height: 60)
+                            .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
+                            .background(Color(red: 0.949, green: 0.949, blue: 0.97))
+                            .foregroundColor(.black)
+                            .cornerRadius(30)
+                        
+                        Text("Password:")
+                            .font(.system(size: 15))
+                            .foregroundColor(.black)
+                            .padding(.trailing,geoReader.size.width * 0.75)
+                            .opacity(0.6)
+                        
+                        TextField("Password", text: $password)
+                            .frame(width: 360, height: 60)
+                            .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
+                            .background(Color(red: 0.949, green: 0.949, blue: 0.97))
+                            .foregroundColor(.black)
+                            .cornerRadius(30)
+                        
+                        Button(action: {
+                            login()
+                        }) {
+                            Text("Sign In")
+                                .frame(width: 380, height: 60)
+                                .background(Color.gray)
+                                .cornerRadius(40)
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        
+                        Text("Don't have an account?")
+                            .foregroundColor(.black)
+                        
+                        NavigationLink(destination: SignUpView()){
+                            Text("sign up here")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 20))
+                        }
                     }
-                    .padding()
-                    
-                    Text("Don't have an account?")
-                        .foregroundColor(.black)
-                    
-                    NavigationLink(destination: SignUpView()){
-                        Text("sign up here")
-                            .foregroundColor(.blue)
-                            .font(.system(size: 20))
-                    }
+                    .position(x: geoReader.frame(in: .local).midX , y:geoReader.size.height * 0.6)
                 }
+                .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
+        
             }
             .navigationBarBackButtonHidden(true)
-            .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
+            
         }
     }
     
