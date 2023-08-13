@@ -115,7 +115,7 @@ struct Header: View {
                                             }
                                         }
                                         .pickerStyle(.segmented)
-                                        .colorMultiply(.black)
+                                        .colorMultiply(.gray)
                                     }
                                     .listRowBackground(Color.white)
                                     
