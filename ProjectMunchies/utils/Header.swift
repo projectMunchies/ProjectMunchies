@@ -10,6 +10,7 @@ import SwiftUI
 struct Header: View {
     @Binding var showHamburgerMenu: Bool
     @Binding var isLoading: Bool
+    @Binding var foodFilter: FoodFilterModel
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
    // @State private var showHamburgerMenu: Bool = false
@@ -24,7 +25,7 @@ struct Header: View {
     let cuisineTypes = ["Chinese","American","Mexican","Japanese","Indian","Italian","Thai","French"]
     let drinkTypes = ["Juice","Smoothies","Soda","Tea","Coffee","Hot Chocolate"]
     let happHourTypes = ["Liquor","Beer","Wine","Margaritas","Cocktails"]
-    let gender = ["Guy","Girl"]
+    let gender = ["Male","Female"]
     let mainCategories = ["Cuisine","Drinks","Happy Hour"]
     let locations = ["Tampa","American"]
     
@@ -51,10 +52,23 @@ struct Header: View {
                         .font(.system(size: 35))
                         .foregroundColor(.black)
                 }
-                Text("CrunchBunch")
-                    .bold()
-                    .foregroundColor(Color.black)
-                    .font(.title2)
+                
+          
+                ZStack{
+                    Image("crunchBunchAppIcon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geoReader.size.width * 0.05, height: geoReader.size.height * 0.05)
+                            .position(x:geoReader.size.width * 0.01, y:geoReader.size.height * 0.5)
+                    
+                    Image("crunchBunchText")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.4)
+                            .position(x:geoReader.size.width * 0.24, y:geoReader.size.height * 0.505)
+                }
+              
+                
             }
             
             Spacer()
@@ -238,6 +252,7 @@ struct Header: View {
                                 Button(action: {
                                     showPrefPopover.toggle()
                                     fakeLoading()
+                                    saveFoodFilter()
                                 }) {
                                     Text("Find Foodmate")
                                         .frame(width: 180, height: 60)
@@ -389,10 +404,14 @@ struct Header: View {
         }
     }
     
+    public func saveFoodFilter(){
+        foodFilter.gender = foodFilterGender
+    }
+    
 }
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false))
+        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData))
     }
 }

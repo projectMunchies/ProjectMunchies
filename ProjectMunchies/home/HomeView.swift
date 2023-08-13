@@ -29,13 +29,13 @@ struct HomeView: View {
                         ProgressView()
                             .tint(.black)
                     } else {
-                        CardsView(geoReader: geoReader)
+                        CardsView(geoReader: geoReader, foodFilter: homeViewModel.foodFilter)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.55)
                     }
                     
                     subHeaderSection(for: geoReader)
                         .position(x:geoReader.size.width * 0.55, y:geoReader.size.height * 0.12)
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
                 .onAppear{

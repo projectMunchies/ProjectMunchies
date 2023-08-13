@@ -40,14 +40,15 @@ struct SettingsView: View {
                                 .foregroundColor(.white)
                         }
                     }
+                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
                     
                     Text("Settings")
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)
-                        .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.1)
+                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false))
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData))
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }

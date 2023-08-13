@@ -19,30 +19,30 @@ enum MockService {
                 participants: ["dasfdsfweefcae","fdsafdsfessfd"],
                 eventDate: Date.now
             ),
-            EventModel(
-                id: "jkhblhjkbkjbjkblk",
-                title: "Taco Tuesdays",
-                location: "Mugelitos, Tampa,Fl",
-                description: "Taco tuesdays youj already know what it be",
-                participants: ["fer3f4f3f34","faee43434343"],
-                eventDate: Date.now
-            ),
-            EventModel(
-                id: "jkhblhjkbkjbjkblk",
-                title: "Taco Tuesdays",
-                location: "Mugelitos, Tampa,Fl",
-                description: "Taco tuesdays youj already know what it be",
-                participants: ["fer3f4f3f34","faee43434343"],
-                eventDate: Date.now
-            ),
-            EventModel(
-                id: "jkhblhjkbkjbjkblk",
-                title: "Taco Tuesdays",
-                location: "Mugelitos, Tampa,Fl",
-                description: "Taco tuesdays youj already know what it be",
-                participants: ["fer3f4f3f34","faee43434343"],
-                eventDate: Date.now
-            )
+//            EventModel(
+//                id: "jkhblhjkbkjbjkblk",
+//                title: "Taco Tuesdays",
+//                location: "Mugelitos, Tampa,Fl",
+//                description: "Taco tuesdays youj already know what it be",
+//                participants: ["fer3f4f3f34","faee43434343"],
+//                eventDate: Date.now
+//            ),
+//            EventModel(
+//                id: "jkhblhjkbkjbjkblk",
+//                title: "Taco Tuesdays",
+//                location: "Mugelitos, Tampa,Fl",
+//                description: "Taco tuesdays youj already know what it be",
+//                participants: ["fer3f4f3f34","faee43434343"],
+//                eventDate: Date.now
+//            ),
+//            EventModel(
+//                id: "jkhblhjkbkjbjkblk",
+//                title: "Taco Tuesdays",
+//                location: "Mugelitos, Tampa,Fl",
+//                description: "Taco tuesdays youj already know what it be",
+//                participants: ["fer3f4f3f34","faee43434343"],
+//                eventDate: Date.now
+//            )
         ]
     }
     
@@ -56,6 +56,17 @@ enum MockService {
             fcmTokens: [],
             messageThreadIds: []
         )
+    }
+    
+    static var foodFilterSampleData: FoodFilterModel {
+        FoodFilterModel(
+            id: "",
+            category: "",
+            type: "",
+            gender: "",
+            location: "",
+            ageRangeFrom: "",
+            ageRangeTo: "")
     }
     
     static var profilesSampleData: [ProfileModel] {

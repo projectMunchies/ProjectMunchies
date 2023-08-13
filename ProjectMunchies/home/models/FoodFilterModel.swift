@@ -15,5 +15,4 @@ struct FoodFilterModel: Identifiable, Codable {
     var location: String
     var ageRangeFrom: String
     var ageRangeTo: String
-    var messageThreadIds: [String]
 }

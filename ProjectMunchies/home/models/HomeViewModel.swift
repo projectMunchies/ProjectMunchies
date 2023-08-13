@@ -17,7 +17,7 @@ class HomeViewModel: ObservableObject {
     
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "", fcmTokens: [], messageThreadIds: [])
-    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "", messageThreadIds: [])
+    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "")
     
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
