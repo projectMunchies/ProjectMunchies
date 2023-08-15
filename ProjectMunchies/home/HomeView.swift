@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var showImageSheet: Bool = false
     @State private var editInfo: Bool = false
     @State private var profileImage: UIImage = UIImage()
+    @State var isLargeImageAlert: Bool = false
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -135,10 +136,15 @@ struct HomeView: View {
                 }
                 
                 Button(action: {
-                    //if SaveImage button displayed, save image, close popover and open showIntroPopover
+                    //if Save Image button is displayed = save image, close popover
                     if editInfo == true {
-                        homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id)
-                        showAddImagePopover.toggle()
+                        homeViewModel.uploadStorageFile(image: self.profileImage, profileId: homeViewModel.userProfile.id) {(message) -> Void in
+                            if message == "image too large" {
+                                isLargeImageAlert.toggle()
+                            } else if message == "success" {
+                                showAddImagePopover.toggle()
+                            }
+                        }
                     }
                     editInfo.toggle()
                 }) {
@@ -150,6 +156,9 @@ struct HomeView: View {
                         .foregroundColor(.white)
                 }
                 .padding(.top)
+                .alert("Image too large, choose another image", isPresented: $isLargeImageAlert) {
+                            Button("OK", role: .cancel) { }
+                        }
             }
         }
         .sheet(isPresented: $showImageSheet){
