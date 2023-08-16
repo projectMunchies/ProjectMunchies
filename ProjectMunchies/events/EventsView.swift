@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EventsView: View {
     @StateObject private var viewModel = CardViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
     @State private var events: [EventModel] = MockService.eventsSampleData
     @State private var showHamburgerMenu: Bool = false
@@ -97,6 +98,15 @@ struct EventsView: View {
                         }
                     }
                         .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
+                        .onAppear{
+                            homeViewModel.getUserProfile() {(userProfileId) -> Void in
+                                if userProfileId != "" {
+                                    //get profileImage
+                                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+                                }
+                            }
+                        }
+                    
                     
                     Text("Events")
                         .bold()
@@ -104,7 +114,7 @@ struct EventsView: View {
                         .font(.largeTitle)
                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData))
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }

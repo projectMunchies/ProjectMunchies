@@ -11,6 +11,7 @@ struct Header: View {
     @Binding var showHamburgerMenu: Bool
     @Binding var isLoading: Bool
     @Binding var foodFilter: FoodFilterModel
+    let homeViewModel: HomeViewModel
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
    // @State private var showHamburgerMenu: Bool = false
@@ -77,12 +78,21 @@ struct Header: View {
             HStack(spacing: 20){
                 filterIcon(for: geoReader)
                 
-                NavigationLink(destination: NotificationsView() ) {
-                    Image(systemName: "bell")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
+                NavigationLink(destination: SettingsView() ) {
+                    if !homeViewModel.profileImage.size.height.isZero {
+                        Image(uiImage: homeViewModel.profileImage)
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .background(Color.black.opacity(0.2))
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                    } else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .font(.system(size: 35))
+                            .foregroundColor(.black)
+                    }
                 }
                 
    introIcon(for: geoReader)
@@ -412,6 +422,6 @@ struct Header: View {
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData))
+        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), homeViewModel: HomeViewModel())
     }
 }

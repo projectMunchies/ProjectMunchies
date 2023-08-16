@@ -16,6 +16,7 @@ struct HomeView: View {
     @State private var showHamburgerMenu: Bool = false
     @State private var showImageSheet: Bool = false
     @State private var editInfo: Bool = false
+    // for some reason I cant use homeViewModel.profileImage here
     @State private var profileImage: UIImage = UIImage()
     @State var isLargeImageAlert: Bool = false
     
@@ -36,7 +37,7 @@ struct HomeView: View {
                     
                     subHeaderSection(for: geoReader)
                         .position(x:geoReader.size.width * 0.55, y:geoReader.size.height * 0.12)
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
                 .onAppear{

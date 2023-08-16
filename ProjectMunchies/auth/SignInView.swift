@@ -79,7 +79,7 @@ struct SignInView: View {
                     }
                     .position(x: geoReader.frame(in: .local).midX , y:geoReader.size.height * 0.6)
                 }
-                .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
+                .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY)
         
             }
             .navigationBarBackButtonHidden(true)
