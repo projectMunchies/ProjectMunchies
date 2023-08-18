@@ -13,7 +13,9 @@ struct ProfileModel: Identifiable, Codable {
     var location: String
     var description: String
     var gender: String
+    var age: String
     var fcmTokens: [String]
     var messageThreadIds: [String]
+    var isMockData: Bool
 }
 

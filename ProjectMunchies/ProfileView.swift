@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject private var viewModel = CardViewModel()
+    @StateObject private var cardViewModel = CardViewModel()
     let card: ProfileModel
     
     var body: some View {
@@ -18,7 +18,7 @@ struct ProfileView: View {
                     .ignoresSafeArea()
                 
                 ZStack{
-                    Image(uiImage: viewModel.profileImage)
+                    Image(uiImage: cardViewModel.profileImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 450, height: geoReader.size.height * 0.7)
@@ -91,7 +91,7 @@ struct ProfileView: View {
                     .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                 }
                 .onAppear{
-                    viewModel.getStorageFile(profileId: card.id)
+                    cardViewModel.getStorageFile(profileId: card.id)
                 }
             }
         }

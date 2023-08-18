@@ -16,8 +16,8 @@ class HomeViewModel: ObservableObject {
     let db = Firestore.firestore()
     
     @Published var profileImage: UIImage = UIImage()
-    @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "", fcmTokens: [], messageThreadIds: [])
-    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "")
+    @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], isMockData: false)
+    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "", category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "25", ageRangeTo: "70")
     
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
@@ -32,7 +32,7 @@ class HomeViewModel: ObservableObject {
                              //                        print("\(document.documentID) => \(document.data())")
                              let data = document.data()
                              if !data.isEmpty{
-                                 self.userProfile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [])
+                                 self.userProfile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [], isMockData: data["isMockDat"] as? Bool ?? false )
                              }
                          }
                          completed(self.userProfile.id)
@@ -72,8 +72,8 @@ class HomeViewModel: ObservableObject {
     public func getImageStorageFile(profileId: String) {
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
              
-             // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-             imageRef.getData(maxSize: Int64(1 * 1024 * 1024)) { data, error in
+             // Download in memory with a maximum allowed size of 2MB (2 * 1024 * 1024 bytes)
+             imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) { data, error in
                  if let error = error {
                      // Uh-oh, an error occurred!
                      print("Error getting file: ", error)

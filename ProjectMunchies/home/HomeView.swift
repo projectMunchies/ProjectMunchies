@@ -31,7 +31,7 @@ struct HomeView: View {
                         ProgressView()
                             .tint(.black)
                     } else {
-                        CardsView(geoReader: geoReader, foodFilter: homeViewModel.foodFilter)
+                        CardsView(geoReader: geoReader, foodFilter: homeViewModel.foodFilter, userProfileId: homeViewModel.userProfile.id)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.55)
                     }
                     

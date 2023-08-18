@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardView: View {
-    @StateObject private var viewModel = CardViewModel()
+    @StateObject private var cardViewModel = CardViewModel()
     @State
     private var translation: CGSize = .zero
     private var geoReader: GeometryProxy
@@ -35,7 +35,7 @@ struct CardView: View {
         GeometryReader{ geoReader in
             ZStack{
                 ZStack{
-                    Image(uiImage: viewModel.profileImage)
+                    Image(uiImage: cardViewModel.profileImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 380, height: geoReader.size.height * 0.75)
@@ -77,7 +77,7 @@ struct CardView: View {
                 overlayss()
             }
             .onAppear{
-                viewModel.getStorageFile(profileId: card.id)
+                cardViewModel.getStorageFile(profileId: card.id)
             }
             .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
             .animation(.spring())

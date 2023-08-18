@@ -415,7 +415,9 @@ struct Header: View {
     }
     
     public func saveFoodFilter(){
-        foodFilter.gender = foodFilterGender
+        foodFilter.gender = self.foodFilterGender
+        foodFilter.ageRangeFrom = String(self.foodFilterAgeRangeFrom)
+        foodFilter.ageRangeTo = String(self.foodFilterAgeRangeTo)
     }
     
 }
