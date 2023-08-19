@@ -67,12 +67,15 @@ enum MockService {
     static var foodFilterSampleData: FoodFilterModel {
         FoodFilterModel(
             id: "",
+            userProfileId: "",
             category: "",
             type: "",
             gender: "",
             location: "",
             ageRangeFrom: "",
-            ageRangeTo: "")
+            ageRangeTo: "",
+            timeStamp: Date()
+        )
     }
     
     static var profilesSampleData: [ProfileModel] {
@@ -1257,6 +1260,90 @@ enum MockService {
             "messageThreadIds": [],
             "isMockData": true
         ])
+    }
+    
+    public func addMockFilterData() {
+        let docRefs = db.collection("filters")
+        
+//        let id = UUID().uuidString
+//        docRefs.document(id).setData([
+//            "id": "",
+//            "fullName": "",
+//            "location": "",
+//            "description": "",
+//            "gender": "",
+//            "age": "",
+//            "fcmTokens": [],
+//            "messageThreadIds": [],
+//            "isMockData": true
+//        ])
+//
+                let id = UUID().uuidString
+                docRefs.document(id).setData([
+                    "id": id,
+                    "userProfileId": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
+                    "category": "Cuisine",
+                    "type": "American",
+                    "gender": "Pick",
+                    "location": "Tampa",
+                    "ageRangeFrom": "20",
+                    "ageRangeTo": "70",
+                    "isMockData": true
+                ])
+        
+        let id2 = UUID().uuidString
+        docRefs.document(id2).setData([
+            "id": id2,
+            "userProfileId": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
+            "category": "Drinks",
+            "type": "Smoothies",
+            "gender": "Female",
+            "location": "American",
+            "ageRangeFrom": "20",
+            "ageRangeTo": "50",
+            "isMockData": true
+        ])
+        
+        let id3 = UUID().uuidString
+        docRefs.document(id3).setData([
+            "id": id3,
+            "userProfileId": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
+            "category": "Cuisine",
+            "type": "American",
+            "gender": "Female",
+            "location": "Tampa",
+            "ageRangeFrom": "24",
+            "ageRangeTo": "66",
+            "isMockData": true
+        ])
+        
+        let id4 = UUID().uuidString
+        docRefs.document(id4).setData([
+            "id": id4,
+            "userProfileId": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
+            "category": "Drinks",
+            "type": "Soda",
+            "gender": "Male",
+            "location": "Tampa",
+            "ageRangeFrom": "26",
+            "ageRangeTo": "40",
+            "isMockData": true
+        ])
+        
+        let id5 = UUID().uuidString
+        docRefs.document(id5).setData([
+            "id": id5,
+            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
+            "category": "Happy Hour",
+            "type": "Beer",
+            "gender": "Male",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+
     }
 }
 

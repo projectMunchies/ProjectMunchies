@@ -19,6 +19,7 @@ struct HomeView: View {
     // for some reason I cant use homeViewModel.profileImage here
     @State private var profileImage: UIImage = UIImage()
     @State var isLargeImageAlert: Bool = false
+    @State private var filteredCards: [ProfileModel] = []
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -31,13 +32,13 @@ struct HomeView: View {
                         ProgressView()
                             .tint(.black)
                     } else {
-                        CardsView(geoReader: geoReader, foodFilter: homeViewModel.foodFilter, userProfileId: homeViewModel.userProfile.id)
+                        CardsView(geoReader: geoReader, foodFilter: homeViewModel.foodFilter,filteredCards: self.filteredCards,  userProfileId: homeViewModel.userProfile.id)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.55)
                     }
                     
                     subHeaderSection(for: geoReader)
                         .position(x:geoReader.size.width * 0.55, y:geoReader.size.height * 0.12)
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, homeViewModel: homeViewModel)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
                 .onAppear{

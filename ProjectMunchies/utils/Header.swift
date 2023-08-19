@@ -11,10 +11,10 @@ struct Header: View {
     @Binding var showHamburgerMenu: Bool
     @Binding var isLoading: Bool
     @Binding var foodFilter: FoodFilterModel
+    @Binding var filteredCards: [ProfileModel]
     let homeViewModel: HomeViewModel
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
-   // @State private var showHamburgerMenu: Bool = false
     
     @State private var foodFilterCategory = "Cuisine"
     @State private var foodFilterType = "Pick"
@@ -35,7 +35,6 @@ struct Header: View {
             headerSection(for: geoReader)
             
         }
-     
     }
     
     public func headerSection(for geoReader: GeometryProxy) -> some View {
@@ -54,22 +53,19 @@ struct Header: View {
                         .foregroundColor(.black)
                 }
                 
-          
                 ZStack{
                     Image("crunchBunchAppIcon")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: geoReader.size.width * 0.05, height: geoReader.size.height * 0.05)
-                            .position(x:geoReader.size.width * 0.01, y:geoReader.size.height * 0.5)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geoReader.size.width * 0.05, height: geoReader.size.height * 0.05)
+                        .position(x:geoReader.size.width * 0.01, y:geoReader.size.height * 0.5)
                     
                     Image("crunchBunchText")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.4)
-                            .position(x:geoReader.size.width * 0.24, y:geoReader.size.height * 0.505)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.4)
+                        .position(x:geoReader.size.width * 0.24, y:geoReader.size.height * 0.505)
                 }
-              
-                
             }
             
             Spacer()
@@ -95,7 +91,7 @@ struct Header: View {
                     }
                 }
                 
-   introIcon(for: geoReader)
+                introIcon(for: geoReader)
             }
             Spacer()
         }
@@ -115,7 +111,7 @@ struct Header: View {
                     .popover(isPresented: $showPrefPopover) {
                         ZStack{
                             Color.white
-                             
+                            
                             VStack{
                                 Form {
                                     Section {
@@ -133,9 +129,9 @@ struct Header: View {
                                         HStack{
                                             Text("Food Type")
                                                 .foregroundColor(.black)
-
+                                            
                                             Spacer()
-
+                                            
                                             Menu{
                                                 Picker("", selection: $foodFilterType) {
                                                     ForEach(changeFoodType(), id: \.self) {
@@ -151,15 +147,14 @@ struct Header: View {
                                         }
                                     }
                                     .listRowBackground(Color.white)
-
-
+                                    
                                     Section {
                                         HStack{
                                             Text("Gender")
                                                 .foregroundColor(.black)
                                             
                                             Spacer()
-
+                                            
                                             Menu{
                                                 Picker("", selection: $foodFilterGender) {
                                                     ForEach(gender, id: \.self) {
@@ -173,12 +168,11 @@ struct Header: View {
                                                     .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
-                                         
                                         }
                                     }
-                                   .listRowBackground(Color.white)
-
-
+                                    .listRowBackground(Color.white)
+                                    
+                                    
                                     Section {
                                         HStack{
                                             Text("Location")
@@ -199,19 +193,17 @@ struct Header: View {
                                                     .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
                                             }
-                                       
                                         }
-
                                     }
                                     .listRowBackground(Color.white)
-
+                                    
                                     Section{
                                         HStack{
                                             Text("Age Range From")
                                                 .foregroundColor(.black)
                                             
                                             Spacer()
-
+                                            
                                             Menu{
                                                 Picker("", selection: $foodFilterAgeRangeFrom) {
                                                     ForEach(Array(stride(from: 18, to: 100, by: 1)), id: \.self) { index in
@@ -223,22 +215,19 @@ struct Header: View {
                                                 Text("\(self.foodFilterAgeRangeFrom)")
                                                     .frame(width: geoReader.size.width * 0.2)
                                                     .foregroundColor(.gray)
-                                                
                                             }
-                                            
-                                          
                                         }
                                     }
                                     .listRowBackground(Color.white)
-
+                                    
                                     Section{
                                         HStack{
                                             Text("Age Range To")
                                                 .foregroundColor(.black)
                                             
                                             Spacer()
-
-
+                                            
+                                            
                                             Menu{
                                                 Picker("", selection: $foodFilterAgeRangeTo) {
                                                     ForEach(Array(stride(from: 18, to: 100, by: 1)), id: \.self) { index in
@@ -262,7 +251,7 @@ struct Header: View {
                                 Button(action: {
                                     showPrefPopover.toggle()
                                     fakeLoading()
-                                    saveFoodFilter()
+                                    saveFoodFilter(for: geoReader)
                                 }) {
                                     Text("Find Foodmate")
                                         .frame(width: 180, height: 60)
@@ -272,7 +261,6 @@ struct Header: View {
                                 }
                             }
                         }
-                    
                     }
             }
         }
@@ -294,7 +282,6 @@ struct Header: View {
             .popover(isPresented: $showIntroPopover) {
                 introPopover(for: geoReader)
             }
-            
         }
     }
     
@@ -389,41 +376,70 @@ struct Header: View {
                 .padding(.top)
             }
         }
-      
     }
     
     private func changeFoodType() -> [String] {
         var types: [String] = []
         switch self.foodFilterCategory{
         case "Cuisine" :
-             types = cuisineTypes;
+            types = cuisineTypes;
         case "Drinks" :
-             types = drinkTypes;
+            types = drinkTypes;
         case "Happy Hour" :
-             types = happHourTypes
+            types = happHourTypes
         default:
             types = []
         }
         return types;
     }
     
-    public func fakeLoading(){
+    //not sure if this is still needed
+    private func fakeLoading(){
         isLoading.toggle()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             isLoading.toggle()
         }
     }
     
-    public func saveFoodFilter(){
+    private func saveFoodFilter(for geoReader: GeometryProxy){
+        //pickers dont work well with Binding props so I used states instead then bind them
+        bindFoodFilter()
+     
+        //updating or creating user's filter
+        homeViewModel.getUserFilter() {(userFilter) in
+            if userFilter.id != "" {
+                homeViewModel.updateUserFilter(userFilterId: userFilter.id,userFilter: foodFilter)
+            }else {
+                homeViewModel.createUserFilter(userFilter: foodFilter)
+            }
+        }
+        
+        // get all filters recently updated that match user's parameters then grab the profile
+        homeViewModel.getFilteredRecords(foodFilter: foodFilter) {(foodFilters) in
+            if !foodFilters.isEmpty {
+                var removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
+                let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
+                // using state in CardsView() is easier than making my own and passing it into CardsView()
+                CardsView(geoReader: geoReader , foodFilter: self.foodFilter, filteredCards: [], userProfileId: homeViewModel.userProfile.id).getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
+                    if !profiles.isEmpty {
+                        filteredCards = profiles
+                    }
+                }
+            }
+        }
+    }
+    
+    private func bindFoodFilter () {
         foodFilter.gender = self.foodFilterGender
         foodFilter.ageRangeFrom = String(self.foodFilterAgeRangeFrom)
         foodFilter.ageRangeTo = String(self.foodFilterAgeRangeTo)
+        foodFilter.category = String(self.foodFilterCategory)
+        foodFilter.type = String(self.foodFilterType)
     }
-    
 }
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), homeViewModel: HomeViewModel())
+        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), filteredCards: .constant(MockService.profilesSampleData), homeViewModel: HomeViewModel())
     }
 }
