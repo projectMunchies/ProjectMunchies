@@ -21,6 +21,10 @@ struct ContentView: View {
                             .tabItem {
                                 Label("", systemImage: "house")
                             }
+//                        LiveFeed()
+//                            .tabItem {
+//                                Label("", systemImage: "network")
+//                            }
                         EventsView()
                             .tabItem {
                                 Label("", systemImage: "takeoutbag.and.cup.and.straw")

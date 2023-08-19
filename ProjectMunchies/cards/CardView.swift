@@ -79,7 +79,7 @@ struct CardView: View {
             .onAppear{
                 cardViewModel.getStorageFile(profileId: card.id)
             }
-            .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY )
+            .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY)
             .animation(.spring())
             .offset(x: translation.width, y: 0)
             .rotationEffect(.degrees(

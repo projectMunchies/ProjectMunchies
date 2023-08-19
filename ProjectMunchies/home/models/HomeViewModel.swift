@@ -24,22 +24,22 @@ class HomeViewModel: ObservableObject {
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
         db.collection("profiles")
-                 .whereField("userId", isEqualTo: Auth.auth().currentUser?.uid as Any)
-                 .getDocuments() { (querySnapshot, err) in
-                     if let err = err {
-                         print("Error getting documents: \(err)")
-                         completed("")
-                     } else {
-                         for document in querySnapshot!.documents {
-                             //                        print("\(document.documentID) => \(document.data())")
-                             let data = document.data()
-                             if !data.isEmpty{
-                                 self.userProfile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [], isMockData: data["isMockDat"] as? Bool ?? false )
-                             }
-                         }
-                         completed(self.userProfile.id)
-                     }
-                 }
+            .whereField("userId", isEqualTo: Auth.auth().currentUser?.uid as Any)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    completed("")
+                } else {
+                    for document in querySnapshot!.documents {
+                        //                        print("\(document.documentID) => \(document.data())")
+                        let data = document.data()
+                        if !data.isEmpty{
+                            self.userProfile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [], isMockData: data["isMockDat"] as? Bool ?? false )
+                        }
+                    }
+                    completed(self.userProfile.id)
+                }
+            }
     }
     
     public func createUserProfile(completed: @escaping (_ newUserProfileId: String) -> Void) {
@@ -68,28 +68,28 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     
     public func getImageStorageFile(profileId: String) {
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
-             
-             // Download in memory with a maximum allowed size of 2MB (2 * 1024 * 1024 bytes)
-             imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) { data, error in
-                 if let error = error {
-                     // Uh-oh, an error occurred!
-                     print("Error getting file: ", error)
-                 } else {
-                     let image = UIImage(data: data!)
-                     self.profileImage = image!
-                     
-                 }
-             }
+        
+        // Download in memory with a maximum allowed size of 2MB (2 * 1024 * 1024 bytes)
+        imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) { data, error in
+            if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error getting file: ", error)
+            } else {
+                let image = UIImage(data: data!)
+                self.profileImage = image!
+                
+            }
+        }
     }
     
     public func uploadStorageFile(image: UIImage, profileId: String,completed: @escaping (_ message: String) -> Void){
-         let storageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
-
+        let storageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
+        
         // cut image mb in half
         let data = image.jpegData(compressionQuality: 0.5)
         
@@ -114,63 +114,61 @@ class HomeViewModel: ObservableObject {
         }
         else {
             //will display alert
-          completed("image too large")
+            completed("image too large")
         }
-     }
+    }
     
     public func getFilteredRecords(foodFilter: FoodFilterModel, completed: @escaping (_ filteredRecords: [FoodFilterModel]) -> Void) {
+        //clean if dirty
         self.foodFilters.removeAll()
-        let matchDayString = "sunday"
         
-        let enumDayOfWeek = Date.Weekday(rawValue: matchDayString)
-        
+        let dayString = "sunday"
+        let enumDayOfWeek = Date.Weekday(rawValue: dayString)
         let start = Date.today().previous(enumDayOfWeek ?? .sunday)
         let end = Date.today().next(enumDayOfWeek ?? .sunday)
-//        print(foodFilter.category)
-//        print(foodFilter.type)
+        
         db.collection("filters")
-            //.whereField("profileId", isNotEqualTo: userProfile.id)
             .whereField("timeStamp", isGreaterThan: start)
             .whereField("timeStamp", isLessThan: end)
             .whereField("category", isEqualTo: foodFilter.category)
             .whereField("type", isEqualTo: foodFilter.type)
-                 .getDocuments() { (querySnapshot, err) in
-                     if let err = err {
-                         print("Error getting documents: \(err)")
-                         completed([])
-                     } else {
-                         for document in querySnapshot!.documents {
-                             //                        print("\(document.documentID) => \(document.data())")
-                             let data = document.data()
-                             if !data.isEmpty{
-                                 let foodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
-                                 
-                                 self.foodFilters.append(foodFilter)
-                             }
-                         }
-                         completed(self.foodFilters)
-                     }
-                 }
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    completed([])
+                } else {
+                    for document in querySnapshot!.documents {
+                        //                        print("\(document.documentID) => \(document.data())")
+                        let data = document.data()
+                        if !data.isEmpty{
+                            let foodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
+                            
+                            self.foodFilters.append(foodFilter)
+                        }
+                    }
+                    completed(self.foodFilters)
+                }
+            }
     }
     
     public func getUserFilter(completed: @escaping (_ userFilter: FoodFilterModel) -> Void) {
         db.collection("filters")
             .whereField("userProfileId", isEqualTo: userProfile.id)
-                 .getDocuments() { (querySnapshot, err) in
-                     if let err = err {
-                         print("Error getting documents: \(err)")
-                         completed(FoodFilterModel(id: "", userProfileId: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "", timeStamp: Date()))
-                     } else {
-                         for document in querySnapshot!.documents {
-                             //                        print("\(document.documentID) => \(document.data())")
-                             let data = document.data()
-                             if !data.isEmpty{
-                                 self.userFoodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
-                             }
-                         }
-                         completed(self.userFoodFilter)
-                     }
-                 }
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    completed(FoodFilterModel(id: "", userProfileId: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "", timeStamp: Date()))
+                } else {
+                    for document in querySnapshot!.documents {
+                        //                        print("\(document.documentID) => \(document.data())")
+                        let data = document.data()
+                        if !data.isEmpty{
+                            self.userFoodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
+                        }
+                    }
+                    completed(self.userFoodFilter)
+                }
+            }
     }
     
     public func createUserFilter(userFilter: FoodFilterModel) {
