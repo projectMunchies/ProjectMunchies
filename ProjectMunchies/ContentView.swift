@@ -21,10 +21,14 @@ struct ContentView: View {
                             .tabItem {
                                 Label("", systemImage: "house")
                             }
-//                        LiveFeed()
-//                            .tabItem {
-//                                Label("", systemImage: "network")
-//                            }
+                        LiveFeedView()
+                            .tabItem {
+                               // Label("", systemImage: "network")
+                                Image("newsFeedIcon")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .scaledToFit()
+                            }
                         EventsView()
                             .tabItem {
                                 Label("", systemImage: "takeoutbag.and.cup.and.straw")
