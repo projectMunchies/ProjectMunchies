@@ -180,6 +180,7 @@ enum MockService {
                 messageThreadIds: [],
                 isMockData: true
             ),
+            
             ProfileModel(
                 id: "ef49e44f-1957-4690-8bcf-473f9afe73cb",
                 fullName: "Ruth Campos",
@@ -738,6 +739,7 @@ enum MockService {
 //            "messageThreadIds": [],
 //            "isMockData": true
 //            ])
+        //ALREADY DONE
 //            docRefs.document("f244f9a3-1f31-4d02-a509-99cb00bd1481").setData([
 //            "id": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
 //            "fullName": "Aurelia Driscoll",
@@ -771,6 +773,7 @@ enum MockService {
 //            "messageThreadIds": [],
 //            "isMockData": true
 //            ])
+        //ALREADY DONE
 //            docRefs.document("f8c341e5-4e8e-42d6-ada8-25d6f8e9530f").setData([
 //            "id": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
 //            "fullName": "Linda Rice",
@@ -782,6 +785,7 @@ enum MockService {
 //            "messageThreadIds": [],
 //            "isMockData": true
 //            ])
+        //ALREADY DONE
 //            docRefs.document("ef49e44f-1957-4690-8bcf-473f9afe73cb").setData([
 //            "id": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
 //            "fullName": "Ruth Campos",
@@ -848,6 +852,8 @@ enum MockService {
 //            "messageThreadIds": [],
 //            "isMockData": true
 //            ])
+        
+        //ALREADY DONE
 //            docRefs.document("e53f7388-b23a-4016-9ed9-4e86d4379f30").setData([
 //            "id": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
 //            "fullName": "Claire Simpson",
@@ -959,485 +965,489 @@ enum MockService {
 //            "isMockData": true
 //            ])
         
-        docRefs.document("2d924df2-19a7-49ca-9621-5356bf42c425").setData([
-        "id": "2d924df2-19a7-49ca-9621-5356bf42c425",
-        "fullName": "Wynter Lindsey",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
+//        docRefs.document("2d924df2-19a7-49ca-9621-5356bf42c425").setData([
+//        "id": "2d924df2-19a7-49ca-9621-5356bf42c425",
+//        "fullName": "Wynter Lindsey",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("9869fc83-6043-43fc-9e3f-97c5e65e3ce1").setData([
+//        "id": "9869fc83-6043-43fc-9e3f-97c5e65e3ce1",
+//        "fullName": "Phoebe Allen",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("4f4b7c75-331e-4a99-883a-962aee62d992").setData([
+//        "id": "4f4b7c75-331e-4a99-883a-962aee62d992",
+//        "fullName": "Savannah Long",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("66fa9627-ea35-47c9-ad02-785bbec4997b").setData([
+//        "id": "66fa9627-ea35-47c9-ad02-785bbec4997b",
+//        "fullName": "Lexi Carter",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1").setData([
+//        "id": "a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1",
+//        "fullName": "Alaya Kim",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("35726856-fc5f-4a32-a1d3-0cc9a373ffa6").setData([
+//        "id": "35726856-fc5f-4a32-a1d3-0cc9a373ffa6",
+//        "fullName": "Noelle Tyler",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("77904145-1739-4fd0-b88c-7691a463f925").setData([
+//        "id": "77904145-1739-4fd0-b88c-7691a463f925",
+//        "fullName": "Daniella Reed",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "30",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("291ca006-fa3c-457c-8f20-e43fe30726e2").setData([
+//        "id": "291ca006-fa3c-457c-8f20-e43fe30726e2",
+//        "fullName": "Payton Hill",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("26242486-e28a-4cc0-8519-650e584b7304").setData([
+//        "id": "26242486-e28a-4cc0-8519-650e584b7304",
+//        "fullName": "Giselle Meyer",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//        docRefs.document("828f54e3-22cf-438a-8481-d5e5edaead81").setData([
+//        "id": "828f54e3-22cf-438a-8481-d5e5edaead81",
+//        "fullName": "Elle Watson",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "22",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//
+//        docRefs.document("76058066-89f2-4c5f-a77a-7a01e5331302").setData([
+//        "id": "76058066-89f2-4c5f-a77a-7a01e5331302",
+//        "fullName": "Eva Cox",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("d78496a3-a350-47fd-8d68-861086452bf5").setData([
+//        "id": "d78496a3-a350-47fd-8d68-861086452bf5",
+//        "fullName": "Myla Mckinney",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "28",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("ff76fd27-e5e4-48a8-b354-3bed165d2d4d").setData([
+//        "id": "ff76fd27-e5e4-48a8-b354-3bed165d2d4d",
+//        "fullName": "Ayla Reyes",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("66be07b5-95ca-491e-b157-42f9b45433f4").setData([
+//        "id": "66be07b5-95ca-491e-b157-42f9b45433f4",
+//        "fullName": "Journey Cook",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("aaf421ff-c89f-45d2-af59-c67c33527061").setData([
+//        "id": "aaf421ff-c89f-45d2-af59-c67c33527061",
+//        "fullName": "Sloane Roberts",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "35",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("804394ff-9a58-41dc-b0a5-809cc66a68f6").setData([
+//        "id": "804394ff-9a58-41dc-b0a5-809cc66a68f6",
+//        "fullName": "Maria Taylor",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("ec57dd64-f53e-493f-8489-17f3fefaba98").setData([
+//        "id": "ec57dd64-f53e-493f-8489-17f3fefaba98",
+//        "fullName": "Daniella Stewart",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("a54bb7c2-de23-46f6-a859-eba1739cc7a1").setData([
+//        "id": "a54bb7c2-de23-46f6-a859-eba1739cc7a1",
+//        "fullName": "Elise Porter",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//        docRefs.document("ec953202-d7bf-4048-8bff-b5e1088410d4").setData([
+//        "id": "ec953202-d7bf-4048-8bff-b5e1088410d4",
+//        "fullName": "Samantha Davidson",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "20",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("a9d0f188-a238-4852-b83b-620deb3622d8").setData([
+//        "id": "a9d0f188-a238-4852-b83b-620deb3622d8",
+//        "fullName": "Elle Bennet",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Female",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
         
-        docRefs.document("9869fc83-6043-43fc-9e3f-97c5e65e3ce1").setData([
-        "id": "9869fc83-6043-43fc-9e3f-97c5e65e3ce1",
-        "fullName": "Phoebe Allen",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("4f4b7c75-331e-4a99-883a-962aee62d992").setData([
-        "id": "4f4b7c75-331e-4a99-883a-962aee62d992",
-        "fullName": "Savannah Long",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("66fa9627-ea35-47c9-ad02-785bbec4997b").setData([
-        "id": "66fa9627-ea35-47c9-ad02-785bbec4997b",
-        "fullName": "Lexi Carter",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1").setData([
-        "id": "a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1",
-        "fullName": "Alaya Kim",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("35726856-fc5f-4a32-a1d3-0cc9a373ffa6").setData([
-        "id": "35726856-fc5f-4a32-a1d3-0cc9a373ffa6",
-        "fullName": "Noelle Tyler",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("77904145-1739-4fd0-b88c-7691a463f925").setData([
-        "id": "77904145-1739-4fd0-b88c-7691a463f925",
-        "fullName": "Daniella Reed",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "30",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("291ca006-fa3c-457c-8f20-e43fe30726e2").setData([
-        "id": "291ca006-fa3c-457c-8f20-e43fe30726e2",
-        "fullName": "Payton Hill",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("26242486-e28a-4cc0-8519-650e584b7304").setData([
-        "id": "26242486-e28a-4cc0-8519-650e584b7304",
-        "fullName": "Giselle Meyer",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        docRefs.document("828f54e3-22cf-438a-8481-d5e5edaead81").setData([
-        "id": "828f54e3-22cf-438a-8481-d5e5edaead81",
-        "fullName": "Elle Watson",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "22",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
         
         
-        docRefs.document("76058066-89f2-4c5f-a77a-7a01e5331302").setData([
-        "id": "76058066-89f2-4c5f-a77a-7a01e5331302",
-        "fullName": "Eva Cox",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
         
-        docRefs.document("d78496a3-a350-47fd-8d68-861086452bf5").setData([
-        "id": "d78496a3-a350-47fd-8d68-861086452bf5",
-        "fullName": "Myla Mckinney",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "28",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("ff76fd27-e5e4-48a8-b354-3bed165d2d4d").setData([
-        "id": "ff76fd27-e5e4-48a8-b354-3bed165d2d4d",
-        "fullName": "Ayla Reyes",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("66be07b5-95ca-491e-b157-42f9b45433f4").setData([
-        "id": "66be07b5-95ca-491e-b157-42f9b45433f4",
-        "fullName": "Journey Cook",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("aaf421ff-c89f-45d2-af59-c67c33527061").setData([
-        "id": "aaf421ff-c89f-45d2-af59-c67c33527061",
-        "fullName": "Sloane Roberts",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "35",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("804394ff-9a58-41dc-b0a5-809cc66a68f6").setData([
-        "id": "804394ff-9a58-41dc-b0a5-809cc66a68f6",
-        "fullName": "Maria Taylor",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("ec57dd64-f53e-493f-8489-17f3fefaba98").setData([
-        "id": "ec57dd64-f53e-493f-8489-17f3fefaba98",
-        "fullName": "Daniella Stewart",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("a54bb7c2-de23-46f6-a859-eba1739cc7a1").setData([
-        "id": "a54bb7c2-de23-46f6-a859-eba1739cc7a1",
-        "fullName": "Elise Porter",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        docRefs.document("ec953202-d7bf-4048-8bff-b5e1088410d4").setData([
-        "id": "ec953202-d7bf-4048-8bff-b5e1088410d4",
-        "fullName": "Samantha Davidson",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "20",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("a9d0f188-a238-4852-b83b-620deb3622d8").setData([
-        "id": "a9d0f188-a238-4852-b83b-620deb3622d8",
-        "fullName": "Elle Bennet",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Female",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
         
     //Men
-        docRefs.document("cb182851-bd1e-4283-bebd-41bb589fa2cf").setData([
-        "id": "cb182851-bd1e-4283-bebd-41bb589fa2cf",
-        "fullName": "Jameson Meyer",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f").setData([
-        "id": "fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f",
-        "fullName": "Ryan Watson",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe").setData([
-        "id": "5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe",
-        "fullName": "Liam Cox",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("4ff33e9e-0b8a-4122-a966-c0344298d8b6").setData([
-        "id": "4ff33e9e-0b8a-4122-a966-c0344298d8b6",
-        "fullName": "Luka Mckinney",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("d55c9be4-e9af-47e1-8f1e-a10bbc8f435b").setData([
-        "id": "d55c9be4-e9af-47e1-8f1e-a10bbc8f435b",
-        "fullName": "Jonah Reyes",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("3b0793d7-12ca-48aa-ac3c-91697e8fb068").setData([
-        "id": "3b0793d7-12ca-48aa-ac3c-91697e8fb068",
-        "fullName": "George Cook",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("4a415dd1-2ffe-4abf-b12f-bede94789bea").setData([
-        "id": "4a415dd1-2ffe-4abf-b12f-bede94789bea",
-        "fullName": "Cody Roberts",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("1fc94190-9718-4c99-9651-df44028b8933").setData([
-        "id": "1fc94190-9718-4c99-9651-df44028b8933",
-        "fullName": "Theo Taylor",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("6933917c-3cc4-443e-83bc-4d758d2098dc").setData([
-        "id": "6933917c-3cc4-443e-83bc-4d758d2098dc",
-        "fullName": "Ryan Stewart",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("a42ec640-ccda-4d31-a4be-7e936ff91791").setData([
-        "id": "a42ec640-ccda-4d31-a4be-7e936ff91791",
-        "fullName": "Erick Ward",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("ddcc77c2-9ea7-40e8-85e4-5b6c1779d492").setData([
-        "id": "ddcc77c2-9ea7-40e8-85e4-5b6c1779d492",
-        "fullName": "Timothy Porter",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed").setData([
-        "id": "1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed",
-        "fullName": "George Stewart",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("ae95f594-81d9-4968-9be3-0112eff5c85d").setData([
-        "id": "ae95f594-81d9-4968-9be3-0112eff5c85d",
-        "fullName": "Peter Davidson",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623").setData([
-        "id": "c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623",
-        "fullName": "Johnny Bennet",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("4c2e44bf-3254-46f2-873a-d7c9e7b403d8").setData([
-        "id": "4c2e44bf-3254-46f2-873a-d7c9e7b403d8",
-        "fullName": "Thomas Horton",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("dd1903b9-27a7-4fbc-b5cb-30d3304ffa88").setData([
-        "id": "dd1903b9-27a7-4fbc-b5cb-30d3304ffa88",
-        "fullName": "Jordan Gomez",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("93abcb16-3008-4ab6-9d6d-850b99b6e47a").setData([
-        "id": "93abcb16-3008-4ab6-9d6d-850b99b6e47a",
-        "fullName": "Timothy Edwards",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("0ad3c615-f59c-4e5c-8f57-30d70d238b07").setData([
-        "id": "0ad3c615-f59c-4e5c-8f57-30d70d238b07",
-        "fullName": "Nathan Hill",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("8550cd55-9114-4688-b758-f3968a0796f5").setData([
-        "id": "8550cd55-9114-4688-b758-f3968a0796f5",
-        "fullName": "Adam Thomas",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
-        
-        docRefs.document("7dee6646-1268-4826-8295-efce74297c60").setData([
-        "id": "7dee6646-1268-4826-8295-efce74297c60",
-        "fullName": "Troy Mccarty",
-        "location": "Tampa,Fl",
-        "description": "",
-        "gender": "Male",
-        "age": "25",
-        "fcmTokens": [],
-        "messageThreadIds": [],
-        "isMockData": true
-        ])
+//        docRefs.document("cb182851-bd1e-4283-bebd-41bb589fa2cf").setData([
+//        "id": "cb182851-bd1e-4283-bebd-41bb589fa2cf",
+//        "fullName": "Jameson Meyer",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f").setData([
+//        "id": "fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f",
+//        "fullName": "Ryan Watson",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe").setData([
+//        "id": "5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe",
+//        "fullName": "Liam Cox",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("4ff33e9e-0b8a-4122-a966-c0344298d8b6").setData([
+//        "id": "4ff33e9e-0b8a-4122-a966-c0344298d8b6",
+//        "fullName": "Luka Mckinney",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("d55c9be4-e9af-47e1-8f1e-a10bbc8f435b").setData([
+//        "id": "d55c9be4-e9af-47e1-8f1e-a10bbc8f435b",
+//        "fullName": "Jonah Reyes",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("3b0793d7-12ca-48aa-ac3c-91697e8fb068").setData([
+//        "id": "3b0793d7-12ca-48aa-ac3c-91697e8fb068",
+//        "fullName": "George Cook",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("4a415dd1-2ffe-4abf-b12f-bede94789bea").setData([
+//        "id": "4a415dd1-2ffe-4abf-b12f-bede94789bea",
+//        "fullName": "Cody Roberts",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("1fc94190-9718-4c99-9651-df44028b8933").setData([
+//        "id": "1fc94190-9718-4c99-9651-df44028b8933",
+//        "fullName": "Theo Taylor",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("6933917c-3cc4-443e-83bc-4d758d2098dc").setData([
+//        "id": "6933917c-3cc4-443e-83bc-4d758d2098dc",
+//        "fullName": "Ryan Stewart",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("a42ec640-ccda-4d31-a4be-7e936ff91791").setData([
+//        "id": "a42ec640-ccda-4d31-a4be-7e936ff91791",
+//        "fullName": "Erick Ward",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("ddcc77c2-9ea7-40e8-85e4-5b6c1779d492").setData([
+//        "id": "ddcc77c2-9ea7-40e8-85e4-5b6c1779d492",
+//        "fullName": "Timothy Porter",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed").setData([
+//        "id": "1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed",
+//        "fullName": "George Stewart",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("ae95f594-81d9-4968-9be3-0112eff5c85d").setData([
+//        "id": "ae95f594-81d9-4968-9be3-0112eff5c85d",
+//        "fullName": "Peter Davidson",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623").setData([
+//        "id": "c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623",
+//        "fullName": "Johnny Bennet",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("4c2e44bf-3254-46f2-873a-d7c9e7b403d8").setData([
+//        "id": "4c2e44bf-3254-46f2-873a-d7c9e7b403d8",
+//        "fullName": "Thomas Horton",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("dd1903b9-27a7-4fbc-b5cb-30d3304ffa88").setData([
+//        "id": "dd1903b9-27a7-4fbc-b5cb-30d3304ffa88",
+//        "fullName": "Jordan Gomez",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("93abcb16-3008-4ab6-9d6d-850b99b6e47a").setData([
+//        "id": "93abcb16-3008-4ab6-9d6d-850b99b6e47a",
+//        "fullName": "Timothy Edwards",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("0ad3c615-f59c-4e5c-8f57-30d70d238b07").setData([
+//        "id": "0ad3c615-f59c-4e5c-8f57-30d70d238b07",
+//        "fullName": "Nathan Hill",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("8550cd55-9114-4688-b758-f3968a0796f5").setData([
+//        "id": "8550cd55-9114-4688-b758-f3968a0796f5",
+//        "fullName": "Adam Thomas",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
+//
+//        docRefs.document("7dee6646-1268-4826-8295-efce74297c60").setData([
+//        "id": "7dee6646-1268-4826-8295-efce74297c60",
+//        "fullName": "Troy Mccarty",
+//        "location": "Tampa,Fl",
+//        "description": "",
+//        "gender": "Male",
+//        "age": "25",
+//        "fcmTokens": [],
+//        "messageThreadIds": [],
+//        "isMockData": true
+//        ])
         
         
 //            docRefs.document("be3597d0-f8af-4245-b45f-01d5adc75039").setData([
@@ -1616,6 +1626,7 @@ enum MockService {
 //            "messageThreadIds": [],
 //            "isMockData": true
 //            ])
+        //ALREADY DONE
 //            docRefs.document("fecada7b-4a43-4915-b131-2a0d5e08203c").setData([
 //            "id": "fecada7b-4a43-4915-b131-2a0d5e08203c",
 //            "fullName": "Kareem Bayerle",
@@ -1756,65 +1767,1219 @@ enum MockService {
 //            "isMockData": true
 //        ])
 //
-                let id = UUID().uuidString
-                docRefs.document(id).setData([
-                    "id": id,
-                    "userProfileId": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
-                    "category": "Cuisine",
-                    "type": "American",
-                    "gender": "Pick",
-                    "location": "Tampa",
-                    "ageRangeFrom": "20",
-                    "ageRangeTo": "70",
-                    "isMockData": true
-                ])
+//                let id = UUID().uuidString
+//                docRefs.document(id).setData([
+//                    "id": id,
+//                    "userProfileId": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
+//                    "category": "Cuisine",
+//                    "type": "American",
+//                    "gender": "Pick",
+//                    "location": "Tampa",
+//                    "ageRangeFrom": "20",
+//                    "ageRangeTo": "70",
+//                    "isMockData": true
+//                ])
+//
+//        let id2 = UUID().uuidString
+//        docRefs.document(id2).setData([
+//            "id": id2,
+//            "userProfileId": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
+//            "category": "Drinks",
+//            "type": "Smoothies",
+//            "gender": "Female",
+//            "location": "American",
+//            "ageRangeFrom": "20",
+//            "ageRangeTo": "50",
+//            "isMockData": true
+//        ])
+//
+//        let id3 = UUID().uuidString
+//        docRefs.document(id3).setData([
+//            "id": id3,
+//            "userProfileId": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
+//            "category": "Cuisine",
+//            "type": "American",
+//            "gender": "Female",
+//            "location": "Tampa",
+//            "ageRangeFrom": "24",
+//            "ageRangeTo": "66",
+//            "isMockData": true
+//        ])
+//
+//        let id4 = UUID().uuidString
+//        docRefs.document(id4).setData([
+//            "id": id4,
+//            "userProfileId": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
+//            "category": "Drinks",
+//            "type": "Soda",
+//            "gender": "Male",
+//            "location": "Tampa",
+//            "ageRangeFrom": "26",
+//            "ageRangeTo": "40",
+//            "isMockData": true
+//        ])
+//
+//        let id5 = UUID().uuidString
+//        docRefs.document(id5).setData([
+//            "id": id5,
+//            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
+//            "category": "Happy Hour",
+//            "type": "Beer",
+//            "gender": "Male",
+//            "location": "Tampa",
+//            "ageRangeFrom": "18",
+//            "ageRangeTo": "70",
+//            "isMockData": true
+//        ])
+//
         
-        let id2 = UUID().uuidString
-        docRefs.document(id2).setData([
-            "id": id2,
-            "userProfileId": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
-            "category": "Drinks",
-            "type": "Smoothies",
-            "gender": "Female",
-            "location": "American",
-            "ageRangeFrom": "20",
-            "ageRangeTo": "50",
-            "isMockData": true
-        ])
-        
-        let id3 = UUID().uuidString
-        docRefs.document(id3).setData([
-            "id": id3,
-            "userProfileId": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
-            "category": "Cuisine",
-            "type": "American",
-            "gender": "Female",
-            "location": "Tampa",
-            "ageRangeFrom": "24",
-            "ageRangeTo": "66",
-            "isMockData": true
-        ])
-        
-        let id4 = UUID().uuidString
-        docRefs.document(id4).setData([
-            "id": id4,
-            "userProfileId": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
-            "category": "Drinks",
-            "type": "Soda",
-            "gender": "Male",
-            "location": "Tampa",
-            "ageRangeFrom": "26",
-            "ageRangeTo": "40",
-            "isMockData": true
-        ])
-        
-        let id5 = UUID().uuidString
-        docRefs.document(id5).setData([
-            "id": id5,
-            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
+        let id6 = UUID().uuidString
+        docRefs.document(id6).setData([
+            "id": id6,
+            "userProfileId": "8ff57448-387d-41f4-be45-bc879be23fbf",
             "category": "Happy Hour",
-            "type": "Beer",
-            "gender": "Male",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id7 = UUID().uuidString
+        docRefs.document(id7).setData([
+            "id": id7,
+            "userProfileId": "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id8 = UUID().uuidString
+        docRefs.document(id8).setData([
+            "id": id8,
+            "userProfileId": "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id9 = UUID().uuidString
+        docRefs.document(id9).setData([
+            "id": id9,
+            "userProfileId": "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id10 = UUID().uuidString
+        docRefs.document(id10).setData([
+            "id": id10,
+            "userProfileId": "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id11 = UUID().uuidString
+        docRefs.document(id11).setData([
+            "id": id11,
+            "userProfileId": "339b76b7-c58e-48fe-a181-eb67bbd21b49",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id12 = UUID().uuidString
+        docRefs.document(id12).setData([
+            "id": id12,
+            "userProfileId": "d7e891d8-b126-45c1-b878-5a3be0db7d10",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id13 = UUID().uuidString
+        docRefs.document(id13).setData([
+            "id": id13,
+            "userProfileId": "26102e2e-0b2b-4ff9-9b9c-a2b87e9af06a",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id14 = UUID().uuidString
+        docRefs.document(id14).setData([
+            "id": id14,
+            "userProfileId": "a8b00895-411c-4cb0-8e19-559696ce6391",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id15 = UUID().uuidString
+        docRefs.document(id15).setData([
+            "id": id15,
+            "userProfileId": "93cb0b79-6afc-41de-aad1-c28808de4a4a",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id16 = UUID().uuidString
+        docRefs.document(id16).setData([
+            "id": id16,
+            "userProfileId": "9527bf1e-b5a8-4fe5-93e6-7db84ba91166",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id17 = UUID().uuidString
+        docRefs.document(id17).setData([
+            "id": id17,
+            "userProfileId": "4f5c7f12-c290-4a8a-abf6-deb8f396e325",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        
+        let id18 = UUID().uuidString
+        docRefs.document(id18).setData([
+            "id": id18,
+            "userProfileId": "25148c1d-e2f9-40c9-83ab-099c6e3c5322",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id19 = UUID().uuidString
+        docRefs.document(id19).setData([
+            "id": id19,
+            "userProfileId": "176443d2-66ab-44d7-8ec8-cda127185a50",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id20 = UUID().uuidString
+        docRefs.document(id20).setData([
+            "id": id20,
+            "userProfileId": "a87d620a-e0ae-4f10-bda4-5696a41cc5ac",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id21 = UUID().uuidString
+        docRefs.document(id21).setData([
+            "id": id21,
+            "userProfileId": "0c9004ad-623d-4575-9c1f-d192f1662f72",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id22 = UUID().uuidString
+        docRefs.document(id22).setData([
+            "id": id22,
+            "userProfileId": "a764113f-b440-425f-bb28-7ccfb5b0b67d",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id23 = UUID().uuidString
+        docRefs.document(id23).setData([
+            "id": id23,
+            "userProfileId": "5850c7a9-f735-4934-a735-fcffee610ce8",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id24 = UUID().uuidString
+        docRefs.document(id24).setData([
+            "id": id24,
+            "userProfileId": "62f36450-3711-46f6-ba0f-43ad5dca9004",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id25 = UUID().uuidString
+        docRefs.document(id25).setData([
+            "id": id25,
+            "userProfileId": "399e5315-6699-454f-9785-e756d78dda08",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id26 = UUID().uuidString
+        docRefs.document(id26).setData([
+            "id": id26,
+            "userProfileId": "3a775f5f-cfdf-49fe-9b01-e657aaf0e91c",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id27 = UUID().uuidString
+        docRefs.document(id27).setData([
+            "id": id27,
+            "userProfileId": "2d924df2-19a7-49ca-9621-5356bf42c425",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id28 = UUID().uuidString
+        docRefs.document(id28).setData([
+            "id": id28,
+            "userProfileId": "9869fc83-6043-43fc-9e3f-97c5e65e3ce1",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id29 = UUID().uuidString
+        docRefs.document(id29).setData([
+            "id": id29,
+            "userProfileId": "4f4b7c75-331e-4a99-883a-962aee62d992",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        
+        let id30 = UUID().uuidString
+        docRefs.document(id30).setData([
+            "id": id30,
+            "userProfileId": "66fa9627-ea35-47c9-ad02-785bbec4997b",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id31 = UUID().uuidString
+        docRefs.document(id31).setData([
+            "id": id31,
+            "userProfileId": "a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id32 = UUID().uuidString
+        docRefs.document(id32).setData([
+            "id": id32,
+            "userProfileId": "35726856-fc5f-4a32-a1d3-0cc9a373ffa6",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id33 = UUID().uuidString
+        docRefs.document(id33).setData([
+            "id": id33,
+            "userProfileId": "77904145-1739-4fd0-b88c-7691a463f925",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id34 = UUID().uuidString
+        docRefs.document(id34).setData([
+            "id": id34,
+            "userProfileId": "291ca006-fa3c-457c-8f20-e43fe30726e2",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id35 = UUID().uuidString
+        docRefs.document(id35).setData([
+            "id": id35,
+            "userProfileId": "26242486-e28a-4cc0-8519-650e584b7304",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id36 = UUID().uuidString
+        docRefs.document(id36).setData([
+            "id": id36,
+            "userProfileId": "828f54e3-22cf-438a-8481-d5e5edaead81",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id37 = UUID().uuidString
+        docRefs.document(id37).setData([
+            "id": id37,
+            "userProfileId": "76058066-89f2-4c5f-a77a-7a01e5331302",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id38 = UUID().uuidString
+        docRefs.document(id38).setData([
+            "id": id38,
+            "userProfileId": "d78496a3-a350-47fd-8d68-861086452bf5",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id39 = UUID().uuidString
+        docRefs.document(id39).setData([
+            "id": id39,
+            "userProfileId": "ff76fd27-e5e4-48a8-b354-3bed165d2d4d",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id40 = UUID().uuidString
+        docRefs.document(id40).setData([
+            "id": id40,
+            "userProfileId": "66be07b5-95ca-491e-b157-42f9b45433f4",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id41 = UUID().uuidString
+        docRefs.document(id41).setData([
+            "id": id41,
+            "userProfileId": "aaf421ff-c89f-45d2-af59-c67c33527061",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        
+        let id42 = UUID().uuidString
+        docRefs.document(id42).setData([
+            "id": id42,
+            "userProfileId": "804394ff-9a58-41dc-b0a5-809cc66a68f6",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id43 = UUID().uuidString
+        docRefs.document(id43).setData([
+            "id": id43,
+            "userProfileId": "ec57dd64-f53e-493f-8489-17f3fefaba98",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id44 = UUID().uuidString
+        docRefs.document(id44).setData([
+            "id": id44,
+            "userProfileId": "a54bb7c2-de23-46f6-a859-eba1739cc7a1",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id45 = UUID().uuidString
+        docRefs.document(id45).setData([
+            "id": id45,
+            "userProfileId": "ec953202-d7bf-4048-8bff-b5e1088410d4",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id46 = UUID().uuidString
+        docRefs.document(id46).setData([
+            "id": id46,
+            "userProfileId": "a9d0f188-a238-4852-b83b-620deb3622d8",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id47 = UUID().uuidString
+        docRefs.document(id47).setData([
+            "id": id47,
+            "userProfileId": "cb182851-bd1e-4283-bebd-41bb589fa2cf",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id48 = UUID().uuidString
+        docRefs.document(id48).setData([
+            "id": id48,
+            "userProfileId": "fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id49 = UUID().uuidString
+        docRefs.document(id49).setData([
+            "id": id49,
+            "userProfileId": "5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id50 = UUID().uuidString
+        docRefs.document(id50).setData([
+            "id": id50,
+            "userProfileId": "4ff33e9e-0b8a-4122-a966-c0344298d8b6",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id51 = UUID().uuidString
+        docRefs.document(id51).setData([
+            "id": id51,
+            "userProfileId": "d55c9be4-e9af-47e1-8f1e-a10bbc8f435b",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id52 = UUID().uuidString
+        docRefs.document(id52).setData([
+            "id": id52,
+            "userProfileId": "3b0793d7-12ca-48aa-ac3c-91697e8fb068",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id53 = UUID().uuidString
+        docRefs.document(id53).setData([
+            "id": id53,
+            "userProfileId": "4a415dd1-2ffe-4abf-b12f-bede94789bea",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        
+        
+        
+        
+        
+        
+        let id54 = UUID().uuidString
+        docRefs.document(id54).setData([
+            "id": id54,
+            "userProfileId": "1fc94190-9718-4c99-9651-df44028b8933",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id55 = UUID().uuidString
+        docRefs.document(id55).setData([
+            "id": id55,
+            "userProfileId": "6933917c-3cc4-443e-83bc-4d758d2098dc",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id56 = UUID().uuidString
+        docRefs.document(id56).setData([
+            "id": id56,
+            "userProfileId": "a42ec640-ccda-4d31-a4be-7e936ff91791",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id57 = UUID().uuidString
+        docRefs.document(id57).setData([
+            "id": id57,
+            "userProfileId": "ddcc77c2-9ea7-40e8-85e4-5b6c1779d492",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id58 = UUID().uuidString
+        docRefs.document(id58).setData([
+            "id": id58,
+            "userProfileId": "1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id59 = UUID().uuidString
+        docRefs.document(id59).setData([
+            "id": id59,
+            "userProfileId": "ae95f594-81d9-4968-9be3-0112eff5c85d",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id60 = UUID().uuidString
+        docRefs.document(id60).setData([
+            "id": id60,
+            "userProfileId": "c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id61 = UUID().uuidString
+        docRefs.document(id61).setData([
+            "id": id61,
+            "userProfileId": "4c2e44bf-3254-46f2-873a-d7c9e7b403d8",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id62 = UUID().uuidString
+        docRefs.document(id62).setData([
+            "id": id62,
+            "userProfileId": "dd1903b9-27a7-4fbc-b5cb-30d3304ffa88",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id63 = UUID().uuidString
+        docRefs.document(id63).setData([
+            "id": id63,
+            "userProfileId": "93abcb16-3008-4ab6-9d6d-850b99b6e47a",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id64 = UUID().uuidString
+        docRefs.document(id64).setData([
+            "id": id64,
+            "userProfileId": "0ad3c615-f59c-4e5c-8f57-30d70d238b07",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id65 = UUID().uuidString
+        docRefs.document(id65).setData([
+            "id": id65,
+            "userProfileId": "8550cd55-9114-4688-b758-f3968a0796f5",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id66 = UUID().uuidString
+        docRefs.document(id66).setData([
+            "id": id66,
+            "userProfileId": "7dee6646-1268-4826-8295-efce74297c60",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id67 = UUID().uuidString
+        docRefs.document(id67).setData([
+            "id": id67,
+            "userProfileId": "be3597d0-f8af-4245-b45f-01d5adc75039",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id68 = UUID().uuidString
+        docRefs.document(id68).setData([
+            "id": id68,
+            "userProfileId": "1112314d-de9c-45bd-9f95-ce46898d7a97",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id69 = UUID().uuidString
+        docRefs.document(id69).setData([
+            "id": id69,
+            "userProfileId": "7c6f12f2-9cdf-404b-bfb1-3531fcba038c",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id70 = UUID().uuidString
+        docRefs.document(id70).setData([
+            "id": id70,
+            "userProfileId": "00d1726a-cb7f-423e-aa50-533dfba961e1",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id71 = UUID().uuidString
+        docRefs.document(id71).setData([
+            "id": id71,
+            "userProfileId": "50ad62b7-3c90-40d6-8baf-459509e48e07",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id72 = UUID().uuidString
+        docRefs.document(id72).setData([
+            "id": id72,
+            "userProfileId": "dec2cc1d-3641-4e1a-93e0-9fe763ee36ef",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id73 = UUID().uuidString
+        docRefs.document(id73).setData([
+            "id": id73,
+            "userProfileId": "24da908a-0951-407b-abec-b0b1e44ff4c0",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id74 = UUID().uuidString
+        docRefs.document(id74).setData([
+            "id": id74,
+            "userProfileId": "c2165cd3-b124-4d65-aaaf-1441e2a81bf7",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id75 = UUID().uuidString
+        docRefs.document(id75).setData([
+            "id": id75,
+            "userProfileId": "7019b1e4-c0e9-4371-917d-2ac85c458210",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id76 = UUID().uuidString
+        docRefs.document(id76).setData([
+            "id": id76,
+            "userProfileId": "77b8c5cf-aa52-4818-bdfa-b979079b1066",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id77 = UUID().uuidString
+        docRefs.document(id77).setData([
+            "id": id77,
+            "userProfileId": "cce32d43-65bd-4f80-81da-f8e9b58da07d",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id78 = UUID().uuidString
+        docRefs.document(id78).setData([
+            "id": id78,
+            "userProfileId": "e2176174-56c2-48d0-8faf-aee1bd833ca7",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id79 = UUID().uuidString
+        docRefs.document(id79).setData([
+            "id": id79,
+            "userProfileId": "2a0fff25-8ad8-4fa4-8639-2067757ebc93",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id80 = UUID().uuidString
+        docRefs.document(id80).setData([
+            "id": id80,
+            "userProfileId": "c7029440-0dee-4406-99e7-31d9a5cc3027",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id81 = UUID().uuidString
+        docRefs.document(id81).setData([
+            "id": id81,
+            "userProfileId": "82e786c0-1a04-4304-9f17-6a88cc56a8eb",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id82 = UUID().uuidString
+        docRefs.document(id82).setData([
+            "id": id82,
+            "userProfileId": "c01e933d-bbe1-41de-b542-bbe64a4b2561",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id83 = UUID().uuidString
+        docRefs.document(id83).setData([
+            "id": id83,
+            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id84 = UUID().uuidString
+        docRefs.document(id84).setData([
+            "id": id84,
+            "userProfileId": "d860ef2d-e354-49a9-9d5c-01fbcd17fba2",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id85 = UUID().uuidString
+        docRefs.document(id85).setData([
+            "id": id85,
+            "userProfileId": "ca9aca07-a8e2-4166-9a0c-15d5d74a5a78",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id86 = UUID().uuidString
+        docRefs.document(id86).setData([
+            "id": id86,
+            "userProfileId": "9c7e67ee-74bf-4a82-8c13-bf13459bfdc0",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id87 = UUID().uuidString
+        docRefs.document(id87).setData([
+            "id": id87,
+            "userProfileId": "c8819f16-5e27-49dc-8949-8f9aacbd2cb4",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id88 = UUID().uuidString
+        docRefs.document(id88).setData([
+            "id": id88,
+            "userProfileId": "dbcd8e0a-9a3c-4bc7-bd0d-723705e1d95b",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id89 = UUID().uuidString
+        docRefs.document(id89).setData([
+            "id": id89,
+            "userProfileId": "dcffd2d8-929d-4439-9728-357a7c4fe582",
+            "category": "Happy Hour",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id90 = UUID().uuidString
+        docRefs.document(id90).setData([
+            "id": id90,
+            "userProfileId": "c115223c-c494-4a33-b914-5d00d91d3eb9",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id91 = UUID().uuidString
+        docRefs.document(id91).setData([
+            "id": id91,
+            "userProfileId": "70437a1b-88c9-4423-8eef-3a4afe60a592",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id92 = UUID().uuidString
+        docRefs.document(id92).setData([
+            "id": id92,
+            "userProfileId": "19457ad4-3451-4316-9921-c87aadb7d9ae",
+            "category": "Drinks",
+            "type": "Pick",
+            "gender": "Pick",
+            "location": "Tampa",
+            "ageRangeFrom": "18",
+            "ageRangeTo": "70",
+            "isMockData": true
+        ])
+        
+        let id93 = UUID().uuidString
+        docRefs.document(id93).setData([
+            "id": id93,
+            "userProfileId": "28527272-2ac8-42b5-8fc3-f1af5a5770cb",
+            "category": "Cuisine",
+            "type": "Pick",
+            "gender": "Pick",
             "location": "Tampa",
             "ageRangeFrom": "18",
             "ageRangeTo": "70",

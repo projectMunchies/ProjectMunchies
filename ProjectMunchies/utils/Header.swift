@@ -403,8 +403,13 @@ struct Header: View {
     
     private func saveFoodFilter(for geoReader: GeometryProxy){
         //pickers dont work well with Binding props so I used states instead then bind them
-        bindFoodFilter()
-     
+        //this also doesnt work well in its own function
+        foodFilter.gender = self.foodFilterGender
+        foodFilter.ageRangeFrom = String(self.foodFilterAgeRangeFrom)
+        foodFilter.ageRangeTo = String(self.foodFilterAgeRangeTo)
+        foodFilter.category = String(self.foodFilterCategory)
+        foodFilter.type = String(self.foodFilterType)
+
         //updating or creating user's filter
         homeViewModel.getUserFilter() {(userFilter) in
             if userFilter.id != "" {
@@ -427,14 +432,6 @@ struct Header: View {
                 }
             }
         }
-    }
-    
-    private func bindFoodFilter () {
-        foodFilter.gender = self.foodFilterGender
-        foodFilter.ageRangeFrom = String(self.foodFilterAgeRangeFrom)
-        foodFilter.ageRangeTo = String(self.foodFilterAgeRangeTo)
-        foodFilter.category = String(self.foodFilterCategory)
-        foodFilter.type = String(self.foodFilterType)
     }
 }
 

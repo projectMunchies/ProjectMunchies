@@ -122,7 +122,7 @@ class HomeViewModel: ObservableObject {
         //clean if dirty
         self.foodFilters.removeAll()
         
-        let dayString = "sunday"
+        let dayString = "monday"
         let enumDayOfWeek = Date.Weekday(rawValue: dayString)
         let start = Date.today().previous(enumDayOfWeek ?? .sunday)
         let end = Date.today().next(enumDayOfWeek ?? .sunday)
