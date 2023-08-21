@@ -28,7 +28,7 @@ struct Header: View {
     let happHourTypes = ["Liquor","Beer","Wine","Margaritas","Cocktails"]
     let gender = ["Male","Female"]
     let mainCategories = ["Cuisine","Drinks","Happy Hour"]
-    let locations = ["Tampa","American"]
+    let locations = ["Tampa, Fl","Clearwater, Fl", "St.Petersburg, Fl"]
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -422,7 +422,7 @@ struct Header: View {
         // get all filters recently updated that match user's parameters then grab the profile
         homeViewModel.getFilteredRecords(foodFilter: foodFilter) {(foodFilters) in
             if !foodFilters.isEmpty {
-                var removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
+                let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
                 let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
                 // using state in CardsView() is easier than making my own and passing it into CardsView()
                 CardsView(geoReader: geoReader , foodFilter: self.foodFilter, filteredCards: [], userProfileId: homeViewModel.userProfile.id).getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
