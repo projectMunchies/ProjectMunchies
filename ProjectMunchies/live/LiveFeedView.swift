@@ -11,6 +11,8 @@ import MapKit
 struct City: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
+    var name: String
+    var address: String
 }
 
 
@@ -21,6 +23,8 @@ struct LiveFeedView: View {
     @State private var searchText: String = ""
     @State private var feed: [FeedModel] = MockService.feedSampleData
     @State private var searchResults: [MKMapItem] = []
+    @State private var startSearch: Bool = false
+    
     
     @State private var region = MKCoordinateRegion(
     center: CLLocationCoordinate2D(
@@ -38,6 +42,8 @@ struct LiveFeedView: View {
 //         City(coordinate: .init(latitude: 30.9506, longitude: -83.4572)),
 //         City(coordinate: .init(latitude: 27.9506, longitude: -84.4572))
      ]
+    
+   // let geoReader: GeometryProxy
 
     
     var body: some View {
@@ -48,7 +54,8 @@ struct LiveFeedView: View {
                 
                 ZStack{
                     VStack{
-                        SearchBar(searchText: $searchText)
+                        SearchBar(searchText: $searchText, startSearch: $startSearch)
+                            .padding(.bottom)
 
                         Map(coordinateRegion: $region, annotationItems: cities) { city in
 //                            MapAnnotation(
@@ -61,64 +68,54 @@ struct LiveFeedView: View {
 //                            }
                             
                             MapMarker(coordinate: city.coordinate, tint: .red)
+                                
                         }
                             .frame(width: geoReader.size.width * 0.98, height: geoReader.size.height * 0.5)
                             .cornerRadius(30)
                         
                         
-                        Button(action: {
-                            search(for: "beaches")
-                        }) {
-                            Text("Search")
-                                .frame(width: 380, height: 60)
-                                .background(Color.gray)
-                                .cornerRadius(40)
-                                .foregroundColor(.white)
-                        }
-//                        ScrollView{
-//                            VStack{
-//                                ForEach(self.feed.filter({searchText.isEmpty ? true: $0.text.contains(searchText)})) { message in
-//                                        ZStack{
-//                                            Text("")
-//                                                .frame(width: 380, height: 100)
-//                                                .background(.gray)
-//                                                .cornerRadius(30)
-//
-//                                            VStack{
-//                                                HStack{
-//                                                    Spacer()
-//                                                    Text("\(message.text)")
-//                                                        .font(.system(size: 30))
-//                                                        .foregroundColor(.white)
-//
-//                                                    Spacer()
-//
-////                                                    Image(systemName: "ellipsis")
-////                                                        .resizable()
-////                                                        .scaledToFill()
-////                                                        .frame(width: 10, height: 5)
-////                                                        .font(.system(size: 35))
-////                                                        .foregroundColor(.white)
-//                                                   // Spacer()
-//                                                }
-//
+                        ScrollView{
+                            VStack{
+                                ForEach(self.cities) { message in
+                                        ZStack{
+                                            Text("")
+                                                .frame(width: 380, height: 110)
+                                                .background(.gray)
+                                                .cornerRadius(30)
+
+                                            VStack{
+                                                Text("\(message.name)")
+                                                    .font(.system(size: 20))
+                                                    .foregroundColor(.white)
+                                                
+                                                Text("\(message.address)")
+                                                    .font(.system(size: 10))
+                                                    .foregroundColor(.white)
+
 //                                                Spacer()
 //                                                    .frame(height: 50)
-//
-//                                            }
-//                                        }
-//                                        .padding(.bottom, geoReader.size.height * 0.005)
-//                                    }
-//                            }
-//                        }
+                                            }
+                                        }
+                                        .padding(.bottom, geoReader.size.height * 0.003)
+                                    }
+                            }
+                        }
                     }
-                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
+                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.64)
                         .onAppear{
                             homeViewModel.getUserProfile() {(userProfileId) -> Void in
                                 if userProfileId != "" {
                                     //get profileImage
                                     homeViewModel.getImageStorageFile(profileId: userProfileId)
                                 }
+                            }
+                        }
+                        .onChange(of: startSearch) { value in
+                            search(for: self.searchText)
+                        }
+                        .onChange(of: searchText) { value in
+                            if self.searchText == "" {
+                                self.cities.removeAll()
                             }
                         }
                     
@@ -140,10 +137,11 @@ struct LiveFeedView: View {
                     .frame(width: geoReader.size.width/2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
-        }
+     }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
-    private func search(for query: String) {
+    public func search(for query: String) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
@@ -157,7 +155,7 @@ struct LiveFeedView: View {
             searchResults = response?.mapItems ?? []
             
             for result in searchResults {
-                let city = City(coordinate: result.placemark.coordinate)
+                let city = City(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.cities.append(city)
             }
         
@@ -168,6 +166,9 @@ struct LiveFeedView: View {
 
 struct LiveFeedView_Previews: PreviewProvider {
     static var previews: some View {
-        LiveFeedView()
+       // GeometryReader{ proxy in
+            LiveFeedView()
+      //  }
+
     }
 }

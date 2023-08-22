@@ -12,7 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
-        GeometryReader { geoReader in
+       // GeometryReader { geoReader in
             VStack{
                 switch viewRouter.currentPage {
                 case .homePage :
@@ -27,6 +27,7 @@ struct ContentView: View {
                                 Image("newsFeedIcon")
                                     .renderingMode(.template)
                                     .resizable()
+                                    .foregroundColor(.black)
                                     .scaledToFit()
                             }
                         EventsView()
@@ -45,7 +46,7 @@ struct ContentView: View {
                     SignUpView()
                 }
             }
-        }
+       // }
     }
 }
 
