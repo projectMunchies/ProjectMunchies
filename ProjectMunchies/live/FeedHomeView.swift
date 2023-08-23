@@ -17,7 +17,7 @@ struct City: Identifiable {
 
 
 
-struct LiveFeedView: View {
+struct FeedHomeView: View {
     @State private var showHamburgerMenu: Bool = false
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
@@ -159,15 +159,15 @@ struct LiveFeedView: View {
                 self.cities.append(city)
             }
         
-            print(searchResults)
+            //print(searchResults)
         }
     }
 }
 
-struct LiveFeedView_Previews: PreviewProvider {
+struct FeedHomeView_Previews: PreviewProvider {
     static var previews: some View {
        // GeometryReader{ proxy in
-            LiveFeedView()
+        FeedHomeView()
       //  }
 
     }

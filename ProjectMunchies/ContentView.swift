@@ -21,7 +21,7 @@ struct ContentView: View {
                             .tabItem {
                                 Label("", systemImage: "house")
                             }
-                        LiveFeedView()
+                        FeedHomeView()
                             .tabItem {
                                // Label("", systemImage: "network")
                                 Image("newsFeedIcon")

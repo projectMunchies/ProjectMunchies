@@ -127,7 +127,7 @@ struct Header: View {
                                     
                                     Section {
                                         HStack{
-                                            Text("Food Type")
+                                            Text("Type")
                                                 .foregroundColor(.black)
                                             
                                             Spacer()
@@ -265,6 +265,8 @@ struct Header: View {
             }
         }
     }
+    
+//    <a target="_blank" href="https://icons8.com/icon/83194/news">News</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
     
     private func introIcon(for geoReader: GeometryProxy) -> some View {
         VStack{
