@@ -28,7 +28,7 @@ struct DetailView: View {
                     .matchedGeometryEffect(id: movie.id, in: animation)
                 
                 VStack(spacing: 15){
-                    Text("Story Plot")
+                    Text("About")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity,alignment: .leading)
@@ -37,20 +37,20 @@ struct DetailView: View {
                     Text(sampleText)
                         .multilineTextAlignment(.leading)
                     
-                    Button{
-                        
-                    }label: {
-                        Text("Book Ticket")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .padding(.vertical)
-                            .frame(maxWidth: .infinity)
-                            .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(.blue)
-                            }
-                    }
-                    .padding(.top,20)
+//                    Button{
+//
+//                    }label: {
+//                        Text("Book Ticket")
+//                            .fontWeight(.semibold)
+//                            .foregroundColor(.white)
+//                            .padding(.vertical)
+//                            .frame(maxWidth: .infinity)
+//                            .background{
+//                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+//                                    .fill(.blue)
+//                            }
+//                    }
+//                    .padding(.top,20)
                 }
                 .opacity(showDetailContent ? 1 : 0)
                 .offset(y: showDetailContent ? 0 : 200)

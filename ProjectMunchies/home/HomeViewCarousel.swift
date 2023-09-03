@@ -65,7 +65,7 @@ struct HomeViewCarousel: View {
                                     Image(movie.artwork)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
-                                        .frame(width: size.width * 0.2, height: size.height * 0.2)
+                                        .frame(width: size.width * 0.2, height: size.height * 0.1)
                                       
                                 }
                         }
@@ -112,23 +112,24 @@ struct HomeViewCarousel: View {
                                     }
                                   
                                 }
-//                                Button{
-//
-//                                }label: {
-//                                    VStack{
-//                                        Image(systemName: "plus")
-//                                            .frame(width: 60, height: 80)
-//                                            .background(.gray.opacity(0.5))
-//                                            .cornerRadius(15)
-//                                            .dropDestination(for: Image.self) { items, locations in
-//                                                return true
-//                                            }
-//
-//                                        Text("Add new bunch")
-//                                            .font(.system(size: 12))
-//                                            .foregroundColor(.black)
-//                                    }
-//                                }
+                                Button{
+
+                                }label: {
+                                    VStack{
+                                        Image(systemName: "plus")
+                                            .frame(width: 60, height: 80)
+                                            .background(.gray.opacity(0.5))
+                                            .cornerRadius(15)
+                                            .dropDestination(for: Image.self) { items, locations in
+                                                return true
+                                            }
+
+                                        Text("Add new bunch")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(.black)
+                                    }
+                                }
+                                .disabled(true)
                            
                             }
                         }
@@ -143,6 +144,13 @@ struct HomeViewCarousel: View {
                         DetailView(movie: movie, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, animation: animation)
                     }
                 }
+            }
+            
+            //Display HamburgerMenu
+            if self.showHamburgerMenu {
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
+                    .frame(width: geoReader.size.width/2)
+                    .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
     
