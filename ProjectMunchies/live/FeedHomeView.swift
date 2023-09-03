@@ -26,6 +26,11 @@ struct FeedHomeView: View {
     @State private var startSearch: Bool = false
     
     
+    //Animated View properties
+    @State var currentIndex: Int = 0
+    
+    
+    
     @State private var region = MKCoordinateRegion(
     center: CLLocationCoordinate2D(
         latitude: 27.9506,
@@ -51,6 +56,8 @@ struct FeedHomeView: View {
             ZStack{
                 Color.white
                     .ignoresSafeArea()
+                
+               BGView()
                 
                 ZStack{
                     VStack{
@@ -139,6 +146,42 @@ struct FeedHomeView: View {
             }
      }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+    
+    // Blurred BG
+    @ViewBuilder
+    func BGView()->some View{
+        GeometryReader{proxy in
+            let size = proxy.size
+            
+            TabView(selection: $currentIndex) {
+                ForEach(movies.indices, id: \.self){index in
+                    Image(movies[index].artwork)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                        .tag(index)
+                    
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut, value: currentIndex)
+            
+            let color: Color = .white
+            //Custom Gradient
+            LinearGradient(colors: [
+                .white,
+                .clear,
+                color
+
+            ], startPoint: .top, endPoint: .bottom)
+            
+            // Blurred Overlay
+            Rectangle()
+                .fill(.ultraThinMaterial)
+        }
+        .ignoresSafeArea()
     }
     
     public func search(for query: String) {

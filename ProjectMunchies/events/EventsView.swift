@@ -14,12 +14,16 @@ struct EventsView: View {
     @State private var events: [EventModel] = []
     @State private var showHamburgerMenu: Bool = false
     
+    //Animated View properties
+    @State var currentIndex: Int = 0
+    
     var body: some View {
         GeometryReader { geoReader in
             ZStack{
                 Color.white
                     .ignoresSafeArea()
                 
+                BGView()
                 ZStack{
                     VStack{
                         SearchBar(searchText: $searchText, startSearch: .constant(false))
@@ -133,6 +137,42 @@ struct EventsView: View {
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
+    }
+    
+    // Blurred BG
+    @ViewBuilder
+    func BGView()->some View{
+        GeometryReader{proxy in
+            let size = proxy.size
+            
+            TabView(selection: $currentIndex) {
+                ForEach(movies.indices, id: \.self){index in
+                    Image(movies[index].artwork)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                        .tag(index)
+                    
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut, value: currentIndex)
+            
+            let color: Color = .white
+            //Custom Gradient
+            LinearGradient(colors: [
+                .white,
+                .clear,
+                color
+
+            ], startPoint: .top, endPoint: .bottom)
+            
+            // Blurred Overlay
+            Rectangle()
+                .fill(.ultraThinMaterial)
+        }
+        .ignoresSafeArea()
     }
     
     private func headerSection(for geoReader: GeometryProxy) -> some View {

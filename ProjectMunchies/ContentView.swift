@@ -17,7 +17,7 @@ struct ContentView: View {
                 switch viewRouter.currentPage {
                 case .homePage :
                     TabView {
-                        HomeView()
+                        HomeViewCarousel()
                             .tabItem {
                                 Label("", systemImage: "house")
                             }

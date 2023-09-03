@@ -18,11 +18,18 @@ struct SettingsView: View {
     
     @State private var showHamburgerMenu: Bool = false
     
+    //Animated View properties
+    @State var currentIndex: Int = 0
+    
+    
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
                 Color.white
                     .ignoresSafeArea()
+                
+                BGView()
+                
                 ZStack{
                     VStack{
                         imageSection(for: geoReader)
@@ -70,6 +77,45 @@ struct SettingsView: View {
             }
         }
     }
+    
+    
+    // Blurred BG
+    @ViewBuilder
+    func BGView()->some View{
+        GeometryReader{proxy in
+            let size = proxy.size
+            
+            TabView(selection: $currentIndex) {
+                ForEach(movies.indices, id: \.self){index in
+                    Image(movies[index].artwork)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                        .tag(index)
+                    
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut, value: currentIndex)
+            
+            let color: Color = .white
+            //Custom Gradient
+            LinearGradient(colors: [
+                .white,
+                .clear,
+                color
+
+            ], startPoint: .top, endPoint: .bottom)
+            
+            // Blurred Overlay
+            Rectangle()
+                .fill(.ultraThinMaterial)
+        }
+        .ignoresSafeArea()
+    }
+    
+    
     
     private func deleteUser(){
         let user = Auth.auth().currentUser

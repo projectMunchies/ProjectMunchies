@@ -57,7 +57,7 @@ struct Header: View {
                     Image("crunchBunchAppIcon")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: geoReader.size.width * 0.05, height: geoReader.size.height * 0.05)
+                        .frame(width: geoReader.size.width * 0.08, height: geoReader.size.height * 0.08)
                         .position(x:geoReader.size.width * 0.01, y:geoReader.size.height * 0.5)
                     
                     Image("crunchBunchText")
