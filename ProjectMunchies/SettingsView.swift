@@ -8,19 +8,16 @@
 import SwiftUI
 import Firebase
 
-
 struct SettingsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var showSheet = false
     @State private var editInfo = false
     @State var isLargeImageAlert: Bool = false
-    
     @State private var showHamburgerMenu: Bool = false
     
     //Animated View properties
     @State var currentIndex: Int = 0
-    
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -78,7 +75,6 @@ struct SettingsView: View {
         }
     }
     
-    
     // Blurred BG
     @ViewBuilder
     func BGView()->some View{
@@ -93,7 +89,6 @@ struct SettingsView: View {
                         .frame(width: size.width, height: size.height)
                         .clipped()
                         .tag(index)
-                    
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -105,7 +100,6 @@ struct SettingsView: View {
                 .white,
                 .clear,
                 color
-
             ], startPoint: .top, endPoint: .bottom)
             
             // Blurred Overlay
@@ -115,15 +109,12 @@ struct SettingsView: View {
         .ignoresSafeArea()
     }
     
-    
-    
     private func deleteUser(){
         let user = Auth.auth().currentUser
         user?.delete() { error in
             if let error = error {
                 print("Error deleting account")
                 print(error)
-                
             }else {
                 viewRouter.currentPage = .signinPage
             }
@@ -220,7 +211,6 @@ struct SettingsView: View {
                             .cornerRadius(geoReader.size.width * 0.06)
                             .shadow(radius: geoReader.size.width * 0.02, x: geoReader.size.width * 0.04, y: geoReader.size.width * 0.04)
                     }
-            
             
             Button(action: {
                 signOutUser()

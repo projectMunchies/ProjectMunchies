@@ -12,41 +12,38 @@ struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
-       // GeometryReader { geoReader in
-            VStack{
-                switch viewRouter.currentPage {
-                case .homePage :
-                    TabView {
-                        HomeViewCarousel()
-                            .tabItem {
-                                Label("", systemImage: "house")
-                            }
-                        FeedHomeView()
-                            .tabItem {
-                               // Label("", systemImage: "network")
-                                Image("newsFeedIcon")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .foregroundColor(.black)
-                                    .scaledToFit()
-                            }
-                        EventsView()
-                            .tabItem {
-                                Label("", systemImage: "takeoutbag.and.cup.and.straw")
-                            }
-                        SettingsView()
-                            .tabItem {
-                                Label("", systemImage: "person")
-                            }
-                    }
-                case .signinPage :
-                    SignInView()
-                    
-                case .signupPage :
-                    SignUpView()
+        VStack{
+            switch viewRouter.currentPage {
+            case .homePage :
+                TabView {
+                    HomeViewCarousel()
+                        .tabItem {
+                            Label("", systemImage: "house")
+                        }
+                    FeedHomeView()
+                        .tabItem {
+                            Image("newsFeedIcon")
+                                .renderingMode(.template)
+                                .resizable()
+                                .foregroundColor(.black)
+                                .scaledToFit()
+                        }
+                    EventsView()
+                        .tabItem {
+                            Label("", systemImage: "takeoutbag.and.cup.and.straw")
+                        }
+                    SettingsView()
+                        .tabItem {
+                            Label("", systemImage: "person")
+                        }
                 }
+            case .signinPage :
+                SignInView()
+                
+            case .signupPage :
+                SignUpView()
             }
-       // }
+        }
     }
 }
 

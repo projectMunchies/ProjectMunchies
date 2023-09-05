@@ -19,10 +19,7 @@ struct EventEditView: View {
     var body: some View {
         VStack{
             Form{
-               
                 Section{
-                   
-                    
                     TextField(event.title, text: $eventTitle)
 //                        .frame(width: 360, height: 60)
 //                        .background(Color(red: 0.949, green: 0.949, blue: 0.97))

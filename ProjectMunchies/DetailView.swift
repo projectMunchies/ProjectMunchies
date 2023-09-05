@@ -37,20 +37,20 @@ struct DetailView: View {
                     Text(sampleText)
                         .multilineTextAlignment(.leading)
                     
-//                    Button{
-//
-//                    }label: {
-//                        Text("Book Ticket")
-//                            .fontWeight(.semibold)
-//                            .foregroundColor(.white)
-//                            .padding(.vertical)
-//                            .frame(maxWidth: .infinity)
-//                            .background{
-//                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-//                                    .fill(.blue)
-//                            }
-//                    }
-//                    .padding(.top,20)
+                    Button{
+                        
+                    }label: {
+                        Text("Send Invite")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding(.vertical)
+                            .frame(maxWidth: .infinity)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .fill(.gray)
+                            }
+                    }
+                    .padding(.top,20)
                 }
                 .opacity(showDetailContent ? 1 : 0)
                 .offset(y: showDetailContent ? 0 : 200)
@@ -89,6 +89,6 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-    HomeViewCarousel()
+        HomeViewCarousel()
     }
 }

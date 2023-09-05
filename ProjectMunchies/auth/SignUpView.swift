@@ -26,11 +26,6 @@ struct SignUpView: View {
                         .position(x: geoReader.frame(in: .local).midX, y:geoReader.size.height * 0.24)
                     
                     VStack{
-    //                                Text("Never Eat alone again")
-    //                                    .font(.system(size: 15))
-    //                                    .foregroundColor(.black)
-    //                                    .padding(.bottom,geoReader.size.height * 0.05)
-            
                         Text("Email:")
                             .font(.system(size: 15))
                             .foregroundColor(.black)
@@ -76,7 +71,6 @@ struct SignUpView: View {
                                 .foregroundColor(.blue)
                                 .font(.system(size: 20))
                         }
-                      
                     }
                     .position(x: geoReader.frame(in: .local).midX , y:geoReader.size.height * 0.6)
                 }
@@ -91,7 +85,7 @@ struct SignUpView: View {
             if error != nil {
                 print(error?.localizedDescription ?? "")
             }else{
-                print("success")
+                print("successfully signed up")
             }
         }
     }

@@ -16,7 +16,6 @@ struct NotificationsView: View {
             Text("NO NOTIFICATIONS AT THIS TIME")
                 .foregroundColor(.black)
         }
-       
     }
 }
 

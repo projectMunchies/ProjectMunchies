@@ -43,8 +43,6 @@
 		770AD0982A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
 		770AD0992A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
 		770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
-		770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
-		770AD09D2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
 		770AD09F2A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
 		770AD0A02A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
 		770AD0A12A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
@@ -249,23 +247,19 @@
 				77F3E0A72A860C1400BC3791 /* home */,
 				77F3E0A42A8608CD00BC3791 /* utils */,
 				770AD0562A76BBAB004CA5D2 /* auth */,
-				77E383502A75B78F0084B8A6 /* Info.plist */,
-				77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */,
-				77E3830E2A7225470084B8A6 /* ContentView.swift */,
-				77E383102A7225490084B8A6 /* Assets.xcassets */,
 				77E383122A7225490084B8A6 /* Preview Content */,
-				77E383402A7242A40084B8A6 /* SearchBar.swift */,
 				77E383472A7248CB0084B8A6 /* cards */,
 				77E383462A7248BC0084B8A6 /* events */,
 				77E383442A7247460084B8A6 /* MockService.swift */,
+				77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */,
 				77E3834A2A738D480084B8A6 /* Extensions.swift */,
+				77E3830E2A7225470084B8A6 /* ContentView.swift */,
 				77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */,
+				77E383102A7225490084B8A6 /* Assets.xcassets */,
+				77E383502A75B78F0084B8A6 /* Info.plist */,
 				770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */,
 				77E383512A75BB840084B8A6 /* ProfileView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
-				77C124832AA3A587006F3126 /* SnapCarousel.swift */,
-				770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */,
-				77C124852AA3A737006F3126 /* OffsetModifier.swift */,
 				77C124812AA3A568006F3126 /* DetailView.swift */,
 				77F3E0A22A79065700BC3791 /* NotificationsView.swift */,
 			);
@@ -322,6 +316,10 @@
 		77F3E0A42A8608CD00BC3791 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */,
+				77C124852AA3A737006F3126 /* OffsetModifier.swift */,
+				77C124832AA3A587006F3126 /* SnapCarousel.swift */,
+				77E383402A7242A40084B8A6 /* SearchBar.swift */,
 				77F3E0A52A86092500BC3791 /* ImagePicker.swift */,
 				77F3E0AD2A87A13C00BC3791 /* Header.swift */,
 			);
@@ -555,7 +553,6 @@
 				770AD0A02A78C046004CA5D2 /* CardViewModel.swift in Sources */,
 				77E3831E2A7225490084B8A6 /* ProjectMunchiesTests.swift in Sources */,
 				770AD0982A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
-				770AD09C2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +560,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				770AD09D2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 				770AD0992A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3832A2A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift in Sources */,
 				77E383282A7225490084B8A6 /* ProjectMunchiesUITests.swift in Sources */,
@@ -727,7 +723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -762,7 +758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

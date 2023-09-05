@@ -24,19 +24,14 @@ struct SignInView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: geoReader.size.height * 0.5, height: geoReader.size.height * 0.5)
                         .position(x: geoReader.frame(in: .local).midX, y:geoReader.size.height * 0.24)
-                        
+                    
                     VStack{
-    //                    Text("Never Eat alone again")
-    //                        .font(.system(size: 15))
-    //                        .foregroundColor(.black)
-    //                        .padding(.bottom,geoReader.size.height * 0.05)
-                        
                         Text("Email:")
                             .font(.system(size: 15))
                             .foregroundColor(.black)
                             .padding(.trailing,geoReader.size.width * 0.8)
                             .opacity(0.6)
-                    
+                        
                         TextField("Email", text: $email)
                             .frame(width: 360, height: 60)
                             .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
@@ -80,10 +75,8 @@ struct SignInView: View {
                     .position(x: geoReader.frame(in: .local).midX , y:geoReader.size.height * 0.6)
                 }
                 .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY)
-        
             }
             .navigationBarBackButtonHidden(true)
-            
         }
     }
     
@@ -92,7 +85,7 @@ struct SignInView: View {
             if error != nil {
                 print(error?.localizedDescription ?? "")
             }else{
-                print("success")
+                print("successfully logged in")
             }
         }
     }

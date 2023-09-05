@@ -8,22 +8,17 @@
 import SwiftUI
 
 struct HomeViewCarousel: View {
+    @StateObject private var homeViewModel = HomeViewModel()
     //Animated View properties
     @State var currentIndex: Int = 0
-    @State var currentTab: String = "Films"
     
     //Detail View properties
     @State var detailMovie: Movie?
     @State var showDetailView: Bool = false
+    
     // FOR MATCHED GEOMETRY EFFECT STORING CURRENT CARD SIZE
     @State var currentCardSize: CGSize = .zero
     
-    
-    
-    @StateObject private var homeViewModel = HomeViewModel()
-    
-    @State private var showAddImagePopover: Bool = false
-    @State private var input1: String = ""
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var filteredCards: [ProfileModel] = []
@@ -31,6 +26,7 @@ struct HomeViewCarousel: View {
     // Environment Values
     @Namespace var animation
     @Environment (\.colorScheme) var scheme
+    
     var body: some View {
         GeometryReader{geoReader in
             ZStack{
@@ -39,104 +35,37 @@ struct HomeViewCarousel: View {
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    
-    //                //Custom Nav Bar
-    //                NavBar()
-    //
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: movies){movie in
-                        
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: movies){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
                             
-                            Image(movie.artwork)
+                            Image(profile.artwork)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: size.width, height: size.height * 0.67)
                                 .cornerRadius(15)
-                                .matchedGeometryEffect(id: movie.id, in: animation)
+                                .matchedGeometryEffect(id: profile.id, in: animation)
                                 .onTapGesture {
                                     currentCardSize = size
-                                    detailMovie = movie
+                                    detailMovie = profile
                                     withAnimation(.easeInOut){
                                         showDetailView = true
                                     }
                                 }
-                                .draggable(Image(movie.artwork)){
-                                    Image(movie.artwork)
+                                .draggable(Image(profile.artwork)){
+                                    Image(profile.artwork)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: size.width * 0.2, height: size.height * 0.1)
-                                      
                                 }
                         }
-                        
                     }
                     // Since Carousel is Moved The current Card a little bit up
                     //Using padding to avoid the Undercovering the top element
                     .padding(.top,50)
                     
-                    VStack{
-                        // Custom Indicator
-                        CustomIndicator()
-                        
-                        HStack{
-                            Text("Bunches")
-                                .font(.title3.bold())
-                            
-                            Spacer()
-                            
-//                            Button("See More"){
-//                            }
-//                            .font(.system(size: 16, weight: .semibold))
-                            
-                        }
-                        .padding(.horizontal)
-                        
-                        ScrollView(.horizontal, showsIndicators: false){
-                            HStack(spacing: 15){
-                                ForEach(mockBunches){bunch in
-                                    VStack{
-                                        Image(bunch.artwork)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 60, height: 80)
-                                            .background(.gray.opacity(0.2))
-                                            .cornerRadius(15)
-                                            .dropDestination(for: Image.self) { items, locations in
-                                                return true
-                                            }
-                                        
-                                        Text(bunch.movieTitle)
-                                            .font(.system(size: 12))
-                                            .foregroundColor(.black)
-                                    }
-                                  
-                                }
-                                Button{
-
-                                }label: {
-                                    VStack{
-                                        Image(systemName: "plus")
-                                            .frame(width: 60, height: 80)
-                                            .background(.gray.opacity(0.5))
-                                            .cornerRadius(15)
-                                            .dropDestination(for: Image.self) { items, locations in
-                                                return true
-                                            }
-
-                                        Text("Add new bunch")
-                                            .font(.system(size: 12))
-                                            .foregroundColor(.black)
-                                    }
-                                }
-                                .disabled(true)
-                           
-                            }
-                        }
-                    }
-                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.77)
-                  
-                    
+                    Footer()
+                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.77)
                 }
                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.6)
                 .overlay{
@@ -153,15 +82,13 @@ struct HomeViewCarousel: View {
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
-    
     }
     
     //Custom Indicator
     @ViewBuilder
-    func CustomIndicator()->some View{
+    private func CustomIndicator()->some View{
         HStack(spacing: 5){
             ForEach(movies.indices,id: \.self){index in
-                
                 Circle()
                     .fill(currentIndex == index ? .blue : .gray.opacity(0.5))
                     .frame(width: currentIndex == index ? 10 : 6, height: currentIndex == index ? 10 : 6)
@@ -169,36 +96,10 @@ struct HomeViewCarousel: View {
         }
         .animation(.easeInOut, value: currentIndex)
     }
-    //Custom Nav Bar
-    @ViewBuilder
-    func NavBar()->some View{
-        HStack(spacing: 0){
-            ForEach(["Films","Localities"],id: \.self){tab in
-                Button{
-                    
-                } label:  {
-                    Text(tab)
-                        .foregroundColor(.white)
-                        .padding(.vertical,6)
-                        .padding(.horizontal,20)
-//                        .background{
-//                            if currentTab == tab{
-//                                Capsule()
-//                                    .fill(.regularMaterial)
-//                                    .environment(\.ColorScheme, .dark)
-//                                    .matchedGeometryEffect(id: "TAB", in: animation)
-//                            }
-//                        }
-                }
-                
-            }
-        }
-        .padding()
-    }
     
     // Blurred BG
     @ViewBuilder
-    func BGView()->some View{
+    private func BGView()->some View{
         GeometryReader{proxy in
             let size = proxy.size
             
@@ -210,7 +111,6 @@ struct HomeViewCarousel: View {
                         .frame(width: size.width, height: size.height)
                         .clipped()
                         .tag(index)
-                    
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -222,7 +122,7 @@ struct HomeViewCarousel: View {
                 .white,
                 .clear,
                 color
-            
+                
             ], startPoint: .top, endPoint: .bottom)
             
             // Blurred Overlay
@@ -230,6 +130,61 @@ struct HomeViewCarousel: View {
                 .fill(.ultraThinMaterial)
         }
         .ignoresSafeArea()
+    }
+    
+    //Footer
+    private func Footer()->some View{
+        VStack{
+            CustomIndicator()
+            
+            HStack{
+                Text("Bunches")
+                    .font(.title3.bold())
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack(spacing: 15){
+                    ForEach(mockBunches){bunch in
+                        VStack{
+                            Image(bunch.artwork)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 60, height: 80)
+                                .background(.gray.opacity(0.2))
+                                .cornerRadius(15)
+                                .dropDestination(for: Image.self) { items, locations in
+                                    return true
+                                }
+                            
+                            Text(bunch.movieTitle)
+                                .font(.system(size: 12))
+                                .foregroundColor(.black)
+                        }
+                    }
+                    
+                    Button{
+                        
+                    }label: {
+                        VStack{
+                            Image(systemName: "plus")
+                                .frame(width: 60, height: 80)
+                                .background(.gray.opacity(0.5))
+                                .cornerRadius(15)
+                                .dropDestination(for: Image.self) { items, locations in
+                                    return true
+                                }
+                            
+                            Text("Add new bunch")
+                                .font(.system(size: 12))
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .disabled(true)
+                }
+            }
+        }
     }
 }
 
