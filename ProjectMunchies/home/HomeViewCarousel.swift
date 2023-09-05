@@ -13,7 +13,7 @@ struct HomeViewCarousel: View {
     @State var currentIndex: Int = 0
     
     //Detail View properties
-    @State var detailMovie: Movie?
+    @State var detailMovie: ProfileModel?
     @State var showDetailView: Bool = false
     
     // FOR MATCHED GEOMETRY EFFECT STORING CURRENT CARD SIZE
@@ -35,7 +35,7 @@ struct HomeViewCarousel: View {
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: movies){profile in
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: mockProfiles){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
                             
@@ -61,7 +61,7 @@ struct HomeViewCarousel: View {
                                     }
                                 
                                 VStack{
-                                    Text("\(profile.movieTitle)")
+                                    Text("\(profile.fullName)")
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
                                     
@@ -85,8 +85,8 @@ struct HomeViewCarousel: View {
                 }
                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.6)
                 .overlay{
-                    if let movie = detailMovie,showDetailView{
-                        DetailView(movie: movie, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, animation: animation)
+                    if let profile = detailMovie,showDetailView{
+                        DetailView(profile: profile, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, animation: animation)
                     }
                 }
             }
@@ -104,7 +104,7 @@ struct HomeViewCarousel: View {
     @ViewBuilder
     private func CustomIndicator()->some View{
         HStack(spacing: 5){
-            ForEach(movies.indices,id: \.self){index in
+            ForEach(mockProfiles.indices,id: \.self){index in
                 Circle()
                     .fill(currentIndex == index ? .blue : .gray.opacity(0.5))
                     .frame(width: currentIndex == index ? 10 : 6, height: currentIndex == index ? 10 : 6)
@@ -120,8 +120,8 @@ struct HomeViewCarousel: View {
             let size = proxy.size
             
             TabView(selection: $currentIndex) {
-                ForEach(movies.indices, id: \.self){index in
-                    Image(movies[index].artwork)
+                ForEach(mockProfiles.indices, id: \.self){index in
+                    Image(mockProfiles[index].artwork)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: size.width, height: size.height)

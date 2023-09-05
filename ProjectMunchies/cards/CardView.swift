@@ -210,7 +210,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { proxy in
-            CardView(geoReader: proxy, card: MockService.profilesSampleData[0], index: 18, onRemove: {_ in})
+            CardView(geoReader: proxy, card: mockProfiles[0], index: 18, onRemove: {_ in})
         }
         
     }

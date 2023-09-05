@@ -100,6 +100,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(card: MockService.profilesSampleData[0])
+        ProfileView(card: mockProfiles[0])
     }
 }

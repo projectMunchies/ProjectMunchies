@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DetailView: View {
-    var movie: Movie
+    var profile: ProfileModel
     @Binding var showDetailVew: Bool
-    @Binding var detailMovie: Movie?
+    @Binding var detailMovie: ProfileModel?
     @Binding var currentCardSize: CGSize
     
     var animation: Namespace.ID
@@ -20,15 +20,15 @@ struct DetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             VStack{
-                Image(movie.artwork)
+                Image(profile.artwork)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: currentCardSize.width, height: currentCardSize.height * 0.67)
                     .cornerRadius(15)
-                    .matchedGeometryEffect(id: movie.id, in: animation)
+                    .matchedGeometryEffect(id: profile.id, in: animation)
                 
                 VStack(spacing: 5){
-                    Text("About \(movie.movieTitle)")
+                    Text("About \(profile.fullName)")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity,alignment: .center)
@@ -38,34 +38,34 @@ struct DetailView: View {
                     HStack{
                         Spacer()
                         Text("Occupation:")
-                        Text("\(movie.occupation)")
+                        Text("\(profile.occupation)")
                         Spacer()
                     }
                     
                     HStack{
                         Spacer()
                         Text("Location:")
-                        Text("\(movie.location)")
+                        Text("\(profile.location)")
                         Spacer()
                     }
                     
                     HStack{
                         Spacer()
                         Text("Favorite Restaurant:")
-                        Text("\(movie.favRestaurant)")
+                        Text("\(profile.favRestaurant)")
                         Spacer()
                     }
                     HStack{
                         Spacer()
                         Text("Favorite Food:")
-                        Text("\(movie.favFood)")
+                        Text("\(profile.favFood)")
                         Spacer()
                     }
                     
                     HStack{
                         Spacer()
                         Text("Hobbies:")
-                        Text(movie.hobbies.joined(separator: ", "))
+                        Text(profile.hobbies.joined(separator: ", "))
                         Spacer()
                     }
                     

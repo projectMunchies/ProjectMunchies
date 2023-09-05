@@ -155,8 +155,8 @@ struct FeedHomeView: View {
             let size = proxy.size
             
             TabView(selection: $currentIndex) {
-                ForEach(movies.indices, id: \.self){index in
-                    Image(movies[index].artwork)
+                ForEach(mockProfiles.indices, id: \.self){index in
+                    Image(mockProfiles[index].artwork)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: size.width, height: size.height)
