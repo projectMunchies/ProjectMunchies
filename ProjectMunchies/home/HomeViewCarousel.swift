@@ -39,30 +39,46 @@ struct HomeViewCarousel: View {
                         GeometryReader{proxy in
                             let size = proxy.size
                             
-                            Image(profile.artwork)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: size.width, height: size.height * 0.67)
-                                .cornerRadius(15)
-                                .matchedGeometryEffect(id: profile.id, in: animation)
-                                .onTapGesture {
-                                    currentCardSize = size
-                                    detailMovie = profile
-                                    withAnimation(.easeInOut){
-                                        showDetailView = true
+                            ZStack{
+                                Image(profile.artwork)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: size.width, height: size.height * 0.67)
+                                    .cornerRadius(15)
+                                    .matchedGeometryEffect(id: profile.id, in: animation)
+                                    .onTapGesture {
+                                        currentCardSize = size
+                                        detailMovie = profile
+                                        withAnimation(.easeInOut){
+                                            showDetailView = true
+                                        }
                                     }
+                                    .draggable(Image(profile.artwork)){
+                                        Image(profile.artwork)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: size.width * 0.2, height: size.height * 0.1)
+                                    }
+                                
+                                VStack{
+                                    Text("\(profile.movieTitle)")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("\(profile.occupation)")
+                                        .foregroundColor(.white)
+                                    
+                                    Text("\(profile.location)")
+                                        .foregroundColor(.white)
                                 }
-                                .draggable(Image(profile.artwork)){
-                                    Image(profile.artwork)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: size.width * 0.2, height: size.height * 0.1)
-                                }
+                                .position(x:size.width * 0.2, y:size.height * 0.7)
+                            }
                         }
                     }
                     // Since Carousel is Moved The current Card a little bit up
                     //Using padding to avoid the Undercovering the top element
                     .padding(.top,50)
+                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
                     
                     Footer()
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.77)
@@ -181,7 +197,6 @@ struct HomeViewCarousel: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .disabled(true)
                 }
             }
         }

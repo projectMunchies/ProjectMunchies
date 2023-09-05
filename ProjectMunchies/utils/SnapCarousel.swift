@@ -64,13 +64,10 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
                     // based on the progress increasing or decresing the currentIndex...
                     
                     let progress = -offsetX / width
-                    
                     let roundIndex = progress.rounded()
                     
                     // setting min...
                     currentIndex = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
-                    
-                    
                     //updating index...
                     currentIndex = index
                 })
@@ -86,12 +83,10 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
                     // based on the progress increasing or decresing the currentIndex...
                     
                     let progress = -offsetX / width
-                    
                     let roundIndex = progress.rounded()
                     
                     // setting min...
                     index = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
-                    
                 })
             )
         }
@@ -101,7 +96,6 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
     
     //Moving View based on scroll Offset...
     func gettOffset(item: T,width: CGFloat)->CGFloat{
-        
         //Progress...
         // Shifting Current Item to Top.
         let progress = ((offset < 0 ? offset : -offset) / width) * 60
@@ -128,7 +122,6 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
         } ?? 0
         return index
     }
- 
 }
 
 struct Home_PreviewsCarousel: PreviewProvider {

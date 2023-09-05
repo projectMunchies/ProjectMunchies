@@ -27,12 +27,47 @@ struct DetailView: View {
                     .cornerRadius(15)
                     .matchedGeometryEffect(id: movie.id, in: animation)
                 
-                VStack(spacing: 15){
-                    Text("About")
+                VStack(spacing: 5){
+                    Text("About \(movie.movieTitle)")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .frame(maxWidth: .infinity,alignment: .center)
                         .padding(.top,25)
+                        .padding(.bottom,5)
+                    
+                    HStack{
+                        Spacer()
+                        Text("Occupation:")
+                        Text("\(movie.occupation)")
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        Spacer()
+                        Text("Location:")
+                        Text("\(movie.location)")
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        Spacer()
+                        Text("Favorite Restaurant:")
+                        Text("\(movie.favRestaurant)")
+                        Spacer()
+                    }
+                    HStack{
+                        Spacer()
+                        Text("Favorite Food:")
+                        Text("\(movie.favFood)")
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        Spacer()
+                        Text("Hobbies:")
+                        Text(movie.hobbies.joined(separator: ", "))
+                        Spacer()
+                    }
                     
                     Text(sampleText)
                         .multilineTextAlignment(.leading)

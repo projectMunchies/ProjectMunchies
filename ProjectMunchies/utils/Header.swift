@@ -12,10 +12,11 @@ struct Header: View {
     @Binding var isLoading: Bool
     @Binding var foodFilter: FoodFilterModel
     @Binding var filteredCards: [ProfileModel]
+    
     let homeViewModel: HomeViewModel
+    
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
-    
     @State private var foodFilterCategory = "Cuisine"
     @State private var foodFilterType = "Pick"
     @State private var foodFilterGender = "Pick"
@@ -299,11 +300,10 @@ struct Header: View {
                         .font(.custom("Chalkduster", size: geoReader.size.height * 0.035))
                         .multilineTextAlignment(.center)
                     
-                    Text("Where you'll never eat alone again")
+                    Text("The eat-together group meeting app")
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
-                    
                     
                     Spacer()
                         .frame(height: geoReader.size.height * 0.04)
@@ -313,8 +313,12 @@ struct Header: View {
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
                     
+                    Text("- Scroll through profiles to find potential food friends based on your food filter")
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: geoReader.size.height * 0.028))
                     
-                    Text("- Use card swiping feature to find your match based on your food filter")
+                    Text("- Hold and drag profile into the 'Bunches' you created at the bottom of screen, an invite to join will be automatically sent")
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
@@ -336,7 +340,7 @@ struct Header: View {
                         .font(.system(size: geoReader.size.height * 0.028))
                         .padding(.bottom,5)
                     
-                    Text("- Use it to find partner for any occasion, anytime anyday")
+                    Text("- Use it to find food mates for any occasion, anytime anyday")
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
@@ -344,7 +348,7 @@ struct Header: View {
                     Spacer()
                         .frame(height: geoReader.size.height * 0.04)
                     
-                    Text("Events")
+                    Text("Bunches & Events")
                         .bold()
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
