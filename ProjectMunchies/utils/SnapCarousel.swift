@@ -16,23 +16,21 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
     var trailingSpace: CGFloat
     @Binding var index: Int
     init(spacing: CGFloat = 15, trailingSpace: CGFloat = 100, index: Binding<Int>, items: [T], @ViewBuilder content: @escaping (T)->Content){
-        
         self.list = items
         self.spacing = spacing
         self.trailingSpace = trailingSpace
         self._index = index
         self.content = content
-        
     }
     
     //Offset...
     @GestureState var offset: CGFloat = 0
     @State var currentIndex: Int = 0
+    @State var imageIndex: Int = 0
     
     var body: some View{
         GeometryReader{proxy in
             //Setting the current Width for snap Carousel...
-            
             // One Sided snap Carousel...
             
             let width = proxy.size.width - (trailingSpace - spacing)
@@ -51,7 +49,6 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
             .gesture(
             DragGesture()
                 .updating($offset, body: { value, out, _ in
-                    
                     // Making it a little bit slower
                     out = (value.translation.width / 1.5)
                 })
@@ -73,7 +70,6 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
                 })
                 .onChanged({ value in
                     // updating only index...
-                    
                     
                     // Updating Current Index...
                     let offsetX = value.translation.width
@@ -99,19 +95,15 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
         //Progress...
         // Shifting Current Item to Top.
         let progress = ((offset < 0 ? offset : -offset) / width) * 60
-        
         let topOffset = -progress < 60 ? progress : -(progress + 120)
-        
         let previous = getIndex(item: item) - 1 == currentIndex ? (offset < 0 ? topOffset : -topOffset) : 0
-        
         let next = getIndex(item: item) + 1 == currentIndex ? (offset < 0 ? topOffset : -topOffset) : 0
-        
         //safety check between 0 to max list size....
         let checkBetween = currentIndex >= 0 && currentIndex < list.count ? (getIndex(item: item) - 1 == currentIndex ? previous : next) : 0
         
         //checking current...
         // if so shifting view to top...
-    
+
         return getIndex(item: item) ==  currentIndex ? -60 - topOffset : checkBetween
     }
     

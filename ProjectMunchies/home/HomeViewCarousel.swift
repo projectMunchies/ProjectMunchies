@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import UIKit
+import FirebaseStorage
 
 struct HomeViewCarousel: View {
     @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var cardViewModel = CardViewModel()
     //Animated View properties
     @State var currentIndex: Int = 0
     
     //Detail View properties
     @State var detailMovie: ProfileModel?
     @State var showDetailView: Bool = false
+    @State var detailImage: UIImage = UIImage()
     
     // FOR MATCHED GEOMETRY EFFECT STORING CURRENT CARD SIZE
     @State var currentCardSize: CGSize = .zero
@@ -22,6 +26,11 @@ struct HomeViewCarousel: View {
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var filteredCards: [ProfileModel] = []
+    
+    @State private var isLoadCards: Bool = false
+    @State private var cards: [ProfileModel] = []
+    @State private var lawd: UIImage = UIImage()
+    let storage = Storage.storage()
     
     // Environment Values
     @Namespace var animation
@@ -35,44 +44,11 @@ struct HomeViewCarousel: View {
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: mockProfiles){profile in
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.cards){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
-                            
-                            ZStack{
-                                Image(profile.artwork)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: size.width, height: size.height * 0.67)
-                                    .cornerRadius(15)
-                                    .matchedGeometryEffect(id: profile.id, in: animation)
-                                    .onTapGesture {
-                                        currentCardSize = size
-                                        detailMovie = profile
-                                        withAnimation(.easeInOut){
-                                            showDetailView = true
-                                        }
-                                    }
-                                    .draggable(Image(profile.artwork)){
-                                        Image(profile.artwork)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: size.width * 0.2, height: size.height * 0.1)
-                                    }
-                                
-                                VStack{
-                                    Text("\(profile.fullName)")
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                    
-                                    Text("\(profile.occupation)")
-                                        .foregroundColor(.white)
-                                    
-                                    Text("\(profile.location)")
-                                        .foregroundColor(.white)
-                                }
-                                .position(x:size.width * 0.2, y:size.height * 0.7)
-                            }
+
+                            CardViewCarousel(size: size,profile: profile, detailMovie: $detailMovie, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
                         }
                     }
                     // Since Carousel is Moved The current Card a little bit up
@@ -86,7 +62,75 @@ struct HomeViewCarousel: View {
                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.6)
                 .overlay{
                     if let profile = detailMovie,showDetailView{
-                        DetailView(profile: profile, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, animation: animation)
+                        DetailView(profile: profile, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, detailImage: $detailImage, animation: animation)
+                    }
+                }
+            }
+            .onAppear{
+                homeViewModel.getUserProfile() {(userProfileId) -> Void in
+                    if userProfileId != "" {
+                        //get profileImage
+                        homeViewModel.getImageStorageFile(profileId: userProfileId)
+                        
+                        if !isLoadCards && filteredCards.isEmpty {
+                            getProfiles(filterProfileIds: []){(profiles) in
+                                if !profiles.isEmpty {
+                                    filterCards(){(selfCards) in
+                                        if !selfCards.isEmpty{
+                                          print("")
+                                        }
+                                    }
+                                }
+                            }
+                        }else if !filteredCards.isEmpty {
+                            self.cards.removeAll()
+                            self.cards = filteredCards.shuffled()
+                            filterCards(){(selfCards) in
+                                if !selfCards.isEmpty{
+                                    print("selfCards completed")
+                                }
+                            }
+                        }else {
+                            filterCards(){(selfCards) in
+                                if !selfCards.isEmpty{
+                                    print("selfCards compelted")
+                                }
+                            }
+                        }
+                        
+                    } else {
+                        homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
+                            if newUserProfileId != "" {
+                                //showAddImagePopover.toggle()
+                                
+                                if !isLoadCards && filteredCards.isEmpty {
+                                    getProfiles(filterProfileIds: []){(profiles) in
+                                        if !profiles.isEmpty {
+                                            filterCards(){(selfCards) in
+                                                if !selfCards.isEmpty{
+                                                    isLoadCards.toggle()
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                }else if !filteredCards.isEmpty {
+                                    self.cards.removeAll()
+                                    self.cards = filteredCards.shuffled()
+                                    filterCards(){(selfCards) in
+                                        if !selfCards.isEmpty{
+                                            print("cards loaded")
+                                        }
+                                    }
+                                }else {
+                                    filterCards(){(selfCards) in
+                                        if !selfCards.isEmpty{
+                                            print("cards loaded")
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -104,7 +148,7 @@ struct HomeViewCarousel: View {
     @ViewBuilder
     private func CustomIndicator()->some View{
         HStack(spacing: 5){
-            ForEach(mockProfiles.indices,id: \.self){index in
+            ForEach(self.cards.indices, id: \.self){index in
                 Circle()
                     .fill(currentIndex == index ? .blue : .gray.opacity(0.5))
                     .frame(width: currentIndex == index ? 10 : 6, height: currentIndex == index ? 10 : 6)
@@ -163,21 +207,28 @@ struct HomeViewCarousel: View {
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 15){
                     ForEach(mockBunches){bunch in
-                        VStack{
-                            Image(bunch.artwork)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 60, height: 80)
-                                .background(.gray.opacity(0.2))
-                                .cornerRadius(15)
-                                .dropDestination(for: Image.self) { items, locations in
-                                    return true
-                                }
-                            
-                            Text(bunch.movieTitle)
-                                .font(.system(size: 12))
-                                .foregroundColor(.black)
+                        Button{
+                            //                            NavigationLink(destination: EventView(event: , viewModel: cardViewModel)){
+                            //
+                            //                            }
+                        }label:{
+                            VStack{
+                                Image(bunch.artwork)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 60, height: 80)
+                                    .background(.gray.opacity(0.2))
+                                    .cornerRadius(15)
+                                    .dropDestination(for: Image.self) { items, locations in
+                                        return true
+                                    }
+                                
+                                Text(bunch.movieTitle)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.black)
+                            }
                         }
+                        
                     }
                     
                     Button{
@@ -198,6 +249,87 @@ struct HomeViewCarousel: View {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    private func filterCards(completed: @escaping(_ selfCards: [ProfileModel])-> Void) {
+        // 18 <= age <= 70
+        let ageFilteredCards: [ProfileModel] = self.cards.filter{Int($0.age) ?? 0 >= Int(homeViewModel.foodFilter.ageRangeFrom) ?? 0 &&  Int($0.age) ?? 0 <= Int(homeViewModel.foodFilter.ageRangeTo) ?? 0}
+        
+        if homeViewModel.foodFilter.gender.lowercased() == "male" {
+            self.cards = ageFilteredCards.filter({$0.gender.lowercased() == "male"})
+            completed(self.cards)
+        }
+        else if homeViewModel.foodFilter.gender.lowercased() == "female" {
+            self.cards = ageFilteredCards.filter({$0.gender.lowercased() == "female"})
+            completed(self.cards)
+        }
+        else if homeViewModel.foodFilter.gender.lowercased() == "pick" {
+            self.cards = ageFilteredCards
+            completed(self.cards)
+        }
+    }
+    
+    public func getProfiles(filterProfileIds: [String], completed: @escaping (_ profiles: [ProfileModel]) -> Void) {
+        if filterProfileIds.isEmpty {
+            db.collection("profiles")
+                .whereField("id", isNotEqualTo: homeViewModel.userProfile.id)
+                .limit(to: 10)
+                .getDocuments() {(querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                        completed([])
+                    }else {
+                        for document in querySnapshot!.documents {
+                            let data = document.data()
+                            if !data.isEmpty{
+                                let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false)
+                                self.cards.append(profile)
+                            }
+                        }
+                        // very stupid but I have to do this. There is no shuffle()
+                        var shuffled = self.cards.shuffled()
+                        self.cards = shuffled
+                        completed(self.cards)
+                    }
+                }
+        }else {
+            var profiles: [ProfileModel] = []
+            var profileIds: [String] = []
+            var batches: [Any] = []
+            profileIds = filterProfileIds
+            
+            while(!profileIds.isEmpty){
+                let batch = Array(profileIds.prefix(10))
+                let count = profileIds.count
+                if count < 10{
+                    profileIds.removeSubrange(ClosedRange(uncheckedBounds: (lower: 0, upper: count - 1)))
+                }else {
+                    profileIds.removeSubrange(ClosedRange(uncheckedBounds: (lower: 0, upper: 9)))
+                }
+                
+                batches.append(
+                    db.collection("profiles")
+                        .whereField("id", in: batch)
+                        .limit(to: 20)
+                        .getDocuments() {(querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                                completed([])
+                            }else {
+                                for document in querySnapshot!.documents {
+                                    let data = document.data()
+                                    if !data.isEmpty{
+                                        let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false)
+                                        profiles.append(profile)
+                                    }
+                                }
+                                completed(profiles)
+                            }
+                            
+                        }
+                )
             }
         }
     }

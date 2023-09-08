@@ -12,6 +12,7 @@ struct DetailView: View {
     @Binding var showDetailVew: Bool
     @Binding var detailMovie: ProfileModel?
     @Binding var currentCardSize: CGSize
+    @Binding var detailImage: UIImage
     
     var animation: Namespace.ID
     @State var showDetailContent: Bool = false
@@ -20,7 +21,7 @@ struct DetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             VStack{
-                Image(profile.artwork)
+                Image(uiImage: detailImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: currentCardSize.width, height: currentCardSize.height * 0.67)
@@ -101,6 +102,7 @@ struct DetailView: View {
                 .ignoresSafeArea()
         }
         .onAppear {
+            
             withAnimation(.easeInOut){
                 showDetailContent = true
             }

@@ -34,23 +34,29 @@ class CardViewModel: ObservableObject {
             } else {
                 let image = UIImage(data: data!)
                 self.profileImage = image!
+                
             }
             
         }
     }
     
-    public func getStorageFiles(cardImages: [ProfileModel]){
+    public func getStorageFiles(cardImages: [ProfileModel], completed: @escaping (_ cardImages: [UIImage]) -> Void){
         for profile in cardImages {
             let imageRef = storage.reference().child("\(String(describing: profile.id))"+"/images/image.jpg")
             
             imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) {data, error in
                 if let error = error {
                     print("Error getting file: ",error)
+                    completed([])
                 } else {
                     let image = UIImage(data: data!)
                     self.profileImages.append(image!)
+                    if self.profileImages.indices.contains(8){
+                        completed(self.profileImages)
+                    }
                 }
             }
         }
+        print("this hit")
     }
 }
