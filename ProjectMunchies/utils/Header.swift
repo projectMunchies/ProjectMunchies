@@ -73,7 +73,7 @@ struct Header: View {
                 .frame(width: geoReader.size.width * 0.15)
             
             HStack(spacing: 20){
-                filterIcon(for: geoReader)
+                filterIconAndPopover(for: geoReader)
                 
                 NavigationLink(destination: SettingsView() ) {
                     if !homeViewModel.profileImage.size.height.isZero {
@@ -99,7 +99,7 @@ struct Header: View {
         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
     }
     
-    private func filterIcon(for geoReader: GeometryProxy) -> some View {
+    private func filterIconAndPopover(for geoReader: GeometryProxy) -> some View {
         VStack{
             Button(action: {
                 showPrefPopover.toggle()
@@ -265,9 +265,8 @@ struct Header: View {
                     }
             }
         }
+        //    <a target="_blank" href="https://icons8.com/icon/83194/news">News</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
     }
-    
-//    <a target="_blank" href="https://icons8.com/icon/83194/news">News</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
     
     private func introIcon(for geoReader: GeometryProxy) -> some View {
         VStack{
@@ -415,7 +414,7 @@ struct Header: View {
         foodFilter.ageRangeTo = String(self.foodFilterAgeRangeTo)
         foodFilter.category = String(self.foodFilterCategory)
         foodFilter.type = String(self.foodFilterType)
-
+        
         //updating or creating user's filter
         homeViewModel.getUserFilter() {(userFilter) in
             if userFilter.id != "" {
@@ -431,7 +430,7 @@ struct Header: View {
                 let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
                 let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
                 // using state in CardsView() is easier than making my own and passing it into CardsView()
-                CardsView(geoReader: geoReader , foodFilter: self.foodFilter, filteredCards: [], userProfileId: homeViewModel.userProfile.id).getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
+                HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
                     if !profiles.isEmpty {
                         filteredCards = profiles
                     }

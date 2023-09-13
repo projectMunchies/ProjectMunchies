@@ -26,7 +26,6 @@ struct HomeViewCarousel: View {
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var filteredCards: [ProfileModel] = []
-    
     @State private var isLoadCards: Bool = false
     @State private var cards: [ProfileModel] = []
     @State private var lawd: UIImage = UIImage()
@@ -35,7 +34,6 @@ struct HomeViewCarousel: View {
     // Environment Values
     @Namespace var animation
     @Environment (\.colorScheme) var scheme
-    
     var body: some View {
         GeometryReader{geoReader in
             ZStack{
@@ -44,10 +42,10 @@ struct HomeViewCarousel: View {
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.cards){profile in
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.filteredCards){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
-
+                            
                             CardViewCarousel(size: size,profile: profile, detailMovie: $detailMovie, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
                         }
                     }
@@ -72,18 +70,17 @@ struct HomeViewCarousel: View {
                         //get profileImage
                         homeViewModel.getImageStorageFile(profileId: userProfileId)
                         
-                        if !isLoadCards && filteredCards.isEmpty {
+                        if filteredCards.isEmpty {
                             getProfiles(filterProfileIds: []){(profiles) in
                                 if !profiles.isEmpty {
                                     filterCards(){(selfCards) in
                                         if !selfCards.isEmpty{
-                                          print("")
+                                            print("")
                                         }
                                     }
                                 }
                             }
                         }else if !filteredCards.isEmpty {
-                            self.cards.removeAll()
                             self.cards = filteredCards.shuffled()
                             filterCards(){(selfCards) in
                                 if !selfCards.isEmpty{
@@ -101,8 +98,6 @@ struct HomeViewCarousel: View {
                     } else {
                         homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
                             if newUserProfileId != "" {
-                                //showAddImagePopover.toggle()
-                                
                                 if !isLoadCards && filteredCards.isEmpty {
                                     getProfiles(filterProfileIds: []){(profiles) in
                                         if !profiles.isEmpty {
@@ -111,11 +106,9 @@ struct HomeViewCarousel: View {
                                                     isLoadCards.toggle()
                                                 }
                                             }
-                                            
                                         }
                                     }
                                 }else if !filteredCards.isEmpty {
-                                    self.cards.removeAll()
                                     self.cards = filteredCards.shuffled()
                                     filterCards(){(selfCards) in
                                         if !selfCards.isEmpty{
@@ -289,7 +282,7 @@ struct HomeViewCarousel: View {
                             }
                         }
                         // very stupid but I have to do this. There is no shuffle()
-                        var shuffled = self.cards.shuffled()
+                        let shuffled = self.cards.shuffled()
                         self.cards = shuffled
                         completed(self.cards)
                     }
@@ -312,7 +305,7 @@ struct HomeViewCarousel: View {
                 batches.append(
                     db.collection("profiles")
                         .whereField("id", in: batch)
-                        .limit(to: 20)
+                        .limit(to: 10)
                         .getDocuments() {(querySnapshot, err) in
                             if let err = err {
                                 print("Error getting documents: \(err)")
@@ -325,6 +318,8 @@ struct HomeViewCarousel: View {
                                         profiles.append(profile)
                                     }
                                 }
+                                
+                                profiles.shuffle()
                                 completed(profiles)
                             }
                             

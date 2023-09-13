@@ -20,7 +20,7 @@ class HomeViewModel: ObservableObject {
     @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
     @Published var userFoodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
     @Published var foodFilters: [FoodFilterModel] = []
-    
+    @Published var lastDoc: DocumentSnapshot!
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
         db.collection("profiles")
@@ -69,15 +69,12 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    
-    
     public func getImageStorageFile(profileId: String) {
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
         
         // Download in memory with a maximum allowed size of 2MB (2 * 1024 * 1024 bytes)
         imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) { data, error in
             if let error = error {
-                // Uh-oh, an error occurred!
                 print("Error getting file: ", error)
             } else {
                 let image = UIImage(data: data!)
@@ -119,19 +116,34 @@ class HomeViewModel: ObservableObject {
     }
     
     public func getFilteredRecords(foodFilter: FoodFilterModel, completed: @escaping (_ filteredRecords: [FoodFilterModel]) -> Void) {
-        //clean if dirty
+        //Clean if dirty
         self.foodFilters.removeAll()
         
         let dayString = "sunday"
         let enumDayOfWeek = Date.Weekday(rawValue: dayString)
         let start = Date.today().previous(enumDayOfWeek ?? .sunday)
         let end = Date.today().next(enumDayOfWeek ?? .sunday)
+        var query: Query!
         
-        db.collection("filters")
-            .whereField("timeStamp", isGreaterThan: start)
-            .whereField("timeStamp", isLessThan: end)
-            .whereField("category", isEqualTo: foodFilter.category)
-            .whereField("type", isEqualTo: foodFilter.type)
+        if (self.lastDoc != nil) {
+            query = db.collection("filters")
+                .whereField("timeStamp", isGreaterThan: start)
+                .whereField("timeStamp", isLessThan: end)
+                .whereField("category", isEqualTo: foodFilter.category)
+                .whereField("type", isEqualTo: foodFilter.type)
+                .limit(to: 10)
+            //this has to be at the end for this to work
+                .start(afterDocument: self.lastDoc)
+        }else{
+            query = db.collection("filters")
+                .whereField("timeStamp", isGreaterThan: start)
+                .whereField("timeStamp", isLessThan: end)
+                .whereField("category", isEqualTo: foodFilter.category)
+                .whereField("type", isEqualTo: foodFilter.type)
+                .limit(to: 10)
+        }
+        
+        query
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -146,6 +158,8 @@ class HomeViewModel: ObservableObject {
                             self.foodFilters.append(foodFilter)
                         }
                     }
+                    //important so we can get the next n filters from the db
+                    self.lastDoc = querySnapshot!.documents.last
                     completed(self.foodFilters)
                 }
             }
@@ -197,7 +211,6 @@ class HomeViewModel: ObservableObject {
     }
     
     public func updateUserFilter(userFilterId: String, userFilter: FoodFilterModel) {
-        
         let docData: [String: Any] = [
             "category": userFilter.category,
             "type": userFilter.type,
@@ -207,7 +220,6 @@ class HomeViewModel: ObservableObject {
             "ageRangeTo": userFilter.ageRangeTo,
             "timeStamp": Date()
         ]
-        print(userFilter)
         
         let docRef = db.collection("filters").document(userFilterId)
         
