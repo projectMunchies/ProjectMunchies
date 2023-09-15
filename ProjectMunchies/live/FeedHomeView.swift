@@ -14,9 +14,6 @@ struct City: Identifiable {
     var name: String
     var address: String
 }
-
-
-
 struct FeedHomeView: View {
     @State private var showHamburgerMenu: Bool = false
     @StateObject private var homeViewModel = HomeViewModel()
@@ -82,30 +79,33 @@ struct FeedHomeView: View {
                         
                         
                         ScrollView{
-                            VStack{
-                                ForEach(self.cities) { message in
-                                        ZStack{
-                                            Text("")
-                                                .frame(width: 380, height: 110)
-                                                .background(.gray)
-                                                .cornerRadius(30)
+                            NavigationLink(destination: BunchView()){
+                                VStack{
+                                    ForEach(self.cities) { message in
+                                            ZStack{
+                                                Text("")
+                                                    .frame(width: 380, height: 110)
+                                                    .background(.gray)
+                                                    .cornerRadius(30)
 
-                                            VStack{
-                                                Text("\(message.name)")
-                                                    .font(.system(size: 20))
-                                                    .foregroundColor(.white)
-                                                
-                                                Text("\(message.address)")
-                                                    .font(.system(size: 10))
-                                                    .foregroundColor(.white)
+                                                VStack{
+                                                    Text("\(message.name)")
+                                                        .font(.system(size: 20))
+                                                        .foregroundColor(.white)
+                                                    
+                                                    Text("\(message.address)")
+                                                        .font(.system(size: 10))
+                                                        .foregroundColor(.white)
 
-//                                                Spacer()
-//                                                    .frame(height: 50)
+    //                                                Spacer()
+    //                                                    .frame(height: 50)
+                                                }
                                             }
+                                            .padding(.bottom, geoReader.size.height * 0.003)
                                         }
-                                        .padding(.bottom, geoReader.size.height * 0.003)
-                                    }
+                                }
                             }
+                         
                         }
                     }
                         .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.64)
@@ -126,8 +126,7 @@ struct FeedHomeView: View {
                             }
                         }
                     
-                    
-                    Text("CrunchFeed")
+                    Text("Find Location")
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)

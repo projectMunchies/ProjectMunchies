@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ProfileModel: Identifiable{
+struct ProfileModel: Identifiable, Equatable{
     var id: String
     var fullName: String
     var location: String

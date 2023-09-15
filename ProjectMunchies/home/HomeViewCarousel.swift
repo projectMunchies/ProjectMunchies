@@ -42,7 +42,7 @@ struct HomeViewCarousel: View {
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.filteredCards){profile in
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.filteredCards.isEmpty ? self.cards : self.filteredCards){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
                             
@@ -81,18 +81,12 @@ struct HomeViewCarousel: View {
                                 }
                             }
                         }else if !filteredCards.isEmpty {
-                            self.cards = filteredCards.shuffled()
-                            filterCards(){(selfCards) in
-                                if !selfCards.isEmpty{
-                                    print("selfCards completed")
-                                }
-                            }
-                        }else {
-                            filterCards(){(selfCards) in
-                                if !selfCards.isEmpty{
-                                    print("selfCards compelted")
-                                }
-                            }
+//                            self.cards = filteredCards.shuffled()
+//                            filterCards(){(selfCards) in
+//                                if !selfCards.isEmpty{
+//                                    print("selfCards completed")
+//                                }
+//                            }
                         }
                         
                     } else {
@@ -124,6 +118,14 @@ struct HomeViewCarousel: View {
                                 }
                             }
                         }
+                    }
+                }
+            }
+            .onChange(of: filteredCards) { newValue in
+                self.cards = filteredCards.shuffled()
+                filterCards(){(selfCards) in
+                    if !selfCards.isEmpty{
+                        print("selfCards completed")
                     }
                 }
             }
@@ -200,11 +202,7 @@ struct HomeViewCarousel: View {
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 15){
                     ForEach(mockBunches){bunch in
-                        Button{
-                            //                            NavigationLink(destination: EventView(event: , viewModel: cardViewModel)){
-                            //
-                            //                            }
-                        }label:{
+                        NavigationLink(destination: BunchView()){
                             VStack{
                                 Image(bunch.artwork)
                                     .resizable()
@@ -221,16 +219,14 @@ struct HomeViewCarousel: View {
                                     .foregroundColor(.black)
                             }
                         }
-                        
                     }
                     
-                    Button{
-                        
-                    }label: {
+                    NavigationLink(destination: FeedHomeView()){
                         VStack{
                             Image(systemName: "plus")
                                 .frame(width: 60, height: 80)
                                 .background(.gray.opacity(0.5))
+                                .foregroundColor(.blue)
                                 .cornerRadius(15)
                                 .dropDestination(for: Image.self) { items, locations in
                                     return true
@@ -281,9 +277,6 @@ struct HomeViewCarousel: View {
                                 self.cards.append(profile)
                             }
                         }
-                        // very stupid but I have to do this. There is no shuffle()
-                        let shuffled = self.cards.shuffled()
-                        self.cards = shuffled
                         completed(self.cards)
                     }
                 }
