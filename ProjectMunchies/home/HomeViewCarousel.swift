@@ -25,7 +25,6 @@ struct HomeViewCarousel: View {
     
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
-    @State private var filteredCards: [ProfileModel] = []
     @State private var isLoadCards: Bool = false
     @State private var cards: [ProfileModel] = []
     @State private var lawd: UIImage = UIImage()
@@ -39,10 +38,10 @@ struct HomeViewCarousel: View {
             ZStack{
                 BGView()
                 
-                Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $filteredCards, homeViewModel: homeViewModel)
+                Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $cards, homeViewModel: homeViewModel)
                 
                 ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.filteredCards.isEmpty ? self.cards : self.filteredCards){profile in
+                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.cards){profile in
                         GeometryReader{proxy in
                             let size = proxy.size
                             
@@ -69,8 +68,7 @@ struct HomeViewCarousel: View {
                     if userProfileId != "" {
                         //get profileImage
                         homeViewModel.getImageStorageFile(profileId: userProfileId)
-                        
-                        if filteredCards.isEmpty {
+                    
                             getProfiles(filterProfileIds: []){(profiles) in
                                 if !profiles.isEmpty {
                                     filterCards(){(selfCards) in
@@ -80,19 +78,10 @@ struct HomeViewCarousel: View {
                                     }
                                 }
                             }
-                        }else if !filteredCards.isEmpty {
-//                            self.cards = filteredCards.shuffled()
-//                            filterCards(){(selfCards) in
-//                                if !selfCards.isEmpty{
-//                                    print("selfCards completed")
-//                                }
-//                            }
-                        }
                         
                     } else {
                         homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
                             if newUserProfileId != "" {
-                                if !isLoadCards && filteredCards.isEmpty {
                                     getProfiles(filterProfileIds: []){(profiles) in
                                         if !profiles.isEmpty {
                                             filterCards(){(selfCards) in
@@ -102,31 +91,27 @@ struct HomeViewCarousel: View {
                                             }
                                         }
                                     }
-                                }else if !filteredCards.isEmpty {
-                                    self.cards = filteredCards.shuffled()
-                                    filterCards(){(selfCards) in
-                                        if !selfCards.isEmpty{
-                                            print("cards loaded")
-                                        }
-                                    }
-                                }else {
-                                    filterCards(){(selfCards) in
-                                        if !selfCards.isEmpty{
-                                            print("cards loaded")
-                                        }
-                                    }
-                                }
                             }
                         }
                     }
                 }
             }
-            .onChange(of: filteredCards) { newValue in
-                self.cards = filteredCards.shuffled()
+            .onChange(of: cards) { newValue in
+                self.cards = newValue.shuffled()
                 filterCards(){(selfCards) in
                     if !selfCards.isEmpty{
                         print("selfCards completed")
                     }
+                }
+            }
+            .onChange(of: homeViewModel.foodFilter){ newValue in
+               //do this to have more profiles to choose from in db
+                //homeViewModel.lastDoc = nil
+                homeViewModel.getFilteredRecords(foodFilter: newValue, isReset: true){(foodFilters) in
+                    if foodFilters.isEmpty{
+                        print(homeViewModel.lastDoc.data())
+                    }
+                    
                 }
             }
             
@@ -261,6 +246,9 @@ struct HomeViewCarousel: View {
     }
     
     public func getProfiles(filterProfileIds: [String], completed: @escaping (_ profiles: [ProfileModel]) -> Void) {
+        //Clean if dirty
+        self.cards.removeAll()
+        
         if filterProfileIds.isEmpty {
             db.collection("profiles")
                 .whereField("id", isNotEqualTo: homeViewModel.userProfile.id)

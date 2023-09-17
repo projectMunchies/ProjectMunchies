@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoodFilterModel: Identifiable, Codable {
+struct FoodFilterModel: Identifiable, Codable, Equatable {
     var id: String
     var userProfileId: String
     var category: String

@@ -115,7 +115,7 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    public func getFilteredRecords(foodFilter: FoodFilterModel, completed: @escaping (_ filteredRecords: [FoodFilterModel]) -> Void) {
+    public func getFilteredRecords(foodFilter: FoodFilterModel, isReset: Bool, completed: @escaping (_ filteredRecords: [FoodFilterModel]) -> Void) {
         //Clean if dirty
         self.foodFilters.removeAll()
         
@@ -143,6 +143,14 @@ class HomeViewModel: ObservableObject {
                 .limit(to: 10)
         }
         
+        //grab the first doc if the db
+        if(isReset){
+            query = db.collection("filters")
+                .whereField("timeStamp", isGreaterThan: start)
+                .whereField("timeStamp", isLessThan: end)
+                .limit(to: 1)
+        }
+        
         query
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -155,11 +163,20 @@ class HomeViewModel: ObservableObject {
                         if !data.isEmpty{
                             let foodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
                             
-                            self.foodFilters.append(foodFilter)
+                            if(isReset){
+                                self.lastDoc = querySnapshot!.documents.first
+                            }else{
+                                self.foodFilters.append(foodFilter)
+                            }
+                          
                         }
                     }
-                    //important so we can get the next n filters from the db
-                    self.lastDoc = querySnapshot!.documents.last
+                    
+                    if(!isReset){
+                        //important so we can get the next n filters from the db
+                        self.lastDoc = querySnapshot!.documents.last
+                    }
+                  
                     completed(self.foodFilters)
                 }
             }

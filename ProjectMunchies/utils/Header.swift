@@ -34,7 +34,6 @@ struct Header: View {
     var body: some View {
         GeometryReader{ geoReader in
             headerSection(for: geoReader)
-            
         }
     }
     
@@ -425,7 +424,7 @@ struct Header: View {
         }
         
         // get all filters recently updated that match user's parameters then grab the profile
-        homeViewModel.getFilteredRecords(foodFilter: foodFilter) {(foodFilters) in
+        homeViewModel.getFilteredRecords(foodFilter: foodFilter, isReset: false) {(foodFilters) in
             if !foodFilters.isEmpty {
                 let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
                 let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
