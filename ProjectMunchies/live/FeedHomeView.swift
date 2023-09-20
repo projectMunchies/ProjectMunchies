@@ -79,7 +79,7 @@ struct FeedHomeView: View {
                         
                         
                         ScrollView{
-                            NavigationLink(destination: BunchView()){
+                            NavigationLink(destination: BunchView(bunchId: "")){
                                 VStack{
                                     ForEach(self.cities) { message in
                                             ZStack{

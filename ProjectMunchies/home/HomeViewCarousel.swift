@@ -68,29 +68,28 @@ struct HomeViewCarousel: View {
                     if userProfileId != "" {
                         //get profileImage
                         homeViewModel.getImageStorageFile(profileId: userProfileId)
-                    
-                            getProfiles(filterProfileIds: []){(profiles) in
-                                if !profiles.isEmpty {
-                                    filterCards(){(selfCards) in
-                                        if !selfCards.isEmpty{
-                                            print("")
-                                        }
+                        
+                        getProfiles(filterProfileIds: []){(profiles) in
+                            if !profiles.isEmpty {
+                                filterCards(){(selfCards) in
+                                    if !selfCards.isEmpty{
                                     }
                                 }
                             }
+                        }
                         
                     } else {
                         homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
                             if newUserProfileId != "" {
-                                    getProfiles(filterProfileIds: []){(profiles) in
-                                        if !profiles.isEmpty {
-                                            filterCards(){(selfCards) in
-                                                if !selfCards.isEmpty{
-                                                    isLoadCards.toggle()
-                                                }
+                                getProfiles(filterProfileIds: []){(profiles) in
+                                    if !profiles.isEmpty {
+                                        filterCards(){(selfCards) in
+                                            if !selfCards.isEmpty{
+                                                isLoadCards.toggle()
                                             }
                                         }
                                     }
+                                }
                             }
                         }
                     }
@@ -100,18 +99,16 @@ struct HomeViewCarousel: View {
                 self.cards = newValue.shuffled()
                 filterCards(){(selfCards) in
                     if !selfCards.isEmpty{
-                        print("selfCards completed")
                     }
                 }
             }
             .onChange(of: homeViewModel.foodFilter){ newValue in
-               //do this to have more profiles to choose from in db
+                //do this to have more profiles to choose from in db
                 //homeViewModel.lastDoc = nil
                 homeViewModel.getFilteredRecords(foodFilter: newValue, isReset: true){(foodFilters) in
                     if foodFilters.isEmpty{
                         print(homeViewModel.lastDoc.data())
                     }
-                    
                 }
             }
             
@@ -186,24 +183,10 @@ struct HomeViewCarousel: View {
             
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 15){
-                    ForEach(mockBunches){bunch in
-                        NavigationLink(destination: BunchView()){
-                            VStack{
-                                Image(bunch.artwork)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 60, height: 80)
-                                    .background(.gray.opacity(0.2))
-                                    .cornerRadius(15)
-                                    .dropDestination(for: Image.self) { items, locations in
-                                        return true
-                                    }
-                                
-                                Text(bunch.movieTitle)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.black)
-                            }
-                        }
+                    ForEach(homeViewModel.userProfile.bunchIds, id: \.self){bunchId in
+                        
+                        BunchView(bunchId: bunchId)
+                        
                     }
                     
                     NavigationLink(destination: FeedHomeView()){
@@ -224,6 +207,7 @@ struct HomeViewCarousel: View {
                     }
                 }
             }
+            .padding(.horizontal)
         }
     }
     
@@ -261,7 +245,7 @@ struct HomeViewCarousel: View {
                         for document in querySnapshot!.documents {
                             let data = document.data()
                             if !data.isEmpty{
-                                let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false)
+                                let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? [])
                                 self.cards.append(profile)
                             }
                         }
@@ -295,7 +279,7 @@ struct HomeViewCarousel: View {
                                 for document in querySnapshot!.documents {
                                     let data = document.data()
                                     if !data.isEmpty{
-                                        let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false)
+                                        let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? [])
                                         profiles.append(profile)
                                     }
                                 }

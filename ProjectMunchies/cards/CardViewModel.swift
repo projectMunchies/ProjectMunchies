@@ -57,6 +57,5 @@ class CardViewModel: ObservableObject {
                 }
             }
         }
-        print("this hit")
     }
 }
