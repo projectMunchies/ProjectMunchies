@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailView: View {
     var profile: ProfileModel
     @Binding var showDetailVew: Bool
-    @Binding var detailMovie: ProfileModel?
     @Binding var currentCardSize: CGSize
     @Binding var detailImage: UIImage
     

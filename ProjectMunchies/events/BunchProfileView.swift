@@ -10,6 +10,8 @@ import SwiftUI
 struct BunchProfileView: View {
     @State private var threads: [String] = []
     @State private var allReviews: [String] = []
+    @State private var reviewText: String = ""
+    @State private var isEditing: Bool = false
     
     let singleBunch: BunchModel
     
@@ -39,9 +41,7 @@ struct BunchProfileView: View {
                                     .frame(width: 70, height: 100)
                                     .clipped()
                                     .cornerRadius(70)
-                                  
                             }
-                           
                         }
                         .padding()
                     }
@@ -74,6 +74,34 @@ struct BunchProfileView: View {
                             }
                         }
                     }
+                    
+                    TextField("...add review", text: $reviewText)
+                        .frame(width: 380, height: 50)
+                        .background(.white.opacity(0.5))
+                        .foregroundColor(.black)
+                        .cornerRadius(15)
+                        .overlay(
+                            HStack{
+                                Spacer()
+                                
+                                if isEditing{
+                                    Button(action: {
+                                        print("fuck yeah!")
+                                    })  {
+                                        Image(systemName: "arrow.up.message.fill")
+                                            .resizable()
+                                            .frame(width: 27, height: 30)
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                
+                                Spacer()
+                                    .frame(width: 10)
+                            }
+                        )
+                        .onTapGesture {
+                            isEditing = true
+                        }
                 }
                 .onAppear{
                     self.allReviews = readCSV(inputFile: "Restaurant_Reviews2.tsv")
@@ -146,6 +174,6 @@ struct BunchProfileView: View {
 
 struct BunchProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        BunchProfileView(singleBunch: BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []))
+        BunchProfileView(singleBunch: BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""))
     }
 }

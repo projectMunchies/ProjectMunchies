@@ -12,27 +12,25 @@ import FirebaseStorage
 struct HomeViewCarousel: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var cardViewModel = CardViewModel()
-    //Animated View properties
-    @State var currentIndex: Int = 0
+    //controls swiping cards left to right
+    @State var swipeIndex: Int = 0
     
-    //Detail View properties
-    @State var detailMovie: ProfileModel?
+    @State var detailProfile: ProfileModel?
     @State var showDetailView: Bool = false
     @State var detailImage: UIImage = UIImage()
-    
     // FOR MATCHED GEOMETRY EFFECT STORING CURRENT CARD SIZE
     @State var currentCardSize: CGSize = .zero
     
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
-    @State private var isLoadCards: Bool = false
     @State private var cards: [ProfileModel] = []
-    @State private var lawd: UIImage = UIImage()
+    //toggles groups and singles tabview
+    @State var cardTypeIndex: Int = 0
     let storage = Storage.storage()
-    
     // Environment Values
     @Namespace var animation
     @Environment (\.colorScheme) var scheme
+    
     var body: some View {
         GeometryReader{geoReader in
             ZStack{
@@ -40,26 +38,71 @@ struct HomeViewCarousel: View {
                 
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $cards, homeViewModel: homeViewModel)
                 
-                ZStack{
-                    SnapCarousel(spacing: 20,trailingSpace: 110, index: $currentIndex, items: self.cards){profile in
-                        GeometryReader{proxy in
-                            let size = proxy.size
-                            
-                            CardViewCarousel(size: size,profile: profile, detailMovie: $detailMovie, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
-                        }
+                VStack{
+                    //Tab View...
+                    HStack(spacing: 0){
+                        Text("Groups")
+                            .frame(width: 200)
+                            .foregroundColor(self.cardTypeIndex == 0 ? .white : Color(.blue).opacity(0.7))
+                            .fontWeight(.bold)
+                            .padding(.vertical,10)
+                            .padding(.horizontal,35)
+                            .background(Color(.blue).opacity(self.cardTypeIndex == 0 ? 1 : 0))
+                            .clipShape(Capsule())
+                            .onTapGesture {
+                                withAnimation(.default){
+                                    self.cardTypeIndex = 0
+                                }
+                            }
+                        
+                        Text("Singles")
+                            .frame(width: 200)
+                            .foregroundColor(self.cardTypeIndex == 1 ? .white : Color(.blue).opacity(0.7))
+                            .fontWeight(.bold)
+                            .padding(.vertical,10)
+                            .padding(.horizontal,35)
+                            .background(Color(.blue).opacity(self.cardTypeIndex == 1 ? 1 : 0))
+                            .clipShape(Capsule())
+                            .onTapGesture {
+                                withAnimation(.default){
+                                    self.cardTypeIndex = 1
+                                }
+                            }
                     }
-                    // Since Carousel is Moved The current Card a little bit up
-                    //Using padding to avoid the Undercovering the top element
-                    .padding(.top,50)
-                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                    .frame(width: 400)
+                    .background(Color.black.opacity(0.06))
+                    .clipShape(Capsule())
+                    
+                    Spacer(minLength: 0)
+                }
+                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.58)
+                
+                ZStack{
+                    if isLoading{
+                        ProgressView()
+                            .controlSize(.large)
+                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.35)
+                    } else {
+                        SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
+                            GeometryReader{proxy in
+                                let size = proxy.size
+                                
+                                CardViewCarousel(size: size, profile: profile, cardTypeIndex: self.cardTypeIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+                            }
+                        }
+                        // Since Carousel is Moved The current Card a little bit up
+                        //Using padding to avoid the Undercovering the top element
+                        .padding(.top,50)
+                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                    }
                     
                     Footer()
                         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.77)
                 }
                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.6)
                 .overlay{
-                    if let profile = detailMovie,showDetailView{
-                        DetailView(profile: profile, showDetailVew: $showDetailView, detailMovie: $detailMovie, currentCardSize: $currentCardSize, detailImage: $detailImage, animation: animation)
+                    if let profile = detailProfile,showDetailView{
+                        DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage, animation: animation)
                     }
                 }
             }
@@ -84,9 +127,7 @@ struct HomeViewCarousel: View {
                                 getProfiles(filterProfileIds: []){(profiles) in
                                     if !profiles.isEmpty {
                                         filterCards(){(selfCards) in
-                                            if !selfCards.isEmpty{
-                                                isLoadCards.toggle()
-                                            }
+                                            //should something be here?
                                         }
                                     }
                                 }
@@ -127,11 +168,11 @@ struct HomeViewCarousel: View {
         HStack(spacing: 5){
             ForEach(self.cards.indices, id: \.self){index in
                 Circle()
-                    .fill(currentIndex == index ? .blue : .gray.opacity(0.5))
-                    .frame(width: currentIndex == index ? 10 : 6, height: currentIndex == index ? 10 : 6)
+                    .fill(swipeIndex == index ? .blue : .gray.opacity(0.5))
+                    .frame(width: swipeIndex == index ? 10 : 6, height: swipeIndex == index ? 10 : 6)
             }
         }
-        .animation(.easeInOut, value: currentIndex)
+        .animation(.easeInOut, value: swipeIndex)
     }
     
     // Blurred BG
@@ -140,7 +181,7 @@ struct HomeViewCarousel: View {
         GeometryReader{proxy in
             let size = proxy.size
             
-            TabView(selection: $currentIndex) {
+            TabView(selection: $swipeIndex) {
                 ForEach(mockProfiles.indices, id: \.self){index in
                     Image(mockProfiles[index].artwork)
                         .resizable()
@@ -151,7 +192,7 @@ struct HomeViewCarousel: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .animation(.easeInOut, value: currentIndex)
+            .animation(.easeInOut, value: swipeIndex)
             
             let color: Color = .white
             //Custom Gradient
@@ -186,10 +227,9 @@ struct HomeViewCarousel: View {
                     ForEach(homeViewModel.userProfile.bunchIds, id: \.self){bunchId in
                         
                         BunchView(bunchId: bunchId)
-                        
                     }
                     
-                    NavigationLink(destination: FeedHomeView()){
+                    NavigationLink(destination: FindBunchView()){
                         VStack{
                             Image(systemName: "plus")
                                 .frame(width: 60, height: 80)

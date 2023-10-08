@@ -11,12 +11,12 @@ struct BunchModel: Identifiable, Codable {
     var id: String
     var locationName: String
     var profileIds: [String]
-    var reviewIds: [String]
+    var reviewThreadId: String
 }
 
 var mockBunchesReal: [BunchModel] = [
-    BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []),
-    BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []),
-    BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []),
-    BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []),
+    BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""),
+    BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""),
+    BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""),
+    BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""),
 ]

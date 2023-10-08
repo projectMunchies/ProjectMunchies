@@ -250,7 +250,7 @@ struct Header: View {
                                 
                                 Button(action: {
                                     showPrefPopover.toggle()
-                                    fakeLoading()
+                                    isLoading.toggle()
                                     saveFoodFilter(for: geoReader)
                                 }) {
                                     Text("Find Foodmate")
@@ -293,37 +293,40 @@ struct Header: View {
             
             VStack{
                 Group{
-                    Text("Welcome to Crunch Bunch")
+                    Text("How to use CrunchBunch")
                         .foregroundColor(Color("MainColor"))
                         .font(.custom("Chalkduster", size: geoReader.size.height * 0.035))
                         .multilineTextAlignment(.center)
-                    
-                    Text("The eat-together group meeting app")
+                }
+    
+                        Spacer()
+                            .frame(height: geoReader.size.height * 0.04)
+                
+                Group{
+                    Text("Home")
+                        .bold()
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
-                    
-                    Spacer()
-                        .frame(height: geoReader.size.height * 0.04)
-                    
-                    Text("Here's how it works:")
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: geoReader.size.height * 0.028))
+                        .padding(.bottom,5)
                     
                     Text("- Scroll through profiles to find potential food friends based on your food filter")
                         .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
+                        .padding(.bottom,2)
                     
                     Text("- Hold and drag profile into the 'Bunches' you created at the bottom of screen, an invite to join will be automatically sent")
                         .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
+                        .padding(.bottom,2)
                     
-                    Spacer()
-                        .frame(height: geoReader.size.height * 0.04)
+                    
+                    
+                    Text("- View accepted invites via event menu tab and notifications")
+                        .foregroundColor(.black)
+                        .font(.system(size: geoReader.size.height * 0.028))
                 }
+                .multilineTextAlignment(.center)
                 
                 Group{
                     Image("filterIcon")
@@ -332,40 +335,37 @@ struct Header: View {
                         .font(.system(size: 35))
                         .foregroundColor(.black)
                     
-                    Text("Food Filter is located in the the top right ")
+                    Text("Use Food Filter to find food mates for any occasion, anytime anyday")
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
-                        .padding(.bottom,5)
+                        .padding(.bottom,2)
                     
-                    Text("- Use it to find food mates for any occasion, anytime anyday")
+                    Text("- button is located in the the top right")
                         .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.trailing)
                         .font(.system(size: geoReader.size.height * 0.028))
-                    
-                    Spacer()
-                        .frame(height: geoReader.size.height * 0.04)
-                    
-                    Text("Bunches & Events")
+                }
+    
+                Spacer()
+                    .frame(height: geoReader.size.height * 0.04)
+                
+                Group{
+                    Text("Food Feeds")
                         .bold()
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
                         .padding(.bottom,5)
                     
-                    Text("- Events will automatically be created once matched")
+                    Text("- Add to live feed by commented on the venue")
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .font(.system(size: geoReader.size.height * 0.028))
-                    
-                    Text("- Then you can finalize event a get eating!")
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: geoReader.size.height * 0.028))
-                    
-                    Spacer()
-                        .frame(height: geoReader.size.height * 0.01)
                 }
+                
+                Spacer()
+                    .frame(height: geoReader.size.height * 0.01)
                 
                 Button(action: {
                     showIntroPopover.toggle()
@@ -397,14 +397,6 @@ struct Header: View {
         return types;
     }
     
-    //not sure if this is still needed
-    private func fakeLoading(){
-        isLoading.toggle()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            isLoading.toggle()
-        }
-    }
-    
     private func saveFoodFilter(for geoReader: GeometryProxy){
         //pickers dont work well with Binding props so I used states instead then bind them
         //this also doesnt work well in its own function
@@ -414,7 +406,7 @@ struct Header: View {
         foodFilter.category = String(self.foodFilterCategory)
         foodFilter.type = String(self.foodFilterType)
         
-        //updating or creating user's filter
+        //updating or creating user's filter in db
         homeViewModel.getUserFilter() {(userFilter) in
             if userFilter.id != "" {
                 homeViewModel.updateUserFilter(userFilterId: userFilter.id,userFilter: foodFilter)
@@ -423,7 +415,7 @@ struct Header: View {
             }
         }
         
-        // get all filters recently updated that match user's parameters then grab the profile
+        //main logic;get all filters recently updated that match user's parameters then grab the profile
         homeViewModel.getFilteredRecords(foodFilter: foodFilter, isReset: false) {(foodFilters) in
             if !foodFilters.isEmpty {
                 let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
@@ -432,6 +424,7 @@ struct Header: View {
                 HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
                     if !profiles.isEmpty {
                         filteredCards = profiles
+                        isLoading.toggle()
                     }
                 }
             }

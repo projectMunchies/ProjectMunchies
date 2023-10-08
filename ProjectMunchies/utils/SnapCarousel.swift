@@ -14,12 +14,12 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
     //Properties...
     var spacing: CGFloat
     var trailingSpace: CGFloat
-    @Binding var index: Int
-    init(spacing: CGFloat = 15, trailingSpace: CGFloat = 100, index: Binding<Int>, items: [T], @ViewBuilder content: @escaping (T)->Content){
+    @Binding var swipeIndex: Int
+    init(spacing: CGFloat = 15, trailingSpace: CGFloat = 100, swipeIndex: Binding<Int>, items: [T], @ViewBuilder content: @escaping (T)->Content){
         self.list = items
         self.spacing = spacing
         self.trailingSpace = trailingSpace
-        self._index = index
+        self._swipeIndex = swipeIndex
         self.content = content
     }
     
@@ -66,7 +66,7 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
                     // setting min...
                     currentIndex = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
                     //updating index...
-                    currentIndex = index
+                    currentIndex = swipeIndex
                 })
                 .onChanged({ value in
                     // updating only index...
@@ -82,7 +82,7 @@ struct SnapCarousel<Content: View,T: Identifiable>: View {
                     let roundIndex = progress.rounded()
                     
                     // setting min...
-                    index = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
+                    swipeIndex = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
                 })
             )
         }

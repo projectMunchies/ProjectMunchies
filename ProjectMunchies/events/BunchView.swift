@@ -12,7 +12,7 @@ import FirebaseStorage
 struct BunchView: View {
     let bunchId: String
     
-    @State private var singleBunch: BunchModel = BunchModel(id: "", locationName: "", profileIds: [], reviewIds: [])
+    @State private var singleBunch: BunchModel = BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: "")
     @State private var bunchImage: UIImage = UIImage()
     
     
@@ -58,12 +58,12 @@ struct BunchView: View {
             .getDocuments() {(querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
-                    completed(BunchModel(id: "", locationName: "", profileIds: [], reviewIds: []))
+                    completed(BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""))
                 }else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if !data.isEmpty{
-                            self.singleBunch = BunchModel(id: data["id"] as? String ?? "", locationName: data["locationName"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [], reviewIds: data["reviewIds"] as? [String] ?? [])
+                            self.singleBunch = BunchModel(id: data["id"] as? String ?? "", locationName: data["locationName"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [], reviewThreadId: data["reviewThreadId"] as? String ?? "")
                         }
                     }
                     completed(self.singleBunch)

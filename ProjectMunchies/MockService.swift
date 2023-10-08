@@ -660,31 +660,6 @@ enum MockService {
     //        ]
     //    }
     
-    static var feedSampleData: [FeedModel] {
-        [
-            FeedModel(
-                id: "",
-                text: "",
-                timeStamp: Date()
-            ),
-            FeedModel(
-                id: "",
-                text: "",
-                timeStamp: Date()
-            ),
-            FeedModel(
-                id: "",
-                text: "",
-                timeStamp: Date()
-            ),
-            FeedModel(
-                id: "",
-                text: "",
-                timeStamp: Date()
-            )
-        ]
-    }
-    
     
     // put this in another view cuase it cant run here
     public func addNewMockData() {
@@ -3493,9 +3468,7 @@ enum MockService {
             "timeStamp": Date()
         ])
     }
-    
-    
-    
+
     public func addNewMockBunches() {
         let docRefs = db.collection("bunches")
              
