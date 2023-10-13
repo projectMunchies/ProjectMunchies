@@ -221,14 +221,14 @@
 			path = auth;
 			sourceTree = "<group>";
 		};
-		773E0E222A91060B008BA9A2 /* live */ = {
+		773E0E222A91060B008BA9A2 /* liveFeed */ = {
 			isa = PBXGroup;
 			children = (
 				773E0E232A91061C008BA9A2 /* models */,
 				773E0E242A91070D008BA9A2 /* FeedHomeView.swift */,
 				77EDE4DA2ACBCBD5005E0149 /* FindBunchView.swift */,
 			);
-			path = live;
+			path = liveFeed;
 			sourceTree = "<group>";
 		};
 		773E0E232A91061C008BA9A2 /* models */ = {
@@ -263,11 +263,10 @@
 		77E3830B2A7225470084B8A6 /* ProjectMunchies */ = {
 			isa = PBXGroup;
 			children = (
-				773E0E222A91060B008BA9A2 /* live */,
+				773E0E222A91060B008BA9A2 /* liveFeed */,
 				77F3E0A72A860C1400BC3791 /* home */,
 				77F3E0A42A8608CD00BC3791 /* utils */,
 				770AD0562A76BBAB004CA5D2 /* auth */,
-				77E383122A7225490084B8A6 /* Preview Content */,
 				77E383472A7248CB0084B8A6 /* cards */,
 				77E383462A7248BC0084B8A6 /* events */,
 				77E383442A7247460084B8A6 /* MockService.swift */,
@@ -275,14 +274,13 @@
 				77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */,
 				77E3834A2A738D480084B8A6 /* Extensions.swift */,
 				77E3830E2A7225470084B8A6 /* ContentView.swift */,
+				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
+				77F3E0A22A79065700BC3791 /* NotificationsView.swift */,
 				77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */,
 				77E383102A7225490084B8A6 /* Assets.xcassets */,
 				77E383502A75B78F0084B8A6 /* Info.plist */,
 				770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */,
-				77E383512A75BB840084B8A6 /* ProfileView.swift */,
-				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
-				77C124812AA3A568006F3126 /* DetailView.swift */,
-				77F3E0A22A79065700BC3791 /* NotificationsView.swift */,
+				77E383122A7225490084B8A6 /* Preview Content */,
 			);
 			path = ProjectMunchies;
 			sourceTree = "<group>";
@@ -328,6 +326,8 @@
 		77E383472A7248CB0084B8A6 /* cards */ = {
 			isa = PBXGroup;
 			children = (
+				77C124812AA3A568006F3126 /* DetailView.swift */,
+				77E383512A75BB840084B8A6 /* ProfileView.swift */,
 				77E3833A2A7229B80084B8A6 /* CardsView.swift */,
 				77E383382A7229AD0084B8A6 /* CardView.swift */,
 				77E383482A7388F50084B8A6 /* ProfileModel.swift */,
