@@ -27,16 +27,15 @@ struct IndividualCardsInGroup: View {
                 .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
         }
         .onAppear{
-            fdsf(profileId: profileId){(profileId) in
+            getProf(profileId: profileId){(profileId) in
                 if !profileId.isEmpty{
                     cardViewModel2.getStorageFile2(profileId: profileId)
                 }
             }
-      
         }
     }
     
-    private func fdsf(profileId: String, completed: @escaping (_ profileId: String) -> Void){
+    private func getProf(profileId: String, completed: @escaping (_ profileId: String) -> Void){
         db.collection("profiles")
             .whereField("id", isEqualTo: profileId)
             .limit(to: 10)

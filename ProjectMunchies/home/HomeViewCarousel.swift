@@ -39,8 +39,8 @@ struct HomeViewCarousel: View {
                 
                 Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $cards, homeViewModel: homeViewModel)
                 
+                //TabVew Groups/Singles
                 VStack{
-                    //Tab View...
                     HStack(spacing: 0){
                         Text("Groups")
                             .frame(width: 200)
@@ -78,12 +78,15 @@ struct HomeViewCarousel: View {
                 }
                 .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.58)
                 
+                //mainView Cards
                 ZStack{
                     if isLoading{
                         ProgressView()
                             .controlSize(.large)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.35)
                     } else {
+                        //switch cardView based on tabs
+                        //Singles = 1, Groups = 0
                         if cardTypeIndex == 1 {
                             SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
                                 GeometryReader{proxy in
@@ -101,10 +104,7 @@ struct HomeViewCarousel: View {
                                 GeometryReader{proxy in
                                     let size = proxy.size
                                     
-                                    
                                     CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, cardTypeIndex: self.cardTypeIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
-                                    
-                                    
                                 }
                             }
                             // Since Carousel is Moved The current Card a little bit up
@@ -112,7 +112,6 @@ struct HomeViewCarousel: View {
                             .padding(.top,50)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
                         }
-                        
                     }
                     
                     Footer()
@@ -369,7 +368,7 @@ struct HomeViewCarousel: View {
                         //                        print("\(document.documentID) => \(document.data())")
                         let data = document.data()
                         if !data.isEmpty{
-                            var group = GroupModel(id: data["id"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [],
+                            let group = GroupModel(id: data["id"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [],
                                                    groupProfile:  ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? []))
                             
                             self.groups.append(group)

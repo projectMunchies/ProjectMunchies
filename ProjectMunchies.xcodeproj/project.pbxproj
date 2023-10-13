@@ -331,6 +331,7 @@
 				77E3833A2A7229B80084B8A6 /* CardsView.swift */,
 				77E383382A7229AD0084B8A6 /* CardView.swift */,
 				77E383482A7388F50084B8A6 /* ProfileModel.swift */,
+				77DBDB1C2AD661D7003AB373 /* IndiviualCardsInGroup.swift */,
 				770AD09E2A78C046004CA5D2 /* CardViewModel.swift */,
 				772012E12AAAD5FA00BA1FBB /* CardViewCarousel.swift */,
 				77DBDB1E2AD7BED8003AB373 /* GroupModel.swift */,
@@ -366,7 +367,6 @@
 				77F3E0A82A860C2300BC3791 /* models */,
 				77E383362A7226290084B8A6 /* HomeView.swift */,
 				778952292AA3BEE5008999DC /* HomeViewCarousel.swift */,
-				77DBDB1C2AD661D7003AB373 /* IndiviualCardsInGroup.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
