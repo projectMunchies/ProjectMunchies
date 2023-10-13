@@ -13,6 +13,7 @@ class CardViewModel: ObservableObject {
     @Published var profileImages: [UIImage] = []
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfileImage: UIImage = UIImage()
+    @Published var profileImage2: UIImage = UIImage()
     
     let storage = Storage.storage()
     //
@@ -37,6 +38,19 @@ class CardViewModel: ObservableObject {
                 
             }
             
+        }
+    }
+    
+    public func getStorageFile2(profileId: String) {
+        let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
+        
+        imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) {data, error in
+            if let error = error {
+                print("Error getting file: ",error)
+            } else {
+                let image = UIImage(data: data!)
+                self.profileImage2 = image!
+            }
         }
     }
     

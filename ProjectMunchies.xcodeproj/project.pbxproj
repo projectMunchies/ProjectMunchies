@@ -57,6 +57,8 @@
 		77C124842AA3A587006F3126 /* SnapCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C124832AA3A587006F3126 /* SnapCarousel.swift */; };
 		77C124862AA3A737006F3126 /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C124852AA3A737006F3126 /* OffsetModifier.swift */; };
 		77DBDB1B2ACFD3EE003AB373 /* ReviewThreadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DBDB1A2ACFD3EE003AB373 /* ReviewThreadModel.swift */; };
+		77DBDB1D2AD661D7003AB373 /* IndiviualCardsInGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DBDB1C2AD661D7003AB373 /* IndiviualCardsInGroup.swift */; };
+		77DBDB1F2AD7BED8003AB373 /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DBDB1E2AD7BED8003AB373 /* GroupModel.swift */; };
 		77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */; };
 		77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3830E2A7225470084B8A6 /* ContentView.swift */; };
 		77E383112A7225490084B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E383102A7225490084B8A6 /* Assets.xcassets */; };
@@ -122,6 +124,8 @@
 		77C124832AA3A587006F3126 /* SnapCarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapCarousel.swift; sourceTree = "<group>"; };
 		77C124852AA3A737006F3126 /* OffsetModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		77DBDB1A2ACFD3EE003AB373 /* ReviewThreadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewThreadModel.swift; sourceTree = "<group>"; };
+		77DBDB1C2AD661D7003AB373 /* IndiviualCardsInGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndiviualCardsInGroup.swift; sourceTree = "<group>"; };
+		77DBDB1E2AD7BED8003AB373 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		77E383092A7225470084B8A6 /* ProjectMunchies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectMunchies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesApp.swift; sourceTree = "<group>"; };
 		77E3830E2A7225470084B8A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 				77E383482A7388F50084B8A6 /* ProfileModel.swift */,
 				770AD09E2A78C046004CA5D2 /* CardViewModel.swift */,
 				772012E12AAAD5FA00BA1FBB /* CardViewCarousel.swift */,
+				77DBDB1E2AD7BED8003AB373 /* GroupModel.swift */,
 			);
 			path = cards;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 				77F3E0A82A860C2300BC3791 /* models */,
 				77E383362A7226290084B8A6 /* HomeView.swift */,
 				778952292AA3BEE5008999DC /* HomeViewCarousel.swift */,
+				77DBDB1C2AD661D7003AB373 /* IndiviualCardsInGroup.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -542,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
+				77DBDB1F2AD7BED8003AB373 /* GroupModel.swift in Sources */,
 				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
 				773E0E272A92760B008BA9A2 /* ReviewModel.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
@@ -555,6 +562,7 @@
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
+				77DBDB1D2AD661D7003AB373 /* IndiviualCardsInGroup.swift in Sources */,
 				77EDE4D92AB97D90005E0149 /* BunchView.swift in Sources */,
 				77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */,
 				77E3833B2A7229B80084B8A6 /* CardsView.swift in Sources */,

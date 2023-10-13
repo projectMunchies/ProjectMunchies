@@ -14,7 +14,7 @@ import FirebaseAuth
 class HomeViewModel: ObservableObject {
     let storage = Storage.storage()
     let db = Firestore.firestore()
-    
+     
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , favRestaurant: "", favFood: "", hobbies: [],eventIds: [], isMockData: false, bunchIds: [])
     @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())

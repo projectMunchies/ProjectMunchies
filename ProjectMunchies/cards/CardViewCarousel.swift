@@ -10,7 +10,10 @@ import SwiftUI
 struct CardViewCarousel: View {
     @StateObject private var cardViewModel = CardViewModel()
     let size: CGSize
-    let profile: ProfileModel
+    //defining these allow me to make these args optional
+    var profile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , favRestaurant: "", favFood: "", hobbies: [],eventIds: [], isMockData: false, bunchIds: [])
+    var groupProfileIds: [String] = []
+    
     let cardTypeIndex: Int
     @Binding var detailProfile: ProfileModel?
     @Binding var showDetailView: Bool
@@ -44,7 +47,7 @@ struct CardViewCarousel: View {
                             .frame(width: size.width * 0.2, height: size.height * 0.1)
                     }
             } else {
-                GridViewCardGroup(fitness_Data: GroupImages_Data, cardViewModel: cardViewModel)
+                GridViewCardGroup(fitness_Data: GroupImages_Data, cardViewModel2: cardViewModel, groupProfileIds: groupProfileIds)
                     .onTapGesture {
                         currentCardSize = size
                         detailProfile = profile
@@ -90,59 +93,34 @@ struct CardViewCarousel_Previews: PreviewProvider {
 }
 
 struct GridViewCardGroup: View {
-    var fitness_Data : [Fitness]
-    var cardViewModel: CardViewModel
+    var fitness_Data: [Fitness]
+    var cardViewModel2: CardViewModel
+    var groupProfileIds: [String]
     
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10){
-            ForEach(fitness_Data) { fitness in
+            ForEach(groupProfileIds, id: \.self) { profileId in
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
+//                    Image(uiImage: cardViewModel2.profileImage)
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fill)
+//                        .frame(width: 100, height: 100)
+//                        .cornerRadius(15)
+//                        .padding()
+//                    //image name same as color name...
+//                        .background(.gray)
+//                        .cornerRadius(20)
+//                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+                
+                        IndividualCardsInGroup(profileId: profileId)
                     
-                    //                    VStack(alignment: .leading, spacing: 15){
-                    //                        Text(fitness.title)
-                    //                            .foregroundColor(.white)
-                    //
-                    //                        Text(fitness.data)
-                    //                            .font(.title2)
-                    //                            .fontWeight(.bold)
-                    //                            .foregroundColor(.white)
-                    //                            .padding(.top,10)
-                    //
-                    //                        HStack{
-                    //                            Spacer(minLength: 0)
-                    //
-                    //                            Text(fitness.suggest)
-                    //                                .foregroundColor(.white)
-                    //                        }
-                    //                    }
-                    
-                    Image(uiImage: cardViewModel.profileImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .cornerRadius(15)
-                        .padding()
-                    //image name same as color name...
-                        .background(.gray)
-                        .cornerRadius(20)
-                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    
-                    //top Image...
-                    
-                    //                    Image("Bunch2")
-                    //                        .resizable()
-                    //                        .frame(width: 40, height: 40)
-                    //                        .padding()
-                    //                        .background(.white.opacity(0.35))
-                    //                    //.clipShape(Circle())
-                    //                        .cornerRadius(20)
+                  
                 }
             }
         }
         .padding(.horizontal,50)
-        //  .padding(.top,25)
     }
 }
 

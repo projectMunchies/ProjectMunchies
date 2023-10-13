@@ -24,6 +24,7 @@ struct HomeViewCarousel: View {
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var cards: [ProfileModel] = []
+    @State private var groups: [GroupModel] = []
     //toggles groups and singles tabview
     @State var cardTypeIndex: Int = 0
     let storage = Storage.storage()
@@ -83,17 +84,35 @@ struct HomeViewCarousel: View {
                             .controlSize(.large)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.35)
                     } else {
-                        SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
-                            GeometryReader{proxy in
-                                let size = proxy.size
-                                
-                                CardViewCarousel(size: size, profile: profile, cardTypeIndex: self.cardTypeIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+                        if cardTypeIndex == 1 {
+                            SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
+                                GeometryReader{proxy in
+                                    let size = proxy.size
+                                    
+                                    CardViewCarousel(size: size, profile: profile, cardTypeIndex: self.cardTypeIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+                                }
                             }
+                            // Since Carousel is Moved The current Card a little bit up
+                            //Using padding to avoid the Undercovering the top element
+                            .padding(.top,50)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                        } else {
+                            SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.groups){group in
+                                GeometryReader{proxy in
+                                    let size = proxy.size
+                                    
+                                    
+                                    CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, cardTypeIndex: self.cardTypeIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+                                    
+                                    
+                                }
+                            }
+                            // Since Carousel is Moved The current Card a little bit up
+                            //Using padding to avoid the Undercovering the top element
+                            .padding(.top,50)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
                         }
-                        // Since Carousel is Moved The current Card a little bit up
-                        //Using padding to avoid the Undercovering the top element
-                        .padding(.top,50)
-                        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                        
                     }
                     
                     Footer()
@@ -111,7 +130,12 @@ struct HomeViewCarousel: View {
                     if userProfileId != "" {
                         //get profileImage
                         homeViewModel.getImageStorageFile(profileId: userProfileId)
-                        
+                        getGroups(){(groupIds) in
+                            if !groupIds.isEmpty{
+                                print("success")
+                            }
+                            
+                        }
                         getProfiles(filterProfileIds: []){(profiles) in
                             if !profiles.isEmpty {
                                 filterCards(){(selfCards) in
@@ -136,13 +160,13 @@ struct HomeViewCarousel: View {
                     }
                 }
             }
-            .onChange(of: cards) { newValue in
-                self.cards = newValue.shuffled()
-                filterCards(){(selfCards) in
-                    if !selfCards.isEmpty{
-                    }
-                }
-            }
+            //            .onChange(of: cards) { newValue in
+            //                self.cards = newValue.shuffled()
+            //                filterCards(){(selfCards) in
+            //                    if !selfCards.isEmpty{
+            //                    }
+            //                }
+            //            }
             .onChange(of: homeViewModel.foodFilter){ newValue in
                 //do this to have more profiles to choose from in db
                 //homeViewModel.lastDoc = nil
@@ -332,6 +356,29 @@ struct HomeViewCarousel: View {
                 )
             }
         }
+    }
+    
+    public func getGroups(completed: @escaping (_ groupIds: [GroupModel]) -> Void) {
+        db.collection("groups")
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    completed([])
+                } else {
+                    for document in querySnapshot!.documents {
+                        //                        print("\(document.documentID) => \(document.data())")
+                        let data = document.data()
+                        if !data.isEmpty{
+                            var group = GroupModel(id: data["id"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [],
+                                                   groupProfile:  ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? []))
+                            
+                            self.groups.append(group)
+                            
+                        }
+                    }
+                    completed(self.groups)
+                }
+            }
     }
 }
 
