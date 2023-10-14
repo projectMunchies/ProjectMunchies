@@ -19,11 +19,11 @@ struct IndividualCardsInGroup: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 100, height: 100)
-                .cornerRadius(15)
+                .cornerRadius(70)
                 .padding()
             //image name same as color name...
                 .background(.gray)
-                .cornerRadius(20)
+                .cornerRadius(70)
                 .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
         }
         .onAppear{

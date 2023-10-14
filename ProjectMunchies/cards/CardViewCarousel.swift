@@ -96,15 +96,32 @@ struct CardViewCarousel_Previews: PreviewProvider {
 struct GridViewCardGroup: View {
     var cardViewModel2: CardViewModel
     var groupProfileIds: [String]
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
+    var columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10){
             ForEach(groupProfileIds, id: \.self) { profileId in
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
                     IndividualCardsInGroup(profileId: profileId)
+                    
                 }
             }
+            ZStack{
+                Text("")
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(70)
+                    .padding()
+                //image name same as color name...
+                    .background(.gray)
+                    .cornerRadius(70)
+                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+                
+                Text("+20")
+                    .foregroundColor(.white)
+                    .font(.title2)
+            }
+            
+            
         }
         .padding(.horizontal,50)
     }
