@@ -18,13 +18,10 @@ struct IndividualCardsInGroup: View {
             Image(uiImage: cardViewModel2.profileImage2)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 100)
-                .cornerRadius(70)
-                .padding()
-            //image name same as color name...
+                .frame(width: 130, height: 130)
                 .background(.gray)
-                .cornerRadius(70)
-                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+                .cornerRadius(20)
+                .padding(1)
         }
         .onAppear{
             getProf(profileId: profileId){(profileId) in

@@ -22,68 +22,81 @@ struct CardViewCarousel: View {
     @Namespace var animation
     
     var body: some View {
-        ZStack{
-            //Singles = 1, Groups = 0
-            if cardTypeIndex == 1 {
-                Image(uiImage: cardViewModel.profileImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size.width, height: size.height * 0.55)
-                    .cornerRadius(15)
-                //contentShape fixed the issue with onTapGesture not clicking the right image
-                    .contentShape(Rectangle())
-                    .matchedGeometryEffect(id: profile.id, in: animation)
-                    .onTapGesture {
-                        currentCardSize = size
-                        detailProfile = profile
-                        detailImage = cardViewModel.profileImage
-                        withAnimation(.easeInOut){
-                            showDetailView = true
+            ZStack{
+                //Singles = 1, Groups = 0
+                if cardTypeIndex == 1 {
+                    Image(uiImage: cardViewModel.profileImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width, height: size.height * 0.55)
+                        .cornerRadius(15)
+                    //contentShape fixed the issue with onTapGesture not clicking the right image
+                        .contentShape(Rectangle())
+                        .matchedGeometryEffect(id: profile.id, in: animation)
+                        .onTapGesture {
+                            currentCardSize = size
+                            detailProfile = profile
+                            detailImage = cardViewModel.profileImage
+                            withAnimation(.easeInOut){
+                                showDetailView = true
+                            }
                         }
-                    }
-                    .draggable(Image(uiImage: cardViewModel.profileImage)){
-                        Image(uiImage: cardViewModel.profileImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: size.width * 0.2, height: size.height * 0.1)
-                    }
-            } else {
-                GridViewCardGroup(cardViewModel2: cardViewModel, groupProfileIds: groupProfileIds)
-                    .onTapGesture {
-                        currentCardSize = size
-                        detailProfile = profile
-                        detailImage = cardViewModel.profileImage
-                        withAnimation(.easeInOut){
-                            showDetailView = true
+                        .draggable(Image(uiImage: cardViewModel.profileImage)){
+                            Image(uiImage: cardViewModel.profileImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: size.width * 0.2, height: size.height * 0.1)
                         }
-                    }
-                    .draggable(Image(uiImage: cardViewModel.profileImage)){
-                        Image(uiImage: cardViewModel.profileImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: size.width * 0.2, height: size.height * 0.1)
-                    }
-            }
-            
-            VStack{
-                Text("\(profile.fullName)")
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.leading)
+                } else {
+                    GridViewCardGroup(cardViewModel2: cardViewModel, groupProfileIds: groupProfileIds)
+                        .onTapGesture {
+                            currentCardSize = size
+                            detailProfile = profile
+                            detailImage = cardViewModel.profileImage
+                            withAnimation(.easeInOut){
+                                showDetailView = true
+                            }
+                        }
+                        .draggable(Image(uiImage: cardViewModel.profileImage)){
+                            Image(uiImage: cardViewModel.profileImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: size.width * 0.2, height: size.height * 0.1)
+                        }
+                }
                 
-                Text("\(profile.occupation)")
-                    .foregroundColor(.white)
-                    .padding(.leading)
-                
-                Text("\(profile.location)")
-                    .foregroundColor(.white)
-                    .padding(.leading)
+                VStack{
+                    if cardTypeIndex == 1 {
+                        Text("\(profile.fullName)")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.leading)
+                            .position(x:size.width * 0.2, y:size.height * 0.7)
+                    } else {
+                        Text("\(profile.fullName)")
+                            .font(.system(size: 30))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            //.padding(.trailing)
+                            .position(x:size.width * 0.5, y:size.height * 0.8)
+                    }
+                 
+                    
+                    Text("\(profile.occupation)")
+                        .foregroundColor(.white)
+                        .padding(.leading)
+                        .position(x:size.width * 0.2, y:size.height * 0.7)
+                    
+                    Text("\(profile.location)")
+                        .foregroundColor(.white)
+                        .padding(.leading)
+                        .position(x:size.width * 0.2, y:size.height * 0.7)
+                }
+              
             }
-            .position(x:size.width * 0.2, y:size.height * 0.7)
-        }
-        .onAppear{
-            cardViewModel.getStorageFile(profileId: profile.id)
-        }
+            .onAppear{
+                cardViewModel.getStorageFile(profileId: profile.id)
+            }
     }
 }
 
@@ -96,33 +109,27 @@ struct CardViewCarousel_Previews: PreviewProvider {
 struct GridViewCardGroup: View {
     var cardViewModel2: CardViewModel
     var groupProfileIds: [String]
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
+    var columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 10){
-            ForEach(groupProfileIds, id: \.self) { profileId in
-                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
-                    IndividualCardsInGroup(profileId: profileId)
-                    
+        LazyVGrid(columns: columns, alignment: .center){
+            ForEach(groupProfileIds.indices, id: \.self) { index in
+                if index < 5 {
+                    IndividualCardsInGroup(profileId: groupProfileIds[index])
+                }else if index == 5 {
+                    ZStack{
+                        Text("")
+                            .frame(width: 130, height: 130)
+                            .background(.gray)
+                            .cornerRadius(20)
+                        
+                        Text("+\(groupProfileIds.count - 5)")
+                            .foregroundColor(.white)
+                            .font(.title2)
+                    }
                 }
             }
-            ZStack{
-                Text("")
-                    .frame(width: 100, height: 100)
-                    .cornerRadius(70)
-                    .padding()
-                //image name same as color name...
-                    .background(.gray)
-                    .cornerRadius(70)
-                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                
-                Text("+20")
-                    .foregroundColor(.white)
-                    .font(.title2)
-            }
-            
-            
         }
-        .padding(.horizontal,50)
+        .padding(30)
     }
 }
