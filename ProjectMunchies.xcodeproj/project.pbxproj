@@ -46,6 +46,7 @@
 		770AD09F2A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
 		770AD0A02A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
 		770AD0A12A78C046004CA5D2 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09E2A78C046004CA5D2 /* CardViewModel.swift */; };
+		770C75AC2AE0258800A0AF91 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770C75AB2AE0258800A0AF91 /* GroupsView.swift */; };
 		772012E22AAAD5FA00BA1FBB /* CardViewCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772012E12AAAD5FA00BA1FBB /* CardViewCarousel.swift */; };
 		772C9B0C2AB1964300D157F8 /* BunchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C9B0B2AB1964300D157F8 /* BunchProfileView.swift */; };
 		772C9B0E2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */; };
@@ -69,15 +70,12 @@
 		77E383372A7226290084B8A6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383362A7226290084B8A6 /* HomeView.swift */; };
 		77E383392A7229AD0084B8A6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383382A7229AD0084B8A6 /* CardView.swift */; };
 		77E3833B2A7229B80084B8A6 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833A2A7229B80084B8A6 /* CardsView.swift */; };
-		77E3833D2A7229DC0084B8A6 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833C2A7229DC0084B8A6 /* EventView.swift */; };
 		77E3833F2A7229E50084B8A6 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3833E2A7229E50084B8A6 /* EventsView.swift */; };
 		77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383402A7242A40084B8A6 /* SearchBar.swift */; };
-		77E383432A7244C60084B8A6 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383422A7244C60084B8A6 /* EventModel.swift */; };
 		77E383452A7247460084B8A6 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383442A7247460084B8A6 /* MockService.swift */; };
 		77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* ProfileModel.swift */; };
 		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
-		77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834E2A751D9E0084B8A6 /* EventEditView.swift */; };
 		77E383522A75BB840084B8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383512A75BB840084B8A6 /* ProfileView.swift */; };
 		77EDE4D72AB8276C005E0149 /* BunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EDE4D62AB8276C005E0149 /* BunchModel.swift */; };
 		77EDE4D92AB97D90005E0149 /* BunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EDE4D82AB97D90005E0149 /* BunchView.swift */; };
@@ -113,6 +111,7 @@
 		770AD0962A76D0BE004CA5D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
 		770AD09E2A78C046004CA5D2 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		770C75AB2AE0258800A0AF91 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		772012E12AAAD5FA00BA1FBB /* CardViewCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewCarousel.swift; sourceTree = "<group>"; };
 		772C9B0B2AB1964300D157F8 /* BunchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchProfileView.swift; sourceTree = "<group>"; };
 		772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Restaurant_Reviews2.tsv; sourceTree = "<group>"; };
@@ -139,15 +138,12 @@
 		77E383362A7226290084B8A6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		77E383382A7229AD0084B8A6 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		77E3833A2A7229B80084B8A6 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
-		77E3833C2A7229DC0084B8A6 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		77E3833E2A7229E50084B8A6 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		77E383402A7242A40084B8A6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		77E383422A7244C60084B8A6 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		77E383442A7247460084B8A6 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		77E383482A7388F50084B8A6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
-		77E3834E2A751D9E0084B8A6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 		77E383502A75B78F0084B8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77E383512A75BB840084B8A6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		77EDE4D62AB8276C005E0149 /* BunchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchModel.swift; sourceTree = "<group>"; };
@@ -315,10 +311,9 @@
 			children = (
 				77EDE4D52AB82744005E0149 /* models */,
 				77E3833E2A7229E50084B8A6 /* EventsView.swift */,
-				77E3833C2A7229DC0084B8A6 /* EventView.swift */,
-				77E3834E2A751D9E0084B8A6 /* EventEditView.swift */,
 				772C9B0B2AB1964300D157F8 /* BunchProfileView.swift */,
 				77EDE4D82AB97D90005E0149 /* BunchView.swift */,
+				770C75AB2AE0258800A0AF91 /* GroupsView.swift */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -342,7 +337,6 @@
 		77EDE4D52AB82744005E0149 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				77E383422A7244C60084B8A6 /* EventModel.swift */,
 				77EDE4D62AB8276C005E0149 /* BunchModel.swift */,
 			);
 			path = models;
@@ -551,8 +545,8 @@
 				77DBDB1F2AD7BED8003AB373 /* GroupModel.swift in Sources */,
 				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
 				773E0E272A92760B008BA9A2 /* ReviewModel.swift in Sources */,
+				770C75AC2AE0258800A0AF91 /* GroupsView.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
-				77E383432A7244C60084B8A6 /* EventModel.swift in Sources */,
 				770AD09F2A78C046004CA5D2 /* CardViewModel.swift in Sources */,
 				77EDE4D72AB8276C005E0149 /* BunchModel.swift in Sources */,
 				77EDE4DB2ACBCBD5005E0149 /* FindBunchView.swift in Sources */,
@@ -569,7 +563,6 @@
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
 				77E383522A75BB840084B8A6 /* ProfileView.swift in Sources */,
 				773E0E252A91070D008BA9A2 /* FeedHomeView.swift in Sources */,
-				77E3833D2A7229DC0084B8A6 /* EventView.swift in Sources */,
 				77C124862AA3A737006F3126 /* OffsetModifier.swift in Sources */,
 				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
 				77C124822AA3A568006F3126 /* DetailView.swift in Sources */,
@@ -577,7 +570,6 @@
 				77DBDB1B2ACFD3EE003AB373 /* ReviewThreadModel.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
 				772C9B0C2AB1964300D157F8 /* BunchProfileView.swift in Sources */,
-				77E3834F2A751D9E0084B8A6 /* EventEditView.swift in Sources */,
 				7789522A2AA3BEE5008999DC /* HomeViewCarousel.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,

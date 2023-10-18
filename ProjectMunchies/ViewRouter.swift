@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ViewRouter: ObservableObject {
     static let shared = ViewRouter()
-    @Published var currentPage: Route = .signupPage
+    @Published var currentPage: Route = .homePage
     
     init(){
         run()

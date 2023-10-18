@@ -20,6 +20,15 @@ struct ContentView: View {
                         .tabItem {
                             Label("", systemImage: "house")
                         }
+                    EventsView()
+                        .tabItem {
+                            Label("", systemImage: "calendar")
+                        }
+                    //GroupsView
+                    GroupsView()
+                        .tabItem {
+                            Label("", systemImage: "person.3.fill")
+                        }
                     FeedHomeView()
                         .tabItem {
                             Image("newsFeedIcon")
@@ -27,14 +36,6 @@ struct ContentView: View {
                                 .resizable()
                                 .foregroundColor(.black)
                                 .scaledToFit()
-                        }
-                    EventsView()
-                        .tabItem {
-                            Label("", systemImage: "takeoutbag.and.cup.and.straw")
-                        }
-                    SettingsView()
-                        .tabItem {
-                            Label("", systemImage: "person")
                         }
                 }
             case .signinPage :

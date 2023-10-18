@@ -1,13 +1,13 @@
 //
-//  EventsView.swift
+//  GroupsView.swift
 //  ProjectMunchies
 //
-//  Created by DotZ3R0 on 7/27/23.
+//  Created by DotZ3R0 on 10/18/23.
 //
 
 import SwiftUI
 
-struct EventsView: View {
+struct GroupsView: View {
     @StateObject private var viewModel = CardViewModel()
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
@@ -119,7 +119,7 @@ struct EventsView: View {
                         }
                     
                     
-                    Text("Events")
+                    Text("Groups")
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)
@@ -219,8 +219,8 @@ struct EventsView: View {
     }
 }
 
-struct EventsView_Previews: PreviewProvider {
+struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        EventsView()
+        GroupsView()
     }
 }

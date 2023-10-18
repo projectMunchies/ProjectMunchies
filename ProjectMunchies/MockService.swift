@@ -12,42 +12,42 @@ import FirebaseFirestore
 let db = Firestore.firestore()
 
 enum MockService {
-    static var eventsSampleData: [EventModel] {
-        [
-            EventModel(
-                id: "cf432344",
-                title: "Itialian night with",
-                location: "Magginos, Tampa,Fl",
-                description: "Enjoy a great night with some great people",
-                participants: ["dasfdsfweefcae","fdsafdsfessfd"],
-                eventDate: Date.now
-            ),
-            //            EventModel(
-            //                id: "jkhblhjkbkjbjkblk",
-            //                title: "Taco Tuesdays",
-            //                location: "Mugelitos, Tampa,Fl",
-            //                description: "Taco tuesdays youj already know what it be",
-            //                participants: ["fer3f4f3f34","faee43434343"],
-            //                eventDate: Date.now
-            //            ),
-            //            EventModel(
-            //                id: "jkhblhjkbkjbjkblk",
-            //                title: "Taco Tuesdays",
-            //                location: "Mugelitos, Tampa,Fl",
-            //                description: "Taco tuesdays youj already know what it be",
-            //                participants: ["fer3f4f3f34","faee43434343"],
-            //                eventDate: Date.now
-            //            ),
-            //            EventModel(
-            //                id: "jkhblhjkbkjbjkblk",
-            //                title: "Taco Tuesdays",
-            //                location: "Mugelitos, Tampa,Fl",
-            //                description: "Taco tuesdays youj already know what it be",
-            //                participants: ["fer3f4f3f34","faee43434343"],
-            //                eventDate: Date.now
-            //            )
-        ]
-    }
+//    static var eventsSampleData: [EventModel] {
+//        [
+//            EventModel(
+//                id: "cf432344",
+//                title: "Itialian night with",
+//                location: "Magginos, Tampa,Fl",
+//                description: "Enjoy a great night with some great people",
+//                participants: ["dasfdsfweefcae","fdsafdsfessfd"],
+//                eventDate: Date.now
+//            ),
+//            //            EventModel(
+//            //                id: "jkhblhjkbkjbjkblk",
+//            //                title: "Taco Tuesdays",
+//            //                location: "Mugelitos, Tampa,Fl",
+//            //                description: "Taco tuesdays youj already know what it be",
+//            //                participants: ["fer3f4f3f34","faee43434343"],
+//            //                eventDate: Date.now
+//            //            ),
+//            //            EventModel(
+//            //                id: "jkhblhjkbkjbjkblk",
+//            //                title: "Taco Tuesdays",
+//            //                location: "Mugelitos, Tampa,Fl",
+//            //                description: "Taco tuesdays youj already know what it be",
+//            //                participants: ["fer3f4f3f34","faee43434343"],
+//            //                eventDate: Date.now
+//            //            ),
+//            //            EventModel(
+//            //                id: "jkhblhjkbkjbjkblk",
+//            //                title: "Taco Tuesdays",
+//            //                location: "Mugelitos, Tampa,Fl",
+//            //                description: "Taco tuesdays youj already know what it be",
+//            //                participants: ["fer3f4f3f34","faee43434343"],
+//            //                eventDate: Date.now
+//            //            )
+//        ]
+//    }
     
     //    static var userProfileSampleData: ProfileModel {
     //        ProfileModel(
