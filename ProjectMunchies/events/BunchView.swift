@@ -24,15 +24,30 @@ struct BunchView: View {
         VStack{
             if singleBunch.id != "" && bunchImage.size.width > 0 {
                 NavigationLink(destination: BunchProfileView(singleBunch: self.singleBunch)){
-                    Image(uiImage: self.bunchImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 60, height: 80)
-                        .background(.gray.opacity(0.2))
-                        .cornerRadius(15)
-                        .dropDestination(for: Image.self) { items, locations in
-                            return true
+                    
+                    ZStack{
+                        Image(uiImage: self.bunchImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 60, height: 80)
+                            .opacity(0.1)
+                            .background(.gray.opacity(0.6))
+                            .cornerRadius(15)
+                            .dropDestination(for: Image.self) { items, locations in
+                                return true
+                            }
+                        VStack{
+                            Text("+1")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                            
+                            Text("invite")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
                         }
+                       
+                    }
+                  
                 }
                 
                 Text(singleBunch.locationName)

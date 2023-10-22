@@ -20,23 +20,23 @@ struct ContentView: View {
                         .tabItem {
                             Label("", systemImage: "house")
                         }
+                    CreateGroupView()
+                        .tabItem {
+                            Label("", systemImage: "plus.circle.fill")
+                        }
                     EventsView()
                         .tabItem {
                             Label("", systemImage: "calendar")
                         }
-                    //GroupsView
-                    GroupsView()
-                        .tabItem {
-                            Label("", systemImage: "person.3.fill")
-                        }
-                    FeedHomeView()
-                        .tabItem {
-                            Image("newsFeedIcon")
-                                .renderingMode(.template)
-                                .resizable()
-                                .foregroundColor(.black)
-                                .scaledToFit()
-                        }
+            
+//                    FeedHomeView()
+//                        .tabItem {
+//                            Image("newsFeedIcon")
+//                                .renderingMode(.template)
+//                                .resizable()
+//                                .foregroundColor(.black)
+//                                .scaledToFit()
+//                        }
                 }
             case .signinPage :
                 SignInView()

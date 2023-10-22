@@ -12,12 +12,13 @@ struct SearchBar: View {
     @Binding var searchText: String
     @Binding var startSearch: Bool
     @State private var isEditing: Bool = false
+    let textFieldName: String
     
     
     
     var body: some View {
             HStack{
-                TextField("Search...", text: $searchText)
+                TextField(textFieldName, text: $searchText)
                     .frame(width: 380, height: 50)
                     .background(Color(red: 0.949, green: 0.949, blue: 0.97))
                     .foregroundColor(.black)
@@ -58,6 +59,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(searchText: .constant(""), startSearch: .constant(false))
+        SearchBar(searchText: .constant(""), startSearch: .constant(false), textFieldName: "Search...")
     }
 }

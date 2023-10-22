@@ -57,7 +57,7 @@ struct FindBunchView: View {
                 
                 ZStack{
                     VStack{
-                        SearchBar(searchText: $searchText, startSearch: $startSearch)
+                        SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search...")
                             .padding(.bottom)
 
                         Map(coordinateRegion: $region, annotationItems: cities) { city in
@@ -130,7 +130,7 @@ struct FindBunchView: View {
                         .font(.largeTitle)
                        .position(x:geoReader.size.width * 0.25, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }

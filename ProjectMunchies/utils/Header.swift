@@ -434,6 +434,6 @@ struct Header: View {
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), filteredCards: .constant(mockProfiles), homeViewModel: HomeViewModel())
+        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant(mockProfiles), homeViewModel: HomeViewModel())
     }
 }

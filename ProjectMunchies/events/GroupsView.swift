@@ -26,7 +26,7 @@ struct GroupsView: View {
                 BGView()
                 ZStack{
                     VStack{
-                        SearchBar(searchText: $searchText, startSearch: .constant(false))
+                        SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search...")
                         
                         ScrollView{
                             VStack{
@@ -125,7 +125,7 @@ struct GroupsView: View {
                         .font(.largeTitle)
                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }
