@@ -11,7 +11,7 @@ struct EventsView: View {
     @StateObject private var viewModel = CardViewModel()
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
-    @State private var events: [BunchModel] = []
+    @State private var events: [BunchModel] = [BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: "")]
     @State private var showHamburgerMenu: Bool = false
     
     //Animated View properties
@@ -30,75 +30,75 @@ struct EventsView: View {
                         
                         ScrollView{
                             VStack{
-//                                ForEach(self.events.filter({searchText.isEmpty ? true: $0.title.contains(searchText)})) { event in
-//                                    NavigationLink(destination: EventView(event: event, viewModel: viewModel)) {
+                                ForEach(self.events) { event in
+                                    NavigationLink(destination: SignInView()) {
+
+                                        ZStack{
+                                            Text("")
+                                                .frame(width: 380, height: 200)
+                                                .background(.gray)
+                                                .cornerRadius(30)
+
+                                            VStack{
+                                                HStack{
+//                                                    Spacer()
+//                                                    Text("\(event.title)")
+//                                                        .font(.system(size: 30))
+//                                                        .foregroundColor(.white)
+
+                                                    Spacer()
+
+//                                                    Image(systemName: "ellipsis")
+//                                                        .resizable()
+//                                                        .scaledToFill()
+//                                                        .frame(width: 10, height: 5)
+//                                                        .font(.system(size: 35))
+//                                                        .foregroundColor(.white)
+                                                   // Spacer()
+                                                }
+
+                                                Spacer()
+                                                    .frame(height: 50)
+                                                HStack{
+                                                  //  Spacer()
+//                                                    Text("\(event.eventDate, style: .date)")
+//                                                        .font(.system(size: 20))
+//                                                        .foregroundColor(.white)
+//                                                    Spacer()
+//                                                        .frame(width: geoReader.size.width * 0.1)
 //
-////                                        ZStack{
-////                                            Text("")
-////                                                .frame(width: 380, height: 200)
-////                                                .background(.gray)
-////                                                .cornerRadius(30)
-////
-////                                            VStack{
-////                                                HStack{
-////                                                    Spacer()
-////                                                    Text("\(event.title)")
-////                                                        .font(.system(size: 30))
-////                                                        .foregroundColor(.white)
-////
-////                                                    Spacer()
-////
-//////                                                    Image(systemName: "ellipsis")
-//////                                                        .resizable()
-//////                                                        .scaledToFill()
-//////                                                        .frame(width: 10, height: 5)
-//////                                                        .font(.system(size: 35))
-//////                                                        .foregroundColor(.white)
-////                                                   // Spacer()
-////                                                }
-////
-////                                                Spacer()
-////                                                    .frame(height: 50)
-////                                                HStack{
-////                                                  //  Spacer()
-////                                                    Text("\(event.eventDate, style: .date)")
-////                                                        .font(.system(size: 20))
-////                                                        .foregroundColor(.white)
-////                                                    Spacer()
-////                                                        .frame(width: geoReader.size.width * 0.1)
-//////
-//////                                                    ForEach(event.participants, id: \.self) { participant in
-//////                                                        ZStack{
-//////                                                            Image("Guy")
-//////                                                                .resizable()
-//////                                                                .scaledToFill()
-//////                                                                .frame(width: 50, height: 50)
-//////                                                                .cornerRadius(20)
-//////                                                                .foregroundColor(.white)
-//////
-//////                                                        }
-//////
-//////                                                    }
-////
-////                                                    Image("Guy")
-////                                                                .resizable()
-////                                                                .scaledToFill()
-////                                                                .frame(width: 50, height: 50)
-////                                                                .cornerRadius(20)
-////                                                                .foregroundColor(.white)
-////
-////                                                    Image("Girl")
-////                                                                .resizable()
-////                                                                .scaledToFill()
-////                                                                .frame(width: 50, height: 50)
-////                                                                .cornerRadius(20)
-////                                                                .foregroundColor(.white)
-////                                                }
-////                                            }
-////                                        }
-//                                    }
-//                                }
-//                                
+//                                                    ForEach(event.participants, id: \.self) { participant in
+//                                                        ZStack{
+//                                                            Image("Guy")
+//                                                                .resizable()
+//                                                                .scaledToFill()
+//                                                                .frame(width: 50, height: 50)
+//                                                                .cornerRadius(20)
+//                                                                .foregroundColor(.white)
+//
+//                                                        }
+//
+//                                                    }
+
+                                                    Image("Guy")
+                                                                .resizable()
+                                                                .scaledToFill()
+                                                                .frame(width: 50, height: 50)
+                                                                .cornerRadius(20)
+                                                                .foregroundColor(.white)
+
+                                                    Image("Girl")
+                                                                .resizable()
+                                                                .scaledToFill()
+                                                                .frame(width: 50, height: 50)
+                                                                .cornerRadius(20)
+                                                                .foregroundColor(.white)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
                                 
                                 Text("MATCH WITH FRIENDS TO SET UP EVENTS")
                                     .font(.system(size: geoReader.size.height * 0.03))

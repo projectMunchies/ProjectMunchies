@@ -15,134 +15,200 @@ struct City: Identifiable {
     var address: String
 }
 struct FindBunchView: View {
+    @Binding var showFindBunchPopover: Bool
     @State private var showHamburgerMenu: Bool = false
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
     @State private var searchResults: [MKMapItem] = []
     @State private var startSearch: Bool = false
-    
+    @State var showModal: Bool = false
+    @State var currentCity: City = City(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "", address: "")
     
     //Animated View properties
     @State var currentIndex: Int = 0
     
-    
-    
     @State private var region = MKCoordinateRegion(
-    center: CLLocationCoordinate2D(
-        latitude: 27.9506,
-        longitude: -82.4572
-    ),
-    span: MKCoordinateSpan(
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1
-    )
+        center: CLLocationCoordinate2D(
+            latitude: 27.9506,
+            longitude: -82.4572
+        ),
+        span: MKCoordinateSpan(
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1
+        )
     )
     
     @State private var cities: [City] = [
-//         City(coordinate: .init(latitude: 27.9506, longitude: -82.4572)),
-//         City(coordinate: .init(latitude: 30.9506, longitude: -83.4572)),
-//         City(coordinate: .init(latitude: 27.9506, longitude: -84.4572))
-     ]
-    
-   // let geoReader: GeometryProxy
-
-    
+        //         City(coordinate: .init(latitude: 27.9506, longitude: -82.4572)),
+        //         City(coordinate: .init(latitude: 30.9506, longitude: -83.4572)),
+        //         City(coordinate: .init(latitude: 27.9506, longitude: -84.4572))
+    ]
     var body: some View {
-        GeometryReader { geoReader in
-            ZStack{
-                Color.white
-                    .ignoresSafeArea()
-                
-               BGView()
-                
+        NavigationStack{
+            GeometryReader { geoReader in
                 ZStack{
-                    VStack{
+                    Color.white
+                        .ignoresSafeArea()
+                    
+                    BGView()
+                    
+                    ZStack{
+                        Text("Invite Details")
+                            .bold()
+                            .foregroundColor(.black)
+                            .font(.title)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.01)
+                        
+                        
+                        Map(coordinateRegion: $region, annotationItems: cities) { city in
+                            MapAnnotation(coordinate: city.coordinate) {
+                                Image(systemName: "mappin.and.ellipse")
+                                //.stroke(.red, lineWidth: 3)
+                                    .resizable()
+                                    .frame(width: 45, height: 45)
+                                    .foregroundColor(.red)
+                                    .onTapGesture {
+                                        currentCity = city
+                                    }
+                            }
+                            
+                        }
+                        .frame(width: geoReader.size.width * 0.98, height: geoReader.size.height * 0.75)
+                        .cornerRadius(30)
+                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.42)
+                        
                         SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search...")
                             .padding(.bottom)
-
-                        Map(coordinateRegion: $region, annotationItems: cities) { city in
-//                            MapAnnotation(
-//                                coordinate: city.coordinate,
-//                                anchorPoint: CGPoint(x: 0.5, y: 0.5)
-//                            ) {
-//                                Circle()
-//                                    .stroke(Color.red)
-//                                    .frame(width: 44, height: 44)
-//                            }
-                            
-                            MapMarker(coordinate: city.coordinate, tint: .red)
-                                
-                        }
-                            .frame(width: geoReader.size.width * 0.98, height: geoReader.size.height * 0.5)
-                            .cornerRadius(30)
+                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.75)
                         
-                        ScrollView{
-                            NavigationLink(destination: BunchProfileView(singleBunch:BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: "") )){
-                                VStack{
-                                    ForEach(self.cities) { message in
-                                            ZStack{
-                                                Text("")
-                                                    .frame(width: 380, height: 110)
-                                                    .background(.gray)
-                                                    .cornerRadius(30)
-
-                                                VStack{
-                                                    Text("\(message.name)")
-                                                        .font(.system(size: 20))
-                                                        .foregroundColor(.white)
-                                                    
-                                                    Text("\(message.address)")
-                                                        .font(.system(size: 10))
-                                                        .foregroundColor(.white)
-
-    //                                                Spacer()
-    //                                                    .frame(height: 50)
-                                                }
-                                            }
-                                            .padding(.bottom, geoReader.size.height * 0.003)
-                                        }
-                                }
+                        
+                        //                            ScrollView{
+                        //                                    VStack{
+                        //                                        ForEach(self.cities) { message in
+                        //                                            Button(action:  {
+                        //                                                showModal.toggle()
+                        //                                            }){
+                        //                                                ZStack{
+                        //                                                    Text("")
+                        //                                                        .frame(width: 380, height: 110)
+                        //                                                       // .background(.gray)
+                        //                                                        .cornerRadius(30)
+                        //
+                        //                                                    VStack{
+                        //                                                        Text("\(message.name)")
+                        //                                                            .font(.system(size: 20))
+                        //                                                            .foregroundColor(.black)
+                        //
+                        //                                                        Text("\(message.address)")
+                        //                                                            .font(.system(size: 10))
+                        //                                                            .foregroundColor(.black)
+                        //                                                    }
+                        //                                                }
+                        //                                            }
+                        //                                                .padding(.bottom, geoReader.size.height * 0.003)
+                        //                                            }
+                        //                                    }
+                        //                            }
+                        
+                        Button(action:  {
+                            showModal.toggle()
+                        }){
+                            VStack{
+                                Text("\(currentCity.name)")
+                                    .bold()
+                                    .foregroundColor(.black)
+                                    .font(.title2)
+                                
+                                Text("\(currentCity.address)")
+                                    .foregroundColor(.black)
                             }
-                         
+                        }
+                        // .padding(.bottom, geoReader.size.height * 0.003)
+                        .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.1)
+                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.85)
+                        
+                        HStack{
+                            Button{
+                                
+                            }label: {
+                                Text("Send Invite")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical)
+                                    .frame(width:geoReader.size.width * 0.45, height:geoReader.size.height * 0.08)
+                                    .background{
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(.green)
+                                            .cornerRadius(40)
+                                    }
+                            }
+                            
+                            Button{
+                                showFindBunchPopover.toggle()
+                            }label: {
+                                Text("Cancel")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical)
+                                    .frame(width:geoReader.size.width * 0.45, height:geoReader.size.height * 0.08)
+                                    .background{
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(.red)
+                                            .cornerRadius(40)
+                                    }
+                            }
+                        }
+                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.95)
+                        
+                        
+                        if showModal {
+                            Rectangle() // the semi-transparent overlay
+                                .foregroundColor(Color.black.opacity(0.5))
+                                .edgesIgnoringSafeArea(.all)
+                            
+                            GeometryReader { geometry in // the modal container
+                                RoundedRectangle(cornerRadius: 16)
+                                    .foregroundColor(.white)
+                                    .frame(width: geoReader.size.width * 0.7, height: geoReader.size.height * 0.3)
+                                    .overlay(ModalContentView(showModal: self.$showModal, geoReader: geoReader))
+                            }
+                            .transition(.move(edge: .bottom))
+                            .position(x: geoReader.size.width * 0.65, y: geoReader.size.height * 0.75)
+                            
+                        }
+                        
+                        //                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+                    }
+                    .navigationBarBackButtonHidden(true)
+                    .disabled(self.showHamburgerMenu ? true : false)
+                    .onAppear{
+                        homeViewModel.getUserProfile() {(userProfileId) -> Void in
+                            if userProfileId != "" {
+                                //get profileImage
+                                homeViewModel.getImageStorageFile(profileId: userProfileId)
+                            }
                         }
                     }
-                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.64)
-                        .onAppear{
-                            homeViewModel.getUserProfile() {(userProfileId) -> Void in
-                                if userProfileId != "" {
-                                    //get profileImage
-                                    homeViewModel.getImageStorageFile(profileId: userProfileId)
-                                }
-                            }
+                    .onChange(of: startSearch) { value in
+                        search(for: self.searchText)
+                    }
+                    .onChange(of: searchText) { value in
+                        if self.searchText == "" {
+                            self.cities.removeAll()
                         }
-                        .onChange(of: startSearch) { value in
-                            search(for: self.searchText)
-                        }
-                        .onChange(of: searchText) { value in
-                            if self.searchText == "" {
-                                self.cities.removeAll()
-                            }
-                        }
-                    
-                    Text("Find Location")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.largeTitle)
-                       .position(x:geoReader.size.width * 0.25, y:geoReader.size.height * 0.1)
-                    
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+                    }
                 }
-                .disabled(self.showHamburgerMenu ? true : false)
+                
+                //Display HamburgerMenu
+                if self.showHamburgerMenu {
+                    HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
+                        .frame(width: geoReader.size.width/2)
+                        .padding(.trailing, geoReader.size.width * 0.5)
+                }
             }
-            
-            //Display HamburgerMenu
-            if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
-                    .frame(width: geoReader.size.width/2)
-                    .padding(.trailing, geoReader.size.width * 0.5)
-            }
-     }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+        
     }
     
     // Blurred BG
@@ -171,7 +237,7 @@ struct FindBunchView: View {
                 .white,
                 .clear,
                 color
-
+                
             ], startPoint: .top, endPoint: .bottom)
             
             // Blurred Overlay
@@ -198,7 +264,7 @@ struct FindBunchView: View {
                 let city = City(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.cities.append(city)
             }
-        
+            
             //print(searchResults)
         }
     }
@@ -206,9 +272,68 @@ struct FindBunchView: View {
 
 struct FindBunchView_Previews: PreviewProvider {
     static var previews: some View {
-       // GeometryReader{ proxy in
-        FindBunchView()
-      //  }
+        // GeometryReader{ proxy in
+        FindBunchView(showFindBunchPopover: .constant(false))
+        //  }
+        
+    }
+}
 
+struct ModalContentView: View {
+    @Binding var showModal: Bool
+    let geoReader: GeometryProxy
+    @State private var eventDate: Date = Date()
+    
+    var body: some View {
+        VStack {
+            
+            Text("Pick a Date")
+                .bold()
+                .font(.title3)
+                .foregroundColor(.black)
+                .position(x:geoReader.size.width * 0.35, y:geoReader.size.height * 0.05)
+            
+            DatePicker("",selection: $eventDate)
+                .position(x:geoReader.size.width * 0.25, y:geoReader.size.height * 0.01)
+            
+            
+            HStack{
+                Button(action: {
+                    withAnimation {
+                        self.showModal.toggle()
+                    }
+                }) {
+                    Text("Done")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                        .frame(width:geoReader.size.width * 0.2, height:geoReader.size.height * 0.04)
+                        .background{
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(.green)
+                                .cornerRadius(40)
+                        }
+                }
+                
+                Button(action: {
+                    withAnimation {
+                        self.showModal.toggle()
+                    }
+                }) {
+                    Text("Close")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                        .frame(width:geoReader.size.width * 0.2, height:geoReader.size.height * 0.04)
+                        .background{
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(.red)
+                                .cornerRadius(40)
+                        }
+                }
+            }
+            .position(x:geoReader.size.width * 0.35, y:geoReader.size.height * 0.05)
+            
+        }
     }
 }

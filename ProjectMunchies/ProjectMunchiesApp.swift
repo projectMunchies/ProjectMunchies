@@ -24,10 +24,7 @@ struct ProjectMunchiesApp: App {
     @StateObject var viewRouter = ViewRouter()
     var body: some Scene {
         WindowGroup {
-            NavigationView{
                 ContentView().environmentObject(viewRouter)
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

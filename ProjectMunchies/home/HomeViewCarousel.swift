@@ -27,7 +27,8 @@ struct HomeViewCarousel: View {
     @State private var searchResults: [MKMapItem] = []
     @State private var startSearch: Bool = false
     @State private var showFindBunchPopover: Bool = false
-    @State private var eventDate: Date = Date()
+    @State private var opacity: CGFloat = 0.2
+    @State var appear = false
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 27.9506,
@@ -59,47 +60,49 @@ struct HomeViewCarousel: View {
     let storage = Storage.storage()
     
     var body: some View {
-        GeometryReader{geoReader in
-            ZStack{
-                BGView()
-                
-                Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $cards, homeViewModel: homeViewModel)
-                
-                SlidingTabs(slidingTabsIndex: $slidingTabsIndex, tabNames: ["Connect","Discover"], geoReader: geoReader)
-                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.1)
-                
-                //mainView
-                mainDisplay(geoReader: geoReader)
-            }
-            .onAppear{
-                getProfileData()
-            }
-            .popover(isPresented: $showFindBunchPopover) {
-                findBunchPopover()
-            }
-            .onChange(of: homeViewModel.foodFilter){ newValue in
-                //do this to have more profiles to choose from in db
-                //homeViewModel.lastDoc = nil
-                homeViewModel.getFilteredRecords(foodFilter: newValue, isReset: true){(foodFilters) in
-                    if foodFilters.isEmpty{
-                        print(homeViewModel.lastDoc.data())
+        NavigationStack{
+            GeometryReader{geoReader in
+                ZStack{
+                    BGView()
+                    
+                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: $isLoading, foodFilter: $homeViewModel.foodFilter, filteredCards: $cards, homeViewModel: homeViewModel)
+                    
+                    SlidingTabs(slidingTabsIndex: $slidingTabsIndex, tabNames: ["Connect","Discover"], geoReader: geoReader)
+                        .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.1)
+                    
+                    //mainView
+                    mainDisplay(geoReader: geoReader)
+                }
+                .onAppear{
+                    getProfileData()
+                }
+                //            .popover(isPresented: $showFindBunchPopover) {
+                //                findBunchPopover()
+                //            }
+                .onChange(of: homeViewModel.foodFilter){ newValue in
+                    //do this to have more profiles to choose from in db
+                    //homeViewModel.lastDoc = nil
+                    homeViewModel.getFilteredRecords(foodFilter: newValue, isReset: true){(foodFilters) in
+                        if foodFilters.isEmpty{
+                            print(homeViewModel.lastDoc.data())
+                        }
                     }
                 }
-            }
-            .onChange(of: startSearch) { value in
-                searchB(for: self.searchText)
-            }
-            .onChange(of: searchText) { value in
-                if self.searchText == "" {
-                    self.cities.removeAll()
+                .onChange(of: startSearch) { value in
+                    searchB(for: self.searchText)
                 }
-            }
-            
-            //Display HamburgerMenu
-            if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
-                    .frame(width: geoReader.size.width/2)
-                    .padding(.trailing, geoReader.size.width * 0.5)
+                .onChange(of: searchText) { value in
+                    if self.searchText == "" {
+                        self.cities.removeAll()
+                    }
+                }
+                
+                //Display HamburgerMenu
+                if self.showHamburgerMenu {
+                    HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
+                        .frame(width: geoReader.size.width/2)
+                        .padding(.trailing, geoReader.size.width * 0.5)
+                }
             }
         }
     }
@@ -153,6 +156,8 @@ struct HomeViewCarousel: View {
     
     private func mainDisplay(geoReader: GeometryProxy) -> some View {
         ZStack{
+        swipeDownIndicator(geoReader: geoReader)
+            
             if !isLoading{
                 //slidingTabsIndex Connect = 0, Discover = 1
                 displayCards(geoReader: geoReader)
@@ -172,6 +177,7 @@ struct HomeViewCarousel: View {
                 DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage, animation: animation)
             }
         }
+        
     }
     
     private func displayCards(geoReader: GeometryProxy) -> some View{
@@ -191,26 +197,32 @@ struct HomeViewCarousel: View {
                 .padding(.top,50)
                 .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
             } else {
-                SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.groups){group in
+                SnapCarousel(spacing: geoReader.size.width * 0.1, trailingSpace: geoReader.size.width * 0.2, swipeIndex: $swipeIndex, items: self.groups){group in
                     GeometryReader{proxy in
                         let size = proxy.size
                         ScrollView(.vertical, showsIndicators: false){
                             CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
                                 .onChange(of: offset) { newValue in
-                                    // your own custom threshold for toggling invite button
-                                    if newValue > 290{
+                                    // your own custom threshold for toggling inviteDetails view
+                                    if newValue > 260{
                                         withAnimation(.easeInOut){
                                             showFindBunchPopover = true
+                                            
                                         }
                                         
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05){
-                                            withAnimation(.easeInOut){
-                                                showFindBunchPopover = true
-                                            }
-                                        }
+                                        
+                                        //                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05){
+                                        //                                            withAnimation(.easeInOut){
+                                        //                                                showFindBunchPopover = true
+                                        //                                            }
+                                        //                                        }
                                     }
+                                    
                                 }
                                 .modifier(OffsetModifier(offset: $offset))
+                                .navigationDestination(isPresented: $showFindBunchPopover){
+                                    FindBunchView(showFindBunchPopover: $showFindBunchPopover)
+                                }
                         }
                         .position(x: geoReader.size.width * 0.4, y: geoReader.size.height * 0.65)
                     }
@@ -227,6 +239,28 @@ struct HomeViewCarousel: View {
         VStack{
             CustomIndicator()
         }
+    }
+    
+    private func swipeDownIndicator(geoReader: GeometryProxy) -> some View {
+        VStack{
+            Image(systemName: "arrow.down.circle.fill")
+                .resizable()
+                .foregroundColor(.blue)
+                .frame(width: geoReader.size.width * 0.2, height: geoReader.size.height * 0.1)
+            
+            
+            Text("Swipe down")
+                .font(.title2)
+                .opacity(0.5)
+        }
+        .opacity(opacity)
+        .animation(
+            .easeInOut(duration: 1).repeatForever(),
+            value: opacity
+        )
+        .onAppear(perform: { opacity = 1 })
+        
+        .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.9)
     }
     
     private func getProfileData() {
@@ -339,6 +373,9 @@ struct HomeViewCarousel: View {
     }
     
     public func getGroups(completed: @escaping (_ groupIds: [GroupModel]) -> Void) {
+        //clean if dirty
+        self.groups.removeAll()
+        
         db.collection("groups")
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -365,61 +402,19 @@ struct HomeViewCarousel: View {
             ZStack{
                 Color.white
                     .scaleEffect(1.5)
+                
                 Map(coordinateRegion: $region, annotationItems: cities) { city in
                     MapMarker(coordinate: city.coordinate, tint: .red)
                 }
                 .frame(width: geoReader.size.width, height: geoReader.size.height * 1.4)
                 
-                ZStack{
-                    Text("")
-                        .frame(width: geoReader.size.width * 0.9, height: geoReader.size.height * 0.3)
-                        .background(.white)
-                        .cornerRadius(30)
-                    VStack{
-                        Text("Pick a Date")
-                            .foregroundColor(.black)
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.65)
-                        
-                        DatePicker("",selection: $eventDate)
-                            .position(x:geoReader.size.width * 0.25, y:geoReader.size.height * 0.01)
-                    }
-                    
-                    ScrollView{
-                        NavigationLink(destination: BunchProfileView(singleBunch:BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: ""))){
-                            VStack{
-                                ForEach(self.cities) { message in
-                                    ZStack{
-                                        Text("")
-                                            .frame(width: geoReader.size.width * 0.85, height: geoReader.size.height * 0.1)
-                                        // .background(.gray)
-                                            .cornerRadius(30)
-                                        
-                                        VStack{
-                                            Text("\(message.name)")
-                                                .font(.system(size: 25))
-                                                .foregroundColor(.black)
-                                            
-                                            Text("\(message.address)")
-                                                .font(.system(size: 10))
-                                                .foregroundColor(.black)
-                                                .padding(.bottom,15)
-                                            
-                                            Divider()
-                                        }
-                                    }
-                                    .padding(.bottom, geoReader.size.height * 0.003)
-                                }
-                            }
-                        }
-                    }
-                    .frame(width: geoReader.size.width * 0.5, height: geoReader.size.height * 0.3)
-                }
-                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
+                popoverBody(geoReader: geoReader)
+                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                 
-             popoverButtons(geoReader: geoReader)
-                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.95)
+                popoverButtons(geoReader: geoReader)
+                    .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.95)
                 
-              popoverHeader(geoReader: geoReader)
+                popoverHeader(geoReader: geoReader)
             }
         }
     }
@@ -489,6 +484,37 @@ struct HomeViewCarousel: View {
                             .cornerRadius(40)
                     }
             }
+        }
+    }
+    
+    private func popoverBody(geoReader: GeometryProxy) -> some View {
+        ZStack{
+            Text("")
+                .frame(width: geoReader.size.width * 0.9, height: geoReader.size.height * 0.3)
+                .background(.white)
+                .cornerRadius(30)
+            
+            ScrollView{
+                VStack{
+                    ForEach(self.cities) { message in
+                        VStack{
+                            Text("\(message.name)")
+                                .font(.system(size: 25))
+                                .foregroundColor(.black)
+                            
+                            Text("\(message.address)")
+                                .font(.system(size: 10))
+                                .foregroundColor(.black)
+                                .padding(.bottom,15)
+                            
+                            Divider()
+                        }
+                        
+                        .padding(.bottom, geoReader.size.height * 0.003)
+                    }
+                }
+            }
+            .frame(width: geoReader.size.width * 0.5, height: geoReader.size.height * 0.3)
         }
     }
 }

@@ -41,12 +41,12 @@ struct CardViewCarousel: View {
                                 showDetailView = true
                             }
                         }
-                        .draggable(Image(uiImage: cardViewModel.profileImage)){
-                            Image(uiImage: cardViewModel.profileImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: size.width * 0.2, height: size.height * 0.1)
-                        }
+//                        .draggable(Image(uiImage: cardViewModel.profileImage)){
+//                            Image(uiImage: cardViewModel.profileImage)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: size.width * 0.2, height: size.height * 0.1)
+//                        }
                 } else {
                     GridViewCardGroup(cardViewModel2: cardViewModel, groupProfileIds: groupProfileIds, size: size)
                         .onTapGesture {
@@ -57,12 +57,12 @@ struct CardViewCarousel: View {
                                 showDetailView = true
                             }
                         }
-                        .draggable(Image(uiImage: cardViewModel.profileImage)){
-                            Image(uiImage: cardViewModel.profileImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: size.width * 0.2, height: size.height * 0.1)
-                        }
+//                        .draggable(Image(uiImage: cardViewModel.profileImage)){
+//                            Image(uiImage: cardViewModel.profileImage)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: size.width * 0.2, height: size.height * 0.1)
+//                        }
                 }
                 
                 VStack{
