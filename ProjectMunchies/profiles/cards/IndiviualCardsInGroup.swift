@@ -10,13 +10,14 @@ import SwiftUI
 struct IndividualCardsInGroup: View {
     var profileId: String
     let size: CGSize
+var cardViewModelMultipleImages: CardViewModel
     @StateObject private var cardViewModel2 = CardViewModel()
     @State var showImage: Bool = false
     @State var individualCard: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , favRestaurant: "", favFood: "", hobbies: [],eventIds: [], isMockData: false, bunchIds: [])
     
     var body: some View {
         VStack{
-            Image(uiImage: cardViewModel2.profileImage2)
+            Image(uiImage: appendStuff())
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: size.height * 0.2, height: size.height * 0.2)
@@ -31,6 +32,12 @@ struct IndividualCardsInGroup: View {
                 }
             }
         }
+    }
+    
+    private func appendStuff() -> UIImage{
+        
+        cardViewModelMultipleImages.profileImages.append(cardViewModel2.profileImage2)
+        return cardViewModel2.profileImage2
     }
     
     private func getProf(profileId: String, completed: @escaping (_ profileId: String) -> Void){
@@ -57,6 +64,6 @@ struct IndividualCardsInGroup: View {
 
 struct IndividualCardsInGroup_Previews: PreviewProvider {
     static var previews: some View {
-        IndividualCardsInGroup(profileId: "", size: .zero)
+        IndividualCardsInGroup(profileId: "", size: .zero, cardViewModelMultipleImages: CardViewModel())
     }
 }

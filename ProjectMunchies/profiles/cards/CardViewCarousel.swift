@@ -18,7 +18,7 @@ struct CardViewCarousel: View {
     @Binding var detailProfile: ProfileModel?
     @Binding var showDetailView: Bool
     @Binding var currentCardSize: CGSize
-    @Binding var detailImage: UIImage
+    @Binding var detailImages: [UIImage]
     @Namespace var animation
     
     var body: some View {
@@ -36,7 +36,7 @@ struct CardViewCarousel: View {
                         .onTapGesture {
                             currentCardSize = size
                             detailProfile = profile
-                            detailImage = cardViewModel.profileImage
+                            detailImages = [cardViewModel.profileImage]
                             withAnimation(.easeInOut){
                                 showDetailView = true
                             }
@@ -48,11 +48,11 @@ struct CardViewCarousel: View {
 //                                .frame(width: size.width * 0.2, height: size.height * 0.1)
 //                        }
                 } else {
-                    GridViewCardGroup(cardViewModel2: cardViewModel, groupProfileIds: groupProfileIds, size: size)
+                    GridViewCardGroup(cardViewModelMultipleImages: cardViewModel, groupProfileIds: groupProfileIds, size: size)
                         .onTapGesture {
                             currentCardSize = size
                             detailProfile = profile
-                            detailImage = cardViewModel.profileImage
+                            detailImages = cardViewModel.profileImages
                             withAnimation(.easeInOut){
                                 showDetailView = true
                             }
@@ -95,19 +95,19 @@ struct CardViewCarousel: View {
               
             }
             .onAppear{
-                cardViewModel.getStorageFile(profileId: profile.id)
+                cardViewModel.getStorageFile(profileId: groupProfileIds[0])
             }
     }
 }
 
 struct CardViewCarousel_Previews: PreviewProvider {
     static var previews: some View {
-        CardViewCarousel(size: .zero, profile: mockProfiles.first!, slidingTabsIndex: 0, detailProfile: .constant(mockProfiles.first!), showDetailView: .constant(false), currentCardSize: .constant(.zero), detailImage: .constant(UIImage()))
+        CardViewCarousel(size: .zero, profile: mockProfiles.first!, slidingTabsIndex: 0, detailProfile: .constant(mockProfiles.first!), showDetailView: .constant(true), currentCardSize: .constant(.zero), detailImages: .constant([]))
     }
 }
 
 struct GridViewCardGroup: View {
-    var cardViewModel2: CardViewModel
+    var cardViewModelMultipleImages: CardViewModel
     var groupProfileIds: [String]
     var columns = Array(repeating: GridItem(.flexible()), count: 2)
     let size: CGSize
@@ -116,7 +116,7 @@ struct GridViewCardGroup: View {
         LazyVGrid(columns: columns, alignment: .center){
             ForEach(groupProfileIds.indices, id: \.self) { index in
                 if index < 5 {
-                    IndividualCardsInGroup(profileId: groupProfileIds[index], size: size)
+                    IndividualCardsInGroup(profileId: groupProfileIds[index], size: size, cardViewModelMultipleImages: cardViewModelMultipleImages)
                 }else if index == 5 {
                     ZStack{
                         Text("")

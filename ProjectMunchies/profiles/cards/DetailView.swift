@@ -11,7 +11,7 @@ struct DetailView: View {
     var profile: ProfileModel
     @Binding var showDetailVew: Bool
     @Binding var currentCardSize: CGSize
-    @Binding var detailImage: UIImage
+    @Binding var detailImages: [UIImage]
     
     var animation: Namespace.ID
     @State var showDetailContent: Bool = false
@@ -20,12 +20,17 @@ struct DetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             VStack{
-                Image(uiImage: detailImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: currentCardSize.width, height: currentCardSize.height * 0.67)
-                    .cornerRadius(15)
-                    .matchedGeometryEffect(id: profile.id, in: animation)
+                HStack(spacing:0){
+                        ForEach(detailImages, id: \.self){ detailImage in
+                            Image(uiImage: detailImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: currentCardSize.width * 0.2, height: currentCardSize.height * 0.6)
+                                .cornerRadius(30)
+                                .padding(.trailing)
+                        }
+                }
+                    .position(x:currentCardSize.width * 0.05, y:currentCardSize.height * 0.3)
                 
                 VStack(spacing: 5){
                     Text("About \(profile.fullName)")
@@ -85,16 +90,16 @@ struct DetailView: View {
                                     .fill(.gray)
                             }
                     }
-                    .padding(.top,20)
+//                    .padding(.top,20)
+//                    .padding(.trailing,80)
                 }
                 .opacity(showDetailContent ? 1 : 0)
                 .offset(y: showDetailContent ? 0 : 200)
             }
-            .padding()
             .modifier(OffsetModifier(offset: $offset))
         }
-        .coordinateSpace(name: "SCROLL")
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+       // .coordinateSpace(name: "SCROLL")
+        //.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background{
             Rectangle()
                 .fill(.ultraThinMaterial)

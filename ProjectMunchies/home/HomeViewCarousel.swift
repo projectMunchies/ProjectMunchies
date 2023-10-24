@@ -15,11 +15,12 @@ struct HomeViewCarousel: View {
     @StateObject private var cardViewModel = CardViewModel()
     @State private var detailProfile: ProfileModel?
     @State private var showDetailView: Bool = false
-    @State private var detailImage: UIImage = UIImage()
+    @State private var detailImages: [UIImage] = [UIImage()]
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var cards: [ProfileModel] = []
     @State private var groups: [GroupModel] = []
+    @State private var allGroups: [GroupModel] = [GroupModel(id: "", profileIds: [], groupProfile: MockDataService.userProfileSampleData)]
     @State private var inviteSent: Bool = false
     @State private var phase = 0.0
     @State private var offset: CGFloat = 0
@@ -156,7 +157,10 @@ struct HomeViewCarousel: View {
     
     private func mainDisplay(geoReader: GeometryProxy) -> some View {
         ZStack{
-        swipeDownIndicator(geoReader: geoReader)
+            if slidingTabsIndex == 0 {
+                swipeDownIndicator(geoReader: geoReader)
+            }
+      
             
             if !isLoading{
                 //slidingTabsIndex Connect = 0, Discover = 1
@@ -174,7 +178,7 @@ struct HomeViewCarousel: View {
         }
         .overlay{
             if let profile = detailProfile,showDetailView{
-                DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage, animation: animation)
+                DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages, animation: animation)
             }
         }
         
@@ -183,25 +187,26 @@ struct HomeViewCarousel: View {
     private func displayCards(geoReader: GeometryProxy) -> some View{
         ZStack{
             if slidingTabsIndex == 1 {
-                SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
-                    GeometryReader{proxy in
-                        let size = proxy.size
-                        ScrollView(.vertical, showsIndicators: false){
-                            CardViewCarousel(size: size, profile: profile, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
-                        }
-                        .position(x: geoReader.size.width * 0.4, y: geoReader.size.height * 0.75)
-                    }
-                }
-                // Since Carousel is Moved The current Card a little bit up
-                //Using padding to avoid the Undercovering the top element
-                .padding(.top,50)
-                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+//                SnapCarousel(spacing: 20,trailingSpace: 110, swipeIndex: $swipeIndex, items: self.cards){profile in
+//                    GeometryReader{proxy in
+//                        let size = proxy.size
+//                        ScrollView(.vertical, showsIndicators: false){
+//                            CardViewCarousel(size: size, profile: profile, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+//                        }
+//                        .position(x: geoReader.size.width * 0.4, y: geoReader.size.height * 0.75)
+//                    }
+//                }
+//                // Since Carousel is Moved The current Card a little bit up
+//                //Using padding to avoid the Undercovering the top element
+//                .padding(.top,50)
+//                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
+                discoverGroups(geoReader: geoReader)
             } else {
                 SnapCarousel(spacing: geoReader.size.width * 0.1, trailingSpace: geoReader.size.width * 0.2, swipeIndex: $swipeIndex, items: self.groups){group in
                     GeometryReader{proxy in
                         let size = proxy.size
                         ScrollView(.vertical, showsIndicators: false){
-                            CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImage: $detailImage)
+                            CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages)
                                 .onChange(of: offset) { newValue in
                                     // your own custom threshold for toggling inviteDetails view
                                     if newValue > 260{
@@ -220,9 +225,9 @@ struct HomeViewCarousel: View {
                                     
                                 }
                                 .modifier(OffsetModifier(offset: $offset))
-                                .navigationDestination(isPresented: $showFindBunchPopover){
-                                    FindBunchView(showFindBunchPopover: $showFindBunchPopover)
-                                }
+//                                .navigationDestination(isPresented: $showFindBunchPopover){
+//                                    FindBunchView(showFindBunchPopover: $showFindBunchPopover)
+//                                }
                         }
                         .position(x: geoReader.size.width * 0.4, y: geoReader.size.height * 0.65)
                     }
@@ -237,7 +242,10 @@ struct HomeViewCarousel: View {
     
     private func Footer()->some View{
         VStack{
-            CustomIndicator()
+            if slidingTabsIndex == 0 {
+                CustomIndicator()
+            }
+         
         }
     }
     
@@ -515,6 +523,56 @@ struct HomeViewCarousel: View {
                 }
             }
             .frame(width: geoReader.size.width * 0.5, height: geoReader.size.height * 0.3)
+        }
+    }
+    
+    private func discoverGroups(geoReader: GeometryProxy) -> some View {
+        VStack{
+                SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search groups...")
+                
+                ScrollView{
+                    VStack{
+                        ForEach(self.allGroups) { group in
+                            NavigationLink(destination: SignInView()) {
+                                ZStack{
+                                    Text("")
+                                        .frame(width: 380, height: 200)
+                                        .background(.gray)
+                                        .cornerRadius(30)
+                                    VStack{
+                                        Text("Group Name")
+                                            .font(.title2)
+                                            .foregroundColor(.white)
+                                   
+                                            HStack{
+                                                ForEach(0..<3){ item in
+                                                    ZStack{
+                                                        Image("Guy")
+                                                                    .resizable()
+                                                                    .scaledToFill()
+                                                                    .frame(width: 50, height: 50)
+                                                                    .cornerRadius(20)
+                                                                    .foregroundColor(.white)
+                                                                 
+                                                    }
+                                                }
+                                              
+
+                                                Image(systemName: "plus.circle.fill")
+                                                            .resizable()
+                                                            .scaledToFill()
+                                                            .frame(width: 50, height: 50)
+                                                            .cornerRadius(20)
+                                                            .foregroundColor(.white)
+                                            }
+                                    }
+                                   
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
         }
     }
 }

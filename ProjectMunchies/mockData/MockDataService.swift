@@ -49,19 +49,11 @@ enum MockDataService {
 //        ]
 //    }
     
-    //    static var userProfileSampleData: ProfileModel {
-    //        ProfileModel(
-    //            id: "",
-    //            fullName: "",
-    //            location: "",
-    //            description: "",
-    //            gender: "",
-    //            age: "",
-    //            fcmTokens: [],
-    //            messageThreadIds: [],
-    //            isMockData: true
-    //        )
-    //    }
+        static var userProfileSampleData: ProfileModel {
+            ProfileModel(
+               id: "r45r43", fullName: "fdsfsd", location: "", description: "", gender: "", age: "", fcmTokens: [], messageThreadIds: [], occupation: "", favRestaurant: "", favFood: "", hobbies: [], eventIds: [], isMockData: true, bunchIds: []
+            )
+        }
     
     static var foodFilterSampleData: FoodFilterModel {
         FoodFilterModel(
