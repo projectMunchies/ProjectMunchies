@@ -15,7 +15,7 @@ struct City: Identifiable {
     var address: String
 }
 struct FindBunchView: View {
-    @Binding var showFindBunchPopover: Bool
+    @Binding var showFindBunchView: Bool
     @State private var showHamburgerMenu: Bool = false
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
@@ -144,7 +144,7 @@ struct FindBunchView: View {
                             }
                             
                             Button{
-                                showFindBunchPopover.toggle()
+                                showFindBunchView.toggle()
                             }label: {
                                 Text("Cancel")
                                     .fontWeight(.semibold)
@@ -273,7 +273,7 @@ struct FindBunchView: View {
 struct FindBunchView_Previews: PreviewProvider {
     static var previews: some View {
         // GeometryReader{ proxy in
-        FindBunchView(showFindBunchPopover: .constant(false))
+        FindBunchView(showFindBunchView: .constant(false))
         //  }
         
     }
