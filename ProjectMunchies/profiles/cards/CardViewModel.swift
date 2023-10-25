@@ -11,6 +11,7 @@ import FirebaseStorage
 
 class CardViewModel: ObservableObject {
     @Published var profileImages: [UIImage] = []
+    @Published var detailProfiles: [ProfileModel] = []
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfileImage: UIImage = UIImage()
     @Published var profileImage2: UIImage = UIImage()

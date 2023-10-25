@@ -19,6 +19,7 @@ struct CardViewCarousel: View {
     @Binding var showDetailView: Bool
     @Binding var currentCardSize: CGSize
     @Binding var detailImages: [UIImage]
+    @Binding var detailProfiles: [ProfileModel]
     @Namespace var animation
     
     var body: some View {
@@ -53,6 +54,7 @@ struct CardViewCarousel: View {
                             currentCardSize = size
                             detailProfile = profile
                             detailImages = cardViewModel.profileImages
+                            detailProfiles = cardViewModel.detailProfiles
                             withAnimation(.easeInOut){
                                 showDetailView = true
                             }
@@ -95,14 +97,14 @@ struct CardViewCarousel: View {
               
             }
             .onAppear{
-                cardViewModel.getStorageFile(profileId: groupProfileIds[0])
+//                cardViewModel.getStorageFile(profileId: groupProfileIds[0])
             }
     }
 }
 
 struct CardViewCarousel_Previews: PreviewProvider {
     static var previews: some View {
-        CardViewCarousel(size: .zero, profile: mockProfiles.first!, slidingTabsIndex: 0, detailProfile: .constant(mockProfiles.first!), showDetailView: .constant(true), currentCardSize: .constant(.zero), detailImages: .constant([]))
+        CardViewCarousel(size: .zero, profile: mockProfiles.first!, slidingTabsIndex: 0, detailProfile: .constant(mockProfiles.first!), showDetailView: .constant(false), currentCardSize: .constant(.zero), detailImages: .constant([UIImage()]), detailProfiles: .constant([]))
     }
 }
 

@@ -12,6 +12,7 @@ struct DetailView: View {
     @Binding var showDetailVew: Bool
     @Binding var currentCardSize: CGSize
     @Binding var detailImages: [UIImage]
+    @Binding var detailProfiles: [ProfileModel]
     
     var animation: Namespace.ID
     @State var showDetailContent: Bool = false
@@ -41,17 +42,10 @@ struct DetailView: View {
                         .padding(.bottom,5)
                     
                     HStack{
-                        Spacer()
-                        Text("Occupation:")
-                        Text("\(profile.occupation)")
-                        Spacer()
-                    }
-                    
-                    HStack{
-                        Spacer()
-                        Text("Location:")
-                        Text("\(profile.location)")
-                        Spacer()
+                        Text("Members: ")
+                        ForEach(detailProfiles) { profile in
+                            Text(profile.fullName)
+                        }
                     }
                     
                     HStack{

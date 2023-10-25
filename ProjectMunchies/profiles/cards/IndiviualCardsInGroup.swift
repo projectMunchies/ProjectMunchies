@@ -35,7 +35,6 @@ var cardViewModelMultipleImages: CardViewModel
     }
     
     private func appendStuff() -> UIImage{
-        
         cardViewModelMultipleImages.profileImages.append(cardViewModel2.profileImage2)
         return cardViewModel2.profileImage2
     }
@@ -54,6 +53,7 @@ var cardViewModelMultipleImages: CardViewModel
                         if !data.isEmpty{
                             let profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? [])
                             self.individualCard = profile
+                            cardViewModelMultipleImages.detailProfiles.append(profile)
                         }
                     }
                     completed(self.individualCard.id)

@@ -14,6 +14,7 @@ struct HomeViewCarousel: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var cardViewModel = CardViewModel()
     @State private var detailProfile: ProfileModel?
+    @State private var detailProfiles: [ProfileModel] = []
     @State private var showDetailView: Bool = false
     @State private var detailImages: [UIImage] = [UIImage()]
     @State private var isLoading: Bool = false
@@ -160,7 +161,7 @@ struct HomeViewCarousel: View {
         }
         .overlay{
             if let profile = detailProfile,showDetailView{
-                DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages, animation: animation)
+                DetailView(profile: profile, showDetailVew: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages, detailProfiles: $detailProfiles, animation: animation)
             }
         }
     }
@@ -187,7 +188,7 @@ struct HomeViewCarousel: View {
                     GeometryReader{proxy in
                         let size = proxy.size
                         ScrollView(.vertical, showsIndicators: false){
-                            CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages)
+                            CardViewCarousel(size: size, profile: group.groupProfile, groupProfileIds: group.profileIds, slidingTabsIndex: self.slidingTabsIndex,  detailProfile: $detailProfile, showDetailView: $showDetailView, currentCardSize: $currentCardSize, detailImages: $detailImages, detailProfiles: $detailProfiles)
                                 .onChange(of: offset) { newValue in
                                     // your own custom threshold for toggling inviteDetails view
                                     if newValue > 260{
