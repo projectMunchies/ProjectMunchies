@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GroupModel: Identifiable {
+struct GroupModel: Identifiable, Hashable{
     var id: String
     var profileIds: [String]
     var groupProfile: ProfileModel

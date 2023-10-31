@@ -31,4 +31,5 @@ enum Route {
     case homePage
     case signinPage
     case signupPage
+    case pickInitialGroupPage
 }

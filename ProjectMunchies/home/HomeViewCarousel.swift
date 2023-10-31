@@ -13,6 +13,7 @@ import MapKit
 struct HomeViewCarousel: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var cardViewModel = CardViewModel()
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var detailProfile: ProfileModel?
     @State private var detailProfiles: [ProfileModel] = []
     @State private var showDetailView: Bool = false
@@ -20,7 +21,6 @@ struct HomeViewCarousel: View {
     @State private var isLoading: Bool = false
     @State private var showHamburgerMenu: Bool = false
     @State private var cards: [ProfileModel] = []
-    @State private var groups: [GroupModel] = []
     @State private var allGroups: [GroupModel] = [GroupModel(id: "", profileIds: [], groupProfile: MockDataService.userProfileSampleData)]
     @State private var inviteSent: Bool = false
     @State private var phase = 0.0
@@ -95,7 +95,7 @@ struct HomeViewCarousel: View {
     @ViewBuilder
     private func CustomIndicator()->some View{
         HStack(spacing: 5){
-            ForEach(self.groups.indices, id: \.self){index in
+            ForEach(homeViewModel.groups.indices, id: \.self){index in
                 Circle()
                     .fill(swipeIndex == index ? .blue : .gray.opacity(0.5))
                     .frame(width: swipeIndex == index ? 10 : 6, height: swipeIndex == index ? 10 : 6)
@@ -184,7 +184,7 @@ struct HomeViewCarousel: View {
                 //                .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.35)
                 discoverGroups(geoReader: geoReader)
             } else {
-                SnapCarousel(spacing: geoReader.size.width * 0.1, trailingSpace: geoReader.size.width * 0.2, swipeIndex: $swipeIndex, items: self.groups){group in
+                SnapCarousel(spacing: geoReader.size.width * 0.1, trailingSpace: geoReader.size.width * 0.2, swipeIndex: $swipeIndex, items: homeViewModel.groups){group in
                     GeometryReader{proxy in
                         let size = proxy.size
                         ScrollView(.vertical, showsIndicators: false){
@@ -254,7 +254,7 @@ struct HomeViewCarousel: View {
             if userProfileId != "" {
                 //get profileImage
                 homeViewModel.getImageStorageFile(profileId: userProfileId)
-                getGroups(){(groupIds) in
+                homeViewModel.getGroups(){(groupIds) in
                     if !groupIds.isEmpty{
                         print("success")
                     }
@@ -262,11 +262,10 @@ struct HomeViewCarousel: View {
             } else {
                 homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
                     if newUserProfileId != "" {
-                        getProfiles(filterProfileIds: []){(profiles) in
-                            if !profiles.isEmpty {
-                                filterCards(){(selfCards) in
-                                    //should something be here?
-                                }
+                        homeViewModel.getImageStorageFile(profileId: userProfileId)
+                        homeViewModel.getGroups(){(groupIds) in
+                            if !groupIds.isEmpty{
+                                viewRouter.currentPage = .pickInitialGroupPage
                             }
                         }
                     }
@@ -356,31 +355,6 @@ struct HomeViewCarousel: View {
         }
     }
     
-    public func getGroups(completed: @escaping (_ groupIds: [GroupModel]) -> Void) {
-        //clean if dirty
-        self.groups.removeAll()
-        
-        db.collection("groups")
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                        //                        print("\(document.documentID) => \(document.data())")
-                        let data = document.data()
-                        if !data.isEmpty{
-                            let group = GroupModel(id: data["id"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [],
-                                                   groupProfile:  ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? []))
-                            
-                            self.groups.append(group)
-                        }
-                    }
-                    completed(self.groups)
-                }
-            }
-    }
-    
     private func discoverGroups(geoReader: GeometryProxy) -> some View {
         VStack{
             SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search groups...")
@@ -391,13 +365,36 @@ struct HomeViewCarousel: View {
                         NavigationLink(destination: SignInView()) {
                             ZStack{
                                 Text("")
-                                    .frame(width: 380, height: 200)
-                                    .background(.gray)
-                                    .cornerRadius(30)
+                                    .frame(width: geoReader.size.width * 0.95, height: geoReader.size.height * 0.25)
+                                    .background(.white)
+                                    .cornerRadius(geoReader.size.width * 0.08)
                                 VStack{
-                                    Text("Group Name")
+                                    HStack{
+                                        Text("Team #6")
+                                            .font(.title)
+                                            .foregroundColor(.black)
+                                            .padding(.trailing,geoReader.size.width * 0.06)
+                                        
+                                        Image(systemName: "plus.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: geoReader.size.width * 0.04, height: geoReader.size.height * 0.04)
+                                            .foregroundColor(.green)
+                                            .padding(.trailing,geoReader.size.width * 0.4)
+                                        
+                             
+                                        
+                                        Image(systemName: "arrow.right.circle")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: geoReader.size.width * 0.04, height: geoReader.size.height * 0.04)
+                                            .foregroundColor(.black)
+                                        
+                                    }
+                                    
+                                    Text("Members (8)")
+                                        .foregroundColor(.gray)
                                         .font(.title2)
-                                        .foregroundColor(.white)
                                     
                                     HStack{
                                         ForEach(0..<3){ item in
@@ -405,18 +402,19 @@ struct HomeViewCarousel: View {
                                                 Image("Guy")
                                                     .resizable()
                                                     .scaledToFill()
-                                                    .frame(width: 50, height: 50)
+                                                    .frame(width: 40, height: 40)
                                                     .cornerRadius(20)
                                                     .foregroundColor(.white)
                                             }
                                         }
                                         
-                                        Image(systemName: "plus.circle.fill")
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 50, height: 50)
-                                            .cornerRadius(20)
-                                            .foregroundColor(.white)
+                                        ZStack{
+                                            Circle()
+                                                .frame(width: 50, height: 50)
+                                            
+                                            Text("+4")
+                                                .foregroundColor(.black)
+                                        }
                                     }
                                 }
                             }
@@ -431,6 +429,7 @@ struct HomeViewCarousel: View {
 struct HomeViewCarousel_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewCarousel()
+            .environmentObject(HomeViewModel())
     }
 }
 

@@ -43,7 +43,11 @@ struct ContentView: View {
                 
             case .signupPage :
                 SignUpView()
+                
+            case .pickInitialGroupPage :
+                PickInitialGroupView()
             }
+    
         }
     }
 }
