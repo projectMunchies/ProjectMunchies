@@ -34,7 +34,7 @@ struct CreateGroupView: View {
                                 .cornerRadius(20)
                                 .padding(.bottom,40)
                         
-                        SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search user or add email")
+                        SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search user or add email", geoReader: geoReader)
                             .padding(.bottom)
                          
                         ScrollView{
@@ -180,24 +180,6 @@ struct CreateGroupView: View {
             
             Spacer()
                 .frame(width: geoReader.size.width * 0.3)
-            
-            HStack(spacing: 20){
-                    NavigationLink(destination: NotificationsView() ) {
-                        Image("filterIcon")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .font(.system(size: 35))
-                            .foregroundColor(.black)
-                    }
-            
-                NavigationLink(destination: NotificationsView() ) {
-                    Image(systemName: "bell")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
-                }
-            }
             Spacer()
         }
     }

@@ -357,7 +357,7 @@ struct HomeViewCarousel: View {
     
     private func discoverGroups(geoReader: GeometryProxy) -> some View {
         VStack{
-            SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search groups...")
+            SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search groups...", geoReader: geoReader)
             
             ScrollView{
                 VStack{

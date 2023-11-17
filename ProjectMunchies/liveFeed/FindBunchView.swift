@@ -77,38 +77,9 @@ struct FindBunchView: View {
                         .cornerRadius(30)
                         .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.42)
                         
-                        SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search...")
+                        SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search...", geoReader: geoReader)
                             .padding(.bottom)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.75)
-                        
-                        
-                        //                            ScrollView{
-                        //                                    VStack{
-                        //                                        ForEach(self.cities) { message in
-                        //                                            Button(action:  {
-                        //                                                showModal.toggle()
-                        //                                            }){
-                        //                                                ZStack{
-                        //                                                    Text("")
-                        //                                                        .frame(width: 380, height: 110)
-                        //                                                       // .background(.gray)
-                        //                                                        .cornerRadius(30)
-                        //
-                        //                                                    VStack{
-                        //                                                        Text("\(message.name)")
-                        //                                                            .font(.system(size: 20))
-                        //                                                            .foregroundColor(.black)
-                        //
-                        //                                                        Text("\(message.address)")
-                        //                                                            .font(.system(size: 10))
-                        //                                                            .foregroundColor(.black)
-                        //                                                    }
-                        //                                                }
-                        //                                            }
-                        //                                                .padding(.bottom, geoReader.size.height * 0.003)
-                        //                                            }
-                        //                                    }
-                        //                            }
                         
                         Button(action:  {
                             showModal.toggle()

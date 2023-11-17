@@ -45,12 +45,4 @@ var mockProfiles: [ProfileModel] = [
 //Dummy Text
 var sampleText = "lorem ispfads fadofjdsjklf dfkljdfd fgkjrewiof fjkdsfjdasf dlkfjads flkdsjfhgfiewu dakjfhdskjaf dfkjdsahfbeiwf ds fdoskjfnds bfudiskfd sfkjdshfdhsf fokjhdskfjha sdkjf fkjadsbfh dajklfd fkdb fdsojf dsjbfd fbjof jfb e dsfkjbd nfdkn f asdfjkhdskjfhlwau"
 
-var mockBunches: [Movie] = [
-Movie(movieTitle: "Saho Saloon", artwork: "Bunch1", occupation: "", location: "", favRestaurant: "", favFood: "", hobbies: [""]),
-Movie(movieTitle: "McDonalds", artwork: "Bunch2", occupation: "", location: "", favRestaurant: "", favFood: "", hobbies: [""]),
-Movie(movieTitle: "Chipotle", artwork: "Bunch3", occupation: "", location: "", favRestaurant: "", favFood: "", hobbies: [""]),
-Movie(movieTitle: "Bar Taco", artwork: "Bunch4", occupation: "", location: "", favRestaurant: "", favFood: "", hobbies: [""]),
-Movie(movieTitle: "511 Franklin", artwork: "Bunch5", occupation: "", location: "", favRestaurant: "", favFood: "", hobbies: [""])
-]
-
 

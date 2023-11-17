@@ -26,7 +26,7 @@ struct EventsView: View {
                 BGView()
                 ZStack{
                     VStack{
-                        SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search...")
+                        SearchBar(searchText: $searchText, startSearch: .constant(false), textFieldName: "Search...", geoReader: geoReader)
                         
                         ScrollView{
                             VStack{
@@ -196,24 +196,6 @@ struct EventsView: View {
             
             Spacer()
                 .frame(width: geoReader.size.width * 0.3)
-            
-            HStack(spacing: 20){
-                    NavigationLink(destination: NotificationsView() ) {
-                        Image("filterIcon")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .font(.system(size: 35))
-                            .foregroundColor(.black)
-                    }
-            
-                NavigationLink(destination: NotificationsView() ) {
-                    Image(systemName: "bell")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .font(.system(size: 35))
-                        .foregroundColor(.black)
-                }
-            }
             Spacer()
         }
     }

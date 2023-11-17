@@ -171,7 +171,7 @@ struct Header: View {
                                         }
                                     }
                                     .listRowBackground(Color.white)
-                                    
+
                                     
                                     Section {
                                         HStack{

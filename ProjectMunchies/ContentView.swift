@@ -10,50 +10,105 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
-    
-    var body: some View {
-        VStack{
-            switch viewRouter.currentPage {
-            case .homePage :
-                TabView {
-                    HomeViewCarousel()
-                        .tabItem {
-                            Label("", systemImage: "house")
-                        }
-                    CreateGroupView()
-                        .tabItem {
-                            Label("", systemImage: "plus.circle.fill")
-                        }
-                    EventsView()
-                        .tabItem {
-                            Label("", systemImage: "calendar")
-                        }
-            
-//                    FeedHomeView()
-//                        .tabItem {
-//                            Image("newsFeedIcon")
-//                                .renderingMode(.template)
-//                                .resizable()
-//                                .foregroundColor(.black)
-//                                .scaledToFit()
-//                        }
-                }
-            case .signinPage :
-                SignInView()
-                
-            case .signupPage :
-                SignUpView()
-                
-            case .pickInitialGroupPage :
-                PickInitialGroupView()
-            }
-    
-        }
-    }
+    @State var selectedTab = 0
+      
+      var body: some View {
+          GeometryReader{ geoReader in
+              ZStack(alignment: .bottom){
+                  TabView(selection: $selectedTab) {
+                      HomeView()
+                          .tag(0)
+                      VideoPlayerHomeView(showOverlay: false)
+                          .tag(1)
+                      EventsView()
+                          .tag(2)
+                      EventsView()
+                          .tag(3)
+                  }
+                  
+                  ZStack{
+                      HStack{
+                          ForEach((TabbedItems.allCases), id: \.self){ item in
+                              Button{
+                                  selectedTab = item.rawValue
+                              } label: {
+                                  CustomTabItem(imageName: item.iconName, title: item.title, isActive: (selectedTab == item.rawValue))
+                              }
+                              if item.rawValue == 1  {
+                                  Spacer()
+                                      .frame(width: 100)
+                              }
+                          }
+                      }
+                      .padding(6)
+                  }
+                  .frame(height: 70)
+                  .background(.purple.opacity(0.2))
+                  .cornerRadius(35)
+                  .padding(.horizontal, 26)
+              }
+          }
+          .ignoresSafeArea(.keyboard, edges: .bottom)
+      }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(ViewRouter())
+    }
+}
+
+enum TabbedItems: Int, CaseIterable{
+    case home = 0
+    case events
+    case chat
+    case profile
+    
+    var title: String{
+        switch self {
+        case .home:
+            return "Home"
+        case .events:
+            return "Events"
+        case .chat:
+            return "Chat"
+        case .profile:
+            return "Profile"
+        }
+    }
+    
+    var iconName: String{
+        switch self {
+        case .home:
+            return "homeIcon"
+        case .events:
+            return "playerIcon"
+        case .chat:
+            return "filterIcon"
+        case .profile:
+            return "filterIcon"
+        }
+    }
+}
+
+extension ContentView{
+    func CustomTabItem(imageName: String, title: String, isActive: Bool) -> some View{
+        HStack(spacing: 10){
+            Spacer()
+            Image(imageName)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(isActive ? .black : .gray)
+                .frame(width: 20, height: 20)
+//            if isActive{
+//                Text(title)
+//                    .font(.system(size: 14))
+//                    .foregroundColor(isActive ? .black : .gray)
+//            }
+            Spacer()
+        }
+        .frame(width: isActive ? .infinity : 60, height: 60)
+        .background(isActive ? .purple.opacity(0.4) : .clear)
+        .cornerRadius(30)
     }
 }
