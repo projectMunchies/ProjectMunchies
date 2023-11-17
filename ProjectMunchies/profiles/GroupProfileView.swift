@@ -14,11 +14,11 @@ struct GroupProfileView: View {
                 Color.white
                     .ignoresSafeArea()
                 VStack{
-                    Image("Movie4")
-                        .resizable()
-                        .scaledToFill()
-                        //.frame(width: geoReader.size.width, height: geoReader.size.height * 0.5)
-                        .ignoresSafeArea()
+//                    Image("Movie4")
+//                        .resizable()
+//                        .scaledToFill()
+//                        //.frame(width: geoReader.size.width, height: geoReader.size.height * 0.5)
+//                        .ignoresSafeArea()
                     
                     VStack{
                         Text("5 Pac")
@@ -39,10 +39,10 @@ struct GroupProfileView: View {
                                         .shadow(radius: 3)
                                     
                                     HStack{
-                                        Image("Movie5")
-                                            .resizable()
-                                            .frame(width: 70, height: 70)
-                                            .cornerRadius(60)
+//                                        Image("Movie5")
+//                                            .resizable()
+//                                            .frame(width: 70, height: 70)
+//                                            .cornerRadius(60)
                                         VStack{
                                             Text("Full Name")
                                                 .bold()
@@ -51,11 +51,8 @@ struct GroupProfileView: View {
                                             Text("Location")
                                                 .font(.title3)
                                         }
-                                        
                                     }
-                              
                                 }
-                            
                             }
                         }
                     }

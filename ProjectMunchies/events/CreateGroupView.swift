@@ -43,11 +43,11 @@ struct CreateGroupView: View {
 //                                    Circle()
 //                                        .frame(width: 80, height: 80)
                                     
-                                    Image("Movie3")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(60)
+//                                    Image("Movie3")
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fill)
+//                                        .frame(width: 100, height: 100)
+//                                        .cornerRadius(60)
                                       
                                     
                                     Spacer()

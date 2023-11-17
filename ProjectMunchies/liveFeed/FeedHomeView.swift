@@ -204,13 +204,13 @@ struct GridView: View {
                     
                     //top Image...
                     
-                    Image("Bunch2")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .padding()
-                        .background(.white.opacity(0.35))
-                        //.clipShape(Circle())
-                        .cornerRadius(20)
+//                    Image("Bunch2")
+//                        .resizable()
+//                        .frame(width: 40, height: 40)
+//                        .padding()
+//                        .background(.white.opacity(0.35))
+//                        //.clipShape(Circle())
+//                        .cornerRadius(20)
                 }
             }
         }
