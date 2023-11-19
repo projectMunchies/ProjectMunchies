@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -88,27 +87,5 @@ enum TabbedItems: Int, CaseIterable{
         case .profile:
             return "filterIcon"
         }
-    }
-}
-
-extension ContentView{
-    func CustomTabItem(imageName: String, title: String, isActive: Bool) -> some View{
-        HStack(spacing: 10){
-            Spacer()
-            Image(imageName)
-                .resizable()
-                .renderingMode(.template)
-                .foregroundColor(isActive ? .black : .gray)
-                .frame(width: 20, height: 20)
-//            if isActive{
-//                Text(title)
-//                    .font(.system(size: 14))
-//                    .foregroundColor(isActive ? .black : .gray)
-//            }
-            Spacer()
-        }
-        .frame(width: isActive ? .infinity : 60, height: 60)
-        .background(isActive ? .purple.opacity(0.4) : .clear)
-        .cornerRadius(30)
     }
 }

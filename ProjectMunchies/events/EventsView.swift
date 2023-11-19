@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct EventsView: View {
-    @StateObject private var viewModel = CardViewModel()
-    @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
     @State private var events: [BunchModel] = [BunchModel(id: "", locationName: "", profileIds: [], reviewThreadId: "")]
     @State private var showHamburgerMenu: Bool = false
@@ -110,12 +108,6 @@ struct EventsView: View {
                     }
                         .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.65)
                         .onAppear{
-                            homeViewModel.getUserProfile() {(userProfileId) -> Void in
-                                if userProfileId != "" {
-                                    //get profileImage
-                                    homeViewModel.getImageStorageFile(profileId: userProfileId)
-                                }
-                            }
                         }
                     
                     
@@ -125,7 +117,7 @@ struct EventsView: View {
                         .font(.largeTitle)
                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+//                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }

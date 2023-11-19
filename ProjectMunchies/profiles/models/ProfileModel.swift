@@ -37,9 +37,7 @@ var mockProfiles: [ProfileModel] = [
     
     ProfileModel(id: "43ui4fj4893", fullName: "Jaycee Lucas", location: "St.Petersburg, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Firefighter", favRestaurant: "Wawa", favFood: "Starbucks", hobbies: ["Yoga","Reading"], eventIds: [], isMockData: true, bunchIds: []),
     
-    ProfileModel(id: "6io56in6ih", fullName: "Simone Guthrie", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Teacher", favRestaurant: "Subway", favFood: "Burgers", hobbies: ["Running","Gym"], eventIds: [], isMockData: true, bunchIds: []),
-    
-//    ProfileModel(id: "3264bkfdhfs784b", fullName: "Jaxen Baird", location: "Clearwater, FL", description: sampleText, gender: "Male", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "Movie7", occupation: "Software Developer", favRestaurant: "Saucy Fingerz", favFood: "Chicken wings", hobbies: ["Fishing","Biking"], eventIds: [], isMockData: true)
+    ProfileModel(id: "6io56in6ih", fullName: "Simone Guthrie", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Teacher", favRestaurant: "Subway", favFood: "Burgers", hobbies: ["Running","Gym"], eventIds: [], isMockData: true, bunchIds: [])
 ]
 
 //Dummy Text

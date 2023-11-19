@@ -21,7 +21,6 @@ class HomeViewModel: ObservableObject {
     @Published var userFoodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
     @Published var foodFilters: [FoodFilterModel] = []
     @Published var lastDoc: DocumentSnapshot!
-    @Published var groups = [GroupModel]()
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
         db.collection("profiles")
@@ -248,31 +247,6 @@ class HomeViewModel: ObservableObject {
                 print("successfully updated userFilter!")
             }
         }
-    }
-    
-    public func getGroups(completed: @escaping (_ groupIds: [GroupModel]) -> Void) {
-        //clean if dirty
-        self.groups.removeAll()
-        
-        db.collection("groups")
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                        //                        print("\(document.documentID) => \(document.data())")
-                        let data = document.data()
-                        if !data.isEmpty{
-                            let group = GroupModel(id: data["id"] as? String ?? "", profileIds: data["profileIds"] as? [String] ?? [],
-                                                   groupProfile:  ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", favRestaurant: data["favRestaurant"] as? String ?? "" , favFood: data["favFood"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], eventIds: data["eventIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, bunchIds: data["bunchIds"] as? [String] ?? []))
-                            
-                            self.groups.append(group)
-                        }
-                    }
-                    completed(self.groups)
-                }
-            }
     }
 }
 

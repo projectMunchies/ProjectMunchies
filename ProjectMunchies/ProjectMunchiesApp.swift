@@ -8,9 +8,7 @@
 import SwiftUI
 import Firebase
 
-
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
-    
     var window: UIWindow?
     
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -38,10 +36,9 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    
     func application(_ application: UIApplication,
-    configurationForConnecting connectingSceneSession: UISceneSession,
-options: UIScene.ConnectionOptions) ->  UISceneConfiguration {
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) ->  UISceneConfiguration {
         FirebaseApp.configure()
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         sceneConfig.delegateClass = SceneDelegate.self
@@ -57,7 +54,7 @@ struct ProjectMunchiesApp: App {
     @StateObject var viewRouter = ViewRouter()
     var body: some Scene {
         WindowGroup {
-                ContentView().environmentObject(viewRouter)
+            ContentView().environmentObject(viewRouter)
         }
     }
 }

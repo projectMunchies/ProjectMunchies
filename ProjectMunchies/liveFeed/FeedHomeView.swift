@@ -11,7 +11,6 @@ import MapKit
 struct FeedHomeView: View {
     @State private var showHamburgerMenu: Bool = false
     @StateObject private var homeViewModel = HomeViewModel()
-    //Animated View properties
     @State var currentIndex: Int = 0
     @State var index: Int = 0
     
@@ -75,10 +74,7 @@ struct FeedHomeView: View {
                         .padding(.horizontal)
                         .padding(.top,25)
                         
-                        //Dashbord grid...
-                        
                         //Tab view with swipe gestures...
-                        
                         TabView(selection: self.$index){
                             GridView(fitness_Data: fit_Data)
                                 .tag(0)
@@ -90,10 +86,8 @@ struct FeedHomeView: View {
                                 Text("Monthly Data")
                             }
                             .tag(2)
-                            
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                        
                         
                         Spacer(minLength: 0)
                     }
@@ -160,14 +154,9 @@ struct FeedHomeView: View {
 
 struct FeedHomeView_Previews: PreviewProvider {
     static var previews: some View {
-        // GeometryReader{ proxy in
         FeedHomeView()
-        //  }
-        
     }
 }
-
-// Grid View...
 
 struct GridView: View {
     var fitness_Data : [Fitness]
@@ -197,20 +186,9 @@ struct GridView: View {
                         }
                     }
                     .padding()
-                    //image name same as color name...
                     .background(.gray)
                     .cornerRadius(20)
                     .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    
-                    //top Image...
-                    
-//                    Image("Bunch2")
-//                        .resizable()
-//                        .frame(width: 40, height: 40)
-//                        .padding()
-//                        .background(.white.opacity(0.35))
-//                        //.clipShape(Circle())
-//                        .cornerRadius(20)
                 }
             }
         }
@@ -218,9 +196,6 @@ struct GridView: View {
         .padding(.top,25)
     }
 }
-
-
-// Dashboard grid model...
 
 struct Fitness: Identifiable {
     var id: Int

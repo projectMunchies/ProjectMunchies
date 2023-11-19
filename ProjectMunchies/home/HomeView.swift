@@ -83,19 +83,21 @@ struct HomeView: View {
                     .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.3)
                     .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                     
-                    ZStack{
-                        Text("")
-                            .frame(width: geoReader.size.width * 0.92, height:  geoReader.size.height * 0.066)
-                            .background(.gray)
-                            .cornerRadius(15)
-                            .multilineTextAlignment(.center)
-                        //                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.04)
-                        //
-                        SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search nearby", geoReader: geoReader)
-                        // .padding(.bottom)
-                        //                                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.04)
-                    }
-                    .position(x: geoReader.size.width * 0.47, y: geoReader.size.height * 0.04)
+//                    ZStack{
+//                        Text("")
+//                            .frame(width: geoReader.size.width * 0.92, height:  geoReader.size.height * 0.066)
+//                            .background(.gray)
+//                            .cornerRadius(15)
+//                            .multilineTextAlignment(.center)
+//                        //                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.04)
+//                        //
+//
+//                        SearchBar(searchText: $searchText, startSearch: $startSearch, textFieldName: "Search nearby", geoReader: geoReader)
+//
+//                        // .padding(.bottom)
+//                        //                                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.04)
+//                    }
+//                    .position(x: geoReader.size.width * 0.47, y: geoReader.size.height * 0.04)
                     
                     
                     
@@ -230,7 +232,7 @@ struct HomeView: View {
                     .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.98)
                     
                     subHeaderSection(for: geoReader)
-                        .position(x:geoReader.size.width * 0.51, y:geoReader.size.height * 0.11)
+                        .position(x:geoReader.size.width * 0.51, y:geoReader.size.height * 0.06)
                     
                     ScrollView(.horizontal){
                         HStack{
@@ -319,74 +321,66 @@ struct HomeView: View {
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                ZStack{
-                    Text("")
-                        .frame(width: 123, height: 38)
-                        .background(.white)
-                        .cornerRadius(30)
-                    
-                    Text("")
-                        .frame(width: 120, height: 35)
-                        .background(.black)
-                        .cornerRadius(30)
-                    
-                    Text("Happy Hour")
-                        .foregroundColor(.white)
-                        .font(.system(size: 15))
+        ScrollView(.vertical,showsIndicators: false){
+            VStack(spacing: 15){
+                ForEach(0..<5){_ in
+                    ZStack{
+    //                    Text("")
+    //                        .frame(width: 400, height: 60)
+    //                        .background(.black)
+    //                        .cornerRadius(30)
+                        HStack{
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .background(Color.black.opacity(0.2))
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(Circle())
+                            
+                            VStack{
+                                Text("Happy Hour Man these nuggets is cool a f")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                                
+                                Text("by Anonymous user")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                            }
+                        }
+                      
+                       
+                    }
                 }
+         
                 
-                ZStack{
-                    Text("")
-                        .frame(width: 123, height: 38)
-                        .background(.white)
-                        .cornerRadius(30)
-                    
-                    Text("")
-                        .frame(width: 120, height: 35)
-                        .background(.black)
-                        .cornerRadius(30)
-                    
-                    Text("8:30-9:30pm")
-                        .foregroundColor(.white)
-                        .font(.system(size: 15))
-                }
-                
-                ZStack{
-                    Text("")
-                        .frame(width: 123, height: 38)
-                        .background(.white)
-                        .cornerRadius(30)
-                    
-                    Text("")
-                        .frame(width: 120, height: 35)
-                        .background(.black)
-                        .cornerRadius(30)
-                    
-                    Text("Tomorrow")
-                        .foregroundColor(.white)
-                        .font(.system(size: 15))
-                }
-                
-                ZStack{
-                    Text("")
-                        .frame(width: 123, height: 38)
-                        .background(.white)
-                        .cornerRadius(30)
-                    
-                    Text("")
-                        .frame(width: 120, height: 35)
-                        .background(.black)
-                        .cornerRadius(30)
-                    
-                    Text("Tomorrow")
-                        .foregroundColor(.white)
-                        .font(.system(size: 15))
-                }
+              
+            
             }
         }
         .frame(height: 100)
+        .mask(
+            VStack(spacing: 0) {
+                   // Left gradient
+                   LinearGradient(gradient:
+                      Gradient(
+                        colors: [Color.black.opacity(0.2), Color.black, Color.black, Color.black]),
+                                  startPoint: .top, endPoint: .bottom
+                      )
+                      .frame(width: 400, height: 80)
+
+                   // Middle
+                  // Rectangle().fill(Color.black)
+//
+                   // Right gradient
+//                   LinearGradient(gradient:
+//                      Gradient(
+//                          colors: [Color.black, Color.black.opacity(0)]),
+//                          startPoint: .top, endPoint: .bottom
+//                      )
+//                      .frame(width: 400)
+               }
+
+        )
     }
     
     private func addImagePopover(for geoReader: GeometryProxy) -> some View {
@@ -501,6 +495,13 @@ struct HomeView: View {
         }
         return types;
     }
+}
+
+struct City: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    var name: String
+    var address: String
 }
 
 struct HomeView_Previews: PreviewProvider {

@@ -421,12 +421,12 @@ struct Header: View {
                 let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
                 let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
                 // using state in CardsView() is easier than making my own and passing it into CardsView()
-                HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
-                    if !profiles.isEmpty {
-                        filteredCards = profiles
-                        isLoading.toggle()
-                    }
-                }
+//                HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
+//                    if !profiles.isEmpty {
+//                        filteredCards = profiles
+//                        isLoading.toggle()
+//                    }
+               // }
             }
         }
     }

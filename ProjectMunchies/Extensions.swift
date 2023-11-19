@@ -45,13 +45,11 @@ extension Date {
              considerToday consider: Bool = false) -> Date {
         
         let dayName = weekDay.rawValue
-        
         let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
         
         assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
         
         let searchWeekdayIndex = weekdaysName.firstIndex(of: dayName)! + 1
-        
         let calendar = Calendar(identifier: .gregorian)
         
         if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
@@ -68,10 +66,9 @@ extension Date {
         
         return date!
     }
-    
 }
 
-// MARK: Helper methods
+// MARK: Helper Date methods
 extension Date {
     func getWeekDaysInEnglish() -> [String] {
         var calendar = Calendar(identifier: .gregorian)
@@ -114,6 +111,28 @@ extension View {
             placeholder().opacity(shouldShow ? 1 : 0)
             self
         }
+    }
+}
+
+extension ContentView{
+    func CustomTabItem(imageName: String, title: String, isActive: Bool) -> some View{
+        HStack(spacing: 10){
+            Spacer()
+            Image(imageName)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(isActive ? .black : .gray)
+                .frame(width: 20, height: 20)
+//            if isActive{
+//                Text(title)
+//                    .font(.system(size: 14))
+//                    .foregroundColor(isActive ? .black : .gray)
+//            }
+            Spacer()
+        }
+        .frame(width: isActive ? .infinity : 60, height: 60)
+        .background(isActive ? .purple.opacity(0.4) : .clear)
+        .cornerRadius(30)
     }
 }
 
