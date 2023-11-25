@@ -131,8 +131,9 @@ extension ContentView{
             Spacer()
         }
         .frame(width: isActive ? .infinity : 60, height: 60)
-        .background(isActive ? .purple.opacity(0.4) : .clear)
+        .background(isActive ? .white.opacity(0.4) : .clear)
         .cornerRadius(30)
     }
 }
+
 

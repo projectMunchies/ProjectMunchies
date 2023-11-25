@@ -171,7 +171,7 @@ struct Header: View {
                                         }
                                     }
                                     .listRowBackground(Color.white)
-
+                                    
                                     
                                     Section {
                                         HStack{
@@ -298,9 +298,9 @@ struct Header: View {
                         .font(.custom("Chalkduster", size: geoReader.size.height * 0.035))
                         .multilineTextAlignment(.center)
                 }
-    
-                        Spacer()
-                            .frame(height: geoReader.size.height * 0.04)
+                
+                Spacer()
+                    .frame(height: geoReader.size.height * 0.04)
                 
                 Group{
                     Text("Home")
@@ -346,7 +346,7 @@ struct Header: View {
                         .multilineTextAlignment(.trailing)
                         .font(.system(size: geoReader.size.height * 0.028))
                 }
-    
+                
                 Spacer()
                     .frame(height: geoReader.size.height * 0.04)
                 
@@ -421,15 +421,25 @@ struct Header: View {
                 let removeUserProfileId = foodFilters.filter({$0.userProfileId != homeViewModel.userProfile.id})
                 let filterProfileIds = removeUserProfileId.map { $0.userProfileId }
                 // using state in CardsView() is easier than making my own and passing it into CardsView()
-//                HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
-//                    if !profiles.isEmpty {
-//                        filteredCards = profiles
-//                        isLoading.toggle()
-//                    }
-               // }
+                //                HomeViewCarousel().getProfiles(filterProfileIds: filterProfileIds) {(profiles) in
+                //                    if !profiles.isEmpty {
+                //                        filteredCards = profiles
+                //                        isLoading.toggle()
+                //                    }
+                // }
             }
         }
     }
+    
+    //add this modifier to the Zstack/Vstack in body
+    //.disabled(self.showHamburgerMenu ? true : false)
+    
+    //Display HamburgerMenu
+    //    if self.showHamburgerMenu {
+    //        HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
+    //            .frame(width: geoReader.size.width/2)
+    //            .padding(.trailing, geoReader.size.width * 0.5)
+    //    }
 }
 
 struct Header_Previews: PreviewProvider {

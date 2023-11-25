@@ -5,14 +5,12 @@
 //  Created by DotZ3R0 on 11/23/23.
 //
 
-import SwiftUI
+import Foundation
+import MapKit
 
-struct VenueModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    VenueModel()
+struct VenueModel: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    var name: String
+    var address: String
 }

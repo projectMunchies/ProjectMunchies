@@ -31,15 +31,18 @@ struct VideoPlayerHomeView: View {
             .overlay {
                 if showOverlay {
                     ZStack{
-                        Text("")
-                            .frame(width: 400, height: 500)
-                            .background(.gray.opacity(0.7))
+                        Rectangle() // the semi-transparent overlay
+                                                   .foregroundColor(Color.black.opacity(0.5))
+                                                   .edgesIgnoringSafeArea(.all)
                         
                         Text("")
                             .frame(width: 350, height: 200)
                             .background(.white)
                             .cornerRadius(30)
                         RatingView(rating: self.$rating)
+                    }
+                    .onTapGesture {
+                        showOverlay.toggle()
                     }
                 }
             }
@@ -73,8 +76,7 @@ struct PlayerView: View {
                             loopEnabled: true
                         )
                     }
-                    .ignoresSafeArea()
-            }
+                .edgesIgnoringSafeArea(.all)            }
         }
         .onAppear{
             self.data[0].youtubePlayer.play()

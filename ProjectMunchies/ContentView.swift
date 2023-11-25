@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State var selectedTab = 0
-      
+    @State private var showFilter: Bool = false
+    
       var body: some View {
           GeometryReader{ geoReader in
-              ZStack(alignment: .bottom){
+              ZStack{
                   TabView(selection: $selectedTab) {
                       HomeView()
                           .tag(0)
@@ -24,7 +26,9 @@ struct ContentView: View {
                       EventsView()
                           .tag(3)
                   }
-                  
+                  //map and TabView() arent working together nicely so I gotta increase height. They also fuck up every other screen
+                  .frame(height: geoReader.size.height * 1.2)
+                
                   ZStack{
                       HStack{
                           ForEach((TabbedItems.allCases), id: \.self){ item in
@@ -42,12 +46,31 @@ struct ContentView: View {
                       .padding(6)
                   }
                   .frame(height: 70)
-                  .background(.purple.opacity(0.2))
+                  .background(.indigo.opacity(0.6))
                   .cornerRadius(35)
                   .padding(.horizontal, 26)
+                  .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.97)
+                  
+                  if selectedTab == 0 {
+                      Button(action: {
+                          self.showFilter.toggle()
+                      }) {
+                          ZStack{
+                              Text("")
+                                  .frame(width: 65, height: 65)
+                                  .background(.white.opacity(0.9))
+                                  .cornerRadius(40)
+                              
+                              Image("crunchBunchAppIcon")
+                                  .resizable()
+                                  .frame(width: 40, height: 40)
+                          }
+                      }
+                     // .disabled(self.startSearch ? true : false)
+                      .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.93)
+                  }
               }
           }
-          .ignoresSafeArea(.keyboard, edges: .bottom)
       }
 }
 
