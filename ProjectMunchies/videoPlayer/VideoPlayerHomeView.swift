@@ -14,42 +14,39 @@ struct VideoPlayerHomeView: View {
     @State private var rating: Int = 0
     
     @State var data = [
-        Video(id: 0, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/rltZSyJ1CQ8"),
-        Video(id: 1, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/Z9tlfHghsBo"),
+        Video(id: 0, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/Z9tlfHghsBo"),
+        Video(id: 1, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/rltZSyJ1CQ8"),
         Video(id: 2, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/3POLWRO9ZL8"),
+        Video(id: 3, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/rltZSyJ1CQ8"),
     ]
     
     var body: some View {
-        ZStack{
-            Color.white.ignoresSafeArea()
-            VStack{
-                PlayerScrollView(data:self.$data)
-            }
-            .onTapGesture {
-                showOverlay.toggle()
-            }
-            .overlay {
-                if showOverlay {
-                    ZStack{
-                        Rectangle() // the semi-transparent overlay
-                                                   .foregroundColor(Color.black.opacity(0.5))
-                                                   .edgesIgnoringSafeArea(.all)
-                        
-                        Text("")
-                            .frame(width: 350, height: 200)
-                            .background(.white)
-                            .cornerRadius(30)
-                        RatingView(rating: self.$rating)
-                    }
-                    .onTapGesture {
-                        showOverlay.toggle()
-                    }
+        VStack{
+            PlayerScrollView(data:self.$data)
+        }
+        .onTapGesture {
+            showOverlay.toggle()
+        }
+        .overlay {
+            if showOverlay {
+                ZStack{
+                    Rectangle() // the semi-transparent overlay
+                        .foregroundColor(Color.black.opacity(0.5))
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    Text("")
+                        .frame(width: 350, height: 200)
+                        .background(.white)
+                        .cornerRadius(30)
+                    RatingView(rating: self.$rating)
+                }
+                .onTapGesture {
+                    showOverlay.toggle()
                 }
             }
-            .ignoresSafeArea()
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
-        .edgesIgnoringSafeArea(.all)
+        .background(Color.black.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/))
+        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 
@@ -63,23 +60,25 @@ struct PlayerView: View {
     @Binding var data : [Video]
     
     var body: some View{
-        VStack(spacing: 0){
-            ForEach(self.data) { i in
-                YouTubePlayerView(i.youtubePlayer)
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                    .offset(y: -5)
-                    .disabled(true)
-                    .onAppear{
-                        i.youtubePlayer.configuration = .init(
-                            autoPlay: true,
-                            showControls: false,
-                            loopEnabled: true
-                        )
-                    }
-                .edgesIgnoringSafeArea(.all)            }
-        }
-        .onAppear{
-            self.data[0].youtubePlayer.play()
+        GeometryReader{ geoReader in
+            VStack(spacing: 0){
+                ForEach(self.data) { i in
+                    YouTubePlayerView(i.youtubePlayer)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                        .offset(y: -5)
+                        .disabled(true)
+                        .onAppear{
+                            i.youtubePlayer.configuration = .init(
+                                autoPlay: false,
+                                showControls: false,
+                                loopEnabled: true
+                            )
+                        }
+                }
+            }
+            .onAppear{
+                self.data[0].youtubePlayer.play()
+            }
         }
     }
 }
@@ -123,22 +122,21 @@ struct PlayerScrollView: UIViewRepresentable {
         let view = UIScrollView()
         let childView = UIHostingController(rootView: PlayerView(data: self.$data))
         
+        //each children occupies one full screen so height = count * height of screen...
         childView.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * CGFloat((data.count)))
         view.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * CGFloat((data.count)))
         
         view.addSubview(childView.view)
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
-        
-        view.contentInsetAdjustmentBehavior = .never
         view.isPagingEnabled = true
         view.delegate = context.coordinator
         
         return view
     }
     
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
+    func updateUIView(_ uiView: UIScrollView, context: Context) {
+        // to dynamically update height based on data
         uiView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * CGFloat((data.count)))
         
         for i in 0..<uiView.subviews.count{
@@ -163,7 +161,6 @@ struct PlayerScrollView: UIViewRepresentable {
                     parent.data[i].youtubePlayer.seek(to: .zero, allowSeekAhead: true)
                     parent.data[i].youtubePlayer.pause()
                 }
-                
                 parent.data[index].youtubePlayer.play()
             }
         }

@@ -655,7 +655,7 @@ enum MockDataService {
     
     // put this in another view cuase it cant run here
     public func addNewMockData() {
-        let docRefs = db.collection("profiles")
+      //  let docRefs = db.collection("profiles")
         
         //        let id = UUID().uuidString
         //        docRefs.document(id).setData([

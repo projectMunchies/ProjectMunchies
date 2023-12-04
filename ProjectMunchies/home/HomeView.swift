@@ -67,7 +67,7 @@ struct HomeView: View {
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
                         subHeaderSection(for: geoReader)
-                            .position(x:geoReader.size.width * 0.47, y:geoReader.size.height * 0.06)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.06)
                         
                         buttonsOnSide(for: geoReader)
                             .position(x:geoReader.size.width * 0.9, y:geoReader.size.height * 0.5)
@@ -107,10 +107,10 @@ struct HomeView: View {
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
         ZStack{
-            //                                Text("")
-            //                                    .frame(width: 380, height: 110)
-            //                                    .background(.black.opacity(0.2))
-            //                                    .cornerRadius(30)
+                                            Text("")
+                                                .frame(width: 380, height: 110)
+                                                .background(.black.opacity(0.3))
+                                                .cornerRadius(30)
             
             
             ScrollView(.vertical,showsIndicators: false){
@@ -199,7 +199,7 @@ struct HomeView: View {
                     self.searchText = ""
                 }else {
                     self.sideButtonIndex = 1
-                    self.searchText = "chipotle"
+                    self.searchText = "mexican food"
                     self.startSearch = true
                 }
             }){
