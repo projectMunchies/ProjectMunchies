@@ -49,7 +49,7 @@ struct ContentView: View {
                     .padding(6)
                 }
                 .frame(height: 70)
-                .background(.indigo.opacity(0.6))
+                .background(.indigo.opacity(0.8))
                 .cornerRadius(35)
                 .padding(.horizontal, 26)
                 .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.97)

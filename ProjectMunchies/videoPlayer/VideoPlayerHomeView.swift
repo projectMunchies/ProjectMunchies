@@ -58,25 +58,27 @@ struct VideoPlayerHomeView_Previews: PreviewProvider {
 
 struct PlayerView: View {
     @Binding var data : [Video]
+    @State var startBullshit: Bool = false
     
     var body: some View{
         GeometryReader{ geoReader in
             VStack(spacing: 0){
                 ForEach(self.data) { i in
+                    // Player(player: i.youtubePlayer)
                     YouTubePlayerView(i.youtubePlayer)
                         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                         .offset(y: -5)
                         .disabled(true)
-                        .onAppear{
-                            i.youtubePlayer.configuration = .init(
-                                autoPlay: false,
-                                showControls: false,
-                                loopEnabled: true
-                            )
-                        }
                 }
             }
             .onAppear{
+                //not sure why the first video isn't working in the foreach above...
+                // be we need to launch it manually
+                self.data[0].youtubePlayer.configuration = .init(
+                    autoPlay: true,
+                    showControls: false,
+                    loopEnabled: true
+                )
                 self.data[0].youtubePlayer.play()
             }
         }
@@ -84,17 +86,17 @@ struct PlayerView: View {
 }
 
 struct Player : UIViewControllerRepresentable {
-    var player: AVPlayer
+    var player: YouTubePlayer
     
-    func makeUIViewController(context: Context) -> AVPlayerViewController {
-        let view = AVPlayerViewController()
-        view.player = player
-        view.showsPlaybackControls = false
-        view.videoGravity = .resizeAspectFill
+    func makeUIViewController(context: Context) -> YouTubePlayerViewController {
+        let  view = YouTubePlayerViewController(
+            player: player
+        )
+        
         return view
     }
     
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
+    func updateUIViewController(_ uiViewController: YouTubePlayerViewController, context: Context) {
     }
 }
 
@@ -158,9 +160,12 @@ struct PlayerScrollView: UIViewRepresentable {
                 index = currentIndex
                 
                 for i in 0..<parent.data.count{
+                    //pausing all other videos
                     parent.data[i].youtubePlayer.seek(to: .zero, allowSeekAhead: true)
                     parent.data[i].youtubePlayer.pause()
                 }
+                
+                //playing next video
                 parent.data[index].youtubePlayer.play()
             }
         }
