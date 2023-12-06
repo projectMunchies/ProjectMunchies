@@ -11,9 +11,10 @@ import MapKit
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
     
-    @State private var searchText: String = ""
+    @Binding var searchText: String
+    @Binding var startSearch: Bool
+    
     @State private var searchResults: [MKMapItem] = []
-    @State private var startSearch: Bool = false
     @State var foodButtonPressed: Bool = false
     @State var drinkButtonPressed: Bool = false
     @State var nightButtonPressed: Bool = false
@@ -91,6 +92,7 @@ struct HomeView: View {
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch == true {
+                            self.venues.removeAll()
                             search(for: self.searchText)
                         }
                     }
@@ -336,6 +338,7 @@ struct HomeView: View {
                 let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.venues.append(venue)
             }
+            print(searchResults)
         }
         
         self.startSearch = false
@@ -365,6 +368,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(searchText: .constant(""), startSearch: .constant(false))
     }
 }

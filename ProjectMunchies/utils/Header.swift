@@ -98,7 +98,7 @@ struct Header: View {
         .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
     }
     
-    private func filterIconAndPopover(for geoReader: GeometryProxy) -> some View {
+    public func filterIconAndPopover(for geoReader: GeometryProxy) -> some View {
         VStack{
             Button(action: {
                 showPrefPopover.toggle()
