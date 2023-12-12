@@ -18,12 +18,13 @@ struct HomeView: View {
     @State var foodButtonPressed: Bool = false
     @State var drinkButtonPressed: Bool = false
     @State var nightButtonPressed: Bool = false
-    @State var historyButtonPressed: Bool = false
+    //@State var historyButtonPressed: Bool = false
     @State var sideButtonIndex = 0
     @State var sideButtonIndexOptions: [Int] = [1,2,3]
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State var searchTextNightSpotsOptions: [String] = ["","",""]
+    @State var liveFeedComments: [String] = ["Happy Hour Man these nuggets is cool a f", "Ehh not really fan of these fries", "These waffles are only good on the weekend", "No Im not liking Chipotle right now"]
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
@@ -84,7 +85,7 @@ struct HomeView: View {
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
                         subHeaderSection(for: geoReader)
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.06)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                         
                         buttonsOnSide(for: geoReader)
                             .position(x:geoReader.size.width * 0.9, y:geoReader.size.height * 0.5)
@@ -129,14 +130,13 @@ struct HomeView: View {
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
         ZStack{
                                             Text("")
-                                                .frame(width: 380, height: 110)
-                                                .background(.black.opacity(0.3))
+                                                .frame(width: 380, height: 60)
+                                                .background(.black.opacity(0.4))
                                                 .cornerRadius(30)
-            
             
             ScrollView(.vertical,showsIndicators: false){
                 VStack(spacing: 15){
-                    ForEach(0..<5){_ in
+                    ForEach(self.liveFeedComments, id: \.self){ comment in
                         ZStack{
                             HStack{
                                 Image(systemName: "person.circle")
@@ -147,13 +147,19 @@ struct HomeView: View {
                                     .clipShape(Circle())
                                 
                                 VStack{
-                                    Text("Happy Hour Man these nuggets is cool a f")
+                                    Spacer()
+                                        .frame(height: 1)
+                                    
+                                    Text(comment)
                                         .foregroundColor(.white)
                                         .font(.system(size: 15))
                                     
                                     Text("by Anonymous user")
                                         .foregroundColor(.white)
                                         .font(.system(size: 15))
+                                    
+                                    Spacer()
+                                        .frame(height: 1)
                                 }
                             }
                         }
@@ -169,7 +175,7 @@ struct HomeView: View {
                                         colors: [Color.black.opacity(0.2), Color.black, Color.black, Color.black]),
                                    startPoint: .top, endPoint: .bottom
                     )
-                    .frame(width: 400, height: 80)
+                    .frame(width: 400, height: 60)
                 }
             )
         }
@@ -284,30 +290,30 @@ struct HomeView: View {
                 }
             }
             
-            Button(action: {
-                self.venues.removeAll()
-                
-                if self.sideButtonIndex == 4 {
-                    self.sideButtonIndex = 0
-                    self.searchText = ""
-                }else {
-                    self.sideButtonIndex = 4
-                    self.searchText = ""
-                    self.startSearch = true
-                }
-            }){
-                ZStack{
-                    Text("")
-                        .frame(width: 50, height: 50)
-                        .background(self.sideButtonIndex == 4 ? .green : .gray)
-                        .cornerRadius(10)
-                    
-                    Image(systemName: "clock.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
-                }
-            }
+//            Button(action: {
+//                self.venues.removeAll()
+//                
+//                if self.sideButtonIndex == 4 {
+//                    self.sideButtonIndex = 0
+//                    self.searchText = ""
+//                }else {
+//                    self.sideButtonIndex = 4
+//                    self.searchText = ""
+//                    self.startSearch = true
+//                }
+//            }){
+//                ZStack{
+//                    Text("")
+//                        .frame(width: 50, height: 50)
+//                        .background(self.sideButtonIndex == 4 ? .green : .gray)
+//                        .cornerRadius(10)
+//                    
+//                    Image(systemName: "clock.fill")
+//                        .resizable()
+//                        .frame(width: 20, height: 20)
+//                        .foregroundColor(.white)
+//                }
+           // }
         }
         .opacity(0.6)
     }

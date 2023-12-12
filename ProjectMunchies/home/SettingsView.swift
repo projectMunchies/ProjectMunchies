@@ -36,7 +36,7 @@ struct SettingsView: View {
                         
                         mainButtons(for: geoReader)
                     }
-                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.52)
+                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                     .sheet(isPresented: $showSheet){
                                             // Pick an image from the photo library:
                                             ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
@@ -49,9 +49,9 @@ struct SettingsView: View {
                         .bold()
                         .foregroundColor(.black)
                         .font(.largeTitle)
-                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
+                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.02)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+//                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
                 }
                 .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY)
                 .disabled(self.showHamburgerMenu ? true : false)
@@ -150,7 +150,7 @@ struct SettingsView: View {
                         .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.04)
                         .background(Color.blue)
                         .cornerRadius(geoReader.size.height * 0.04)
-                        .shadow(radius: 10, x: 10, y: 10)
+                        //.shadow(radius: 10, x: 10, y: 10)
                         .foregroundColor(Color.white)
                 }
             }
@@ -209,7 +209,7 @@ struct SettingsView: View {
                             .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
                             .background(Color.gray)
                             .cornerRadius(geoReader.size.width * 0.06)
-                            .shadow(radius: geoReader.size.width * 0.02, x: geoReader.size.width * 0.04, y: geoReader.size.width * 0.04)
+                          //  .shadow(radius: geoReader.size.width * 0.02, x: geoReader.size.width * 0.04, y: geoReader.size.width * 0.04)
                     }
             
             Button(action: {
