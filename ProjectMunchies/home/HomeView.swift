@@ -20,6 +20,10 @@ struct HomeView: View {
     @State var nightButtonPressed: Bool = false
     @State var historyButtonPressed: Bool = false
     @State var sideButtonIndex = 0
+    @State var sideButtonIndexOptions: [Int] = [1,2,3]
+    @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
+    @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
+    @State var searchTextNightSpotsOptions: [String] = ["","",""]
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
@@ -30,6 +34,18 @@ struct HomeView: View {
     ),CLLocationCoordinate2D(
         latitude: 27.9432414,
         longitude: -82.4503545
+    ),CLLocationCoordinate2D(
+        latitude: 27.9937694,
+        longitude: -82.6449753
+    ),CLLocationCoordinate2D(
+        latitude: 27.9505663,
+        longitude: -82.463508
+    ),CLLocationCoordinate2D(
+        latitude: 27.9448659,
+        longitude: -82.4614819
+    ),CLLocationCoordinate2D(
+        latitude: 27.9523886,
+        longitude: -82.462625
     )]
     
     @State private var region = MKCoordinateRegion(
@@ -89,6 +105,9 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        self.sideButtonIndex = self.sideButtonIndexOptions.randomElement()!
+                        self.searchText = changeButtonData()
+                        self.startSearch = true
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch == true {
@@ -119,10 +138,6 @@ struct HomeView: View {
                 VStack(spacing: 15){
                     ForEach(0..<5){_ in
                         ZStack{
-                            //                    Text("")
-                            //                        .frame(width: 400, height: 60)
-                            //                        .background(.black)
-                            //                        .cornerRadius(30)
                             HStack{
                                 Image(systemName: "person.circle")
                                     .resizable()
@@ -184,7 +199,7 @@ struct HomeView: View {
             }
         }
         .onAppear(perform: {
-            fetchRouteFrom(nightSpots[0], to: nightSpots[1])
+            fetchRouteFrom(nightSpots[self.sideButtonIndexOptions.randomElement()!], to: nightSpots[self.sideButtonIndexOptions.randomElement()!])
         })
         .preferredColorScheme(.dark)
         .cornerRadius(30)
@@ -201,7 +216,7 @@ struct HomeView: View {
                     self.searchText = ""
                 }else {
                     self.sideButtonIndex = 1
-                    self.searchText = "mexican food"
+                    self.searchText = self.searchTextFoodOptions.randomElement()!
                     self.startSearch = true
                 }
             }){
@@ -226,7 +241,7 @@ struct HomeView: View {
                     self.searchText = ""
                 }else {
                     self.sideButtonIndex = 2
-                    self.searchText = "beaches"
+                    self.searchText = self.searchTextDrinkOptions.randomElement()!
                     self.startSearch = true
                 }
             }){
@@ -253,6 +268,7 @@ struct HomeView: View {
                     self.sideButtonIndex = 3
                     self.searchText = ""
                     self.startSearch = true
+                    fetchRouteFrom(nightSpots.randomElement()!, to: nightSpots.randomElement()!)
                 }
             }){
                 ZStack{
@@ -363,6 +379,21 @@ struct HomeView: View {
         formatter.unitsStyle = .abbreviated
         formatter.allowedUnits = [.hour, .minute]
         travelTime = formatter.string(from: route.expectedTravelTime)
+    }
+    
+    private func changeButtonData() -> String {
+        var types: String = ""
+        switch self.sideButtonIndex{
+        case 1 :
+            types = self.searchTextFoodOptions.randomElement()!;
+        case 2 :
+            types = self.searchTextDrinkOptions.randomElement()!;
+        case 3 :
+            types = self.searchTextNightSpotsOptions.randomElement()!
+        default:
+            types = ""
+        }
+        return types;
     }
 }
 
