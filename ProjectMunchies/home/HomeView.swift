@@ -84,8 +84,8 @@ struct HomeView: View {
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
-                        subHeaderSection(for: geoReader)
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+//                        subHeaderSection(for: geoReader)
+//                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                         
                         buttonsOnSide(for: geoReader)
                             .position(x:geoReader.size.width * 0.9, y:geoReader.size.height * 0.5)

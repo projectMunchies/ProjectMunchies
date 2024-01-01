@@ -444,6 +444,6 @@ struct Header: View {
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant(mockProfiles), homeViewModel: HomeViewModel())
+        Header(showHamburgerMenu: .constant(false), isLoading: .constant(false), foodFilter: .constant(FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())), filteredCards: .constant(mockProfiles), homeViewModel: HomeViewModel())
     }
 }

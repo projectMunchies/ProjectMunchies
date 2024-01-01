@@ -100,7 +100,7 @@ struct FeedHomeView: View {
                         .font(.largeTitle)
                         .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.1)
                     
-                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+//                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
                 }
                 .disabled(self.showHamburgerMenu ? true : false)
             }

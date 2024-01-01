@@ -12,2975 +12,6 @@ import FirebaseFirestore
 let db = Firestore.firestore()
 
 enum MockDataService {
-//    static var eventsSampleData: [EventModel] {
-//        [
-//            EventModel(
-//                id: "cf432344",
-//                title: "Itialian night with",
-//                location: "Magginos, Tampa,Fl",
-//                description: "Enjoy a great night with some great people",
-//                participants: ["dasfdsfweefcae","fdsafdsfessfd"],
-//                eventDate: Date.now
-//            ),
-//            //            EventModel(
-//            //                id: "jkhblhjkbkjbjkblk",
-//            //                title: "Taco Tuesdays",
-//            //                location: "Mugelitos, Tampa,Fl",
-//            //                description: "Taco tuesdays youj already know what it be",
-//            //                participants: ["fer3f4f3f34","faee43434343"],
-//            //                eventDate: Date.now
-//            //            ),
-//            //            EventModel(
-//            //                id: "jkhblhjkbkjbjkblk",
-//            //                title: "Taco Tuesdays",
-//            //                location: "Mugelitos, Tampa,Fl",
-//            //                description: "Taco tuesdays youj already know what it be",
-//            //                participants: ["fer3f4f3f34","faee43434343"],
-//            //                eventDate: Date.now
-//            //            ),
-//            //            EventModel(
-//            //                id: "jkhblhjkbkjbjkblk",
-//            //                title: "Taco Tuesdays",
-//            //                location: "Mugelitos, Tampa,Fl",
-//            //                description: "Taco tuesdays youj already know what it be",
-//            //                participants: ["fer3f4f3f34","faee43434343"],
-//            //                eventDate: Date.now
-//            //            )
-//        ]
-//    }
-    
-        static var userProfileSampleData: ProfileModel {
-            ProfileModel(
-               id: "r45r43", fullName: "fdsfsd", location: "", description: "", gender: "", age: "", fcmTokens: [], messageThreadIds: [], occupation: "", favRestaurant: "", favFood: "", hobbies: [], eventIds: [], isMockData: true, bunchIds: []
-            )
-        }
-    
-    static var foodFilterSampleData: FoodFilterModel {
-        FoodFilterModel(
-            id: "",
-            userProfileId: "",
-            category: "",
-            type: "",
-            gender: "",
-            location: "",
-            ageRangeFrom: "",
-            ageRangeTo: "",
-            timeStamp: Date()
-        )
-    }
-    
-    //    static var profilesSampleData: [ProfileModel] {
-    //        [
-    //            //Women
-    //            ProfileModel(
-    //                id: "8ff57448-387d-41f4-be45-bc879be23fbf",
-    //                fullName: "Vickie James",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
-    //                fullName: "Marilyn Reynolds",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
-    //                fullName: "Kristina Anthony",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
-    //                fullName: "Kathleen Brown",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
-    //                fullName: "Stormy Beaulieu",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "f244f9a3-1f31-4d02-a509-99cb00bd1481",
-    //                fullName: "Aurelia Driscoll",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "339b76b7-c58e-48fe-a181-eb67bbd21b49",
-    //                fullName: "Theresa Richey",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "d7e891d8-b126-45c1-b878-5a3be0db7d10",
-    //                fullName: "Jane Conti",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
-    //                fullName: "Linda Rice",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //
-    //            ProfileModel(
-    //                id: "ef49e44f-1957-4690-8bcf-473f9afe73cb",
-    //                fullName: "Ruth Campos",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "26102e2e-0b2b-4ff9-9b9c-a2b87e9af06a",
-    //                fullName: "Angie Dyson",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "a8b00895-411c-4cb0-8e19-559696ce6391",
-    //                fullName: "Ana Ramos",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "93cb0b79-6afc-41de-aad1-c28808de4a4a",
-    //                fullName: "Diane Cowan",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "9527bf1e-b5a8-4fe5-93e6-7db84ba91166",
-    //                fullName: "Dee Klimek",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "4f5c7f12-c290-4a8a-abf6-deb8f396e325",
-    //                fullName: "Charolette Spiker",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "e53f7388-b23a-4016-9ed9-4e86d4379f30",
-    //                fullName: "Claire Simpson",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "25148c1d-e2f9-40c9-83ab-099c6e3c5322",
-    //                fullName: "Cara Lowman",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "176443d2-66ab-44d7-8ec8-cda127185a50",
-    //                fullName: "Stella Swafford",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "a87d620a-e0ae-4f10-bda4-5696a41cc5ac",
-    //                fullName: "Amy Leathers",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "0c9004ad-623d-4575-9c1f-d192f1662f72",
-    //                fullName: "Gemma Golden",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "a764113f-b440-425f-bb28-7ccfb5b0b67d",
-    //                fullName: "Sandra Herring",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "5850c7a9-f735-4934-a735-fcffee610ce8",
-    //                fullName: "Mia Lewis",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "62f36450-3711-46f6-ba0f-43ad5dca9004",
-    //                fullName: "Alyssa Turner",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "399e5315-6699-454f-9785-e756d78dda08",
-    //                fullName: "Lana Taylor",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "3a775f5f-cfdf-49fe-9b01-e657aaf0e91c",
-    //                fullName: "Diana Watson",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Female",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //
-    //
-    //
-    //            //Men
-    //            ProfileModel(
-    //                id: "be3597d0-f8af-4245-b45f-01d5adc75039",
-    //                fullName: "Aaron Bates",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "1112314d-de9c-45bd-9f95-ce46898d7a97",
-    //                fullName: "Alexander Kennedy",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "7c6f12f2-9cdf-404b-bfb1-3531fcba038c",
-    //                fullName: "Ben Thomas",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "00d1726a-cb7f-423e-aa50-533dfba961e1",
-    //                fullName: "Billy Kwasny",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "50ad62b7-3c90-40d6-8baf-459509e48e07",
-    //                fullName: "Darrel Zidar",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "dec2cc1d-3641-4e1a-93e0-9fe763ee36ef",
-    //                fullName: "Dean Deperro",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "24da908a-0951-407b-abec-b0b1e44ff4c0",
-    //                fullName: "Donnell Shryer",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "c2165cd3-b124-4d65-aaaf-1441e2a81bf7",
-    //                fullName: "Erich Nabb",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "7019b1e4-c0e9-4371-917d-2ac85c458210",
-    //                fullName: "Frederic Zeiber",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "77b8c5cf-aa52-4818-bdfa-b979079b1066",
-    //                fullName: "Garret Psaila",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "cce32d43-65bd-4f80-81da-f8e9b58da07d",
-    //                fullName: "Garry Buechler",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "e2176174-56c2-48d0-8faf-aee1bd833ca7",
-    //                fullName: "Hans Vereen",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "2a0fff25-8ad8-4fa4-8639-2067757ebc93",
-    //                fullName: "Hugo Storrow",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "c7029440-0dee-4406-99e7-31d9a5cc3027",
-    //                fullName: "Jake Hanig",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "82e786c0-1a04-4304-9f17-6a88cc56a8eb",
-    //                fullName: "Jefferey Cellars",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "c01e933d-bbe1-41de-b542-bbe64a4b2561",
-    //                fullName: "Jim Valladares",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "fecada7b-4a43-4915-b131-2a0d5e08203c",
-    //                fullName: "Kareem Bayerle",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "d860ef2d-e354-49a9-9d5c-01fbcd17fba2",
-    //                fullName: "Lanny Peeters",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "ca9aca07-a8e2-4166-9a0c-15d5d74a5a78",
-    //                fullName: "Luciano Sienkiewicz",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "9c7e67ee-74bf-4a82-8c13-bf13459bfdc0",
-    //                fullName: "Luke Wachowicz",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "c8819f16-5e27-49dc-8949-8f9aacbd2cb4",
-    //                fullName: "Mason Baxter",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "dbcd8e0a-9a3c-4bc7-bd0d-723705e1d95b",
-    //                fullName: "Mitchel Hoeper",
-    //                location: "St.Pete,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "dcffd2d8-929d-4439-9728-357a7c4fe582",
-    //                fullName: "Mohamed Stathis",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "c115223c-c494-4a33-b914-5d00d91d3eb9",
-    //                fullName: "Oliver Mccall",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "70437a1b-88c9-4423-8eef-3a4afe60a592",
-    //                fullName: "Ray Eddleston",
-    //                location: "Clearwater,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "19457ad4-3451-4316-9921-c87aadb7d9ae",
-    //                fullName: "Rob Dominowski",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            ),
-    //            ProfileModel(
-    //                id: "28527272-2ac8-42b5-8fc3-f1af5a5770cb",
-    //                fullName: "Scottie Stefek",
-    //                location: "Tampa,Fl",
-    //                description: "",
-    //                gender: "Male",
-    //                age: "25",
-    //                fcmTokens: [],
-    //                messageThreadIds: [],
-    //                isMockData: true
-    //            )
-    //        ]
-    //    }
-    
-    
-    // put this in another view cuase it cant run here
-    public func addNewMockData() {
-      //  let docRefs = db.collection("profiles")
-        
-        //        let id = UUID().uuidString
-        //        docRefs.document(id).setData([
-        //            "id": "",
-        //            "fullName": "",
-        //            "location": "",
-        //            "description": "",
-        //            "gender": "",
-        //            "age": "",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-        //
-        
-        
-        //Women
-        //        docRefs.document("8ff57448-387d-41f4-be45-bc879be23fbf").setData([
-        //            "id": "8ff57448-387d-41f4-be45-bc879be23fbf",
-        //            "fullName": "Vickie James",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-        //
-        //
-        //        docRefs.document("a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea").setData([
-        //            "id": "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
-        //            "fullName": "Marilyn Reynolds",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("a6f3b606-93c9-4d6b-a4f8-98ee66181206").setData([
-        //           "id" : "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
-        //            "fullName": "Kristina Anthony",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-        //            docRefs.document("b37b0143-d3cc-495d-bfdc-1fec2d8fcf98").setData([
-        //            "id": "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
-        //            "fullName": "Kathleen Brown",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39").setData([
-        //            "id": "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
-        //            "fullName": "Stormy Beaulieu",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //ALREADY DONE
-        //            docRefs.document("f244f9a3-1f31-4d02-a509-99cb00bd1481").setData([
-        //            "id": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
-        //            "fullName": "Aurelia Driscoll",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("339b76b7-c58e-48fe-a181-eb67bbd21b49").setData([
-        //            "id": "339b76b7-c58e-48fe-a181-eb67bbd21b49",
-        //            "fullName": "Theresa Richey",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("d7e891d8-b126-45c1-b878-5a3be0db7d10").setData([
-        //            "id": "d7e891d8-b126-45c1-b878-5a3be0db7d10",
-        //            "fullName": "Jane Conti",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //ALREADY DONE
-        //            docRefs.document("f8c341e5-4e8e-42d6-ada8-25d6f8e9530f").setData([
-        //            "id": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
-        //            "fullName": "Linda Rice",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //ALREADY DONE
-        //            docRefs.document("ef49e44f-1957-4690-8bcf-473f9afe73cb").setData([
-        //            "id": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
-        //            "fullName": "Ruth Campos",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("26102e2e-0b2b-4ff9-9b9c-a2b87e9af06a").setData([
-        //            "id": "26102e2e-0b2b-4ff9-9b9c-a2b87e9af06a",
-        //            "fullName": "Angie Dyson",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("a8b00895-411c-4cb0-8e19-559696ce6391").setData([
-        //            "id": "a8b00895-411c-4cb0-8e19-559696ce6391",
-        //            "fullName": "Ana Ramos",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("93cb0b79-6afc-41de-aad1-c28808de4a4a").setData([
-        //            "id": "93cb0b79-6afc-41de-aad1-c28808de4a4a",
-        //            "fullName": "Diane Cowan",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //        "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("9527bf1e-b5a8-4fe5-93e6-7db84ba91166").setData([
-        //            "id": "9527bf1e-b5a8-4fe5-93e6-7db84ba91166",
-        //            "fullName": "Dee Klimek",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("4f5c7f12-c290-4a8a-abf6-deb8f396e325").setData([
-        //            "id": "4f5c7f12-c290-4a8a-abf6-deb8f396e325",
-        //            "fullName": "Charolette Spiker",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        
-        //ALREADY DONE
-        //            docRefs.document("e53f7388-b23a-4016-9ed9-4e86d4379f30").setData([
-        //            "id": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
-        //            "fullName": "Claire Simpson",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("25148c1d-e2f9-40c9-83ab-099c6e3c5322").setData([
-        //            "id": "25148c1d-e2f9-40c9-83ab-099c6e3c5322",
-        //            "fullName": "Cara Lowman",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("176443d2-66ab-44d7-8ec8-cda127185a50").setData([
-        //            "id": "176443d2-66ab-44d7-8ec8-cda127185a50",
-        //            "fullName": "Stella Swafford",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("a87d620a-e0ae-4f10-bda4-5696a41cc5ac").setData([
-        //            "id": "a87d620a-e0ae-4f10-bda4-5696a41cc5ac",
-        //            "fullName": "Amy Leathers",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("0c9004ad-623d-4575-9c1f-d192f1662f72").setData([
-        //            "id": "0c9004ad-623d-4575-9c1f-d192f1662f72",
-        //            "fullName": "Gemma Golden",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("a764113f-b440-425f-bb28-7ccfb5b0b67d").setData([
-        //            "id": "a764113f-b440-425f-bb28-7ccfb5b0b67d",
-        //            "fullName": "Sandra Herring",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("5850c7a9-f735-4934-a735-fcffee610ce8").setData([
-        //            "id": "5850c7a9-f735-4934-a735-fcffee610ce8",
-        //            "fullName": "Mia Lewis",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("62f36450-3711-46f6-ba0f-43ad5dca9004").setData([
-        //            "id": "62f36450-3711-46f6-ba0f-43ad5dca9004",
-        //            "fullName": "Alyssa Turner",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("399e5315-6699-454f-9785-e756d78dda08").setData([
-        //            "id": "399e5315-6699-454f-9785-e756d78dda08",
-        //            "fullName": "Lana Taylor",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("3a775f5f-cfdf-49fe-9b01-e657aaf0e91c").setData([
-        //            "id": "3a775f5f-cfdf-49fe-9b01-e657aaf0e91c",
-        //            "fullName": "Diana Watson",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Female",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        
-        //        docRefs.document("2d924df2-19a7-49ca-9621-5356bf42c425").setData([
-        //        "id": "2d924df2-19a7-49ca-9621-5356bf42c425",
-        //        "fullName": "Wynter Lindsey",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("9869fc83-6043-43fc-9e3f-97c5e65e3ce1").setData([
-        //        "id": "9869fc83-6043-43fc-9e3f-97c5e65e3ce1",
-        //        "fullName": "Phoebe Allen",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("4f4b7c75-331e-4a99-883a-962aee62d992").setData([
-        //        "id": "4f4b7c75-331e-4a99-883a-962aee62d992",
-        //        "fullName": "Savannah Long",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("66fa9627-ea35-47c9-ad02-785bbec4997b").setData([
-        //        "id": "66fa9627-ea35-47c9-ad02-785bbec4997b",
-        //        "fullName": "Lexi Carter",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1").setData([
-        //        "id": "a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1",
-        //        "fullName": "Alaya Kim",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("35726856-fc5f-4a32-a1d3-0cc9a373ffa6").setData([
-        //        "id": "35726856-fc5f-4a32-a1d3-0cc9a373ffa6",
-        //        "fullName": "Noelle Tyler",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("77904145-1739-4fd0-b88c-7691a463f925").setData([
-        //        "id": "77904145-1739-4fd0-b88c-7691a463f925",
-        //        "fullName": "Daniella Reed",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "30",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("291ca006-fa3c-457c-8f20-e43fe30726e2").setData([
-        //        "id": "291ca006-fa3c-457c-8f20-e43fe30726e2",
-        //        "fullName": "Payton Hill",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("26242486-e28a-4cc0-8519-650e584b7304").setData([
-        //        "id": "26242486-e28a-4cc0-8519-650e584b7304",
-        //        "fullName": "Giselle Meyer",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //        docRefs.document("828f54e3-22cf-438a-8481-d5e5edaead81").setData([
-        //        "id": "828f54e3-22cf-438a-8481-d5e5edaead81",
-        //        "fullName": "Elle Watson",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "22",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //
-        //        docRefs.document("76058066-89f2-4c5f-a77a-7a01e5331302").setData([
-        //        "id": "76058066-89f2-4c5f-a77a-7a01e5331302",
-        //        "fullName": "Eva Cox",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("d78496a3-a350-47fd-8d68-861086452bf5").setData([
-        //        "id": "d78496a3-a350-47fd-8d68-861086452bf5",
-        //        "fullName": "Myla Mckinney",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "28",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("ff76fd27-e5e4-48a8-b354-3bed165d2d4d").setData([
-        //        "id": "ff76fd27-e5e4-48a8-b354-3bed165d2d4d",
-        //        "fullName": "Ayla Reyes",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("66be07b5-95ca-491e-b157-42f9b45433f4").setData([
-        //        "id": "66be07b5-95ca-491e-b157-42f9b45433f4",
-        //        "fullName": "Journey Cook",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("aaf421ff-c89f-45d2-af59-c67c33527061").setData([
-        //        "id": "aaf421ff-c89f-45d2-af59-c67c33527061",
-        //        "fullName": "Sloane Roberts",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "35",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("804394ff-9a58-41dc-b0a5-809cc66a68f6").setData([
-        //        "id": "804394ff-9a58-41dc-b0a5-809cc66a68f6",
-        //        "fullName": "Maria Taylor",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("ec57dd64-f53e-493f-8489-17f3fefaba98").setData([
-        //        "id": "ec57dd64-f53e-493f-8489-17f3fefaba98",
-        //        "fullName": "Daniella Stewart",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("a54bb7c2-de23-46f6-a859-eba1739cc7a1").setData([
-        //        "id": "a54bb7c2-de23-46f6-a859-eba1739cc7a1",
-        //        "fullName": "Elise Porter",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //        docRefs.document("ec953202-d7bf-4048-8bff-b5e1088410d4").setData([
-        //        "id": "ec953202-d7bf-4048-8bff-b5e1088410d4",
-        //        "fullName": "Samantha Davidson",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "20",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("a9d0f188-a238-4852-b83b-620deb3622d8").setData([
-        //        "id": "a9d0f188-a238-4852-b83b-620deb3622d8",
-        //        "fullName": "Elle Bennet",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Female",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        
-        
-        
-        
-        
-        //Men
-        //        docRefs.document("cb182851-bd1e-4283-bebd-41bb589fa2cf").setData([
-        //        "id": "cb182851-bd1e-4283-bebd-41bb589fa2cf",
-        //        "fullName": "Jameson Meyer",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f").setData([
-        //        "id": "fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f",
-        //        "fullName": "Ryan Watson",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe").setData([
-        //        "id": "5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe",
-        //        "fullName": "Liam Cox",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("4ff33e9e-0b8a-4122-a966-c0344298d8b6").setData([
-        //        "id": "4ff33e9e-0b8a-4122-a966-c0344298d8b6",
-        //        "fullName": "Luka Mckinney",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("d55c9be4-e9af-47e1-8f1e-a10bbc8f435b").setData([
-        //        "id": "d55c9be4-e9af-47e1-8f1e-a10bbc8f435b",
-        //        "fullName": "Jonah Reyes",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("3b0793d7-12ca-48aa-ac3c-91697e8fb068").setData([
-        //        "id": "3b0793d7-12ca-48aa-ac3c-91697e8fb068",
-        //        "fullName": "George Cook",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("4a415dd1-2ffe-4abf-b12f-bede94789bea").setData([
-        //        "id": "4a415dd1-2ffe-4abf-b12f-bede94789bea",
-        //        "fullName": "Cody Roberts",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("1fc94190-9718-4c99-9651-df44028b8933").setData([
-        //        "id": "1fc94190-9718-4c99-9651-df44028b8933",
-        //        "fullName": "Theo Taylor",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("6933917c-3cc4-443e-83bc-4d758d2098dc").setData([
-        //        "id": "6933917c-3cc4-443e-83bc-4d758d2098dc",
-        //        "fullName": "Ryan Stewart",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("a42ec640-ccda-4d31-a4be-7e936ff91791").setData([
-        //        "id": "a42ec640-ccda-4d31-a4be-7e936ff91791",
-        //        "fullName": "Erick Ward",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("ddcc77c2-9ea7-40e8-85e4-5b6c1779d492").setData([
-        //        "id": "ddcc77c2-9ea7-40e8-85e4-5b6c1779d492",
-        //        "fullName": "Timothy Porter",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed").setData([
-        //        "id": "1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed",
-        //        "fullName": "George Stewart",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("ae95f594-81d9-4968-9be3-0112eff5c85d").setData([
-        //        "id": "ae95f594-81d9-4968-9be3-0112eff5c85d",
-        //        "fullName": "Peter Davidson",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623").setData([
-        //        "id": "c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623",
-        //        "fullName": "Johnny Bennet",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("4c2e44bf-3254-46f2-873a-d7c9e7b403d8").setData([
-        //        "id": "4c2e44bf-3254-46f2-873a-d7c9e7b403d8",
-        //        "fullName": "Thomas Horton",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("dd1903b9-27a7-4fbc-b5cb-30d3304ffa88").setData([
-        //        "id": "dd1903b9-27a7-4fbc-b5cb-30d3304ffa88",
-        //        "fullName": "Jordan Gomez",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("93abcb16-3008-4ab6-9d6d-850b99b6e47a").setData([
-        //        "id": "93abcb16-3008-4ab6-9d6d-850b99b6e47a",
-        //        "fullName": "Timothy Edwards",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("0ad3c615-f59c-4e5c-8f57-30d70d238b07").setData([
-        //        "id": "0ad3c615-f59c-4e5c-8f57-30d70d238b07",
-        //        "fullName": "Nathan Hill",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("8550cd55-9114-4688-b758-f3968a0796f5").setData([
-        //        "id": "8550cd55-9114-4688-b758-f3968a0796f5",
-        //        "fullName": "Adam Thomas",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        //
-        //        docRefs.document("7dee6646-1268-4826-8295-efce74297c60").setData([
-        //        "id": "7dee6646-1268-4826-8295-efce74297c60",
-        //        "fullName": "Troy Mccarty",
-        //        "location": "Tampa,Fl",
-        //        "description": "",
-        //        "gender": "Male",
-        //        "age": "25",
-        //        "fcmTokens": [],
-        //        "messageThreadIds": [],
-        //        "isMockData": true
-        //        ])
-        
-        
-        //            docRefs.document("be3597d0-f8af-4245-b45f-01d5adc75039").setData([
-        //            "id": "be3597d0-f8af-4245-b45f-01d5adc75039",
-        //            "fullName": "Aaron Bates",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //                                          docRefs.document("1112314d-de9c-45bd-9f95-ce46898d7a97").setData([
-        //            "id": "1112314d-de9c-45bd-9f95-ce46898d7a97",
-        //            "fullName": "Alexander Kennedy",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //                                          ])
-        //            docRefs.document("7c6f12f2-9cdf-404b-bfb1-3531fcba038c").setData([
-        //            "id": "7c6f12f2-9cdf-404b-bfb1-3531fcba038c",
-        //            "fullName": "Ben Thomas",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("00d1726a-cb7f-423e-aa50-533dfba961e1").setData([
-        //            "id": "00d1726a-cb7f-423e-aa50-533dfba961e1",
-        //            "fullName": "Billy Kwasny",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("50ad62b7-3c90-40d6-8baf-459509e48e07").setData([
-        //            "id": "50ad62b7-3c90-40d6-8baf-459509e48e07",
-        //            "fullName": "Darrel Zidar",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("dec2cc1d-3641-4e1a-93e0-9fe763ee36ef").setData([
-        //            "id": "dec2cc1d-3641-4e1a-93e0-9fe763ee36ef",
-        //            "fullName": "Dean Deperro",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("24da908a-0951-407b-abec-b0b1e44ff4c0").setData([
-        //            "id": "24da908a-0951-407b-abec-b0b1e44ff4c0",
-        //            "fullName": "Donnell Shryer",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("c2165cd3-b124-4d65-aaaf-1441e2a81bf7").setData([
-        //            "id": "c2165cd3-b124-4d65-aaaf-1441e2a81bf7",
-        //            "fullName": "Erich Nabb",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("7019b1e4-c0e9-4371-917d-2ac85c458210").setData([
-        //            "id": "7019b1e4-c0e9-4371-917d-2ac85c458210",
-        //            "fullName": "Frederic Zeiber",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("77b8c5cf-aa52-4818-bdfa-b979079b1066").setData([
-        //            "id": "77b8c5cf-aa52-4818-bdfa-b979079b1066",
-        //            "fullName": "Garret Psaila",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("cce32d43-65bd-4f80-81da-f8e9b58da07d").setData([
-        //            "id": "cce32d43-65bd-4f80-81da-f8e9b58da07d",
-        //            "fullName": "Garry Buechler",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("e2176174-56c2-48d0-8faf-aee1bd833ca7").setData([
-        //            "id": "e2176174-56c2-48d0-8faf-aee1bd833ca7",
-        //            "fullName": "Hans Vereen",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("2a0fff25-8ad8-4fa4-8639-2067757ebc93").setData([
-        //            "id": "2a0fff25-8ad8-4fa4-8639-2067757ebc93",
-        //            "fullName": "Hugo Storrow",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("c7029440-0dee-4406-99e7-31d9a5cc3027").setData([
-        //            "id": "c7029440-0dee-4406-99e7-31d9a5cc3027",
-        //            "fullName": "Jake Hanig",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("82e786c0-1a04-4304-9f17-6a88cc56a8eb").setData([
-        //            "id": "82e786c0-1a04-4304-9f17-6a88cc56a8eb",
-        //            "fullName": "Jefferey Cellars",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("c01e933d-bbe1-41de-b542-bbe64a4b2561").setData([
-        //            "id": "c01e933d-bbe1-41de-b542-bbe64a4b2561",
-        //            "fullName": "Jim Valladares",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //ALREADY DONE
-        //            docRefs.document("fecada7b-4a43-4915-b131-2a0d5e08203c").setData([
-        //            "id": "fecada7b-4a43-4915-b131-2a0d5e08203c",
-        //            "fullName": "Kareem Bayerle",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("d860ef2d-e354-49a9-9d5c-01fbcd17fba2").setData([
-        //            "id": "d860ef2d-e354-49a9-9d5c-01fbcd17fba2",
-        //            "fullName": "Lanny Peeters",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("ca9aca07-a8e2-4166-9a0c-15d5d74a5a78").setData([
-        //            "id": "ca9aca07-a8e2-4166-9a0c-15d5d74a5a78",
-        //            "fullName": "Luciano Sienkiewicz",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("9c7e67ee-74bf-4a82-8c13-bf13459bfdc0").setData([
-        //            "id": "9c7e67ee-74bf-4a82-8c13-bf13459bfdc0",
-        //            "fullName": "Luke Wachowicz",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("c8819f16-5e27-49dc-8949-8f9aacbd2cb4").setData([
-        //            "id": "c8819f16-5e27-49dc-8949-8f9aacbd2cb4",
-        //            "fullName": "Mason Baxter",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("dbcd8e0a-9a3c-4bc7-bd0d-723705e1d95b").setData([
-        //            "id": "dbcd8e0a-9a3c-4bc7-bd0d-723705e1d95b",
-        //            "fullName": "Mitchel Hoeper",
-        //            "location": "St.Pete,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("dcffd2d8-929d-4439-9728-357a7c4fe582").setData([
-        //            "id": "dcffd2d8-929d-4439-9728-357a7c4fe582",
-        //            "fullName": "Mohamed Stathis",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("c115223c-c494-4a33-b914-5d00d91d3eb9").setData([
-        //            "id": "c115223c-c494-4a33-b914-5d00d91d3eb9",
-        //            "fullName": "Oliver Mccall",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("70437a1b-88c9-4423-8eef-3a4afe60a592").setData([
-        //            "id": "70437a1b-88c9-4423-8eef-3a4afe60a592",
-        //            "fullName": "Ray Eddleston",
-        //            "location": "Clearwater,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //            docRefs.document("19457ad4-3451-4316-9921-c87aadb7d9ae").setData([
-        //            "id": "19457ad4-3451-4316-9921-c87aadb7d9ae",
-        //            "fullName": "Rob Dominowski",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //            ])
-        //
-        //            docRefs.document("28527272-2ac8-42b5-8fc3-f1af5a5770cb").setData([
-        //            "id": "28527272-2ac8-42b5-8fc3-f1af5a5770cb",
-        //            "fullName": "Scottie Stefek",
-        //            "location": "Tampa,Fl",
-        //            "description": "",
-        //            "gender": "Male",
-        //            "age": "25",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-    }
-    
-    public func addMockFilterData() {
-        let docRefs = db.collection("filters")
-        
-        //        let id = UUID().uuidString
-        //        docRefs.document(id).setData([
-        //            "id": "",
-        //            "fullName": "",
-        //            "location": "",
-        //            "description": "",
-        //            "gender": "",
-        //            "age": "",
-        //            "fcmTokens": [],
-        //            "messageThreadIds": [],
-        //            "isMockData": true
-        //        ])
-        //
-        //                let id = UUID().uuidString
-        //                docRefs.document(id).setData([
-        //                    "id": id,
-        //                    "userProfileId": "e53f7388-b23a-4016-9ed9-4e86d4379f30",
-        //                    "category": "Cuisine",
-        //                    "type": "American",
-        //                    "gender": "Pick",
-        //                    "location": "Tampa",
-        //                    "ageRangeFrom": "20",
-        //                    "ageRangeTo": "70",
-        //                    "isMockData": true
-        //                ])
-        //
-        //        let id2 = UUID().uuidString
-        //        docRefs.document(id2).setData([
-        //            "id": id2,
-        //            "userProfileId": "ef49e44f-1957-4690-8bcf-473f9afe73cb",
-        //            "category": "Drinks",
-        //            "type": "Smoothies",
-        //            "gender": "Female",
-        //            "location": "American",
-        //            "ageRangeFrom": "20",
-        //            "ageRangeTo": "50",
-        //            "isMockData": true
-        //        ])
-        //
-        //        let id3 = UUID().uuidString
-        //        docRefs.document(id3).setData([
-        //            "id": id3,
-        //            "userProfileId": "f244f9a3-1f31-4d02-a509-99cb00bd1481",
-        //            "category": "Cuisine",
-        //            "type": "American",
-        //            "gender": "Female",
-        //            "location": "Tampa",
-        //            "ageRangeFrom": "24",
-        //            "ageRangeTo": "66",
-        //            "isMockData": true
-        //        ])
-        //
-        //        let id4 = UUID().uuidString
-        //        docRefs.document(id4).setData([
-        //            "id": id4,
-        //            "userProfileId": "f8c341e5-4e8e-42d6-ada8-25d6f8e9530f",
-        //            "category": "Drinks",
-        //            "type": "Soda",
-        //            "gender": "Male",
-        //            "location": "Tampa",
-        //            "ageRangeFrom": "26",
-        //            "ageRangeTo": "40",
-        //            "isMockData": true
-        //        ])
-        //
-        //        let id5 = UUID().uuidString
-        //        docRefs.document(id5).setData([
-        //            "id": id5,
-        //            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
-        //            "category": "Happy Hour",
-        //            "type": "Beer",
-        //            "gender": "Male",
-        //            "location": "Tampa",
-        //            "ageRangeFrom": "18",
-        //            "ageRangeTo": "70",
-        //            "isMockData": true
-        //        ])
-        //
-        
-        let id6 = UUID().uuidString
-        docRefs.document(id6).setData([
-            "id": id6,
-            "userProfileId": "8ff57448-387d-41f4-be45-bc879be23fbf",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id7 = UUID().uuidString
-        docRefs.document(id7).setData([
-            "id": id7,
-            "userProfileId": "a6ce1c0b-0cdb-4eaf-bca8-d124e39819ea",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id8 = UUID().uuidString
-        docRefs.document(id8).setData([
-            "id": id8,
-            "userProfileId": "a6f3b606-93c9-4d6b-a4f8-98ee66181206",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id9 = UUID().uuidString
-        docRefs.document(id9).setData([
-            "id": id9,
-            "userProfileId": "b37b0143-d3cc-495d-bfdc-1fec2d8fcf98",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id10 = UUID().uuidString
-        docRefs.document(id10).setData([
-            "id": id10,
-            "userProfileId": "d21387d1-fd1d-44b2-bc9c-03dfc8aa3e39",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id11 = UUID().uuidString
-        docRefs.document(id11).setData([
-            "id": id11,
-            "userProfileId": "339b76b7-c58e-48fe-a181-eb67bbd21b49",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id12 = UUID().uuidString
-        docRefs.document(id12).setData([
-            "id": id12,
-            "userProfileId": "d7e891d8-b126-45c1-b878-5a3be0db7d10",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id13 = UUID().uuidString
-        docRefs.document(id13).setData([
-            "id": id13,
-            "userProfileId": "26102e2e-0b2b-4ff9-9b9c-a2b87e9af06a",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id14 = UUID().uuidString
-        docRefs.document(id14).setData([
-            "id": id14,
-            "userProfileId": "a8b00895-411c-4cb0-8e19-559696ce6391",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id15 = UUID().uuidString
-        docRefs.document(id15).setData([
-            "id": id15,
-            "userProfileId": "93cb0b79-6afc-41de-aad1-c28808de4a4a",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id16 = UUID().uuidString
-        docRefs.document(id16).setData([
-            "id": id16,
-            "userProfileId": "9527bf1e-b5a8-4fe5-93e6-7db84ba91166",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id17 = UUID().uuidString
-        docRefs.document(id17).setData([
-            "id": id17,
-            "userProfileId": "4f5c7f12-c290-4a8a-abf6-deb8f396e325",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        
-        let id18 = UUID().uuidString
-        docRefs.document(id18).setData([
-            "id": id18,
-            "userProfileId": "25148c1d-e2f9-40c9-83ab-099c6e3c5322",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id19 = UUID().uuidString
-        docRefs.document(id19).setData([
-            "id": id19,
-            "userProfileId": "176443d2-66ab-44d7-8ec8-cda127185a50",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id20 = UUID().uuidString
-        docRefs.document(id20).setData([
-            "id": id20,
-            "userProfileId": "a87d620a-e0ae-4f10-bda4-5696a41cc5ac",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id21 = UUID().uuidString
-        docRefs.document(id21).setData([
-            "id": id21,
-            "userProfileId": "0c9004ad-623d-4575-9c1f-d192f1662f72",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id22 = UUID().uuidString
-        docRefs.document(id22).setData([
-            "id": id22,
-            "userProfileId": "a764113f-b440-425f-bb28-7ccfb5b0b67d",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id23 = UUID().uuidString
-        docRefs.document(id23).setData([
-            "id": id23,
-            "userProfileId": "5850c7a9-f735-4934-a735-fcffee610ce8",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id24 = UUID().uuidString
-        docRefs.document(id24).setData([
-            "id": id24,
-            "userProfileId": "62f36450-3711-46f6-ba0f-43ad5dca9004",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id25 = UUID().uuidString
-        docRefs.document(id25).setData([
-            "id": id25,
-            "userProfileId": "399e5315-6699-454f-9785-e756d78dda08",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id26 = UUID().uuidString
-        docRefs.document(id26).setData([
-            "id": id26,
-            "userProfileId": "3a775f5f-cfdf-49fe-9b01-e657aaf0e91c",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id27 = UUID().uuidString
-        docRefs.document(id27).setData([
-            "id": id27,
-            "userProfileId": "2d924df2-19a7-49ca-9621-5356bf42c425",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id28 = UUID().uuidString
-        docRefs.document(id28).setData([
-            "id": id28,
-            "userProfileId": "9869fc83-6043-43fc-9e3f-97c5e65e3ce1",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id29 = UUID().uuidString
-        docRefs.document(id29).setData([
-            "id": id29,
-            "userProfileId": "4f4b7c75-331e-4a99-883a-962aee62d992",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        
-        let id30 = UUID().uuidString
-        docRefs.document(id30).setData([
-            "id": id30,
-            "userProfileId": "66fa9627-ea35-47c9-ad02-785bbec4997b",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id31 = UUID().uuidString
-        docRefs.document(id31).setData([
-            "id": id31,
-            "userProfileId": "a0b9c8b8-f52d-45dd-96fe-51da15dc8ca1",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id32 = UUID().uuidString
-        docRefs.document(id32).setData([
-            "id": id32,
-            "userProfileId": "35726856-fc5f-4a32-a1d3-0cc9a373ffa6",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id33 = UUID().uuidString
-        docRefs.document(id33).setData([
-            "id": id33,
-            "userProfileId": "77904145-1739-4fd0-b88c-7691a463f925",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id34 = UUID().uuidString
-        docRefs.document(id34).setData([
-            "id": id34,
-            "userProfileId": "291ca006-fa3c-457c-8f20-e43fe30726e2",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id35 = UUID().uuidString
-        docRefs.document(id35).setData([
-            "id": id35,
-            "userProfileId": "26242486-e28a-4cc0-8519-650e584b7304",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id36 = UUID().uuidString
-        docRefs.document(id36).setData([
-            "id": id36,
-            "userProfileId": "828f54e3-22cf-438a-8481-d5e5edaead81",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id37 = UUID().uuidString
-        docRefs.document(id37).setData([
-            "id": id37,
-            "userProfileId": "76058066-89f2-4c5f-a77a-7a01e5331302",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id38 = UUID().uuidString
-        docRefs.document(id38).setData([
-            "id": id38,
-            "userProfileId": "d78496a3-a350-47fd-8d68-861086452bf5",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id39 = UUID().uuidString
-        docRefs.document(id39).setData([
-            "id": id39,
-            "userProfileId": "ff76fd27-e5e4-48a8-b354-3bed165d2d4d",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id40 = UUID().uuidString
-        docRefs.document(id40).setData([
-            "id": id40,
-            "userProfileId": "66be07b5-95ca-491e-b157-42f9b45433f4",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id41 = UUID().uuidString
-        docRefs.document(id41).setData([
-            "id": id41,
-            "userProfileId": "aaf421ff-c89f-45d2-af59-c67c33527061",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        
-        let id42 = UUID().uuidString
-        docRefs.document(id42).setData([
-            "id": id42,
-            "userProfileId": "804394ff-9a58-41dc-b0a5-809cc66a68f6",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id43 = UUID().uuidString
-        docRefs.document(id43).setData([
-            "id": id43,
-            "userProfileId": "ec57dd64-f53e-493f-8489-17f3fefaba98",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id44 = UUID().uuidString
-        docRefs.document(id44).setData([
-            "id": id44,
-            "userProfileId": "a54bb7c2-de23-46f6-a859-eba1739cc7a1",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id45 = UUID().uuidString
-        docRefs.document(id45).setData([
-            "id": id45,
-            "userProfileId": "ec953202-d7bf-4048-8bff-b5e1088410d4",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id46 = UUID().uuidString
-        docRefs.document(id46).setData([
-            "id": id46,
-            "userProfileId": "a9d0f188-a238-4852-b83b-620deb3622d8",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id47 = UUID().uuidString
-        docRefs.document(id47).setData([
-            "id": id47,
-            "userProfileId": "cb182851-bd1e-4283-bebd-41bb589fa2cf",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id48 = UUID().uuidString
-        docRefs.document(id48).setData([
-            "id": id48,
-            "userProfileId": "fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id49 = UUID().uuidString
-        docRefs.document(id49).setData([
-            "id": id49,
-            "userProfileId": "5d0d1cf2-0aa3-42ff-888b-f0a42c1f2cfe",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id50 = UUID().uuidString
-        docRefs.document(id50).setData([
-            "id": id50,
-            "userProfileId": "4ff33e9e-0b8a-4122-a966-c0344298d8b6",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id51 = UUID().uuidString
-        docRefs.document(id51).setData([
-            "id": id51,
-            "userProfileId": "d55c9be4-e9af-47e1-8f1e-a10bbc8f435b",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id52 = UUID().uuidString
-        docRefs.document(id52).setData([
-            "id": id52,
-            "userProfileId": "3b0793d7-12ca-48aa-ac3c-91697e8fb068",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id53 = UUID().uuidString
-        docRefs.document(id53).setData([
-            "id": id53,
-            "userProfileId": "4a415dd1-2ffe-4abf-b12f-bede94789bea",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        
-        
-        
-        
-        
-        
-        let id54 = UUID().uuidString
-        docRefs.document(id54).setData([
-            "id": id54,
-            "userProfileId": "1fc94190-9718-4c99-9651-df44028b8933",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id55 = UUID().uuidString
-        docRefs.document(id55).setData([
-            "id": id55,
-            "userProfileId": "6933917c-3cc4-443e-83bc-4d758d2098dc",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id56 = UUID().uuidString
-        docRefs.document(id56).setData([
-            "id": id56,
-            "userProfileId": "a42ec640-ccda-4d31-a4be-7e936ff91791",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id57 = UUID().uuidString
-        docRefs.document(id57).setData([
-            "id": id57,
-            "userProfileId": "ddcc77c2-9ea7-40e8-85e4-5b6c1779d492",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id58 = UUID().uuidString
-        docRefs.document(id58).setData([
-            "id": id58,
-            "userProfileId": "1fca9d9a-56d6-4e2d-8ddc-7712aa4b2fed",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id59 = UUID().uuidString
-        docRefs.document(id59).setData([
-            "id": id59,
-            "userProfileId": "ae95f594-81d9-4968-9be3-0112eff5c85d",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id60 = UUID().uuidString
-        docRefs.document(id60).setData([
-            "id": id60,
-            "userProfileId": "c108fa9d-b8b8-4ae8-920d-ec9ab3f7c623",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id61 = UUID().uuidString
-        docRefs.document(id61).setData([
-            "id": id61,
-            "userProfileId": "4c2e44bf-3254-46f2-873a-d7c9e7b403d8",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id62 = UUID().uuidString
-        docRefs.document(id62).setData([
-            "id": id62,
-            "userProfileId": "dd1903b9-27a7-4fbc-b5cb-30d3304ffa88",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id63 = UUID().uuidString
-        docRefs.document(id63).setData([
-            "id": id63,
-            "userProfileId": "93abcb16-3008-4ab6-9d6d-850b99b6e47a",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id64 = UUID().uuidString
-        docRefs.document(id64).setData([
-            "id": id64,
-            "userProfileId": "0ad3c615-f59c-4e5c-8f57-30d70d238b07",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id65 = UUID().uuidString
-        docRefs.document(id65).setData([
-            "id": id65,
-            "userProfileId": "8550cd55-9114-4688-b758-f3968a0796f5",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id66 = UUID().uuidString
-        docRefs.document(id66).setData([
-            "id": id66,
-            "userProfileId": "7dee6646-1268-4826-8295-efce74297c60",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id67 = UUID().uuidString
-        docRefs.document(id67).setData([
-            "id": id67,
-            "userProfileId": "be3597d0-f8af-4245-b45f-01d5adc75039",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id68 = UUID().uuidString
-        docRefs.document(id68).setData([
-            "id": id68,
-            "userProfileId": "1112314d-de9c-45bd-9f95-ce46898d7a97",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id69 = UUID().uuidString
-        docRefs.document(id69).setData([
-            "id": id69,
-            "userProfileId": "7c6f12f2-9cdf-404b-bfb1-3531fcba038c",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id70 = UUID().uuidString
-        docRefs.document(id70).setData([
-            "id": id70,
-            "userProfileId": "00d1726a-cb7f-423e-aa50-533dfba961e1",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id71 = UUID().uuidString
-        docRefs.document(id71).setData([
-            "id": id71,
-            "userProfileId": "50ad62b7-3c90-40d6-8baf-459509e48e07",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id72 = UUID().uuidString
-        docRefs.document(id72).setData([
-            "id": id72,
-            "userProfileId": "dec2cc1d-3641-4e1a-93e0-9fe763ee36ef",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id73 = UUID().uuidString
-        docRefs.document(id73).setData([
-            "id": id73,
-            "userProfileId": "24da908a-0951-407b-abec-b0b1e44ff4c0",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id74 = UUID().uuidString
-        docRefs.document(id74).setData([
-            "id": id74,
-            "userProfileId": "c2165cd3-b124-4d65-aaaf-1441e2a81bf7",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id75 = UUID().uuidString
-        docRefs.document(id75).setData([
-            "id": id75,
-            "userProfileId": "7019b1e4-c0e9-4371-917d-2ac85c458210",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id76 = UUID().uuidString
-        docRefs.document(id76).setData([
-            "id": id76,
-            "userProfileId": "77b8c5cf-aa52-4818-bdfa-b979079b1066",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id77 = UUID().uuidString
-        docRefs.document(id77).setData([
-            "id": id77,
-            "userProfileId": "cce32d43-65bd-4f80-81da-f8e9b58da07d",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id78 = UUID().uuidString
-        docRefs.document(id78).setData([
-            "id": id78,
-            "userProfileId": "e2176174-56c2-48d0-8faf-aee1bd833ca7",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id79 = UUID().uuidString
-        docRefs.document(id79).setData([
-            "id": id79,
-            "userProfileId": "2a0fff25-8ad8-4fa4-8639-2067757ebc93",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id80 = UUID().uuidString
-        docRefs.document(id80).setData([
-            "id": id80,
-            "userProfileId": "c7029440-0dee-4406-99e7-31d9a5cc3027",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id81 = UUID().uuidString
-        docRefs.document(id81).setData([
-            "id": id81,
-            "userProfileId": "82e786c0-1a04-4304-9f17-6a88cc56a8eb",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id82 = UUID().uuidString
-        docRefs.document(id82).setData([
-            "id": id82,
-            "userProfileId": "c01e933d-bbe1-41de-b542-bbe64a4b2561",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id83 = UUID().uuidString
-        docRefs.document(id83).setData([
-            "id": id83,
-            "userProfileId": "fecada7b-4a43-4915-b131-2a0d5e08203c",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id84 = UUID().uuidString
-        docRefs.document(id84).setData([
-            "id": id84,
-            "userProfileId": "d860ef2d-e354-49a9-9d5c-01fbcd17fba2",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id85 = UUID().uuidString
-        docRefs.document(id85).setData([
-            "id": id85,
-            "userProfileId": "ca9aca07-a8e2-4166-9a0c-15d5d74a5a78",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id86 = UUID().uuidString
-        docRefs.document(id86).setData([
-            "id": id86,
-            "userProfileId": "9c7e67ee-74bf-4a82-8c13-bf13459bfdc0",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id87 = UUID().uuidString
-        docRefs.document(id87).setData([
-            "id": id87,
-            "userProfileId": "c8819f16-5e27-49dc-8949-8f9aacbd2cb4",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id88 = UUID().uuidString
-        docRefs.document(id88).setData([
-            "id": id88,
-            "userProfileId": "dbcd8e0a-9a3c-4bc7-bd0d-723705e1d95b",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id89 = UUID().uuidString
-        docRefs.document(id89).setData([
-            "id": id89,
-            "userProfileId": "dcffd2d8-929d-4439-9728-357a7c4fe582",
-            "category": "Happy Hour",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id90 = UUID().uuidString
-        docRefs.document(id90).setData([
-            "id": id90,
-            "userProfileId": "c115223c-c494-4a33-b914-5d00d91d3eb9",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id91 = UUID().uuidString
-        docRefs.document(id91).setData([
-            "id": id91,
-            "userProfileId": "70437a1b-88c9-4423-8eef-3a4afe60a592",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id92 = UUID().uuidString
-        docRefs.document(id92).setData([
-            "id": id92,
-            "userProfileId": "19457ad4-3451-4316-9921-c87aadb7d9ae",
-            "category": "Drinks",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        let id93 = UUID().uuidString
-        docRefs.document(id93).setData([
-            "id": id93,
-            "userProfileId": "28527272-2ac8-42b5-8fc3-f1af5a5770cb",
-            "category": "Cuisine",
-            "type": "Pick",
-            "gender": "Pick",
-            "location": "Tampa",
-            "ageRangeFrom": "18",
-            "ageRangeTo": "70",
-            "isMockData": true
-        ])
-        
-        
-    }
-    
     public func updateMockFIlterData(){
         
         let docRefs = db.collection("filters")
@@ -3461,47 +492,1351 @@ enum MockDataService {
         ])
     }
 
-    public func addNewMockBunches() {
-        let docRefs = db.collection("bunches")
+    public func addNewVenuesChineseCusineType() {
+        let docRefs = db.collection("venues")
              
         let id = UUID().uuidString
         docRefs.document(id).setData([
             "id": id,
-            "locationName": "Saho Saloon",
-            "profileIds": ["00d1726a-cb7f-423e-aa50-533dfba961e1"],
-            "reviewIds": [],
-            "isMockData": true
+            "name": "Oriental Express Chinese Sushu Restaurant",
+            "address": "510 E Jackson St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
         ])
         
         let id2 = UUID().uuidString
         docRefs.document(id2).setData([
             "id": id2,
-            "locationName": "McDonalds",
-            "profileIds": ["ec953202-d7bf-4048-8bff-b5e1088410d4"],
-            "reviewIds": [],
-            "isMockData": true
+            "name": "Ming Gardens Restaurant",
+            "address": "2601 N Tampa St, Tampa, FL 33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
         ])
         
         let id3 = UUID().uuidString
         docRefs.document(id3).setData([
             "id": id3,
-            "locationName": "Chipotle",
-            "profileIds": ["fc3f93b3-3b4f-4e91-9d8b-d8ffff60880f"],
-            "reviewIds": [],
-            "isMockData": true
+            "name": "Wok n Roll",
+            "address": "2802 W Kennedy Blvd, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
         ])
         
         let id4 = UUID().uuidString
         docRefs.document(id4).setData([
             "id": id4,
-            "locationName": "Bar Taco",
-            "profileIds": ["a42ec640-ccda-4d31-a4be-7e936ff91791"],
-            "reviewIds": [],
-            "isMockData": true
+            "name": "China Wok",
+            "address": "4230 S MacDill Ave, Tampa, FL  33611",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
         ])
         
-
+        let id5 = UUID().uuidString
+        docRefs.document(id5).setData([
+            "id": id5,
+            "name": "China Wok",
+            "address": "4058 Fiesta Plaza, Unit 104, Tampa, FL 33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id6 = UUID().uuidString
+        docRefs.document(id6).setData([
+            "id": id6,
+            "name": "Plum Tree",
+            "address": "215 E Davis Blvd, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id7 = UUID().uuidString
+        docRefs.document(id7).setData([
+            "id": id7,
+            "name": "YHS China Bistro",
+            "address": "302 N Dale Mabry Hwy, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id8 = UUID().uuidString
+        docRefs.document(id8).setData([
+            "id": id8,
+            "name": "China 1",
+            "address": "934 E Henderson Ave, Tampa, FL  33605",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id9 = UUID().uuidString
+        docRefs.document(id9).setData([
+            "id": id9,
+            "name": "Yummy House South",
+            "address": "302 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id10 = UUID().uuidString
+        docRefs.document(id10).setData([
+            "id": id10,
+            "name": "Ho Ho To Go",
+            "address": "2502 W Columbus Dr, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id11 = UUID().uuidString
+        docRefs.document(id11).setData([
+            "id": id11,
+            "name": "China 1",
+            "address": "2535 N Dale Mabry Hwy, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id12 = UUID().uuidString
+        docRefs.document(id12).setData([
+            "id": id12,
+            "name": "China Moon Chinese Restaurant",
+            "address": "1900 E Dr Martin Luther King Jr Blvd, Tampa, FL  33610",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id13 = UUID().uuidString
+        docRefs.document(id13).setData([
+            "id": id13,
+            "name": "Far East Chinese Restaurant",
+            "address": "5022 E Tenth Ave, Tampa, FL  33619",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id14 = UUID().uuidString
+        docRefs.document(id14).setData([
+            "id": id14,
+            "name": "Hao Wah Chinese Restaurant",
+            "address": "1713 S Dale Mabry Hwy, Tampa, FL  33629",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id15 = UUID().uuidString
+        docRefs.document(id15).setData([
+            "id": id15,
+            "name": "Yummy House China Bistro - Tampa",
+            "address": "2620 E Hillsborough Ave, Tampa, FL  33610",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id16 = UUID().uuidString
+        docRefs.document(id16).setData([
+            "id": id16,
+            "name": "New China",
+            "address": "3801 W Gandy Blvd, Unit E, Tampa, FL 33611",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id17 = UUID().uuidString
+        docRefs.document(id17).setData([
+            "id": id17,
+            "name": "Shang Hai Take Out",
+            "address": "3337 S West Shore Blvd, Tampa, FL  33629",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id18 = UUID().uuidString
+        docRefs.document(id18).setData([
+            "id": id18,
+            "name": "Taste of China",
+            "address": "5827 S Dale Mabry Hwy, Tampa, FL  33611",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id19 = UUID().uuidString
+        docRefs.document(id19).setData([
+            "id": id19,
+            "name": "China Garden",
+            "address": "5715 N Nebraska Ave, Tampa, FL  33604",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id20 = UUID().uuidString
+        docRefs.document(id20).setData([
+            "id": id20,
+            "name": "Top China",
+            "address": "3810 W Neptune St, Unit B1, Tampa, FL  33629",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id21 = UUID().uuidString
+        docRefs.document(id21).setData([
+            "id": id21,
+            "name": "Hong Kong",
+            "address": "1743 E Hillsborough Ave, Tampa, FL  33610",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id22 = UUID().uuidString
+        docRefs.document(id22).setData([
+            "id": id22,
+            "name": "Top China",
+            "address": "2525 E Hillsborough Ave, Tampa, FL  33610",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id23 = UUID().uuidString
+        docRefs.document(id23).setData([
+            "id": id23,
+            "name": "China House",
+            "address": "3978 W Hillsborough Ave, Tampa, FL  33614",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id24 = UUID().uuidString
+        docRefs.document(id24).setData([
+            "id": id24,
+            "name": "Jade Garden",
+            "address": "Jade Garden, 2626 W Hillsborough Ave, Tampa, FL  33614",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id25 = UUID().uuidString
+        docRefs.document(id25).setData([
+            "id": id25,
+            "name": "Tampa Buffet",
+            "address": "3904 S Dale Mabry Hwy, Tampa, FL  33611",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
     }
+    
+    public func addNewVenuesAmericanCusineType() {
+        let docRefs = db.collection("venues")
+             
+        let id = UUID().uuidString
+        docRefs.document(id).setData([
+            "id": id,
+            "name": "American Social",
+            "address": "601 S Harbour Island Blvd, Unit 107, Tampa, FL 33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id2 = UUID().uuidString
+        docRefs.document(id2).setData([
+            "id": id2,
+            "name": "Samaria Cafe",
+            "address": "502 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id3 = UUID().uuidString
+        docRefs.document(id3).setData([
+            "id": id3,
+            "name": "Ebbe",
+            "address": "1202 N Franklin St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id4 = UUID().uuidString
+        docRefs.document(id4).setData([
+            "id": id4,
+            "name": "211 Restaurant",
+            "address": "211 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id5 = UUID().uuidString
+        docRefs.document(id5).setData([
+            "id": id5,
+            "name": "SoFresh",
+            "address": "512 N Franklin St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id6 = UUID().uuidString
+        docRefs.document(id6).setData([
+            "id": id6,
+            "name": "Ponte Modern American",
+            "address": "1010 Gramercy Ln, Tampa, FL 33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id7 = UUID().uuidString
+        docRefs.document(id7).setData([
+            "id": id7,
+            "name": "Yard House",
+            "address": "450 Channelside Dr\nTampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id8 = UUID().uuidString
+        docRefs.document(id8).setData([
+            "id": id8,
+            "name": "The Dan",
+            "address": "905 N Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id9 = UUID().uuidString
+        docRefs.document(id9).setData([
+            "id": id9,
+            "name": "Yummy House South",
+            "address": "302 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id10 = UUID().uuidString
+        docRefs.document(id10).setData([
+            "id": id10,
+            "name": "Naked Farmer",
+            "address": "1001 Water St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id11 = UUID().uuidString
+        docRefs.document(id11).setData([
+            "id": id11,
+            "name": "Hattricks",
+            "address": "107 S Franklin St, Tampa, FL 33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id12 = UUID().uuidString
+        docRefs.document(id12).setData([
+            "id": id12,
+            "name": "Corazon Restaurant And Bar",
+            "address": "325 N Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id13 = UUID().uuidString
+        docRefs.document(id13).setData([
+            "id": id13,
+            "name": "Riveters Tampa",
+            "address": "2301 N Dale Mabry Hwy, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id14 = UUID().uuidString
+        docRefs.document(id14).setData([
+            "id": id14,
+            "name": "TASTE Downtown Tampa",
+            "address": "513 S Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id15 = UUID().uuidString
+        docRefs.document(id15).setData([
+            "id": id15,
+            "name": "The Pint and Brew - Downtown Tampa",
+            "address": "200 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id16 = UUID().uuidString
+        docRefs.document(id16).setData([
+            "id": id16,
+            "name": "Babushka's",
+            "address": "901 W Platt St, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id17 = UUID().uuidString
+        docRefs.document(id17).setData([
+            "id": id17,
+            "name": "Oxford Exchange",
+            "address": "420 W Kennedy Blvd, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id18 = UUID().uuidString
+        docRefs.document(id18).setData([
+            "id": id18,
+            "name": "Splitsville",
+            "address": "615 Channelside Dr, Unit 120, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id19 = UUID().uuidString
+        docRefs.document(id19).setData([
+            "id": id19,
+            "name": "Union New American",
+            "address": "1111 N West Shore Blvd, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id20 = UUID().uuidString
+        docRefs.document(id20).setData([
+            "id": id20,
+            "name": "Jackson's Bistro Bar & Sushi",
+            "address": "601 S Harbour Island Blvd, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id21 = UUID().uuidString
+        docRefs.document(id21).setData([
+            "id": id21,
+            "name": "The Battery",
+            "address": "615 Channelside Dr, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id22 = UUID().uuidString
+        docRefs.document(id22).setData([
+            "id": id22,
+            "name": "Ricks on the River",
+            "address": "2305 N Willow Ave, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id23 = UUID().uuidString
+        docRefs.document(id23).setData([
+            "id": id23,
+            "name": "BurgerFi",
+            "address": "615 Channelside Dr, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id24 = UUID().uuidString
+        docRefs.document(id24).setData([
+            "id": id24,
+            "name": "Anchor and Brine",
+            "address": "505 Water St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id25 = UUID().uuidString
+        docRefs.document(id25).setData([
+            "id": id25,
+            "name": "Metro Diner",
+            "address": "4011 W Kennedy Blvd, Ste 5, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id26 = UUID().uuidString
+        docRefs.document(id26).setData([
+            "id": id26,
+            "name": "Willa's",
+            "address": "1700 W Fig St, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+    }
+    
+    public func addNewVenuesMexicanCusineType() {
+        let docRefs = db.collection("venues")
+             
+        let id = UUID().uuidString
+        docRefs.document(id).setData([
+            "id": id,
+            "name": "Urban Cantina",
+            "address": "200 E Madison St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id2 = UUID().uuidString
+        docRefs.document(id2).setData([
+            "id": id2,
+            "name": "Taco Bus",
+            "address": "505 N Franklin St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id3 = UUID().uuidString
+        docRefs.document(id3).setData([
+            "id": id3,
+            "name": "Green Lemon",
+            "address": "915 S Howard Ave, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id4 = UUID().uuidString
+        docRefs.document(id4).setData([
+            "id": id4,
+            "name": "Jimmy's Tacos",
+            "address": "1604 N 17th St, Tampa, FL  33605",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id5 = UUID().uuidString
+        docRefs.document(id5).setData([
+            "id": id5,
+            "name": "Jotoro Kitchen & Tequila Bar",
+            "address": "615 Channelside Dr, Unit 114, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id6 = UUID().uuidString
+        docRefs.document(id6).setData([
+            "id": id6,
+            "name": "Lona By Chef Richard Sandoval",
+            "address": "505 Water St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id7 = UUID().uuidString
+        docRefs.document(id7).setData([
+            "id": id7,
+            "name": "Margaritas Mexican Restaurant",
+            "address": "209 E Davis Blvd, Tampa, FL 33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id8 = UUID().uuidString
+        docRefs.document(id8).setData([
+            "id": id8,
+            "name": "Los Chapos Tacos",
+            "address": "951 E Seventh Ave, Tampa, FL  33605",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id9 = UUID().uuidString
+        docRefs.document(id9).setData([
+            "id": id9,
+            "name": "Crazy Burrito",
+            "address": "2506 W Columbus Dr, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id10 = UUID().uuidString
+        docRefs.document(id10).setData([
+            "id": id10,
+            "name": "Chiles Mexican Restaurant",
+            "address": "3247 W Columbus Dr, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id11 = UUID().uuidString
+        docRefs.document(id11).setData([
+            "id": id11,
+            "name": "Bar Taco",
+            "address": "1601 W Snow Ave, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id12 = UUID().uuidString
+        docRefs.document(id12).setData([
+            "id": id12,
+            "name": "Miguelitos Taqueria Y Tequilas",
+            "address": "2702 W Kennedy Blvd, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id13 = UUID().uuidString
+        docRefs.document(id13).setData([
+            "id": id13,
+            "name": "City Dog Cantina",
+            "address": "1208 E Kennedy Blvd, Unit 14, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id14 = UUID().uuidString
+        docRefs.document(id14).setData([
+            "id": id14,
+            "name": "Besito Mexican",
+            "address": "205 Westshore Plaza, Tampa, FL 33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id15 = UUID().uuidString
+        docRefs.document(id15).setData([
+            "id": id15,
+            "name": "La Fiesta Mexican Store",
+            "address": "1202 S 22nd St, Tampa, FL  33605",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id16 = UUID().uuidString
+        docRefs.document(id16).setData([
+            "id": id16,
+            "name": "Rene's Mexican Kitchen",
+            "address": "4414 N Nebraska Ave, Tampa, FL  33603",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id17 = UUID().uuidString
+        docRefs.document(id17).setData([
+            "id": id17,
+            "name": "Muchachas",
+            "address": "1910 N Ola Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id18 = UUID().uuidString
+        docRefs.document(id18).setData([
+            "id": id18,
+            "name": "Lolis Mexican Cravings",
+            "address": "1824 N West Shore Blvd, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id19 = UUID().uuidString
+        docRefs.document(id19).setData([
+            "id": id19,
+            "name": "Taco Dirty",
+            "address": "2221 W Platt St, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id20 = UUID().uuidString
+        docRefs.document(id20).setData([
+            "id": id20,
+            "name": "Lolis Mexican Cravings",
+            "address": "3324 W Gandy Blvd, Unit 2, Tampa, FL  33611",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id21 = UUID().uuidString
+        docRefs.document(id21).setData([
+            "id": id21,
+            "name": "Izzy's Tacos",
+            "address": "123 S Hyde Park Ave, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id22 = UUID().uuidString
+        docRefs.document(id22).setData([
+            "id": id22,
+            "name": "Acapulco Taqueria",
+            "address": "1001 N MacDill Ave, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id23 = UUID().uuidString
+        docRefs.document(id23).setData([
+            "id": id23,
+            "name": "Taqueria Emanuel",
+            "address": "2800 N MacDill Ave, Unit E, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id24 = UUID().uuidString
+        docRefs.document(id24).setData([
+            "id": id24,
+            "name": "Hector's Mexican Food",
+            "address": "3121 E Hillsborough Ave, Tampa, FL  33610",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id25 = UUID().uuidString
+        docRefs.document(id25).setData([
+            "id": id25,
+            "name": "Miguel's Mexican Seafood & Grill",
+            "address": "3035 W Kennedy Blvd, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+    }
+
+    public func addNewVenuesJapaneseCusineType() {
+        let docRefs = db.collection("venues")
+             
+        let id = UUID().uuidString
+        docRefs.document(id).setData([
+            "id": id,
+            "name": "American Social",
+            "address": "601 S Harbour Island Blvd, Unit 107, Tampa, FL 33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id2 = UUID().uuidString
+        docRefs.document(id2).setData([
+            "id": id2,
+            "name": "Samaria Cafe",
+            "address": "502 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id3 = UUID().uuidString
+        docRefs.document(id3).setData([
+            "id": id3,
+            "name": "Ebbe",
+            "address": "1202 N Franklin St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id4 = UUID().uuidString
+        docRefs.document(id4).setData([
+            "id": id4,
+            "name": "211 Restaurant",
+            "address": "211 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id5 = UUID().uuidString
+        docRefs.document(id5).setData([
+            "id": id5,
+            "name": "SoFresh",
+            "address": "512 N Franklin St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id6 = UUID().uuidString
+        docRefs.document(id6).setData([
+            "id": id6,
+            "name": "Ponte Modern American",
+            "address": "1010 Gramercy Ln, Tampa, FL 33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id7 = UUID().uuidString
+        docRefs.document(id7).setData([
+            "id": id7,
+            "name": "Yard House",
+            "address": "450 Channelside Dr\nTampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id8 = UUID().uuidString
+        docRefs.document(id8).setData([
+            "id": id8,
+            "name": "The Dan",
+            "address": "905 N Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id9 = UUID().uuidString
+        docRefs.document(id9).setData([
+            "id": id9,
+            "name": "Yummy House South",
+            "address": "302 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id10 = UUID().uuidString
+        docRefs.document(id10).setData([
+            "id": id10,
+            "name": "Naked Farmer",
+            "address": "1001 Water St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id11 = UUID().uuidString
+        docRefs.document(id11).setData([
+            "id": id11,
+            "name": "Hattricks",
+            "address": "107 S Franklin St, Tampa, FL 33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id12 = UUID().uuidString
+        docRefs.document(id12).setData([
+            "id": id12,
+            "name": "Corazon Restaurant And Bar",
+            "address": "325 N Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id13 = UUID().uuidString
+        docRefs.document(id13).setData([
+            "id": id13,
+            "name": "Riveters Tampa",
+            "address": "2301 N Dale Mabry Hwy, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id14 = UUID().uuidString
+        docRefs.document(id14).setData([
+            "id": id14,
+            "name": "TASTE Downtown Tampa",
+            "address": "513 S Florida Ave, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id15 = UUID().uuidString
+        docRefs.document(id15).setData([
+            "id": id15,
+            "name": "The Pint and Brew - Downtown Tampa",
+            "address": "200 N Tampa St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id16 = UUID().uuidString
+        docRefs.document(id16).setData([
+            "id": id16,
+            "name": "Babushka's",
+            "address": "901 W Platt St, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id17 = UUID().uuidString
+        docRefs.document(id17).setData([
+            "id": id17,
+            "name": "Oxford Exchange",
+            "address": "420 W Kennedy Blvd, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id18 = UUID().uuidString
+        docRefs.document(id18).setData([
+            "id": id18,
+            "name": "Splitsville",
+            "address": "615 Channelside Dr, Unit 120, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id19 = UUID().uuidString
+        docRefs.document(id19).setData([
+            "id": id19,
+            "name": "Union New American",
+            "address": "1111 N West Shore Blvd, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id20 = UUID().uuidString
+        docRefs.document(id20).setData([
+            "id": id20,
+            "name": "Jackson's Bistro Bar & Sushi",
+            "address": "601 S Harbour Island Blvd, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id21 = UUID().uuidString
+        docRefs.document(id21).setData([
+            "id": id21,
+            "name": "The Battery",
+            "address": "615 Channelside Dr, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id22 = UUID().uuidString
+        docRefs.document(id22).setData([
+            "id": id22,
+            "name": "Ricks on the River",
+            "address": "2305 N Willow Ave, Tampa, FL  33607",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id23 = UUID().uuidString
+        docRefs.document(id23).setData([
+            "id": id23,
+            "name": "BurgerFi",
+            "address": "615 Channelside Dr, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id24 = UUID().uuidString
+        docRefs.document(id24).setData([
+            "id": id24,
+            "name": "Anchor and Brine",
+            "address": "505 Water St, Tampa, FL  33602",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id25 = UUID().uuidString
+        docRefs.document(id25).setData([
+            "id": id25,
+            "name": "Metro Diner",
+            "address": "4011 W Kennedy Blvd, Ste 5, Tampa, FL  33609",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+        let id26 = UUID().uuidString
+        docRefs.document(id26).setData([
+            "id": id26,
+            "name": "Willa's",
+            "address": "1700 W Fig St, Tampa, FL  33606",
+            "type": "restaurant",
+            "rating": 0,
+            "cost": "",
+            "portion": "",
+            "popularTimes": "",
+            "deals": []
+        ])
+        
+    }
+    
 }
 
 

@@ -19,7 +19,9 @@ struct ContentView: View {
     @State private var mainCategories: [Category] = [
         Category(id: 1, name:"Food", icon: "foodIcon"),
         Category(id: 2, name:"Drinks", icon: "drinkIcon"),
-        Category(id: 3, name:"Happy Hour", icon: "happyHourIcon")
+        Category(id: 3, name:"Brunch", icon: "brunchIcon"),
+        Category(id: 4, name:"Happy Hour", icon: "happyHourIcon")
+        
     ]
     
     @State private var cuisineTypes: [CategoryType] = [
