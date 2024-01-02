@@ -18,7 +18,7 @@ struct HomeView: View {
     @State var foodButtonPressed: Bool = false
     @State var drinkButtonPressed: Bool = false
     @State var nightButtonPressed: Bool = false
-    //@State var historyButtonPressed: Bool = false
+    @State var isDropdownOpen: Bool = false
     @State var sideButtonIndex = 0
     @State var sideButtonIndexOptions: [Int] = [1,2,3]
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
@@ -84,11 +84,11 @@ struct HomeView: View {
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
-//                        subHeaderSection(for: geoReader)
-//                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
-                        
                         buttonsOnSide(for: geoReader)
                             .position(x:geoReader.size.width * 0.9, y:geoReader.size.height * 0.5)
+                        
+                        subHeaderSection(for: geoReader)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                         
                         displayVenues(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
@@ -128,57 +128,93 @@ struct HomeView: View {
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
-        ZStack{
-                                            Text("")
-                                                .frame(width: 380, height: 60)
-                                                .background(.black.opacity(0.4))
-                                                .cornerRadius(30)
-            
-            ScrollView(.vertical,showsIndicators: false){
-                VStack(spacing: 15){
-                    ForEach(self.liveFeedComments, id: \.self){ comment in
-                        ZStack{
-                            HStack{
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .background(Color.black.opacity(0.2))
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipShape(Circle())
-                                
-                                VStack{
-                                    Spacer()
-                                        .frame(height: 1)
+        VStack(alignment: .leading){
+            HStack {
+                Button(action: {
+                    withAnimation {
+                        isDropdownOpen.toggle()
+                    }
+                }) {
+                    HStack {
+                        Text("Live Reviews")
+                            .foregroundColor(.white)
+                            .font(.system(size: 20, weight: .bold))
+                        
+                    }
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.black)
+                            .frame(height: 35)
+                    )
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.green)
+                            .frame(height: 35)
+                    )
+                    .opacity(0.7)
+                    
+                    
+                    Image(systemName: isDropdownOpen ? "chevron.up" : "chevron.down")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(.white)
+                    // .padding()
+                    // .background(
+                    //   RoundedRectangle(cornerRadius: 15)
+                    //     .fill(Color.black)
+                    //   .frame(height: 35)                                                    )
+                }
+                .padding()
+                .zIndex(1)
+                
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .overlay(
+                VStack(spacing: 15) {
+                    if isDropdownOpen {
+                        ScrollView {
+                            LazyVStack(spacing: 18) {
+                                ForEach(self.liveFeedComments, id: \.self) { comment in
+                                    HStack(alignment: .top) {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .background(Color.black.opacity(0.2))
+                                            .aspectRatio(contentMode: .fill)
+                                            .clipShape(Circle())
+                                            .padding(.trailing, 25)
+                                        
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text(comment)
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 16))
+                                            
+                                            Text("by Anonymous user")
+                                                .foregroundColor(.purple)
+                                                .font(.system(size: 15))
+                                            
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                    }
                                     
-                                    Text(comment)
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 15))
-                                    
-                                    Text("by Anonymous user")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 15))
-                                    
-                                    Spacer()
-                                        .frame(height: 1)
+                                    .padding(.horizontal)
                                 }
                             }
                         }
+                        .frame(width: geoReader.size.width * 0.75,                            height: min(geoReader.size.height * 0.60, CGFloat(self.liveFeedComments.count) * 57.0))
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(15)
+                        .offset(x: -8, y: geoReader.size.height * 0.215)
                     }
                 }
-            }
-            .frame(height: 100)
-            .mask(
-                VStack(spacing: 0) {
-                    // Left gradient
-                    LinearGradient(gradient:
-                                    Gradient(
-                                        colors: [Color.black.opacity(0.2), Color.black, Color.black, Color.black]),
-                                   startPoint: .top, endPoint: .bottom
-                    )
-                    .frame(width: 400, height: 60)
-                }
             )
+           .frame(maxHeight: .infinity)
         }
+        .padding(.leading)
     }
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
@@ -290,30 +326,30 @@ struct HomeView: View {
                 }
             }
             
-//            Button(action: {
-//                self.venues.removeAll()
-//                
-//                if self.sideButtonIndex == 4 {
-//                    self.sideButtonIndex = 0
-//                    self.searchText = ""
-//                }else {
-//                    self.sideButtonIndex = 4
-//                    self.searchText = ""
-//                    self.startSearch = true
-//                }
-//            }){
-//                ZStack{
-//                    Text("")
-//                        .frame(width: 50, height: 50)
-//                        .background(self.sideButtonIndex == 4 ? .green : .gray)
-//                        .cornerRadius(10)
-//                    
-//                    Image(systemName: "clock.fill")
-//                        .resizable()
-//                        .frame(width: 20, height: 20)
-//                        .foregroundColor(.white)
-//                }
-           // }
+            //            Button(action: {
+            //                self.venues.removeAll()
+            //
+            //                if self.sideButtonIndex == 4 {
+            //                    self.sideButtonIndex = 0
+            //                    self.searchText = ""
+            //                }else {
+            //                    self.sideButtonIndex = 4
+            //                    self.searchText = ""
+            //                    self.startSearch = true
+            //                }
+            //            }){
+            //                ZStack{
+            //                    Text("")
+            //                        .frame(width: 50, height: 50)
+            //                        .background(self.sideButtonIndex == 4 ? .green : .gray)
+            //                        .cornerRadius(10)
+            //
+            //                    Image(systemName: "clock.fill")
+            //                        .resizable()
+            //                        .frame(width: 20, height: 20)
+            //                        .foregroundColor(.white)
+            //                }
+            // }
         }
         .opacity(0.6)
     }
