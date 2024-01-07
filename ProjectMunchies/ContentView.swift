@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var startSearch: Bool = false
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
+    @State var showSpotlight: Bool = false
+    @State var currentSpot: Int = 0
     @State private var mainCategories: [Category] = [
         Category(id: 1, name:"Food", icon: "foodIcon"),
         Category(id: 2, name:"Drinks", icon: "drinkIcon"),
@@ -78,7 +80,11 @@ struct ContentView: View {
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             }
+            .onAppear {
+                showSpotlight = true
+            }
         }
+        .addSpotlightOverlay(show: $showSpotlight, currentSpot: $currentSpot)
     }
     
     private func displayCustomTab(geoReader: GeometryProxy) -> some View {
@@ -119,6 +125,7 @@ struct ContentView: View {
                         .resizable()
                         .frame(width: 40, height: 40)
                 }
+                .addSpotlight(0, shape: .circle, roundedRadius: 10, text: "Use filter to find great cusine \noptions in your area! \ntap screen to continue")
             }
             .disabled(selectedTab != 0 ? true : false)
             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.93)
@@ -183,6 +190,7 @@ struct ContentView: View {
                             
                             Button(action: {
                                 categoryTypeIndex = i.id
+                                //                                self.searchText = i.name + " " + self.searchText
                                 self.searchText = i.name
                             }){
                                 VStack{

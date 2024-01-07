@@ -67,3 +67,9 @@ node_modules/
 
 # UserInterfaceState.xcuserstate
 ProjectMunchies.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
+
+# xcshareddata folder
+ProjectMunchies.xcodeproj/xcshareddata
+
+# xcschemamanagement
+ProjectMunchies.xcodeproj/xcuserdata/dotz3r0.xcuserdatad/xcschemes/xcschememanagement.plist

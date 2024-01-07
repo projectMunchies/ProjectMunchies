@@ -55,22 +55,22 @@ struct HomeView: View {
             longitude: -82.4572
         ),
         span: MKCoordinateSpan(
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1
+            latitudeDelta: 0.001,
+            longitudeDelta: 0.001
         )
     )
     
-    @State private var position: MapCameraPosition = .region(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 27.9506,
-            longitude: -82.4572
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1
-        )
-    )
-    )
+    @State private var position: MapCameraPosition = MapCameraPosition
+        .region (MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: 27.9506,
+                longitude: -82.4572
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+            )
+        ))
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
     
@@ -92,6 +92,7 @@ struct HomeView: View {
                         
                         displayVenues(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
+                        
                     }
                     .onAppear{
                         homeViewModel.getUserProfile() {(userProfileId) -> Void in
@@ -136,10 +137,9 @@ struct HomeView: View {
                     }
                 }) {
                     HStack {
-                        Text("Live Reviews")
+                        Text("Live Reviews ")
                             .foregroundColor(.white)
                             .font(.system(size: 20, weight: .bold))
-                        
                     }
                     .padding()
                     .overlay(
@@ -152,24 +152,20 @@ struct HomeView: View {
                             .fill(Color.green)
                             .frame(height: 35)
                     )
+                    .addSpotlight(3, shape: .rounded, roundedRadius: 20, text: "See what the community is saying \nabout venues in your area. \nJoin the fun by adding your own reviews! \ntap screen to complete tutorial")
                     .opacity(0.7)
-                    
                     
                     Image(systemName: isDropdownOpen ? "chevron.up" : "chevron.down")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 12, height: 12)
                         .foregroundColor(.white)
-                    // .padding()
-                    // .background(
-                    //   RoundedRectangle(cornerRadius: 15)
-                    //     .fill(Color.black)
-                    //   .frame(height: 35)                                                    )
                 }
                 .padding()
                 .zIndex(1)
                 
             }
+            
             .frame(maxWidth: .infinity, alignment: .leading)
             .overlay(
                 VStack(spacing: 15) {
@@ -212,8 +208,10 @@ struct HomeView: View {
                     }
                 }
             )
-           .frame(maxHeight: .infinity)
+            
+            .frame(maxHeight: .infinity)
         }
+        
         .padding(.leading)
     }
     
@@ -240,6 +238,9 @@ struct HomeView: View {
                 }
             }
         }
+        .onMapCameraChange { mapCameraUpdateContext in
+            self.region = mapCameraUpdateContext.region
+        }
         .onAppear(perform: {
             fetchRouteFrom(nightSpots[self.sideButtonIndexOptions.randomElement()!], to: nightSpots[self.sideButtonIndexOptions.randomElement()!])
         })
@@ -250,106 +251,87 @@ struct HomeView: View {
     
     private func buttonsOnSide(for geoReader: GeometryProxy) -> some View {
         VStack{
-            Button(action: {
-                self.venues.removeAll()
-                
-                if self.sideButtonIndex == 1 {
-                    self.sideButtonIndex = 0
-                    self.searchText = ""
-                }else {
-                    self.sideButtonIndex = 1
-                    self.searchText = self.searchTextFoodOptions.randomElement()!
-                    self.startSearch = true
-                }
-            }){
-                ZStack{
-                    Text("")
-                        .frame(width: 50, height: 50)
-                        .background(self.sideButtonIndex == 1 ? .green : .gray)
-                        .cornerRadius(10)
+            VStack{
+                Button(action: {
+                    self.venues.removeAll()
                     
-                    Image(systemName: "fork.knife.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
+                    if self.sideButtonIndex == 1 {
+                        self.sideButtonIndex = 0
+                        self.searchText = ""
+                    }else {
+                        self.sideButtonIndex = 1
+                        self.searchText = self.searchTextFoodOptions.randomElement()!
+                        self.startSearch = true
+                    }
+                }){
+                    ZStack{
+                        Text("")
+                            .frame(width: 50, height: 50)
+                            .background(self.sideButtonIndex == 1 ? .green : .gray)
+                            .cornerRadius(10)
+                        
+                        Image(systemName: "fork.knife.circle.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.white)
+                    }
+                }
+                
+                Button(action: {
+                    self.venues.removeAll()
+                    
+                    if self.sideButtonIndex == 2 {
+                        self.sideButtonIndex = 0
+                        self.searchText = ""
+                    }else {
+                        self.sideButtonIndex = 2
+                        self.searchText = self.searchTextDrinkOptions.randomElement()!
+                        self.startSearch = true
+                    }
+                }){
+                    ZStack{
+                        Text("")
+                            .frame(width: 50, height: 50)
+                            .background(self.sideButtonIndex == 2 ? .green : .gray)
+                            .cornerRadius(10)
+                        
+                        Image(systemName: "wineglass.fill")
+                            .resizable()
+                            .frame(width: 15, height: 20)
+                            .foregroundColor(.white)
+                    }
                 }
             }
+            .addSpotlight(1, shape: .rounded, roundedRadius: 5, text: "AI drives these buttons \nto find best options for you everyday! \ntap screen to continue")
             
-            Button(action: {
-                self.venues.removeAll()
-                
-                if self.sideButtonIndex == 2 {
-                    self.sideButtonIndex = 0
-                    self.searchText = ""
-                }else {
-                    self.sideButtonIndex = 2
-                    self.searchText = self.searchTextDrinkOptions.randomElement()!
-                    self.startSearch = true
-                }
-            }){
-                ZStack{
-                    Text("")
-                        .frame(width: 50, height: 50)
-                        .background(self.sideButtonIndex == 2 ? .green : .gray)
-                        .cornerRadius(10)
+            VStack{
+                Button(action: {
+                    self.venues.removeAll()
                     
-                    Image(systemName: "wineglass.fill")
-                        .resizable()
-                        .frame(width: 15, height: 20)
-                        .foregroundColor(.white)
+                    if self.sideButtonIndex == 3 {
+                        self.sideButtonIndex = 0
+                        self.searchText = ""
+                    }else {
+                        self.sideButtonIndex = 3
+                        self.searchText = ""
+                        self.startSearch = true
+                        fetchRouteFrom(nightSpots.randomElement()!, to: nightSpots.randomElement()!)
+                    }
+                }){
+                    ZStack{
+                        Text("")
+                            .frame(width: 50, height: 50)
+                            .background(self.sideButtonIndex == 3 ? .green : .gray)
+                            .cornerRadius(10)
+                        
+                        Image(systemName: "figure.socialdance")
+                            .resizable()
+                            .frame(width: 25, height: 20)
+                            .foregroundColor(.white)
+                    }
                 }
             }
-            
-            Button(action: {
-                self.venues.removeAll()
-                
-                if self.sideButtonIndex == 3 {
-                    self.sideButtonIndex = 0
-                    self.searchText = ""
-                }else {
-                    self.sideButtonIndex = 3
-                    self.searchText = ""
-                    self.startSearch = true
-                    fetchRouteFrom(nightSpots.randomElement()!, to: nightSpots.randomElement()!)
-                }
-            }){
-                ZStack{
-                    Text("")
-                        .frame(width: 50, height: 50)
-                        .background(self.sideButtonIndex == 3 ? .green : .gray)
-                        .cornerRadius(10)
-                    
-                    Image(systemName: "figure.socialdance")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                        .foregroundColor(.white)
-                }
-            }
-            
-            //            Button(action: {
-            //                self.venues.removeAll()
-            //
-            //                if self.sideButtonIndex == 4 {
-            //                    self.sideButtonIndex = 0
-            //                    self.searchText = ""
-            //                }else {
-            //                    self.sideButtonIndex = 4
-            //                    self.searchText = ""
-            //                    self.startSearch = true
-            //                }
-            //            }){
-            //                ZStack{
-            //                    Text("")
-            //                        .frame(width: 50, height: 50)
-            //                        .background(self.sideButtonIndex == 4 ? .green : .gray)
-            //                        .cornerRadius(10)
-            //
-            //                    Image(systemName: "clock.fill")
-            //                        .resizable()
-            //                        .frame(width: 20, height: 20)
-            //                        .foregroundColor(.white)
-            //                }
-            // }
+            .addSpotlight(2, shape: .rectangle, roundedRadius: 0, text: "For bars and nightlife \nFind the best times and places based on your prefences \ntap screen to continue")
         }
         .opacity(0.6)
     }
@@ -380,13 +362,11 @@ struct HomeView: View {
     }
     
     public func search(for query: String) {
+        print("\(query)")
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
-        request.region = MKCoordinateRegion(
-            center: region.center, span: MKCoordinateSpan(latitudeDelta: 0.0125, longitudeDelta: 0.0125)
-        )
-        
+        request.region = self.region
         Task {
             let search = MKLocalSearch(request: request)
             let response = try? await search.start()
