@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct CategoryModel: Identifiable {
+    var id: Int
+    var name: String
+    var icon: String
+}
+
+var mainCategories: [CategoryModel] = [
+    CategoryModel(id: 1, name:"Food", icon: "foodIcon"),
+    CategoryModel(id: 2, name:"Drinks", icon: "drinkIcon"),
+    CategoryModel(id: 3, name:"Brunch", icon: "brunchIcon"),
+    CategoryModel(id: 4, name:"Happy Hour", icon: "happyHourIcon")
+]

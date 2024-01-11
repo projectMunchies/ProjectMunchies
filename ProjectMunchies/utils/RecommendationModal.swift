@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Modal: View {
+struct RecommendationModal: View {
     @Binding var showModal: Bool
     @State private var cards: [Card] = [
         .init(image: "greenLemon", title: "Breakfast"),
@@ -146,5 +146,5 @@ struct Modal: View {
 
 
 #Preview {
-    Modal(showModal: .constant(true))
+    RecommendationModal(showModal: .constant(true))
 }

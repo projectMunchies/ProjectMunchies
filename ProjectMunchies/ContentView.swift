@@ -10,55 +10,22 @@ import MapKit
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
-    @State var selectedTab = 0
+    
+    @State private var selectedTab = 0
     @State private var searchText: String = ""
     @State private var showFilter: Bool = false
     @State private var startSearch: Bool = false
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
-    @State var showSpotlight: Bool = false
-    @State var currentSpot: Int = 0
-    @State private var mainCategories: [Category] = [
-        Category(id: 1, name:"Food", icon: "foodIcon"),
-        Category(id: 2, name:"Drinks", icon: "drinkIcon"),
-        Category(id: 3, name:"Brunch", icon: "brunchIcon"),
-        Category(id: 4, name:"Happy Hour", icon: "happyHourIcon")
-        
-    ]
-    
-    @State private var cuisineTypes: [CategoryType] = [
-        CategoryType(id: 1, name: "Chinese", icon: "chineseFoodIcon"),
-        CategoryType(id: 2, name: "American", icon: "americanFoodIcon"),
-        CategoryType(id: 3, name: "Mexican", icon: "mexicanFoodIcon"),
-        CategoryType(id: 4, name: "Japanese", icon: "japaneseFoodIcon"),
-        CategoryType(id: 5, name: "Indian", icon: "indianFoodIcon"),
-        CategoryType(id: 6, name: "Italian", icon: "italianFoodIcon"),
-        CategoryType(id: 7, name: "Thai", icon: "thaiFoodIcon"),
-        CategoryType(id: 8, name: "French", icon: "frenchFoodIcon")
-    ]
-    
-    @State private var drinkTypes: [CategoryType] = [
-        CategoryType(id: 1, name: "Juice", icon: "juiceIcon"),
-        CategoryType(id: 2, name: "Smoothie", icon: "smoothieIcon"),
-        CategoryType(id: 3, name: "Soda", icon: "sodaIcon"),
-        CategoryType(id: 4, name: "Tea", icon: "teaIcon"),
-        CategoryType(id: 5, name: "Coffee", icon: "coffeeIcon"),
-        CategoryType(id: 6, name: "Hot Chocolate", icon: "hotChocolateIcon")
-    ]
-    
-    @State private var happHourTypes: [CategoryType] = [
-        CategoryType(id: 1, name: "Liquor", icon: "liquorIcon"),
-        CategoryType(id: 2, name: "Beer", icon: "beerIcon"),
-        CategoryType(id: 3, name: "Wine", icon: "wineIcon"),
-        CategoryType(id: 4, name: "Margarita", icon: "margaritaIcon"),
-        CategoryType(id: 5, name: "Cocktail", icon: "cocktailIcon")
-    ]
+    @State private var showSpotlight: Bool = false
+    @State private var currentSpot: Int = 0
+    @State private var showModal: Bool = false
     
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
                 TabView(selection: $selectedTab) {
-                    HomeView(searchText: self.$searchText, startSearch: self.$startSearch)
+                    HomeView(searchText: self.$searchText, startSearch: self.$startSearch, showModal: self.$showModal)
                         .tag(0)
                         .toolbar(.hidden, for: .tabBar)
                     SettingsView()
@@ -72,8 +39,43 @@ struct ContentView: View {
                     //                        .tag(3)
                     //                        .toolbar(.hidden, for: .tabBar)
                 }
+                .blur(radius: showModal ? 5 : 0)
                 
                 displayCustomTab(geoReader: geoReader)
+                
+                if showModal {
+                    VStack{
+                        HStack{
+                            Spacer()
+                            
+                            Button(action: {
+                                withAnimation{
+                                    showModal.toggle()
+                                }
+                            }){
+                                ZStack{
+                                    Circle()
+                                        .foregroundColor(.red)
+                                    
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.white)
+                                }
+                                .frame(width: 50, height: 50)
+                                .padding(.trailing,20)
+                            }
+                        }
+                        
+                        Text("What should I eat today?")
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                        
+                        RecommendationModal(showModal: $showModal)
+                    }
+                    //.zIndex(3)
+                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.6)
+                }
             }
             .sheet(isPresented: $showFilter) {
                 displayFilterSheet(geoReader: geoReader)
@@ -81,7 +83,14 @@ struct ContentView: View {
                     .presentationDragIndicator(.visible)
             }
             .onAppear {
-                showSpotlight = true
+                //showSpotlight = true
+            }
+            .onChange(of:currentSpot) {
+                if currentSpot == 4 {
+                    withAnimation{
+                        showModal.toggle()
+                    }
+                }
             }
         }
         .addSpotlightOverlay(show: $showSpotlight, currentSpot: $currentSpot)
@@ -125,14 +134,12 @@ struct ContentView: View {
                         .resizable()
                         .frame(width: 40, height: 40)
                 }
-                .addSpotlight(0, shape: .circle, roundedRadius: 10, text: "Use filter to find great cusine \noptions in your area! \ntap screen to continue")
+                //                .addSpotlight(0, shape: .circle, roundedRadius: 10, text: "Use filter to find great cusine \noptions in your area! \ntap screen to continue")
             }
             .disabled(selectedTab != 0 ? true : false)
             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.93)
             // }
         }
-        
-        
     }
     
     private func displayFilterSheet(geoReader: GeometryProxy) -> some View {
@@ -147,8 +154,7 @@ struct ContentView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{
-                        ForEach(self.mainCategories) { i in
-                            
+                        ForEach(mainCategories) { i in
                             Button(action: {
                                 categoryIndex = i.id
                                 self.searchText = i.name
@@ -168,8 +174,6 @@ struct ContentView: View {
                                     Text(i.name)
                                 }
                                 .padding(.leading)
-                                
-                                
                             }
                         }
                     }
@@ -187,7 +191,6 @@ struct ContentView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{
                         ForEach(switchCategoryTypes()) { i in
-                            
                             Button(action: {
                                 categoryTypeIndex = i.id
                                 //                                self.searchText = i.name + " " + self.searchText
@@ -206,19 +209,14 @@ struct ContentView: View {
                                                 .font(.system(size: 35))
                                                 .foregroundColor(.black)
                                         }
-                                        
                                     }
                                     
                                     if categoryIndex != 0 {
                                         Text(i.name)
                                     }
-                                    
                                 }
                                 .padding(.leading)
-                                
                             }
-                            
-                            
                         }
                     }
                 }
@@ -238,14 +236,12 @@ struct ContentView: View {
                     
                     Text("Search")
                         .foregroundColor(.white)
-                    
                 }
             }
             .padding(.top)
         }
     }
-    
-    private func switchCategoryTypes() -> [CategoryType]{
+    private func switchCategoryTypes() -> [CategoryTypeModel]{
         switch categoryIndex {
         case 1:
             return cuisineTypes
@@ -254,14 +250,8 @@ struct ContentView: View {
         case 3:
             return happHourTypes
         default:
-            return [CategoryType(id: 1, name: "", icon: "")]
+            return [CategoryTypeModel(id: 1, name: "", icon: "")]
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environmentObject(ViewRouter())
     }
 }
 
@@ -298,14 +288,8 @@ enum TabbedItems: Int, CaseIterable{
     }
 }
 
-struct Category: Identifiable {
-    var id: Int
-    var name: String
-    var icon: String
-}
-
-struct CategoryType: Identifiable {
-    var id: Int
-    var name: String
-    var icon: String
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView().environmentObject(ViewRouter())
+    }
 }

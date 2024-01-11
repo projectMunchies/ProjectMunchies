@@ -13,6 +13,7 @@ struct HomeView: View {
     
     @Binding var searchText: String
     @Binding var startSearch: Bool
+    @Binding var showModal: Bool
     
     @State private var searchResults: [MKMapItem] = []
     @State var foodButtonPressed: Bool = false
@@ -93,6 +94,7 @@ struct HomeView: View {
                         displayVenues(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                         
+                        
                     }
                     .onAppear{
                         homeViewModel.getUserProfile() {(userProfileId) -> Void in
@@ -107,9 +109,9 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        self.sideButtonIndex = self.sideButtonIndexOptions.randomElement()!
-                        self.searchText = changeButtonData()
-                        self.startSearch = true
+                        //                        self.sideButtonIndex = self.sideButtonIndexOptions.randomElement()!
+                        //                        self.searchText = changeButtonData()
+                        // self.startSearch = true
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch == true {
@@ -163,9 +165,7 @@ struct HomeView: View {
                 }
                 .padding()
                 .zIndex(1)
-                
             }
-            
             .frame(maxWidth: .infinity, alignment: .leading)
             .overlay(
                 VStack(spacing: 15) {
@@ -190,12 +190,10 @@ struct HomeView: View {
                                             Text("by Anonymous user")
                                                 .foregroundColor(.purple)
                                                 .font(.system(size: 15))
-                                            
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         
                                     }
-                                    
                                     .padding(.horizontal)
                                 }
                             }
@@ -208,10 +206,8 @@ struct HomeView: View {
                     }
                 }
             )
-            
             .frame(maxHeight: .infinity)
         }
-        
         .padding(.leading)
     }
     
@@ -256,53 +252,76 @@ struct HomeView: View {
                     self.venues.removeAll()
                     
                     if self.sideButtonIndex == 1 {
+                        withAnimation{
+                            self.showModal.toggle()
+                        }
                         self.sideButtonIndex = 0
                         self.searchText = ""
                     }else {
+                        withAnimation{
+                            self.showModal.toggle()
+                        }
                         self.sideButtonIndex = 1
-                        self.searchText = self.searchTextFoodOptions.randomElement()!
-                        self.startSearch = true
+                        
+                        //                        self.searchText = self.searchTextFoodOptions.randomElement()!
+                        //                        self.startSearch = true
                     }
                 }){
                     ZStack{
                         Text("")
-                            .frame(width: 50, height: 50)
-                            .background(self.sideButtonIndex == 1 ? .green : .gray)
+                            .frame(width: 55, height: 55)
+                            .background(self.sideButtonIndex == 1 && showModal ? .green : .gray)
                             .cornerRadius(10)
-                        
-                        Image(systemName: "fork.knife.circle.fill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.white)
+                        VStack{
+                            Image(systemName: "fork.knife.circle.fill")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(.white)
+                            
+                            Text("AI Cusines")
+                                .font(.system(size: 10))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
                 
                 Button(action: {
                     self.venues.removeAll()
-                    
+                    withAnimation {
+                        self.showModal.toggle()
+                    }
                     if self.sideButtonIndex == 2 {
                         self.sideButtonIndex = 0
                         self.searchText = ""
                     }else {
                         self.sideButtonIndex = 2
-                        self.searchText = self.searchTextDrinkOptions.randomElement()!
-                        self.startSearch = true
+                        //                        self.searchText = self.searchTextDrinkOptions.randomElement()!
+                        //                        self.startSearch = true
+                        //                        withAnimation {
+                        //                            self.showModal.toggle()
+                        //                       }
+                        
                     }
                 }){
                     ZStack{
                         Text("")
-                            .frame(width: 50, height: 50)
-                            .background(self.sideButtonIndex == 2 ? .green : .gray)
+                            .frame(width: 55, height: 55)
+                            .background(self.sideButtonIndex == 2 && showModal ? .green : .gray)
                             .cornerRadius(10)
-                        
-                        Image(systemName: "wineglass.fill")
-                            .resizable()
-                            .frame(width: 15, height: 20)
-                            .foregroundColor(.white)
+                        VStack{
+                            Image(systemName: "wineglass.fill")
+                                .resizable()
+                                .frame(width: 20, height: 25)
+                                .foregroundColor(.white)
+                            
+                            Text("AI Drinks")
+                                .font(.system(size: 10))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
             }
-            .addSpotlight(1, shape: .rounded, roundedRadius: 5, text: "AI drives these buttons \nto find best options for you everyday! \ntap screen to continue")
+            .addSpotlight(1, shape: .rounded, roundedRadius: 5, text: "What should I eat and drink today? These buttons are powered by AI and got you covered  \ntap screen to continue")
             
             VStack{
                 Button(action: {
@@ -320,18 +339,24 @@ struct HomeView: View {
                 }){
                     ZStack{
                         Text("")
-                            .frame(width: 50, height: 50)
+                            .frame(width: 55, height: 55)
                             .background(self.sideButtonIndex == 3 ? .green : .gray)
                             .cornerRadius(10)
                         
-                        Image(systemName: "figure.socialdance")
-                            .resizable()
-                            .frame(width: 25, height: 20)
-                            .foregroundColor(.white)
+                        VStack{
+                            Image(systemName: "figure.socialdance")
+                                .resizable()
+                                .frame(width: 25, height: 20)
+                                .foregroundColor(.white)
+                            
+                            Text("What's \nHot")
+                                .font(.system(size: 10))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
             }
-            .addSpotlight(2, shape: .rectangle, roundedRadius: 0, text: "For bars and nightlife \nFind the best times and places based on your prefences \ntap screen to continue")
+            .addSpotlight(2, shape: .rectangle, roundedRadius: 0, text: "Whats the hot spot for today? This button can answer that \ntap screen to continue")
         }
         .opacity(0.6)
     }
@@ -403,24 +428,24 @@ struct HomeView: View {
         travelTime = formatter.string(from: route.expectedTravelTime)
     }
     
-    private func changeButtonData() -> String {
-        var types: String = ""
-        switch self.sideButtonIndex{
-        case 1 :
-            types = self.searchTextFoodOptions.randomElement()!;
-        case 2 :
-            types = self.searchTextDrinkOptions.randomElement()!;
-        case 3 :
-            types = self.searchTextNightSpotsOptions.randomElement()!
-        default:
-            types = ""
-        }
-        return types;
-    }
+    //    private func changeButtonData() -> String {
+    //        var types: String = ""
+    //        switch self.sideButtonIndex{
+    //        case 1 :
+    //            types = self.searchTextFoodOptions.randomElement()!;
+    //        case 2 :
+    //            types = self.searchTextDrinkOptions.randomElement()!;
+    //        case 3 :
+    //            types = self.searchTextNightSpotsOptions.randomElement()!
+    //        default:
+    //            types = ""
+    //        }
+    //        return types;
+    //    }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(searchText: .constant(""), startSearch: .constant(false))
+        HomeView(searchText: .constant(""), startSearch: .constant(false), showModal: .constant(false))
     }
 }
