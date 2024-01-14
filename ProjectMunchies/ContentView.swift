@@ -20,12 +20,25 @@ struct ContentView: View {
     @State private var showSpotlight: Bool = false
     @State private var currentSpot: Int = 0
     @State private var showModal: Bool = false
+    @State private var showVenueFilter: Bool = false
+    @State private var venue: VenueModel = venueSample
+    @State private var position: MapCameraPosition = MapCameraPosition
+        .region (MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: 27.9506,
+                longitude: -82.4572
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+            )
+        ))
     
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
                 TabView(selection: $selectedTab) {
-                    HomeView(searchText: self.$searchText, startSearch: self.$startSearch, showModal: self.$showModal)
+                    HomeView(searchText: self.$searchText, startSearch: self.$startSearch, showModal: self.$showModal, position: $position)
                         .tag(0)
                         .toolbar(.hidden, for: .tabBar)
                     SettingsView()
@@ -71,7 +84,7 @@ struct ContentView: View {
                             .font(.largeTitle)
                             .multilineTextAlignment(.center)
                         
-                        RecommendationModal(showModal: $showModal)
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $venue)
                     }
                     //.zIndex(3)
                     .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.6)
@@ -80,6 +93,21 @@ struct ContentView: View {
             .sheet(isPresented: $showFilter) {
                 displayFilterSheet(geoReader: geoReader)
                     .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+            }
+            .onChange(of: venue.address) {
+                showVenueFilter.toggle()
+            }
+            .sheet(isPresented: $showVenueFilter) {
+                VStack{
+                    Text("\(venue.name)")
+                        .foregroundColor(.white)
+                        .font(.title)
+                    
+                    Text("\(venue.address)")
+                        .foregroundColor(.white)
+                }
+                .presentationDetents([.height(100)])
                     .presentationDragIndicator(.visible)
             }
             .onAppear {

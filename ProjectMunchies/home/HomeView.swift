@@ -14,6 +14,7 @@ struct HomeView: View {
     @Binding var searchText: String
     @Binding var startSearch: Bool
     @Binding var showModal: Bool
+    @Binding var position: MapCameraPosition
     
     @State private var searchResults: [MKMapItem] = []
     @State var foodButtonPressed: Bool = false
@@ -61,17 +62,17 @@ struct HomeView: View {
         )
     )
     
-    @State private var position: MapCameraPosition = MapCameraPosition
-        .region (MKCoordinateRegion(
-            center: CLLocationCoordinate2D(
-                latitude: 27.9506,
-                longitude: -82.4572
-            ),
-            span: MKCoordinateSpan(
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1
-            )
-        ))
+//    @State private var position: MapCameraPosition = MapCameraPosition
+//        .region (MKCoordinateRegion(
+//            center: CLLocationCoordinate2D(
+//                latitude: 27.9506,
+//                longitude: -82.4572
+//            ),
+//            span: MKCoordinateSpan(
+//                latitudeDelta: 0.1,
+//                longitudeDelta: 0.1
+//            )
+//        ))
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
     
@@ -387,7 +388,6 @@ struct HomeView: View {
     }
     
     public func search(for query: String) {
-        print("\(query)")
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
@@ -401,9 +401,8 @@ struct HomeView: View {
                 let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.venues.append(venue)
             }
-            print(searchResults)
+            //print(searchResults)
         }
-        
         self.startSearch = false
     }
     
@@ -446,6 +445,16 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(searchText: .constant(""), startSearch: .constant(false), showModal: .constant(false))
+        HomeView(searchText: .constant(""), startSearch: .constant(false), showModal: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: 27.9506,
+                longitude: -82.4572
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+            )
+        ))
+    ))
     }
 }

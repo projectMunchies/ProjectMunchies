@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 extension DragGesture.Value {
     func percentage(in geometry: GeometryProxy) -> CGFloat {
@@ -134,6 +135,12 @@ extension ContentView{
         .background(isActive ? .white.opacity(0.4) : .clear)
         .cornerRadius(30)
     }
+}
+
+extension CLLocationCoordinate2D: Equatable {}
+
+public func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+    return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
 }
 
 
