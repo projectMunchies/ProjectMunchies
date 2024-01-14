@@ -89,7 +89,7 @@ struct RecommendationModal: View {
             Spacer(minLength: 0)
         }
         .onAppear {
-            self.cards = chooseCards.randomElement() ?? sampleCards
+            self.cards = cardDeck.randomElement() ?? sampleCards
         }
     }
     
@@ -164,7 +164,7 @@ struct RecommendationModal: View {
                         .frame(height: 150)
                     Button(action: {
                         withAnimation {
-                            searchText = "Green Lemon"
+                            searchText = card.title
                             recommendationSearch(for: self.searchText)
                             startSearch = true
                             
@@ -173,7 +173,7 @@ struct RecommendationModal: View {
                     }){
                         ZStack{
                             Text("")
-                                .frame(width: 200, height: 70)
+                                .frame(width: 300, height: 70)
                                 .background(.gray)
                                 .cornerRadius(30)
                             
