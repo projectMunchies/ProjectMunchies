@@ -62,17 +62,6 @@ struct HomeView: View {
         )
     )
     
-//    @State private var position: MapCameraPosition = MapCameraPosition
-//        .region (MKCoordinateRegion(
-//            center: CLLocationCoordinate2D(
-//                latitude: 27.9506,
-//                longitude: -82.4572
-//            ),
-//            span: MKCoordinateSpan(
-//                latitudeDelta: 0.1,
-//                longitudeDelta: 0.1
-//            )
-//        ))
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
     
@@ -85,9 +74,6 @@ struct HomeView: View {
                     ZStack{
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
-                        
-                        buttonsOnSide(for: geoReader)
-                            .position(x:geoReader.size.width * 0.9, y:geoReader.size.height * 0.5)
                         
                         subHeaderSection(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
@@ -110,9 +96,6 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        //                        self.sideButtonIndex = self.sideButtonIndexOptions.randomElement()!
-                        //                        self.searchText = changeButtonData()
-                        // self.startSearch = true
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch == true {
@@ -263,9 +246,6 @@ struct HomeView: View {
                             self.showModal.toggle()
                         }
                         self.sideButtonIndex = 1
-                        
-                        //                        self.searchText = self.searchTextFoodOptions.randomElement()!
-                        //                        self.startSearch = true
                     }
                 }){
                     ZStack{
@@ -279,7 +259,7 @@ struct HomeView: View {
                                 .frame(width: 25, height: 25)
                                 .foregroundColor(.white)
                             
-                            Text("AI Cusines")
+                            Text("Cusines")
                                 .font(.system(size: 10))
                                 .foregroundColor(.white)
                         }
@@ -296,12 +276,6 @@ struct HomeView: View {
                         self.searchText = ""
                     }else {
                         self.sideButtonIndex = 2
-                        //                        self.searchText = self.searchTextDrinkOptions.randomElement()!
-                        //                        self.startSearch = true
-                        //                        withAnimation {
-                        //                            self.showModal.toggle()
-                        //                       }
-                        
                     }
                 }){
                     ZStack{
@@ -315,7 +289,7 @@ struct HomeView: View {
                                 .frame(width: 20, height: 25)
                                 .foregroundColor(.white)
                             
-                            Text("AI Drinks")
+                            Text("Drinks")
                                 .font(.system(size: 10))
                                 .foregroundColor(.white)
                         }
@@ -401,7 +375,6 @@ struct HomeView: View {
                 let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.venues.append(venue)
             }
-            //print(searchResults)
         }
         self.startSearch = false
     }
@@ -426,21 +399,6 @@ struct HomeView: View {
         formatter.allowedUnits = [.hour, .minute]
         travelTime = formatter.string(from: route.expectedTravelTime)
     }
-    
-    //    private func changeButtonData() -> String {
-    //        var types: String = ""
-    //        switch self.sideButtonIndex{
-    //        case 1 :
-    //            types = self.searchTextFoodOptions.randomElement()!;
-    //        case 2 :
-    //            types = self.searchTextDrinkOptions.randomElement()!;
-    //        case 3 :
-    //            types = self.searchTextNightSpotsOptions.randomElement()!
-    //        default:
-    //            types = ""
-    //        }
-    //        return types;
-    //    }
 }
 
 struct HomeView_Previews: PreviewProvider {
@@ -455,6 +413,6 @@ struct HomeView_Previews: PreviewProvider {
                 longitudeDelta: 0.1
             )
         ))
-    ))
+                                                                                                                           ))
     }
 }
