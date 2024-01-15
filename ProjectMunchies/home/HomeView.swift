@@ -13,7 +13,6 @@ struct HomeView: View {
     
     @Binding var searchText: String
     @Binding var startSearch: Bool
-    @Binding var showModal: Bool
     @Binding var position: MapCameraPosition
     
     @State private var searchResults: [MKMapItem] = []
@@ -22,9 +21,14 @@ struct HomeView: View {
     @State var nightButtonPressed: Bool = false
     @State var isDropdownOpen: Bool = false
     @State var sideButtonIndex = 0
+    @State private var showModal: Bool = false
+    @State private var currentSpot: Int = 0
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
     @State private var showFilter: Bool = true
+    @State private var showVenueFilter: Bool = false
+    @State private var venue: VenueModel = venueSample
+    @State private var showSpotlight: Bool = false
     @State private var indent: Int = 80
     @State var sideButtonIndexOptions: [Int] = [1,2,3]
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
@@ -122,8 +126,34 @@ struct HomeView: View {
                         .enabled(upThrough: .height(CGFloat(indent))))
                     .interactiveDismissDisabled()
             }
+            .onChange(of:currentSpot) {
+                if currentSpot == 4 {
+                    withAnimation{
+                        showModal.toggle()
+                    }
+                }
+            }
+            .onAppear {
+                //showSpotlight = true
+            }
+            .onChange(of: venue.address) {
+                showVenueFilter.toggle()
+            }
+            .sheet(isPresented: $showVenueFilter) {
+                VStack{
+                    Text("\(venue.name)")
+                        .foregroundColor(.white)
+                        .font(.title)
+                    
+                    Text("\(venue.address)")
+                        .foregroundColor(.white)
+                }
+                .presentationDetents([.height(100)])
+                .presentationDragIndicator(.visible)
+            }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .addSpotlightOverlay(show: $showSpotlight, currentSpot: $currentSpot)
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
@@ -449,75 +479,97 @@ struct HomeView: View {
                     }
                 }
             }
-            .padding(.top, self.indent == 80 ? 50 : 100)
+            .padding(.top, self.indent == 80 ?
+                     50 : categoryIndex == 2 ?
+                     20 : 100)
             .onChange(of: categoryIndex) {
                 if categoryIndex == 0 {
                     self.indent = 80
+                } else if categoryIndex == 2 {
+                    self.indent = 600
                 } else {
                     self.indent = 300
                 }
             }
             if categoryIndex != 0 {
-                VStack{
+                if categoryIndex == 1 {
+                    displayFilter(geoReader: geoReader)
+                }
+
+                if categoryIndex == 2 {
+                        VStack{
+                            Text("What should I eat today?")
+                                .font(.largeTitle)
+                                .multilineTextAlignment(.center)
+                            
+                            RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $venue)
+                        }
+                }
+            }
+        }
+    }
+    
+    private func displayFilter(geoReader: GeometryProxy) -> some View {
+        VStack{
+            VStack{
+                HStack{
+                    Text("Type")
+                        .font(.system(size: 20))
+                        .padding(.leading,geoReader.size.width * 0.02)
+                    Spacer()
+                }
+                
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack{
-                        Text("Type")
-                            .font(.system(size: 20))
-                            .padding(.leading,geoReader.size.width * 0.02)
-                        Spacer()
-                    }
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack{
-                            ForEach(switchCategoryTypes()) { i in
-                                Button(action: {
-                                    categoryTypeIndex = i.id
-                                    //                                self.searchText = i.name + " " + self.searchText
-                                    self.searchText = i.name
-                                }){
-                                    VStack{
-                                        ZStack{
-                                            Circle()
-                                                .foregroundColor(self.categoryTypeIndex == i.id ? .green : .gray)
-                                                .frame(width: 90, height: 90)
-                                            
-                                            if categoryIndex != 0 {
-                                                Image(i.icon)
-                                                    .resizable()
-                                                    .frame(width: 40, height: 40)
-                                                    .font(.system(size: 35))
-                                                    .foregroundColor(.black)
-                                            }
-                                        }
+                        ForEach(switchCategoryTypes()) { i in
+                            Button(action: {
+                                categoryTypeIndex = i.id
+                                //                                self.searchText = i.name + " " + self.searchText
+                                self.searchText = i.name
+                            }){
+                                VStack{
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(self.categoryTypeIndex == i.id ? .green : .gray)
+                                            .frame(width: 90, height: 90)
                                         
                                         if categoryIndex != 0 {
-                                            Text(i.name)
+                                            Image(i.icon)
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .font(.system(size: 35))
+                                                .foregroundColor(.black)
                                         }
                                     }
-                                    .padding(.leading)
+                                    
+                                    if categoryIndex != 0 {
+                                        Text(i.name)
+                                    }
                                 }
+                                .padding(.leading)
                             }
                         }
                     }
                 }
-                .opacity(categoryIndex != 0 ? 1 : 0.3)
-                .disabled(categoryIndex != 0 ? false : true)
-                
-                Button(action: {
-                    showFilter.toggle()
-                    startSearch.toggle()
-                }){
-                    ZStack{
-                        Text("")
-                            .frame(width: 350, height: 60)
-                            .background(.gray)
-                            .cornerRadius(30)
-                        
-                        Text("Search")
-                            .foregroundColor(.white)
-                    }
-                }
-                .padding(.top)
             }
+            .opacity(categoryIndex != 0 ? 1 : 0.3)
+            .disabled(categoryIndex != 0 ? false : true)
+            
+            Button(action: {
+                showFilter.toggle()
+                startSearch.toggle()
+            }){
+                ZStack{
+                    Text("")
+                        .frame(width: 350, height: 60)
+                        .background(.gray)
+                        .cornerRadius(30)
+                    
+                    Text("Search")
+                        .foregroundColor(.white)
+                }
+            }
+            .padding(.top)
         }
     }
     private func switchCategoryTypes() -> [CategoryTypeModel]{
@@ -536,7 +588,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(searchText: .constant(""), startSearch: .constant(false), showModal: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
+        HomeView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
             center: CLLocationCoordinate2D(
                 latitude: 27.9506,
                 longitude: -82.4572
