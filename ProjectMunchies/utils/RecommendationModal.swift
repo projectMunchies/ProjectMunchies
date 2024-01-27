@@ -7,6 +7,8 @@
 
 import SwiftUI
 import MapKit
+import AVKit
+import YouTubePlayerKit
 
 struct RecommendationModal: View {
     @Binding var showModal: Bool
@@ -16,17 +18,14 @@ struct RecommendationModal: View {
     @Binding var showVenueFilter: Bool
     @Binding var venue: VenueModel
     
+    @State private var sampleYoutubeVideo = sampleVideos
     @State private var cards: [Card] = sampleCards
-    
-    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     @State private var counter = 0
-    @State private var words: [String] = ["predicting...","fetching preferences...","fetching history..."]
     @State private var emptyWords: [String] = []
     @State private var displayModal: Bool = false
-    // @State private var showVenueFilter: Bool = true
-    
     @State private var searchResults: [MKMapItem] = []
-    // @State private var venue: VenueModel = venueSample
+    @State var player = AVPlayer(url:  Bundle.main.url(forResource: "exampleMp4", withExtension: "mp4")!)
+    @State private var words: [String] = ["predicting...","fetching preferences...","fetching history..."]
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 27.9506,
@@ -37,6 +36,8 @@ struct RecommendationModal: View {
             longitudeDelta: 0.001
         )
     )
+    
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         VStack {
@@ -73,7 +74,6 @@ struct RecommendationModal: View {
             .frame(height: 210)
             .onReceive(timer) { time in
                 if counter == 3 {
-                    // timer.upstream.connect().cancel()
                     withAnimation{
                         displayModal.toggle()
                     }
@@ -85,7 +85,6 @@ struct RecommendationModal: View {
                 }
                 counter += 1
             }
-            
             Spacer(minLength: 0)
         }
         .onAppear {
@@ -106,35 +105,20 @@ struct RecommendationModal: View {
             for result in searchResults {
                 let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
                 self.venue = venue
-                //print(venue)
             }
-            // print(searchResults)
         }
-        // self.startSearch = false
     }
     
-    /// CardView
     @ViewBuilder
     func CardView(_ card: Card) -> some View {
         GeometryReader { proxy in
             let size = proxy.size
             let minX = proxy.frame(in: .scrollView).minX
-            /// 190: 180 - Card Width; 10 - Spacing
             let reducingWidth = (minX / 190) * 130
             let cappedWidth = min(reducingWidth, 130)
-            
             let frameWidth = size.width - (minX > 0 ? cappedWidth : -cappedWidth)
             
             ZStack{
-                //                Image(card.image)
-                //                    .resizable()
-                //                    .aspectRatio(contentMode: .fill)
-                //                    .frame(width: size.width, height: size.height)
-                //                    .frame(width: frameWidth)
-                //                    .clipShape(.rect(cornerRadius: 25))
-                //                    .offset(x: minX > 0 ?  0 : -cappedWidth)
-                //                    .offset(x: -card.previousOffset)
-                
                 AsyncImage(url: URL(string: card.image)) { image in
                     image
                         .resizable()
@@ -146,13 +130,12 @@ struct RecommendationModal: View {
                 .frame(width: frameWidth)
                 .overlay(
                     LinearGradient(gradient: Gradient(colors: [.black.opacity(0.7), .clear]),
-                                       startPoint: .top,
-                                       endPoint: .center)
-                    )
+                                   startPoint: .top,
+                                   endPoint: .center)
+                )
                 .clipShape(.rect(cornerRadius: 25))
                 .offset(x: minX > 0 ?  0 : -cappedWidth)
                 .offset(x: -card.previousOffset)
-               
                 
                 VStack{
                     Text(card.mealType)
@@ -186,13 +169,10 @@ struct RecommendationModal: View {
                         // dont think we need these 2 offsets
                         .offset(x: minX > 0 ?  0 : -cappedWidth)
                         .offset(x: -card.previousOffset)
-                        
                     }
                 }
                 .onChange(of: self.venue.coordinate) {
                     position =  MapCameraPosition.item(MKMapItem(placemark: .init(coordinate: venue.coordinate)))
-                    // print("should see coordinate ->\(venue)")
-                    //showVenueFilter.toggle()
                 }
             }
         }
@@ -206,10 +186,9 @@ struct RecommendationModal: View {
             }
         }
     }
-    
 }
-
 
 #Preview {
     RecommendationModal(showModal: .constant(true), startSearch: .constant(false), searchText: .constant(""),position: .constant(MapCameraPosition.automatic), showVenueFilter: .constant(false), venue: .constant(venueSample))
 }
+

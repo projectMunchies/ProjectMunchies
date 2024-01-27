@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import AVKit
 
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
@@ -15,6 +16,11 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
+    var delay: Double = 0 // 1. << don't use state for injectable property
+
+       @State private var scale: CGFloat = 0.5
+    
+    @State var player = AVPlayer()
     @State private var searchResults: [MKMapItem] = []
     @State var foodButtonPressed: Bool = false
     @State var drinkButtonPressed: Bool = false
@@ -22,22 +28,22 @@ struct HomeView: View {
     @State var isDropdownOpen: Bool = false
     @State var sideButtonIndex = 0
     @State private var showModal: Bool = false
-    @State private var currentSpot: Int = 0
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
     @State private var showFilter: Bool = true
     @State private var showVenueFilter: Bool = false
     @State private var venue: VenueModel = venueSample
-    @State private var showSpotlight: Bool = false
-    @State private var indent: Int = 80
-    @State var sideButtonIndexOptions: [Int] = [1,2,3]
-    @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
-    @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
-    @State var searchTextNightSpotsOptions: [String] = ["","",""]
-    @State var liveFeedComments: [String] = ["Happy Hour Man these nuggets is cool a f", "Ehh not really fan of these fries", "These waffles are only good on the weekend", "No Im not liking Chipotle right now"]
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
+    @State private var indent: Int = 80
+    @State var sideButtonIndexOptions: [Int] = [1,2,3]
+    @State var showText: Bool = false
+    
+    @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
+    @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
+    @State var searchTextNightSpotsOptions: [String] = ["","",""]
+    @State var liveReviews: [ReviewModel] = liveReivewSamples
     @State var currentVenue: VenueModel = VenueModel(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "", address: "")
     @State var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
         latitude: 27.9416957,
@@ -88,8 +94,6 @@ struct HomeView: View {
                         
                         displayVenues(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
-                        
-                        
                     }
                     .onAppear{
                         homeViewModel.getUserProfile() {(userProfileId) -> Void in
@@ -104,6 +108,7 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        self.venues = venuesSample
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch == true {
@@ -125,16 +130,7 @@ struct HomeView: View {
                     .presentationBackgroundInteraction(
                         .enabled(upThrough: .height(CGFloat(indent))))
                     .interactiveDismissDisabled()
-            }
-            .onChange(of:currentSpot) {
-                if currentSpot == 4 {
-                    withAnimation{
-                        showModal.toggle()
-                    }
-                }
-            }
-            .onAppear {
-                //showSpotlight = true
+                
             }
             .onChange(of: venue.address) {
                 showVenueFilter.toggle()
@@ -153,7 +149,6 @@ struct HomeView: View {
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .addSpotlightOverlay(show: $showSpotlight, currentSpot: $currentSpot)
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
@@ -164,24 +159,17 @@ struct HomeView: View {
                         isDropdownOpen.toggle()
                     }
                 }) {
-                    HStack {
-                        Text("Live Reviews ")
-                            .foregroundColor(.white)
-                            .font(.system(size: 20, weight: .bold))
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.black)
-                            .frame(height: 35)
-                    )
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.green)
-                            .frame(height: 35)
-                    )
-                    .addSpotlight(3, shape: .rounded, roundedRadius: 20, text: "See what the community is saying \nabout venues in your area. \nJoin the fun by adding your own reviews! \ntap screen to complete tutorial")
-                    .opacity(0.7)
+                    
+                    Text("Live Reviews ")
+                        .foregroundColor(.white)
+                        .font(.system(size: 20, weight: .bold))
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.green)
+                                .frame(height: 35)
+                        )
+                        .opacity(0.7)
                     
                     Image(systemName: isDropdownOpen ? "chevron.up" : "chevron.down")
                         .resizable()
@@ -198,7 +186,7 @@ struct HomeView: View {
                     if isDropdownOpen {
                         ScrollView {
                             LazyVStack(spacing: 18) {
-                                ForEach(self.liveFeedComments, id: \.self) { comment in
+                                ForEach(self.liveReviews, id: \.self) { review in
                                     HStack(alignment: .top) {
                                         Image(systemName: "person.circle")
                                             .resizable()
@@ -209,7 +197,7 @@ struct HomeView: View {
                                             .padding(.trailing, 25)
                                         
                                         VStack(alignment: .leading, spacing: 5) {
-                                            Text(comment)
+                                            Text(review.body)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 16))
                                             
@@ -224,7 +212,7 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        .frame(width: geoReader.size.width * 0.75,                            height: min(geoReader.size.height * 0.60, CGFloat(self.liveFeedComments.count) * 57.0))
+                        .frame(width: geoReader.size.width * 0.75,                            height: min(geoReader.size.height * 0.60, CGFloat(self.liveReviews.count) * 57.0))
                         .padding()
                         .background(Color.black.opacity(0.7))
                         .cornerRadius(15)
@@ -248,14 +236,39 @@ struct HomeView: View {
             } else {
                 ForEach(venues) { venue in
                     Annotation("", coordinate: venue.coordinate) {
-                        Image(systemName: "mappin.circle.fill")
-                            .resizable()
-                            .frame(width: geoReader.size.width * 0.05, height: geoReader.size.width * 0.05)
-                            .foregroundColor(.red)
-                            .onTapGesture {
-                                currentVenue = venue
-                                scrollReader.scrollTo(currentVenue.id, anchor: .center)
+                        ZStack{
+//                            Image(systemName: "mappin.circle.fill")
+//                                .resizable()
+//                                .foregroundColor(.red)
+                            if self.showText {
+                                RoundedRectangle(cornerRadius:10)
+                                    .frame(width: geoReader.size.width * 0.52, height: geoReader.size.width * 0.12)
+                                    .position(y: geoReader.size.height * -0.05)
+                                
                             }
+                            
+                            Circle()
+                                .foregroundColor(.red)
+                                .scaleEffect(scale)
+                                            .animation(
+                                                Animation.easeInOut(duration: 0.6)
+                                                   .repeatForever().delay(delay), value: scale  // 2. << link to value
+                                            )
+                                            .onAppear {
+                                                self.scale = 1    // 3. << withAnimation no needed now
+                                            }
+                            
+                            Text("1")
+                        }
+                        .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
+                        .onLongPressGesture{
+                            self.showText.toggle()
+                        }
+                        .onTapGesture {
+                            currentVenue = venue
+                            scrollReader.scrollTo(currentVenue.id, anchor: .center)
+                        }
+                       
                     }
                 }
             }
@@ -338,7 +351,6 @@ struct HomeView: View {
                     }
                 }
             }
-            .addSpotlight(1, shape: .rounded, roundedRadius: 5, text: "What should I eat and drink today? These buttons are powered by AI and got you covered  \ntap screen to continue")
             
             VStack{
                 Button(action: {
@@ -373,7 +385,6 @@ struct HomeView: View {
                     }
                 }
             }
-            .addSpotlight(2, shape: .rectangle, roundedRadius: 0, text: "Whats the hot spot for today? This button can answer that \ntap screen to continue")
         }
         .opacity(0.6)
     }
@@ -495,15 +506,15 @@ struct HomeView: View {
                 if categoryIndex == 1 {
                     displayFilter(geoReader: geoReader)
                 }
-
+                
                 if categoryIndex == 2 {
-                        VStack{
-                            Text("What should I eat today?")
-                                .font(.largeTitle)
-                                .multilineTextAlignment(.center)
-                            
-                            RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $venue)
-                        }
+                    VStack{
+                        Text("What should I eat today?")
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                        
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $venue)
+                    }
                 }
             }
         }
@@ -598,6 +609,6 @@ struct HomeView_Previews: PreviewProvider {
                 longitudeDelta: 0.1
             )
         ))
-                                                                                                                           ))
+                                                                                              ))
     }
 }

@@ -44,3 +44,10 @@ var sampleCards4: [Card] = [
    .init(image: "https://stordfkenticomedia.blob.core.windows.net/df-us/rms/media/recipemediafiles/recipes/retail/x17/2018_sweet-sallty-snack-mix_5817_600x600.jpg?ext=.jpg", title: "", mealType: "Snack"),
    .init(image: "https://lh3.googleusercontent.com/p/AF1QipNyHf4lP7nyAbq8lU0G9m_hO2FJ7bzymBUsjtmd=s1360-w1360-h1020", title: "Rome + Fig", mealType: "Dinner")
 ]
+
+var hotSpotsCards: [Card] = [
+   .init(image: "https://v16-webapp-prime.us.tiktok.com/video/tos/useast5/tos-useast5-ve-0068c001-tx/owejQIXmwGTIUCJh3pCHIfeCAgL8HLAQI2GklI/?a=1988&ch=0&cr=3&dr=0&lr=unwatermarked&cd=0%7C0%7C0%7C&cv=1&br=2884&bt=1442&bti=NDU3ZjAwOg%3D%3D&cs=0&ds=6&ft=4KJMyMzm8Zmo0DQ.094jVAHZdpWrKsd.&mime_type=video_mp4&qs=0&rc=PDdlOGY0Mzo0N2dmNjxoNUBpM3V3cms5cnQ7cDMzZzczNEA0Yy4vMS1iXy0xXjVjMl4wYSNwamdoMmRjMjVgLS1kMS9zcw%3D%3D&btag=e00088000&expire=1706246933&l=202401240528458470E2FB3DAFB606A9B2&ply_type=2&policy=2&signature=2e7b573fdcc04581b022ff1990c1c0c1&tk=tt_chain_token", title: "Daily Eats", mealType: "Breakfast"),
+   .init(image: "https://lh3.googleusercontent.com/p/AF1QipNemhAwN9nt5vVNIS0Eif4pT8UxMeINcKrz01JO=s1360-w1360-h1020", title: "On Swann", mealType: "Lunch"),
+   .init(image: "https://stordfkenticomedia.blob.core.windows.net/df-us/rms/media/recipemediafiles/recipes/retail/x17/2018_sweet-sallty-snack-mix_5817_600x600.jpg?ext=.jpg", title: "", mealType: "Snack"),
+   .init(image: "https://lh3.googleusercontent.com/p/AF1QipNyHf4lP7nyAbq8lU0G9m_hO2FJ7bzymBUsjtmd=s1360-w1360-h1020", title: "Rome + Fig", mealType: "Dinner")
+]

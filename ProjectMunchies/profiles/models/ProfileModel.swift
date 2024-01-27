@@ -17,27 +17,24 @@ struct ProfileModel: Identifiable, Equatable, Hashable{
     var age: String
     var fcmTokens: [String]
     var messageThreadIds: [String]
-    var artwork: String = ""
     var occupation: String
-    var favRestaurant: String
-    var favFood: String
     var hobbies: [String]
-    var eventIds: [String]
+    var reviewIds: [String]
     var isMockData: Bool
-    var bunchIds: [String]
 }
 
 var mockProfiles: [ProfileModel] = [
-    ProfileModel(id: "rh2389fnwo", fullName: "Kate Duncan", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Real Estate", favRestaurant: "Bar Taco", favFood: "Fries", hobbies: ["Beach","Gym"], eventIds: [], isMockData: true, bunchIds: []),
+    ProfileModel(id: "rh2389fnwo", fullName: "Kate Duncan", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [],occupation: "Real Estate", hobbies: ["Beach","Gym"], reviewIds: ["fsd","FDSFDS"], isMockData: true),
     
-    ProfileModel(id: "lkfn3489h43fuifre", fullName: "Ryan Sutton", location: "St.Petersburg, FL", description: sampleText, gender: "Male", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "Movie2", occupation: "Financial Advisor", favRestaurant: "Miguel's", favFood: "Jazzy's BBQ", hobbies: ["Fishing","Biking"], eventIds: [], isMockData: true, bunchIds: []),
+    ProfileModel(id: "lkfn3489h43fuifre", fullName: "Ryan Sutton", location: "St.Petersburg, FL", description: sampleText, gender: "Male", age: "25", fcmTokens: [], messageThreadIds: [], occupation: "Financial Advisor", hobbies: ["ds"], reviewIds: ["4324234","4312532"], isMockData: true),
     
-    ProfileModel(id: "fkjerabhfueirlbfr", fullName: "Anna Price", location: "Clearwater, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Paralegal", favRestaurant: "Chipotle", favFood: "Spagetti", hobbies: ["Gym", "Art"], eventIds: [], isMockData: true, bunchIds: []),
-    ProfileModel(id: "rjrnbkbfdl347843", fullName: "Wyatt Whitfield", location: "Tampa, FL", description: sampleText, gender: "Male", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Musician", favRestaurant: "Texas de Brazil", favFood: "Culver's", hobbies: ["Sports", "Movies"], eventIds: [], isMockData: true, bunchIds: []),
+    ProfileModel(id: "fkjerabhfueirlbfr", fullName: "Anna Price", location: "Clearwater, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [],occupation: "Paralegal", hobbies: ["Gym", "Art"], reviewIds: ["4423423"], isMockData: true),
     
-    ProfileModel(id: "43ui4fj4893", fullName: "Jaycee Lucas", location: "St.Petersburg, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Firefighter", favRestaurant: "Wawa", favFood: "Starbucks", hobbies: ["Yoga","Reading"], eventIds: [], isMockData: true, bunchIds: []),
+    ProfileModel(id: "rjrnbkbfdl347843", fullName: "Wyatt Whitfield", location: "Tampa, FL", description: sampleText, gender: "Male", age: "25", fcmTokens: [], messageThreadIds: [], occupation: "Musician", hobbies: ["Sports", "Movies"], reviewIds: ["e3223"], isMockData: true),
     
-    ProfileModel(id: "6io56in6ih", fullName: "Simone Guthrie", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], artwork: "", occupation: "Teacher", favRestaurant: "Subway", favFood: "Burgers", hobbies: ["Running","Gym"], eventIds: [], isMockData: true, bunchIds: [])
+    ProfileModel(id: "43ui4fj4893", fullName: "Jaycee Lucas", location: "St.Petersburg, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], occupation: "Firefighter", hobbies: ["Yoga","Reading"], reviewIds: ["3432423"], isMockData: true),
+    
+    ProfileModel(id: "6io56in6ih", fullName: "Simone Guthrie", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], occupation: "Teacher", hobbies: ["Running","Gym"], reviewIds: ["3242"], isMockData: true)
 ]
 
 //Dummy Text

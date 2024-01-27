@@ -13,12 +13,7 @@ struct VideoPlayerHomeView: View {
     @State var showOverlay: Bool
     @State private var rating: Int = 0
     
-    @State var data = [
-        Video(id: 0, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/Z9tlfHghsBo"),
-        Video(id: 1, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/rltZSyJ1CQ8"),
-        Video(id: 2, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/3POLWRO9ZL8"),
-        Video(id: 3, player: AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "exampleMp4", ofType: "mp4")!)), replay: false, youtubePlayer: "https://www.youtube.com/shorts/rltZSyJ1CQ8"),
-    ]
+    @State var data = sampleVideos
     
     var body: some View {
         VStack{
@@ -104,13 +99,6 @@ class Host: UIHostingController<ContentView>{
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
-}
-
-struct Video: Identifiable {
-    var id: Int
-    var player: AVPlayer
-    var replay: Bool
-    var youtubePlayer: YouTubePlayer
 }
 
 struct PlayerScrollView: UIViewRepresentable {
