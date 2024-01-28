@@ -103,7 +103,7 @@ struct RecommendationModal: View {
             searchResults = response?.mapItems ?? []
             
             for result in searchResults {
-                let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
+                let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinate: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
                 self.venue = venue
             }
         }

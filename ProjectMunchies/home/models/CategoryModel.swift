@@ -22,8 +22,8 @@ var mainCategories: [CategoryModel] = [
 
 var homeCategories: [CategoryModel] = [
     CategoryModel(id: 1, name:"Filter", icon: "filterIcon"),
-    CategoryModel(id: 2, name:"What Should I Eat?", icon: "brunchIcon"),
-    CategoryModel(id: 3, name:"Live Reviews", icon: "reviewIcon"),
-  //  CategoryModel(id: 4, name:"Hot Spots", icon: "flameIcon"),
-    CategoryModel(id: 4, name:"Discover", icon: "discoverIcon")
+    CategoryModel(id: 2, name:"Live Reviews", icon: "reviewIcon"),
+    CategoryModel(id: 3, name:"CrunchAI", icon: "brunchIcon"),
+//  CategoryModel(id: 4, name:"Hot Spots", icon: "flameIcon"),
+//   CategoryModel(id: 4, name:"Discover", icon: "discoverIcon")
 ]

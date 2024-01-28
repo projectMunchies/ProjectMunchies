@@ -9,21 +9,19 @@ import Foundation
 import MapKit
 
 struct VenueModel: Identifiable {
-    var id: UUID = .init()
-    var coordinate: CLLocationCoordinate2D
+    var id: String
     var name: String
+    var coordinate: CLLocationCoordinate2D
     var address: String
+    var reviews: [ReviewModel]
+    var specials: [SpecialModel]
 }
 
-
-var venueSample = VenueModel(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "", address: "")
-
+var venueSample = VenueModel(id: "0",  name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
 var venuesSample: [VenueModel] = [
-    VenueModel(coordinate: CLLocationCoordinate2D(latitude: 27.9432414,
-                                                  longitude: -82.4503545), name: "bdgd", address: ""),
-    VenueModel(coordinate: CLLocationCoordinate2D(latitude: 27.9937694,
-                                                  longitude: -82.6449753), name: "gdf", address: ""),
-    VenueModel(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "4yg4", address: ""),
-    VenueModel(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "g454", address: "")
-
+    VenueModel(id: "0", name: "bdgd", coordinate: CLLocationCoordinate2D(latitude: 27.9432414,
+                                                  longitude: -82.4503545), address: "", reviews: [], specials: []),
+    VenueModel(id: "1", name: "gdf", coordinate: CLLocationCoordinate2D(latitude: 27.9626861,
+                                                  longitude: -82.4937287), address: "", reviews: [], specials: []),
+    VenueModel(id: "2", name: "4yg4", coordinate: CLLocationCoordinate2D(latitude: 28.024146, longitude: -82.452467), address: "", reviews: [], specials: [])
 ]

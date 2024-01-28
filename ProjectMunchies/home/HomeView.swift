@@ -16,10 +16,7 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
-    var delay: Double = 0 // 1. << don't use state for injectable property
-
-       @State private var scale: CGFloat = 0.5
-    
+    @State private var scale: CGFloat = 0.5
     @State var player = AVPlayer()
     @State private var searchResults: [MKMapItem] = []
     @State var foodButtonPressed: Bool = false
@@ -36,15 +33,16 @@ struct HomeView: View {
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
-    @State private var indent: Int = 80
+    @State private var indentLow: Int = 80
+    @State private var indentHigh: Int = 80
     @State var sideButtonIndexOptions: [Int] = [1,2,3]
-    @State var showText: Bool = false
+    @State var showBottomTabs: Bool = false
     
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State var searchTextNightSpotsOptions: [String] = ["","",""]
     @State var liveReviews: [ReviewModel] = liveReivewSamples
-    @State var currentVenue: VenueModel = VenueModel(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), name: "", address: "")
+    @State var currentVenue: VenueModel = VenueModel(id: "0", name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
     @State var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
         latitude: 27.9416957,
         longitude: -82.4853619
@@ -76,26 +74,28 @@ struct HomeView: View {
         )
     )
     
+    var delay: Double = 0
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
     
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
-                Color.white
+                Color.black
                     .ignoresSafeArea()
                 ScrollViewReader{ scrollReader in
                     ZStack{
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
-                        subHeaderSection(for: geoReader)
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+                        //                        subHeaderSection(for: geoReader)
+                        //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                         
-                        displayVenues(for: geoReader)
-                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
+                        //                        displayVenues(for: geoReader)
+                        //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                     }
                     .onAppear{
+                        self.showBottomTabs.toggle()
                         homeViewModel.getUserProfile() {(userProfileId) -> Void in
                             if userProfileId != "" {
                                 //get profileImage
@@ -125,10 +125,10 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showFilter) {
                 displayFilterSheet(geoReader: geoReader)
-                    .presentationDetents([.height(CGFloat(indent))])
+                    .presentationDetents([.height(CGFloat(indentLow)),.height(CGFloat(indentHigh))])
                     .presentationDragIndicator(.visible)
                     .presentationBackgroundInteraction(
-                        .enabled(upThrough: .height(CGFloat(indent))))
+                        .enabled(upThrough: .height(CGFloat(indentHigh))))
                     .interactiveDismissDisabled()
                 
             }
@@ -237,38 +237,56 @@ struct HomeView: View {
                 ForEach(venues) { venue in
                     Annotation("", coordinate: venue.coordinate) {
                         ZStack{
-//                            Image(systemName: "mappin.circle.fill")
-//                                .resizable()
-//                                .foregroundColor(.red)
-                            if self.showText {
-                                RoundedRectangle(cornerRadius:10)
-                                    .frame(width: geoReader.size.width * 0.52, height: geoReader.size.width * 0.12)
-                                    .position(y: geoReader.size.height * -0.05)
+                            if venue.id == "1" {
+                                VStack{
+                                    Text("New \nSpecial")
+                                        .bold()
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.yellow)
+                                    
+                                    PacmanAnimation()
+                                }
                                 
-                            }
-                            
-                            Circle()
-                                .foregroundColor(.red)
-                                .scaleEffect(scale)
+                            } else if venue.id == "0" {
+                                VStack{
+                                    Text("New \nDeal")
+                                        .bold()
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.orange)
+                                    SpinningView()
+                                }
+                                
+                            } else {
+                                VStack{
+                                    Text("New \nReview")
+                                        .bold()
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.pink)
+                                    
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(.pink)
+                                            .scaleEffect(scale)
                                             .animation(
                                                 Animation.easeInOut(duration: 0.6)
-                                                   .repeatForever().delay(delay), value: scale  // 2. << link to value
+                                                    .repeatForever().delay(delay), value: scale
                                             )
                                             .onAppear {
-                                                self.scale = 1    // 3. << withAnimation no needed now
+                                                self.scale = 1
                                             }
-                            
-                            Text("1")
-                        }
-                        .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
-                        .onLongPressGesture{
-                            self.showText.toggle()
+                                        Text("1")
+                                    }
+                                    .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
+                                }
+                            }
                         }
                         .onTapGesture {
+                            self.showBottomTabs.toggle()
+                            self.indentLow = 200
+                            self.indentHigh = 800
                             currentVenue = venue
                             scrollReader.scrollTo(currentVenue.id, anchor: .center)
                         }
-                       
                     }
                 }
             }
@@ -425,7 +443,7 @@ struct HomeView: View {
             searchResults = response?.mapItems ?? []
             
             for result in searchResults {
-                let venue = VenueModel(coordinate: result.placemark.coordinate, name: result.name ?? "", address: result.placemark.title ?? "")
+                let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinate: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
                 self.venues.append(venue)
             }
         }
@@ -455,9 +473,12 @@ struct HomeView: View {
     
     private func displayFilterSheet(geoReader: GeometryProxy) -> some View {
         VStack{
-            VStack{
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack{
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack{
+                    Spacer()
+                        .frame(width: geoReader.size.width * 0.1)
+                    
+                    if self.showBottomTabs {
                         ForEach(homeCategories) { i in
                             Button(action: {
                                 if categoryIndex == i.id {
@@ -485,21 +506,23 @@ struct HomeView: View {
                                 .padding(.leading)
                             }
                         }
-                        Spacer()
-                            .frame(width: 30)
+                    }
+                    
+                    if !self.showBottomTabs {
+                    detailsView(geoReader: geoReader)
                     }
                 }
             }
-            .padding(.top, self.indent == 80 ?
+            .padding(.top, self.indentLow == 80 ?
                      50 : categoryIndex == 2 ?
                      20 : 100)
             .onChange(of: categoryIndex) {
                 if categoryIndex == 0 {
-                    self.indent = 80
+                    self.indentLow = 80
                 } else if categoryIndex == 2 {
-                    self.indent = 600
+                    self.indentLow = 600
                 } else {
-                    self.indent = 300
+                    self.indentLow = 300
                 }
             }
             if categoryIndex != 0 {
@@ -583,6 +606,7 @@ struct HomeView: View {
             .padding(.top)
         }
     }
+    
     private func switchCategoryTypes() -> [CategoryTypeModel]{
         switch categoryIndex {
         case 1:
@@ -593,6 +617,55 @@ struct HomeView: View {
             return happHourTypes
         default:
             return [CategoryTypeModel(id: 1, name: "", icon: "")]
+        }
+    }
+    
+    private func detailsView(geoReader: GeometryProxy) -> some View {
+        VStack{
+            HStack{
+                VStack{
+                    Text("New Specials")
+                        .font(.system(size: 50))
+                           .foregroundColor(.yellow)
+                       
+                       Text("Rome + Fig")
+                           .font(.title3)
+                           .foregroundColor(.gray)
+                    
+                    ZStack{
+                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                            .frame(width: 200, height: 100)
+                            .overlay{
+                                
+                                Image("greenLemon")
+                                    .resizable()
+                                    .frame(width: 200, height: 100)
+                                    .scaledToFill()
+                                    .opacity(0.5)
+                                  
+                            }
+                     
+                    }
+                   
+                    
+                }
+                
+                Button(action: {
+                    self.showBottomTabs.toggle()
+                    self.indentLow = 80
+                    currentVenue = VenueModel(id: "0", name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+                }){
+                    Image(systemName: "x.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                    //  .font(.system(size: 35))
+                        .foregroundColor(.gray)
+                }
+                
+            }
+         
+            
+        
         }
     }
 }
@@ -608,7 +681,85 @@ struct HomeView_Previews: PreviewProvider {
                 latitudeDelta: 0.1,
                 longitudeDelta: 0.1
             )
-        ))
-                                                                                              ))
+        ))                                                                                              ))
+    }
+}
+
+struct ResetEllipse: View {
+    var body: some View {
+        ZStack{
+            Ellipse()
+                .frame(width: 40, height: 40)
+                .foregroundColor(.orange)
+            
+            Text("2")
+                .frame(width: 40, height: 40)
+        }
+        
+    }
+}
+
+struct SpinningEllipse: View {
+    @State private var width: CGFloat = 40
+    
+    var body: some View {
+        ZStack{
+            Ellipse()
+                .frame(width: width, height: 40)
+                .foregroundColor(.orange)
+            
+            Text("2")
+                .frame(width: width, height: 10)
+        }
+        .onAppear {
+            withAnimation(.easeInOut.repeatForever(autoreverses: true).speed(1)) {
+                width = 0
+            }
+        }
+    }
+}
+
+struct SpinningView: View {
+    @State private var isSpinning = true
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            if isSpinning {
+                SpinningEllipse()
+            } else {
+                ResetEllipse()
+            }
+            
+            Spacer()
+        }
+        .navigationTitle("Spinning Animation")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct PacmanAnimation: View {
+    var body: some View {
+        TimelineView(.animation) { timeline in
+            Canvas { context, size in
+                let center = CGPoint(x: size.width/2, y: size.height/2)
+                let timenow  = timeline.date.timeIntervalSince1970 * 100
+                let delta = abs(timenow.remainder(dividingBy: 50))
+                
+                var path = Path()
+                path.addArc(center: center, radius: size.width/2,
+                            startAngle: Angle(degrees: delta), endAngle: Angle(degrees: 360 - delta), clockwise: false)
+                path.addLine(to: center)
+                
+                // Draw background circle
+                context.fill(path, with: .color(.yellow))
+                
+                // Draw eyes
+                context.fill(Path(ellipseIn: CGRect(x: size.width / 2, y: size.height / 4,
+                                                    width: 3, height: 3)), with: .color(.black))
+            }
+            .frame(width: 40, height: 40)
+        }
     }
 }
