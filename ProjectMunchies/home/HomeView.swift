@@ -27,7 +27,6 @@ struct HomeView: View {
     @State private var showModal: Bool = false
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
-    @State private var showFilter: Bool = true
     @State private var showVenueFilter: Bool = false
     @State private var venue: VenueModel = venueSample
     @State private var venues: [VenueModel] = []
@@ -37,11 +36,12 @@ struct HomeView: View {
     @State private var indentHigh: Int = 80
     @State var sideButtonIndexOptions: [Int] = [1,2,3]
     @State var showBottomTabs: Bool = false
+    @State var liveReviews: [ReviewModel] = liveReviewSamples
+    @State var newSpecials: [SpecialModel] = specialsSample
     
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State var searchTextNightSpotsOptions: [String] = ["","",""]
-    @State var liveReviews: [ReviewModel] = liveReivewSamples
     @State var currentVenue: VenueModel = VenueModel(id: "0", name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
     @State var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
         latitude: 27.9416957,
@@ -123,7 +123,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showFilter) {
+            .sheet(isPresented: .constant(true)) {
                 displayFilterSheet(geoReader: geoReader)
                     .presentationDetents([.height(CGFloat(indentLow)),.height(CGFloat(indentHigh))])
                     .presentationDragIndicator(.visible)
@@ -230,55 +230,17 @@ struct HomeView: View {
             if self.sideButtonIndex == 3 {
                 if let route {
                     MapPolyline(route.polyline)
-                    //.stroke(.blue, lineWidth: 8)
                         .stroke(gradient, style: stroke)
                 }
             } else {
                 ForEach(venues) { venue in
                     Annotation("", coordinate: venue.coordinate) {
                         ZStack{
-                            if venue.id == "1" {
-                                VStack{
-                                    Text("New \nSpecial")
-                                        .bold()
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.yellow)
-                                    
-                                    PacmanAnimation()
-                                }
-                                
-                            } else if venue.id == "0" {
-                                VStack{
-                                    Text("New \nDeal")
-                                        .bold()
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.orange)
-                                    SpinningView()
-                                }
-                                
-                            } else {
-                                VStack{
-                                    Text("New \nReview")
-                                        .bold()
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.pink)
-                                    
-                                    ZStack{
-                                        Circle()
-                                            .foregroundColor(.pink)
-                                            .scaleEffect(scale)
-                                            .animation(
-                                                Animation.easeInOut(duration: 0.6)
-                                                    .repeatForever().delay(delay), value: scale
-                                            )
-                                            .onAppear {
-                                                self.scale = 1
-                                            }
-                                        Text("1")
-                                    }
-                                    .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
-                                }
-                            }
+                            
+//                            if !newSpecials.isEmpty || !newReviews.isEmpty) {
+                                newSpecialsAndReviews(geoReader: geoReader, venueId: venue.id)
+                          //  }
+                           
                         }
                         .onTapGesture {
                             self.showBottomTabs.toggle()
@@ -295,6 +257,8 @@ struct HomeView: View {
             self.region = mapCameraUpdateContext.region
         }
         .onAppear(perform: {
+            
+            
             fetchRouteFrom(nightSpots[self.sideButtonIndexOptions.randomElement()!], to: nightSpots[self.sideButtonIndexOptions.randomElement()!])
         })
         .preferredColorScheme(.dark)
@@ -509,7 +473,7 @@ struct HomeView: View {
                     }
                     
                     if !self.showBottomTabs {
-                    detailsView(geoReader: geoReader)
+                        detailsView(geoReader: geoReader, venue: venue, specials: newSpecials)
                     }
                 }
             }
@@ -590,7 +554,6 @@ struct HomeView: View {
             .disabled(categoryIndex != 0 ? false : true)
             
             Button(action: {
-                showFilter.toggle()
                 startSearch.toggle()
             }){
                 ZStack{
@@ -620,7 +583,7 @@ struct HomeView: View {
         }
     }
     
-    private func detailsView(geoReader: GeometryProxy) -> some View {
+    private func detailsView(geoReader: GeometryProxy, venue: VenueModel, specials: [SpecialModel]) -> some View {
         VStack{
             HStack{
                 VStack{
@@ -666,6 +629,53 @@ struct HomeView: View {
          
             
         
+        }
+    }
+    
+    private func newSpecialsAndReviews(geoReader: GeometryProxy, venueId: String) -> some View {
+        ZStack{
+            if venueId == "1" {
+                VStack{
+                    Text("New \nSpecial")
+                        .bold()
+                        .font(.system(size: 15))
+                        .foregroundColor(.yellow)
+                    
+                    PacmanAnimation()
+                }
+                
+            } else if venueId == "0" {
+                VStack{
+                    Text("New \nDeal")
+                        .bold()
+                        .font(.system(size: 15))
+                        .foregroundColor(.orange)
+                    SpinningView()
+                }
+                
+            } else {
+                VStack{
+                    Text("New \nReview")
+                        .bold()
+                        .font(.system(size: 15))
+                        .foregroundColor(.pink)
+                    
+                    ZStack{
+                        Circle()
+                            .foregroundColor(.pink)
+                            .scaleEffect(scale)
+                            .animation(
+                                Animation.easeInOut(duration: 0.6)
+                                    .repeatForever().delay(delay), value: scale
+                            )
+                            .onAppear {
+                                self.scale = 1
+                            }
+                        Text("1")
+                    }
+                    .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
+                }
+            }
         }
     }
 }

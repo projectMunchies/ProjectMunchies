@@ -361,6 +361,7 @@
 		77F3E0A72A860C1400BC3791 /* home */ = {
 			isa = PBXGroup;
 			children = (
+				77F3E0A92A860C3E00BC3791 /* HomeViewModel.swift */,
 				77F3E0A82A860C2300BC3791 /* models */,
 				77E383362A7226290084B8A6 /* HomeView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
@@ -371,7 +372,6 @@
 		77F3E0A82A860C2300BC3791 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				77F3E0A92A860C3E00BC3791 /* HomeViewModel.swift */,
 				77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */,
 				77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */,
 				7753346C2B4FD4630078564B /* CategoryTypeModel.swift */,

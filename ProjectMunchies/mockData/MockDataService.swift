@@ -7909,6 +7909,54 @@ enum MockDataService {
             "deals": []
         ])
     }
+    
+//    public func addNewReviews() {
+//        let docRefs = db.collection("reviews")
+//             
+//        let id = UUID().uuidString
+//        docRefs.document(id).setData([
+//            "id": id,
+//            "title": "Could be worse",
+//            "body": "Happy Hour Man these nuggets is cool a f",
+//            "profileId": "ru5t4i954g9ig54t",
+//            "timeStamp": Date.today(),
+//        ])
+//        
+//        let id2 = UUID().uuidString
+//        docRefs.document(id2).setData([
+//            "id": id2,
+//            "title": "WTF if this?",
+//            "body": "Chicken is cold and that on everythang I is!",
+//            "profileId": "fj89j3498fj34f34",
+//            "timeStamp": Date.today(),
+//        ])
+//    }
+//    
+//    public func addNewSpecials() {
+//        let docRefs = db.collection("specials")
+//             
+//        let id = UUID().uuidString
+//        docRefs.document(id).setData([
+//            "id": id,
+//            "name": "Double Combo",
+//            "type": "deal",
+//            "venueId": "3890ue3289ue23",
+//            "description": "blahblah blah",
+//            "creationDate": Date.today(),
+//            "expirationDate": Date.today().next(.monday),
+//        ])
+//        
+//        let id2 = UUID().uuidString
+//        docRefs.document(id2).setData([
+//            "id": id2,
+//            "name": "Buy one get one free",
+//            "type": "offer",
+//            "venueId": "e3289ue3289ue23908",
+//            "description": "blahblah blah",
+//            "creationDate": Date.today(),
+//            "expirationDate": Date.today().next(.monday),
+//        ])
+//    }
 }
 
 
