@@ -1,8 +1,8 @@
 //
 //  OffsetModifier.swift
-//  UICarousel
+//  ProjectMunchies
 //
-//  Created by DotZ3R0 on 9/2/23.
+//  Created by DotZ3R0 on 1/30/24.
 //
 
 import SwiftUI

@@ -16,5 +16,4 @@ class ProfilesViewModel: ObservableObject {
     let db = Firestore.firestore()
      
     @Published var profiles: UIImage = UIImage()
-
 }

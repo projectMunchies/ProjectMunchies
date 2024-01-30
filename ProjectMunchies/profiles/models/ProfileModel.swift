@@ -37,5 +37,4 @@ var mockProfiles: [ProfileModel] = [
     ProfileModel(id: "6io56in6ih", fullName: "Simone Guthrie", location: "Tampa, FL", description: sampleText, gender: "Female", age: "25", fcmTokens: [], messageThreadIds: [], occupation: "Teacher", hobbies: ["Running","Gym"], reviewIds: ["3242"], isMockData: true)
 ]
 
-//Dummy Text
 var sampleText = "lorem ispfads fadofjdsjklf dfkljdfd fgkjrewiof fjkdsfjdasf dlkfjads flkdsjfhgfiewu dakjfhdskjaf dfkjdsahfbeiwf ds fdoskjfnds bfudiskfd sfkjdshfdhsf fokjhdskfjha sdkjf fkjadsbfh dajklfd fkdb fdsojf dsjbfd fbjof jfb e dsfkjbd nfdkn f asdfjkhdskjfhlwau"
