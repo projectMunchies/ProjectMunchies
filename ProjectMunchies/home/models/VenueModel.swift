@@ -27,7 +27,8 @@ struct VenueModel: Identifiable, Hashable, Equatable {
     var specials: [SpecialModel]
 }
 
-var venueSample = VenueModel(id: "",  name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+var emptyVenue = VenueModel(id: "",  name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+
 var venuesSample: [VenueModel] = [
     VenueModel(id: "0", name: "bdgd", coordinates: CLLocationCoordinate2D(latitude: 27.9432414,
                                                   longitude: -82.4503545), address: "", reviews: [], specials: []),

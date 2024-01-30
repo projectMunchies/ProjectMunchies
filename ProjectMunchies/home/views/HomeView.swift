@@ -7,7 +7,6 @@
 
 import SwiftUI
 import MapKit
-import AVKit
 
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
@@ -19,33 +18,25 @@ struct HomeView: View {
     @Binding var position: MapCameraPosition
     
     @State private var scale: CGFloat = 0.5
-    @State var player = AVPlayer()
     @State private var searchResults: [MKMapItem] = []
-    @State var foodButtonPressed: Bool = false
-    @State var drinkButtonPressed: Bool = false
-    @State var nightButtonPressed: Bool = false
-    @State var isDropdownOpen: Bool = false
-    @State var sideButtonIndex = 0
+    @State private var sideButtonIndex = 0
     @State private var showModal: Bool = false
     @State private var categoryIndex: Int = 0
     @State private var categoryTypeIndex: Int = 0
     @State private var showVenueFilter: Bool = false
-    @State private var venue: VenueModel = venueSample
+    @State private var currentVenue: VenueModel = emptyVenue
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
     @State private var indentLow: Int = 80
     @State private var indentHigh: Int = 80
-    @State var sideButtonIndexOptions: [Int] = [1,2,3]
-    @State var showBottomTabs: Bool = false
-    @State var liveReviews: [ReviewModel] = liveReviewSamples
-    @State var newSpecials: [SpecialModel] = specialsSample
+    @State private var showBottomTabs: Bool = false
+    @State private var newSpecials: [SpecialModel] = []
     
-    @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
-    @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
-    @State var searchTextNightSpotsOptions: [String] = ["","",""]
-    @State var currentVenue: VenueModel = VenueModel(id: "0", name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
-    @State var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
+    @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
+    @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
+    @State private var searchTextNightSpotsOptions: [String] = ["","",""]
+    @State private var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
         latitude: 27.9416957,
         longitude: -82.4853619
     ),CLLocationCoordinate2D(
@@ -120,117 +111,21 @@ struct HomeView: View {
                     .presentationBackgroundInteraction(
                         .enabled(upThrough: .height(CGFloat(indentHigh))))
                     .interactiveDismissDisabled()
-                
-            }
-            .onChange(of: venue.address) {
-                showVenueFilter.toggle()
-            }
-            .sheet(isPresented: $showVenueFilter) {
-                VStack{
-                    Text("\(venue.name)")
-                        .foregroundColor(.white)
-                        .font(.title)
-                    
-                    Text("\(venue.address)")
-                        .foregroundColor(.white)
-                }
-                .presentationDetents([.height(100)])
-                .presentationDragIndicator(.visible)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
-        VStack(alignment: .leading){
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        isDropdownOpen.toggle()
-                    }
-                }) {
-                    
-                    Text("Live Reviews ")
-                        .foregroundColor(.white)
-                        .font(.system(size: 20, weight: .bold))
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.green)
-                                .frame(height: 35)
-                        )
-                        .opacity(0.7)
-                    
-                    Image(systemName: isDropdownOpen ? "chevron.up" : "chevron.down")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 12, height: 12)
-                        .foregroundColor(.white)
-                }
-                .padding()
-                .zIndex(1)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .overlay(
-                VStack(spacing: 15) {
-                    if isDropdownOpen {
-                        ScrollView {
-                            LazyVStack(spacing: 18) {
-                                ForEach(self.liveReviews, id: \.self) { review in
-                                    HStack(alignment: .top) {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .background(Color.black.opacity(0.2))
-                                            .aspectRatio(contentMode: .fill)
-                                            .clipShape(Circle())
-                                            .padding(.trailing, 25)
-                                        
-                                        VStack(alignment: .leading, spacing: 5) {
-                                            Text(review.body)
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 16))
-                                            
-                                            Text("by Anonymous user")
-                                                .foregroundColor(.purple)
-                                                .font(.system(size: 15))
-                                        }
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        
-                                    }
-                                    .padding(.horizontal)
-                                }
-                            }
-                        }
-                        .frame(width: geoReader.size.width * 0.75,                            height: min(geoReader.size.height * 0.60, CGFloat(self.liveReviews.count) * 57.0))
-                        .padding()
-                        .background(Color.black.opacity(0.7))
-                        .cornerRadius(15)
-                        .offset(x: -8, y: geoReader.size.height * 0.215)
-                    }
-                }
-            )
-            .frame(maxHeight: .infinity)
-        }
-        .padding(.leading)
+        LiveReviewWidget()
     }
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
         Map(position: $position) {
-            if self.sideButtonIndex == 3 {
-                if let route {
-                    MapPolyline(route.polyline)
-                        .stroke(gradient, style: stroke)
-                }
-            } else {
                 ForEach(self.venues) { venue in
                     Annotation("", coordinate: venue.coordinates) {
                         ZStack{
-                            
-                            //                            if !newSpecials.isEmpty || !newReviews.isEmpty) {
-                            newSpecialsAndReviews(geoReader: geoReader, venueId: venue.id)
-                            //  }
-                            
+                            displayMapAlerts(geoReader: geoReader, venueId: venue.id)
                         }
                         .onTapGesture {
                             self.showBottomTabs.toggle()
@@ -241,122 +136,13 @@ struct HomeView: View {
                         }
                     }
                 }
-            }
         }
         .onMapCameraChange { mapCameraUpdateContext in
             self.region = mapCameraUpdateContext.region
         }
-        .onAppear(perform: {
-            fetchRouteFrom(nightSpots[self.sideButtonIndexOptions.randomElement()!], to: nightSpots[self.sideButtonIndexOptions.randomElement()!])
-        })
         .preferredColorScheme(.dark)
         .cornerRadius(30)
         .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.5)
-    }
-    
-    private func buttonsOnSide(for geoReader: GeometryProxy) -> some View {
-        VStack{
-            VStack{
-                Button(action: {
-                    self.venues.removeAll()
-                    
-                    if self.sideButtonIndex == 1 {
-                        withAnimation{
-                            self.showModal.toggle()
-                        }
-                        self.sideButtonIndex = 0
-                        self.searchText = ""
-                    }else {
-                        withAnimation{
-                            self.showModal.toggle()
-                        }
-                        self.sideButtonIndex = 1
-                    }
-                }){
-                    ZStack{
-                        Text("")
-                            .frame(width: 55, height: 55)
-                            .background(self.sideButtonIndex == 1 && showModal ? .green : .gray)
-                            .cornerRadius(10)
-                        VStack{
-                            Image(systemName: "fork.knife.circle.fill")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                                .foregroundColor(.white)
-                            
-                            Text("Cusines")
-                                .font(.system(size: 10))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-                
-                Button(action: {
-                    self.venues.removeAll()
-                    withAnimation {
-                        self.showModal.toggle()
-                    }
-                    if self.sideButtonIndex == 2 {
-                        self.sideButtonIndex = 0
-                        self.searchText = ""
-                    }else {
-                        self.sideButtonIndex = 2
-                    }
-                }){
-                    ZStack{
-                        Text("")
-                            .frame(width: 55, height: 55)
-                            .background(self.sideButtonIndex == 2 && showModal ? .green : .gray)
-                            .cornerRadius(10)
-                        VStack{
-                            Image(systemName: "wineglass.fill")
-                                .resizable()
-                                .frame(width: 20, height: 25)
-                                .foregroundColor(.white)
-                            
-                            Text("Drinks")
-                                .font(.system(size: 10))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-            }
-            
-            VStack{
-                Button(action: {
-                    self.venues.removeAll()
-                    
-                    if self.sideButtonIndex == 3 {
-                        self.sideButtonIndex = 0
-                        self.searchText = ""
-                    }else {
-                        self.sideButtonIndex = 3
-                        self.searchText = ""
-                        self.startSearch = true
-                        fetchRouteFrom(nightSpots.randomElement()!, to: nightSpots.randomElement()!)
-                    }
-                }){
-                    ZStack{
-                        Text("")
-                            .frame(width: 55, height: 55)
-                            .background(self.sideButtonIndex == 3 ? .green : .gray)
-                            .cornerRadius(10)
-                        
-                        VStack{
-                            Image(systemName: "figure.socialdance")
-                                .resizable()
-                                .frame(width: 25, height: 20)
-                                .foregroundColor(.white)
-                            
-                            Text("What's \nHot")
-                                .font(.system(size: 10))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-            }
-        }
-        .opacity(0.6)
     }
     
     private func displayVenues(for geoReader: GeometryProxy) -> some View {
@@ -384,7 +170,7 @@ struct HomeView: View {
         }
     }
     
-    public func searchForVenues(query: String, mapAlertVenue: VenueModel = venueSample ) {
+    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenue) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
@@ -469,7 +255,7 @@ struct HomeView: View {
                     }
                     
                     if !self.showBottomTabs {
-                        detailsView(geoReader: geoReader, venue: venue, specials: newSpecials)
+                        detailsView(geoReader: geoReader, venue: currentVenue, specials: newSpecials)
                     }
                 }
             }
@@ -496,7 +282,7 @@ struct HomeView: View {
                             .font(.largeTitle)
                             .multilineTextAlignment(.center)
                         
-                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $venue)
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
                     }
                 }
             }
@@ -628,7 +414,7 @@ struct HomeView: View {
         }
     }
     
-    private func newSpecialsAndReviews(geoReader: GeometryProxy, venueId: String) -> some View {
+    private func displayMapAlerts(geoReader: GeometryProxy, venueId: String) -> some View {
         ZStack{
             if venueId == "1" {
                 VStack{
@@ -742,84 +528,5 @@ struct HomeView_Previews: PreviewProvider {
                 longitudeDelta: 0.1
             )
         ))                                                                                              ))
-    }
-}
-
-struct ResetEllipse: View {
-    var body: some View {
-        ZStack{
-            Ellipse()
-                .frame(width: 40, height: 40)
-                .foregroundColor(.orange)
-            
-            Text("2")
-                .frame(width: 40, height: 40)
-        }
-        
-    }
-}
-
-struct SpinningEllipse: View {
-    @State private var width: CGFloat = 40
-    
-    var body: some View {
-        ZStack{
-            Ellipse()
-                .frame(width: width, height: 40)
-                .foregroundColor(.orange)
-            
-            Text("2")
-                .frame(width: width, height: 10)
-        }
-        .onAppear {
-            withAnimation(.easeInOut.repeatForever(autoreverses: true).speed(1)) {
-                width = 0
-            }
-        }
-    }
-}
-
-struct SpinningView: View {
-    @State private var isSpinning = true
-    
-    var body: some View {
-        VStack {
-            Spacer()
-            
-            if isSpinning {
-                SpinningEllipse()
-            } else {
-                ResetEllipse()
-            }
-            
-            Spacer()
-        }
-        .navigationTitle("Spinning Animation")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct PacmanAnimation: View {
-    var body: some View {
-        TimelineView(.animation) { timeline in
-            Canvas { context, size in
-                let center = CGPoint(x: size.width/2, y: size.height/2)
-                let timenow  = timeline.date.timeIntervalSince1970 * 100
-                let delta = abs(timenow.remainder(dividingBy: 50))
-                
-                var path = Path()
-                path.addArc(center: center, radius: size.width/2,
-                            startAngle: Angle(degrees: delta), endAngle: Angle(degrees: 360 - delta), clockwise: false)
-                path.addLine(to: center)
-                
-                // Draw background circle
-                context.fill(path, with: .color(.yellow))
-                
-                // Draw eyes
-                context.fill(Path(ellipseIn: CGRect(x: size.width / 2, y: size.height / 4,
-                                                    width: 3, height: 3)), with: .color(.black))
-            }
-            .frame(width: 40, height: 40)
-        }
     }
 }
