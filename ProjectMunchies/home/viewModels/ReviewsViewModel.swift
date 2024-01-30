@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 import FirebaseAuth
+import MapKit
 
 class ReviewsViewModel: ObservableObject {
     let storage = Storage.storage()
@@ -17,8 +18,9 @@ class ReviewsViewModel: ObservableObject {
     
     @Published var reviews : [ReviewModel] = []
     @Published var newReviews : [ReviewModel] = []
+    @Published var reviewsVenues : [VenueModel] = []
     
-    public func getAllNewReviews(profileId: String, completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
+    public func getAllNewReviews(completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
         var query: Query!
         
         query = db.collection("reviews")
@@ -34,7 +36,7 @@ class ReviewsViewModel: ObservableObject {
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if !data.isEmpty{
-                            let newReview = ReviewModel(id: data["id"] as? String ?? "", title: data["title"] as? String ?? "", body: data["body"] as? String ?? "", profileId: data["profileId"] as? String ?? "", timeStamp: data["timeStamp"] as? Date ?? Date())
+                            let newReview = ReviewModel(id: data["id"] as? String ?? "", title: data["title"] as? String ?? "", body: data["body"] as? String ?? "", profileId: data["profileId"] as? String ?? "", venueId: data["venueId"] as? String ?? "", timeStamp: data["timeStamp"] as? Date ?? Date())
                             
                             self.newReviews.append(newReview)
                         }
@@ -42,6 +44,40 @@ class ReviewsViewModel: ObservableObject {
                     completed(self.newReviews)
                 }
             }
+    }
+    
+    public func getReviewsVenues(newReviews: [ReviewModel] ,completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {
+        var query: Query!
+    
+        if !newReviews.isEmpty {
+            var venueIds = newReviews.map { $0.venueId }
+            
+            query = db.collection("venues")
+                .whereField("id", in: venueIds)
+                .limit(to: 10)
+            
+            query
+                .getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting reviewsVenues documents: \(err)")
+                        completed([])
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let data = document.data()
+                            if !data.isEmpty{
+                                var reviewVenue = VenueModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: data["address"] as? String ?? "", reviews: data["reviews"] as? [ReviewModel] ?? [], specials: data["specials"] as? [SpecialModel] ?? [])
+                                
+                                // after finding matching venue, append associated review
+                                reviewVenue.reviews.append(newReviews.first { $0.venueId == reviewVenue.id } ??  liveReviewSample)
+                                
+                                self.reviewsVenues.append(reviewVenue)
+                            }
+                        }
+                        completed(self.reviewsVenues)
+                    }
+                }
+        }
+        completed([])
     }
     
     public func getReviews(profileId: String, completed: @escaping (_ reviews: [ReviewModel]) -> Void) {
@@ -59,7 +95,7 @@ class ReviewsViewModel: ObservableObject {
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if !data.isEmpty{
-                            let review = ReviewModel(id: data["id"] as? String ?? "", title: data["title"] as? String ?? "", body: data["body"] as? String ?? "", profileId: data["profileId"] as? String ?? "", timeStamp: data["timeStamp"] as? Date ?? Date())
+                            let review = ReviewModel(id: data["id"] as? String ?? "", title: data["title"] as? String ?? "", body: data["body"] as? String ?? "", profileId: data["profileId"] as? String ?? "", venueId: data["venueId"] as? String ?? "", timeStamp: data["timeStamp"] as? Date ?? Date())
                             
                             self.reviews.append(review)
                         }

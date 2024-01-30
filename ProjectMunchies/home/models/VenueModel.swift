@@ -8,20 +8,30 @@
 import Foundation
 import MapKit
 
-struct VenueModel: Identifiable {
-    var id: String
+struct VenueModel: Identifiable, Hashable, Equatable {
+    //Needed to conform to Equatable
+    static func == (lhs: VenueModel, rhs: VenueModel) -> Bool {
+        return lhs.id == rhs.id && lhs.coordinates == rhs.coordinates
+    }
+    
+    //Needed to conform to Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    let id: String
     var name: String
-    var coordinate: CLLocationCoordinate2D
+    var coordinates: CLLocationCoordinate2D
     var address: String
     var reviews: [ReviewModel]
     var specials: [SpecialModel]
 }
 
-var venueSample = VenueModel(id: "0",  name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+var venueSample = VenueModel(id: "",  name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
 var venuesSample: [VenueModel] = [
-    VenueModel(id: "0", name: "bdgd", coordinate: CLLocationCoordinate2D(latitude: 27.9432414,
+    VenueModel(id: "0", name: "bdgd", coordinates: CLLocationCoordinate2D(latitude: 27.9432414,
                                                   longitude: -82.4503545), address: "", reviews: [], specials: []),
-    VenueModel(id: "1", name: "gdf", coordinate: CLLocationCoordinate2D(latitude: 27.9626861,
+    VenueModel(id: "1", name: "gdf", coordinates: CLLocationCoordinate2D(latitude: 27.9626861,
                                                   longitude: -82.4937287), address: "", reviews: [], specials: []),
-    VenueModel(id: "2", name: "4yg4", coordinate: CLLocationCoordinate2D(latitude: 28.024146, longitude: -82.452467), address: "", reviews: [], specials: [])
+    VenueModel(id: "2", name: "4yg4", coordinates: CLLocationCoordinate2D(latitude: 28.024146, longitude: -82.452467), address: "", reviews: [], specials: [])
 ]

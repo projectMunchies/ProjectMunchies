@@ -11,6 +11,8 @@ import AVKit
 
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var reviewsViewModel = ReviewsViewModel()
+    @StateObject private var specialsViewModel = SpecialsViewModel()
     
     @Binding var searchText: String
     @Binding var startSearch: Bool
@@ -42,7 +44,7 @@ struct HomeView: View {
     @State var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State var searchTextNightSpotsOptions: [String] = ["","",""]
-    @State var currentVenue: VenueModel = VenueModel(id: "0", name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+    @State var currentVenue: VenueModel = VenueModel(id: "0", name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
     @State var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
         latitude: 27.9416957,
         longitude: -82.4853619
@@ -96,24 +98,12 @@ struct HomeView: View {
                     }
                     .onAppear{
                         self.showBottomTabs.toggle()
-                        homeViewModel.getUserProfile() {(userProfileId) -> Void in
-                            if userProfileId != "" {
-                                //get profileImage
-                                homeViewModel.getImageStorageFile(profileId: userProfileId)
-                            } else {
-                                homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
-                                    if newUserProfileId != "" {
-                                        //add a popover to add images in the future
-                                    }
-                                }
-                            }
-                        }
-                        self.venues = venuesSample
+                        getUserProfile()
+                        checkForNewMapAlerts()
                     }
                     .onChange(of: startSearch) {
-                        if self.startSearch == true {
-                            self.venues.removeAll()
-                            search(for: self.searchText)
+                        if self.startSearch {
+                            searchForVenues(query: self.searchText)
                         }
                     }
                     .onChange(of: searchText) {
@@ -233,14 +223,14 @@ struct HomeView: View {
                         .stroke(gradient, style: stroke)
                 }
             } else {
-                ForEach(venues) { venue in
-                    Annotation("", coordinate: venue.coordinate) {
+                ForEach(self.venues) { venue in
+                    Annotation("", coordinate: venue.coordinates) {
                         ZStack{
                             
-//                            if !newSpecials.isEmpty || !newReviews.isEmpty) {
-                                newSpecialsAndReviews(geoReader: geoReader, venueId: venue.id)
-                          //  }
-                           
+                            //                            if !newSpecials.isEmpty || !newReviews.isEmpty) {
+                            newSpecialsAndReviews(geoReader: geoReader, venueId: venue.id)
+                            //  }
+                            
                         }
                         .onTapGesture {
                             self.showBottomTabs.toggle()
@@ -257,8 +247,6 @@ struct HomeView: View {
             self.region = mapCameraUpdateContext.region
         }
         .onAppear(perform: {
-            
-            
             fetchRouteFrom(nightSpots[self.sideButtonIndexOptions.randomElement()!], to: nightSpots[self.sideButtonIndexOptions.randomElement()!])
         })
         .preferredColorScheme(.dark)
@@ -396,7 +384,7 @@ struct HomeView: View {
         }
     }
     
-    public func search(for query: String) {
+    public func searchForVenues(query: String, mapAlertVenue: VenueModel = venueSample ) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
@@ -407,8 +395,16 @@ struct HomeView: View {
             searchResults = response?.mapItems ?? []
             
             for result in searchResults {
-                let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinate: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
-                self.venues.append(venue)
+                // if venue is empty
+                if mapAlertVenue.id == "" {
+                    let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinates: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
+                    self.venues.append(venue)
+                } else {
+                    var newMapAlertVenue = mapAlertVenue
+                    newMapAlertVenue.coordinates = result.placemark.coordinate
+                    self.venues.removeAll(where: { $0.id == newMapAlertVenue.id })
+                    self.venues.append(newMapAlertVenue)
+                }
             }
         }
         self.startSearch = false
@@ -589,11 +585,11 @@ struct HomeView: View {
                 VStack{
                     Text("New Specials")
                         .font(.system(size: 50))
-                           .foregroundColor(.yellow)
-                       
-                       Text("Rome + Fig")
-                           .font(.title3)
-                           .foregroundColor(.gray)
+                        .foregroundColor(.yellow)
+                    
+                    Text("Rome + Fig")
+                        .font(.title3)
+                        .foregroundColor(.gray)
                     
                     ZStack{
                         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
@@ -605,18 +601,18 @@ struct HomeView: View {
                                     .frame(width: 200, height: 100)
                                     .scaledToFill()
                                     .opacity(0.5)
-                                  
+                                
                             }
-                     
+                        
                     }
-                   
+                    
                     
                 }
                 
                 Button(action: {
                     self.showBottomTabs.toggle()
                     self.indentLow = 80
-                    currentVenue = VenueModel(id: "0", name: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+                    currentVenue = VenueModel(id: "0", name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
                 }){
                     Image(systemName: "x.circle.fill")
                         .resizable()
@@ -626,9 +622,9 @@ struct HomeView: View {
                 }
                 
             }
-         
             
-        
+            
+            
         }
     }
     
@@ -677,6 +673,60 @@ struct HomeView: View {
                 }
             }
         }
+    }
+    
+    private func getUserProfile() {
+        homeViewModel.getUserProfile() {(userProfileId) -> Void in
+            if userProfileId != "" {
+                //get profileImage
+                homeViewModel.getImageStorageFile(profileId: userProfileId)
+            } else {
+                homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
+                    if newUserProfileId != "" {
+                        //add a popover to add images in the future
+                    }
+                }
+            }
+        }
+    }
+    
+    private func checkForNewMapAlerts() {
+        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
+            specialsViewModel.getAllNewSpecials {(newSpecials) -> Void in
+                if !newReviews.isEmpty || !newSpecials.isEmpty {
+                    getVenuesForMapAlerts(newReviews: newReviews, newSpecials: newSpecials)
+                }
+            }
+        }
+    }
+    
+    private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
+        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
+            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
+                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
+                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+                    for mapAlertVenue in self.venues {
+                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func combineVenues(reviewsVenues: [VenueModel], specialsVenues : [VenueModel]) {
+        //combining specials to reviewVenue object with same id
+        for reviewVenue in reviewsVenues {
+            for specialVenue in specialsVenues {
+                if reviewVenue.id == specialVenue.id {
+                    var foo = reviewVenue
+                    foo.specials.append(contentsOf: specialVenue.specials)
+                    self.venues.append(foo)
+                }
+            }
+        }
+        
+        // removes duplicate venues
+        self.venues = Array(Set(self.venues))
     }
 }
 

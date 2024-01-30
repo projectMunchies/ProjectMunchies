@@ -103,7 +103,7 @@ struct RecommendationModal: View {
             searchResults = response?.mapItems ?? []
             
             for result in searchResults {
-                let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinate: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
+                let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinates: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
                 self.venue = venue
             }
         }
@@ -171,8 +171,8 @@ struct RecommendationModal: View {
                         .offset(x: -card.previousOffset)
                     }
                 }
-                .onChange(of: self.venue.coordinate) {
-                    position =  MapCameraPosition.item(MKMapItem(placemark: .init(coordinate: venue.coordinate)))
+                .onChange(of: self.venue.coordinates) {
+                    position =  MapCameraPosition.item(MKMapItem(placemark: .init(coordinate: venue.coordinates)))
                 }
             }
         }
