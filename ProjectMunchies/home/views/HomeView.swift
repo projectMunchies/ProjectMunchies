@@ -32,7 +32,7 @@ struct HomeView: View {
     @State private var indentHigh: Int = 80
     @State private var showBottomTabs: Bool = false
     @State private var newSpecials: [SpecialModel] = []
-    
+    @State private var isSettingsPresented: Bool = false
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -81,8 +81,8 @@ struct HomeView: View {
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
-                        //                        subHeaderSection(for: geoReader)
-                        //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+                                             subHeaderSection(for: geoReader)
+                                                   .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
                         
                         //                        displayVenues(for: geoReader)
                         //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
@@ -117,8 +117,30 @@ struct HomeView: View {
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
-        LiveReviewWidget()
-    }
+        HStack {
+               Spacer()
+               
+               // Profile icon button
+               Button(action: {
+                   isSettingsPresented.toggle()
+               }) {
+                   Image(systemName: "person.circle")
+                       .resizable()
+                       .frame(width: 30, height: 30)
+                       .foregroundColor(.white)
+                       .padding()
+                        // Add a red border for debugging
+               }
+               .sheet(isPresented: $isSettingsPresented) {
+                   SettingsView()
+               }
+               .padding(.trailing, 16)
+           }
+           .padding(.horizontal, 16)
+           .padding(.top, 16)
+       }
+         
+     
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
         Map(position: $position) {

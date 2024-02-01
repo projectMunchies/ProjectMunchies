@@ -15,97 +15,87 @@ struct SettingsView: View {
     @State private var editInfo = false
     @State var isLargeImageAlert: Bool = false
     @State private var showHamburgerMenu: Bool = false
-    
-    //Animated View properties
-    @State var currentIndex: Int = 0
-    
+
     var body: some View {
-        GeometryReader{ geoReader in
-            ZStack{
+        GeometryReader { geoReader in
+            ZStack {
                 Color.white
                     .ignoresSafeArea()
-                
-                ZStack{
-                    VStack{
-                        imageSection(for: geoReader)
-                        
-                        Spacer()
-                            .frame(height:geoReader.size.height * 0.08)
-                        
-                        mainButtons(for: geoReader)
-                    }
-                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
-                    .sheet(isPresented: $showSheet){
-                                            // Pick an image from the photo library:
-                                            ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
-                                            
-                                            //  If you wish to take a photo from camera instead:
-                                            // ImagePicker(sourceType: .camera, selectedImage: self.$image)
-                                        }
-                    
-                    Text("Settings")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.largeTitle)
-                        .position(x:geoReader.size.width * 0.2, y:geoReader.size.height * 0.02)
-                    
-//                    Header(showHamburgerMenu: $showHamburgerMenu, isLoading: .constant(false), foodFilter: .constant(MockDataService.foodFilterSampleData), filteredCards: .constant([]), homeViewModel: homeViewModel)
+
+                VStack {
+                    imageSection(for: geoReader)
+
+                    Spacer()
+                        .frame(height: geoReader.size.height * 0.08)
+
+                    mainButtons(for: geoReader)
                 }
-                .position(x: geoReader.frame(in: .local).midX , y: geoReader.frame(in: .local).midY)
-                .disabled(self.showHamburgerMenu ? true : false)
-            }
-            //.navigationBarBackButtonHidden(true)
-            .onAppear {
-                homeViewModel.getUserProfile() {(userProfileId) -> Void in
-                    if userProfileId != "" {
-                        //get profileImage
-                        homeViewModel.getImageStorageFile(profileId: userProfileId)
-                    }
+                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
+                .sheet(isPresented: $showSheet) {
+                    ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
+                        .background(Color.white.cornerRadius(20))
+                        .padding()
                 }
+
+                Text("Settings")
+                    .bold()
+                    .foregroundColor(.black)
+                    .font(.largeTitle)
+                    .position(x: geoReader.size.width * 0.2, y: geoReader.size.height * 0.02)
             }
-            
-            //Display HamburgerMenu
+            .position(x: geoReader.frame(in: .local).midX, y: geoReader.frame(in: .local).midY)
+            .disabled(showHamburgerMenu)
+
+            // Display HamburgerMenu
             if self.showHamburgerMenu {
                 HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
-                    .frame(width: geoReader.size.width/2)
+                    .frame(width: geoReader.size.width / 2)
                     .padding(.trailing, geoReader.size.width * 0.5)
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            homeViewModel.getUserProfile { userProfileId in
+                if userProfileId != "" {
+                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+                }
+            }
+        }
     }
-    
-    private func deleteUser(){
+
+    private func deleteUser() {
         let user = Auth.auth().currentUser
-        user?.delete() { error in
+        user?.delete { error in
             if let error = error {
                 print("Error deleting account")
                 print(error)
-            }else {
+            } else {
                 viewRouter.currentPage = .signinPage
             }
         }
     }
-    
-    private func signOutUser(){
+
+    private func signOutUser() {
         let firebaseAuth = Auth.auth()
-        do{
+        do {
             try firebaseAuth.signOut()
-        }catch let signOutError as NSError {
+        } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
             return
         }
         viewRouter.currentPage = .signinPage
     }
-    
+
     private func imageSection(for geoReader: GeometryProxy) -> some View {
-        VStack{
+        VStack {
             Image(uiImage: homeViewModel.profileImage)
                 .resizable()
                 .frame(width: 250, height: 250)
                 .background(Color.black.opacity(0.2))
                 .aspectRatio(contentMode: .fill)
                 .clipShape(Circle())
-            
-            if(editInfo) {
+
+            if editInfo {
                 Button(action: {
                     showSheet = true
                 }) {
@@ -114,68 +104,69 @@ struct SettingsView: View {
                         .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.04)
                         .background(Color.blue)
                         .cornerRadius(geoReader.size.height * 0.04)
-                        //.shadow(radius: 10, x: 10, y: 10)
                         .foregroundColor(Color.white)
                 }
             }
+                    
+            // Horizontal circular buttons
+            HStack {
+                Button(action: {
+                    // Handle "My Bunchies" action
+                }) {
+                    Image(systemName: "circle.grid.2x2.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .background(Color.gray)
+                        .clipShape(Circle())
+                }
+                .padding()
+
+                Button(action: {
+                    // Handle "Privacy and Security" action
+                }) {
+                    Image(systemName: "lock.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .background(Color.gray)
+                        .clipShape(Circle())
+                }
+                .padding()
+
+                Button(action: {
+                    // Handle "My Reviews" action
+                }) {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .background(Color.gray)
+                        .clipShape(Circle())
+                }
+                .padding()
+            }
         }
     }
-//
-//    private func saveAllInfo(){
-//        if editInfo == false {
-//            homeViewModel.updateUserProfile {(profileId) -> Void in
-//                if profileId != "" {
-//                    uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id)
-//                }
-//
-//
-//
-//            }
-//        }
-//    }
-    
-//    private func uploadStorageFile(image: UIImage, profileId: String){
-//            let storageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
-//
-//            let data = image.jpegData(compressionQuality: 0.2)
-//
-//            let metadata = StorageMetadata()
-//            metadata.contentType = "image/jpg"
-//
-//            if let data = data {
-//                storageRef.putData(data, metadata: metadata) { (metadata, error) in
-//                    if let error = error {
-//                        print("Error while uploading file: ", error)
-//                    }
-//
-//                    if let metadata = metadata {
-//                        print("Metadata: ", metadata)
-//                    }
-//                }
-//            }
-//        }
-    
     private func mainButtons(for geoReader: GeometryProxy) -> some View {
-        VStack{
+        VStack {
             Button(action: {
-                if editInfo == true {
-                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) {(message) -> Void in
+                if editInfo {
+                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
                         if message == "image too large" {
                             isLargeImageAlert.toggle()
                         }
                     }
                 }
-                        editInfo.toggle()
-                       // saveAllInfo()
-                    }) {
-                        Text(editInfo ? "Save Profile" : "Edit Profile")
-                            .foregroundColor(.white)
-                            .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
-                            .background(Color.gray)
-                            .cornerRadius(geoReader.size.width * 0.06)
-                          //  .shadow(radius: geoReader.size.width * 0.02, x: geoReader.size.width * 0.04, y: geoReader.size.width * 0.04)
-                    }
-            
+                editInfo.toggle()
+            }) {
+                Text(editInfo ? "Save Profile" : "Edit Profile")
+                    .foregroundColor(.white)
+                    .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
+                    .background(Color.gray)
+                    .cornerRadius(geoReader.size.width * 0.06)
+            }
+
             Button(action: {
                 signOutUser()
             }) {
@@ -185,7 +176,7 @@ struct SettingsView: View {
                     .cornerRadius(geoReader.size.width * 0.06)
                     .foregroundColor(.white)
             }
-            
+
             Button(action: {
                 deleteUser()
             }) {
