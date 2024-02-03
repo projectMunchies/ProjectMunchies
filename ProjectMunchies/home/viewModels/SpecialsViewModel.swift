@@ -78,7 +78,6 @@ class SpecialsViewModel: ObservableObject {
                     }
                 }
         }
-        completed([])
     }
     
     public func getSpecials(profileId: String, completed: @escaping (_ specials: [SpecialModel]) -> Void) {

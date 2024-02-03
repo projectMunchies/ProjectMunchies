@@ -77,7 +77,6 @@ class ReviewsViewModel: ObservableObject {
                     }
                 }
         }
-        completed([])
     }
     
     public func getReviews(profileId: String, completed: @escaping (_ reviews: [ReviewModel]) -> Void) {

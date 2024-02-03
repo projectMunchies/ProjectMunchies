@@ -469,6 +469,9 @@ struct HomeView: View {
                 }
             }
         }
+        .onAppear{
+      
+        }
     }
     
     private func getUserProfile() {
