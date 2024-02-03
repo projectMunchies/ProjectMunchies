@@ -19,7 +19,7 @@ struct SettingsView: View {
     var body: some View {
         GeometryReader { geoReader in
             ZStack {
-                Color.white
+                Color.purple
                     .ignoresSafeArea()
 
                 VStack {
@@ -113,7 +113,7 @@ struct SettingsView: View {
                 Button(action: {
                     // Handle "My Bunchies" action
                 }) {
-                    Image(systemName: "circle.grid.2x2.fill")
+                    Image(systemName: "plus.circle")
                         .resizable()
                         .frame(width: 40, height: 40)
                         .foregroundColor(.white)
@@ -121,17 +121,24 @@ struct SettingsView: View {
                         .clipShape(Circle())
                 }
                 .padding()
+                .sheet(isPresented: $showSheet) {
+                    MyBunchiesView()
+                }
 
                 Button(action: {
                     // Handle "Privacy and Security" action
                 }) {
                     Image(systemName: "lock.fill")
                         .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.white)
-                        .background(Color.gray)
+                        .frame(width: 38, height: 38)
+                        .font(.system(size: 1))
+                        .foregroundColor(Color(red: 255/255, green: 215/255, blue: 100/255))
+                        .background(Color.black)
                         .clipShape(Circle())
-                }
+                        .overlay(
+                                        Circle()
+                                            .stroke(Color.white, lineWidth: 3)
+                                    )                }
                 .padding()
 
                 Button(action: {
@@ -139,10 +146,14 @@ struct SettingsView: View {
                 }) {
                     Image(systemName: "star.fill")
                         .resizable()
-                        .frame(width: 40, height: 40)
+                        .frame(width: 38, height: 38)
                         .foregroundColor(.white)
                         .background(Color.gray)
                         .clipShape(Circle())
+                        .overlay(
+                                        Circle()
+                                            .stroke(Color.white, lineWidth: 3)
+                                    )
                 }
                 .padding()
             }

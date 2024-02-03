@@ -17,6 +17,7 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
+    @State private var selectedMenuIndex: Int = 0
     @State private var scale: CGFloat = 0.5
     @State private var searchResults: [MKMapItem] = []
     @State private var sideButtonIndex = 0
@@ -120,26 +121,40 @@ struct HomeView: View {
         HStack {
                Spacer()
                
-               // Profile icon button
-               Button(action: {
-                   isSettingsPresented.toggle()
-               }) {
-                   Image(systemName: "person.circle")
-                       .resizable()
-                       .frame(width: 30, height: 30)
-                       .foregroundColor(.white)
-                       .padding()
-                        // Add a red border for debugging
+            // Profile icon button with dropdown menu
+                   Menu {
+                       Button(action: {
+                           // Handle "My Bunchies" action
+                       }) {
+                           Label("My Bunchies", systemImage: "person.2.square.stack")
+                       }
+
+                       Button(action: {
+                           // Handle "My Reviews" action
+                       }) {
+                           Label("My Reviews", systemImage: "star.fill")
+                       }
+
+                       Button(action: {
+                           // Handle "Privacy and Security" action
+                       }) {
+                           Label("Privacy and Security", systemImage: "lock.fill")
+                       }
+                   } label: {
+                       Image(systemName: "person.circle")
+                           .resizable()
+                           .frame(width: 30, height: 30)
+                           .foregroundColor(.white)
+                           .padding()
+                   }
+                   .padding(.trailing, 16)
+
+                   // ... (rest of your code)
                }
-               .sheet(isPresented: $isSettingsPresented) {
-                   SettingsView()
-               }
-               .padding(.trailing, 16)
+               .padding(.horizontal, 16)
+               .padding(.top, 16)
            }
-           .padding(.horizontal, 16)
-           .padding(.top, 16)
-       }
-         
+
      
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
