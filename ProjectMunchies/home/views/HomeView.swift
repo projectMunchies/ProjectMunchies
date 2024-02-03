@@ -17,6 +17,8 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
+   
+    @State private var selectedView: Int?
     @State private var selectedMenuIndex: Int = 0
     @State private var scale: CGFloat = 0.5
     @State private var searchResults: [MKMapItem] = []
@@ -122,40 +124,57 @@ struct HomeView: View {
                Spacer()
                
             // Profile icon button with dropdown menu
-                   Menu {
-                       Button(action: {
-                           // Handle "My Bunchies" action
-                       }) {
-                           Label("My Bunchies", systemImage: "person.2.square.stack")
-                       }
+                    Menu {
+                        Button(action: {
+                            selectedView = 0 // My Bunchies
+                        }) {
+                            Label("My Bunchies", systemImage: "person.2.square.stack")
+                        }
 
-                       Button(action: {
-                           // Handle "My Reviews" action
-                       }) {
-                           Label("My Reviews", systemImage: "star.fill")
-                       }
+                        Button(action: {
+                            selectedView = 1 // My Reviews
+                        }) {
+                            Label("My Reviews", systemImage: "star.fill")
+                        }
 
-                       Button(action: {
-                           // Handle "Privacy and Security" action
-                       }) {
-                           Label("Privacy and Security", systemImage: "lock.fill")
-                       }
-                   } label: {
-                       Image(systemName: "person.circle")
-                           .resizable()
-                           .frame(width: 30, height: 30)
-                           .foregroundColor(.white)
-                           .padding()
-                   }
-                   .padding(.trailing, 16)
-
-                   // ... (rest of your code)
+                        Button(action: {
+                            selectedView = 2 // Privacy and Security
+                        }) {
+                            Label("Privacy and Security", systemImage: "lock.fill")
+                        }
+                    } label: {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    .padding(.trailing, 16)
+                }
+        .onChange(of: selectedView) { newValue in
+               switch newValue {
+               case 0:
+                   // Navigate to MyBunchiesView
+                   isSettingsPresented = true
+               case 1:
+                   // Navigate to MyReviewsView
+                   isSettingsPresented = true
+               case 2:
+                   // Navigate to SecurityPrivacyView
+                   isSettingsPresented = true
+               default:
+                   break
                }
-               .padding(.horizontal, 16)
-               .padding(.top, 16)
            }
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .sheet(isPresented: $isSettingsPresented) {
+                        NavigationView {
+                            MyBunchiesView()
+                        }
+                    }
+            }
 
-     
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
         Map(position: $position) {
@@ -549,6 +568,12 @@ struct HomeView: View {
         }
     }
 }
+
+
+
+
+
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

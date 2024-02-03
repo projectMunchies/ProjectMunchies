@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
+		388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */; };
+		388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
 		770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0572A76BBC0004CA5D2 /* SignInView.swift */; };
 		770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0592A76BBCB004CA5D2 /* SignUpView.swift */; };
@@ -101,6 +103,8 @@
 
 /* Begin PBXFileReference section */
 		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
+		3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
+		388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPrivacyView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		770AD0572A76BBC0004CA5D2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
+				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
+				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
 			);
 			path = DetailedSettingsViews;
 			sourceTree = "<group>";
@@ -618,6 +624,7 @@
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
+				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
 				7772A01A2B67811400652687 /* VenuesViewModel.swift in Sources */,
@@ -631,6 +638,7 @@
 				77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
+				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
 				77E383452A7247460084B8A6 /* MockDataService.swift in Sources */,
 				77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */,
