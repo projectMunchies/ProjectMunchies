@@ -21,7 +21,7 @@ struct PacmanAnimation: View {
                 path.addLine(to: center)
                 
                 // Draw background circle
-                context.fill(path, with: .color(.yellow))
+                context.fill(path, with: .color(.blue))
                 
                 // Draw eyes
                 context.fill(Path(ellipseIn: CGRect(x: size.width / 2, y: size.height / 4,

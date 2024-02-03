@@ -144,20 +144,20 @@ struct HomeView: View {
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
         Map(position: $position) {
-                ForEach(self.venues) { venue in
-                    Annotation("", coordinate: venue.coordinates) {
-                        ZStack{
-                            displayMapAlerts(geoReader: geoReader, venueId: venue.id)
-                        }
-                        .onTapGesture {
-                            self.showBottomTabs.toggle()
-                            self.indentLow = 200
-                            self.indentHigh = 800
-                            currentVenue = venue
-                            scrollReader.scrollTo(currentVenue.id, anchor: .center)
-                        }
+            ForEach(self.venues) { venue in
+                Annotation("", coordinate: venue.coordinates) {
+                    ZStack{
+                        displayMapAlerts(geoReader: geoReader, venue: venue)
+                    }
+                    .onTapGesture {
+                        self.showBottomTabs.toggle()
+                        self.indentLow = 200
+                        self.indentHigh = 800
+                        currentVenue = venue
+                        scrollReader.scrollTo(currentVenue.id, anchor: .center)
                     }
                 }
+            }
         }
         .onMapCameraChange { mapCameraUpdateContext in
             self.region = mapCameraUpdateContext.region
@@ -210,7 +210,7 @@ struct HomeView: View {
                 } else {
                     var newMapAlertVenue = mapAlertVenue
                     newMapAlertVenue.coordinates = result.placemark.coordinate
-                    self.venues.removeAll(where: { $0.id == newMapAlertVenue.id })
+                    self.venues.removeAll(where: { $0.id == mapAlertVenue.id })
                     self.venues.append(newMapAlertVenue)
                 }
             }
@@ -326,7 +326,6 @@ struct HomeView: View {
                         ForEach(switchCategoryTypes()) { i in
                             Button(action: {
                                 categoryTypeIndex = i.id
-                                //                                self.searchText = i.name + " " + self.searchText
                                 self.searchText = i.name
                             }){
                                 VStack{
@@ -403,18 +402,13 @@ struct HomeView: View {
                         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                             .frame(width: 200, height: 100)
                             .overlay{
-                                
                                 Image("greenLemon")
                                     .resizable()
                                     .frame(width: 200, height: 100)
                                     .scaledToFill()
                                     .opacity(0.5)
-                                
                             }
-                        
                     }
-                    
-                    
                 }
                 
                 Button(action: {
@@ -425,39 +419,33 @@ struct HomeView: View {
                     Image(systemName: "x.circle.fill")
                         .resizable()
                         .frame(width: 30, height: 30)
-                    //  .font(.system(size: 35))
                         .foregroundColor(.gray)
                 }
-                
             }
-            
-            
-            
         }
     }
     
-    private func displayMapAlerts(geoReader: GeometryProxy, venueId: String) -> some View {
+    private func displayMapAlerts(geoReader: GeometryProxy, venue: VenueModel) -> some View {
         ZStack{
-            if venueId == "1" {
+            if !venue.specials.isEmpty && !venue.reviews.isEmpty {
                 VStack{
-                    Text("New \nSpecial")
+                    Text("New!")
                         .bold()
                         .font(.system(size: 15))
                         .foregroundColor(.yellow)
                     
                     PacmanAnimation()
                 }
-                
-            } else if venueId == "0" {
+            } else if !venue.specials.isEmpty  {
                 VStack{
-                    Text("New \nDeal")
+                    Text("New \nSpecial")
                         .bold()
                         .font(.system(size: 15))
                         .foregroundColor(.orange)
                     SpinningView()
                 }
                 
-            } else {
+            }else if !venue.reviews.isEmpty  {
                 VStack{
                     Text("New \nReview")
                         .bold()
@@ -522,19 +510,25 @@ struct HomeView: View {
     }
     
     private func combineVenues(reviewsVenues: [VenueModel], specialsVenues : [VenueModel]) {
-        //combining specials to reviewVenue object with same id
         for reviewVenue in reviewsVenues {
-            for specialVenue in specialsVenues {
-                if reviewVenue.id == specialVenue.id {
-                    var foo = reviewVenue
-                    foo.specials.append(contentsOf: specialVenue.specials)
-                    self.venues.append(foo)
-                }
-            }
+            self.venues.append(reviewVenue)
         }
         
-        // removes duplicate venues
-        self.venues = Array(Set(self.venues))
+        for specialVenue in specialsVenues {
+            let isMatchingVenue =  self.venues.contains(where: {$0.id == specialVenue.id})
+            
+            if isMatchingVenue {
+                var matchingVenue =  self.venues.first(where: {$0.id == specialVenue.id})
+                //merge specials and reviews to same venue
+                matchingVenue?.specials.append(contentsOf: specialVenue.specials)
+                //remove the original venues from array
+                self.venues.removeAll(where: {$0.id == matchingVenue?.id})
+                //add merged venue
+                self.venues.append(matchingVenue!)
+            } else {
+                self.venues.append(specialVenue)
+            }
+        }
     }
 }
 
@@ -549,6 +543,6 @@ struct HomeView_Previews: PreviewProvider {
                 latitudeDelta: 0.1,
                 longitudeDelta: 0.1
             )
-        ))                                                                                              ))
+        ))))
     }
 }
