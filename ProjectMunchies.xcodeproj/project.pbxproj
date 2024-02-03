@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
 		770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0572A76BBC0004CA5D2 /* SignInView.swift */; };
 		770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0592A76BBCB004CA5D2 /* SignUpView.swift */; };
@@ -99,6 +100,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		770AD0572A76BBC0004CA5D2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -200,6 +202,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
+			isa = PBXGroup;
+			children = (
+				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
+			);
+			path = DetailedSettingsViews;
+			sourceTree = "<group>";
+		};
 		770AD0562A76BBAB004CA5D2 /* auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +348,7 @@
 		77E3830B2A7225470084B8A6 /* ProjectMunchies */ = {
 			isa = PBXGroup;
 			children = (
+				3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */,
 				77B97AB22B6380C500EE6A42 /* liveReviews */,
 				77DC3ADD2B034C8E009F2B9A /* videoPlayer */,
 				77F3E0A72A860C1400BC3791 /* home */,
@@ -591,6 +602,7 @@
 			files = (
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
 				7772A0252B69427500652687 /* LiveReviewWidget.swift in Sources */,
+				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
 				7772A0292B6944B800652687 /* SpinningView.swift in Sources */,
 				7772A01F2B67821600652687 /* ReviewsViewModel.swift in Sources */,
 				770BF48B2B69770100422D01 /* OffsetModifier.swift in Sources */,
