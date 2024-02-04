@@ -20,7 +20,7 @@ var mainCategories: [CategoryModel] = [
     CategoryModel(id: 4, name:"Happy Hour", icon: "happyHourIcon")
 ]
 
-var homeCategories: [CategoryModel] = [
+var bottomIcons: [CategoryModel] = [
     CategoryModel(id: 1, name:"Filter", icon: "filterIcon"),
     CategoryModel(id: 2, name:"Live Reviews", icon: "reviewIcon"),
     CategoryModel(id: 3, name:"CrunchAI", icon: "brunchIcon"),

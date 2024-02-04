@@ -17,8 +17,6 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
-   
-    @State private var selectedView: Int?
     @State private var selectedMenuIndex: Int = 0
     @State private var scale: CGFloat = 0.5
     @State private var searchResults: [MKMapItem] = []
@@ -31,11 +29,10 @@ struct HomeView: View {
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
-    @State private var indentLow: Int = 80
-    @State private var indentHigh: Int = 80
-    @State private var showBottomTabs: Bool = false
+    @State private var indentLow: Int = 90
+    @State private var indentHigh: Int = 90
+    @State private var showBottomNavBar: Bool = false
     @State private var newSpecials: [SpecialModel] = []
-    @State private var isSettingsPresented: Bool = false
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -84,14 +81,14 @@ struct HomeView: View {
                         displayMap(for: geoReader, scrollReader: scrollReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
-                                             subHeaderSection(for: geoReader)
-                                                   .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.03)
+                        subHeaderSection(for: geoReader)
+                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
                         
                         //                        displayVenues(for: geoReader)
                         //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                     }
                     .onAppear{
-                        self.showBottomTabs.toggle()
+                        self.showBottomNavBar.toggle()
                         getUserProfile()
                         checkForNewMapAlerts()
                     }
@@ -121,60 +118,11 @@ struct HomeView: View {
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
         HStack {
-               Spacer()
-               
-            // Profile icon button with dropdown menu
-                    Menu {
-                        Button(action: {
-                            selectedView = 0 // My Bunchies
-                        }) {
-                            Label("My Bunchies", systemImage: "person.2.square.stack")
-                        }
-
-                        Button(action: {
-                            selectedView = 1 // My Reviews
-                        }) {
-                            Label("My Reviews", systemImage: "star.fill")
-                        }
-
-                        Button(action: {
-                            selectedView = 2 // Privacy and Security
-                        }) {
-                            Label("Privacy and Security", systemImage: "lock.fill")
-                        }
-                    } label: {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
-                            .padding()
-                    }
-                    .padding(.trailing, 16)
-                }
-        .onChange(of: selectedView) { newValue in
-               switch newValue {
-               case 0:
-                   // Navigate to MyBunchiesView
-                   isSettingsPresented = true
-               case 1:
-                   // Navigate to MyReviewsView
-                   isSettingsPresented = true
-               case 2:
-                   // Navigate to SecurityPrivacyView
-                   isSettingsPresented = true
-               default:
-                   break
-               }
-           }
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .sheet(isPresented: $isSettingsPresented) {
-                        NavigationView {
-                            MyBunchiesView()
-                        }
-                    }
-            }
-
+            Header()
+        }
+        
+    }
+    
     
     private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
         Map(position: $position) {
@@ -184,11 +132,16 @@ struct HomeView: View {
                         displayMapAlerts(geoReader: geoReader, venue: venue)
                     }
                     .onTapGesture {
-                        self.showBottomTabs.toggle()
-                        self.indentLow = 200
-                        self.indentHigh = 800
-                        currentVenue = venue
-                        scrollReader.scrollTo(currentVenue.id, anchor: .center)
+                        self.showBottomNavBar.toggle()
+                        if self.showBottomNavBar {
+                            self.indentLow = 90
+                            self.indentHigh = 90
+                        } else {
+                            self.indentLow = 200
+                            self.indentHigh = 800
+                            currentVenue = venue
+                        }
+                        //                        scrollReader.scrollTo(currentVenue.id, anchor: .center)
                     }
                 }
             }
@@ -274,75 +227,73 @@ struct HomeView: View {
     }
     
     private func displayFilterSheet(geoReader: GeometryProxy) -> some View {
-        VStack{
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack{
+            VStack{
+                ScrollView(.horizontal, showsIndicators: false) {
                     Spacer()
-                        .frame(width: geoReader.size.width * 0.1)
+                        .frame(width: geoReader.size.width)
                     
-                    if self.showBottomTabs {
-                        ForEach(homeCategories) { i in
-                            Button(action: {
-                                if categoryIndex == i.id {
-                                    categoryIndex = 0
-                                } else {
-                                    categoryIndex = i.id
-                                    self.searchText = i.name
-                                }
-                            }){
-                                VStack{
-                                    ZStack{
-                                        Circle()
-                                            .foregroundColor(self.categoryIndex == i.id ? .green : .gray)
-                                            .frame(width: 70, height: 70)
-                                        
-                                        Image(i.icon)
-                                            .resizable()
-                                            .frame(width: 40, height: 40)
-                                            .font(.system(size: 35))
-                                            .foregroundColor(.black)
+                    HStack{
+                        if self.showBottomNavBar {
+                            ForEach(bottomIcons) { icon in
+                                Button(action: {
+                                    if categoryIndex == icon.id {
+                                        categoryIndex = 0
+                                    } else {
+                                        categoryIndex = icon.id
+                                        self.searchText = icon.name
                                     }
-                                    Text(i.name)
-                                        .foregroundColor(.white)
+                                }){
+                                    VStack{
+                                        ZStack{
+                                            Circle()
+                                                .foregroundColor(self.categoryIndex == icon.id ? .green : .gray)
+                                                .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                            
+                                            Image(icon.icon)
+                                                .resizable()
+                                                .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                                .font(.system(size: 35))
+                                                .foregroundColor(.black)
+                                        }
+                                        Text(icon.name)
+                                            .foregroundColor(.white)
+                                    }
                                 }
-                                .padding(.leading)
                             }
                         }
+                        else {
+                            detailsView(geoReader: geoReader, venue: currentVenue)
+                        }
+                    }
+                }
+                .padding(.top, self.indentLow == 90 ?
+                         geoReader.size.height * 0.02 : categoryIndex == 2 ?
+                         geoReader.size.height * 0.02 : geoReader.size.height * 0.05)
+                .onChange(of: categoryIndex) {
+                    if categoryIndex == 0 {
+                        self.indentLow = 80
+                    } else if categoryIndex == 2 {
+                        self.indentLow = 600
+                    } else {
+                        self.indentLow = 300
+                    }
+                }
+                if categoryIndex != 0 {
+                    if categoryIndex == 1 {
+                        displayFilter(geoReader: geoReader)
                     }
                     
-                    if !self.showBottomTabs {
-                        detailsView(geoReader: geoReader, venue: currentVenue, specials: newSpecials)
+                    if categoryIndex == 2 {
+                        VStack{
+                            Text("What should I eat today?")
+                                .font(.largeTitle)
+                                .multilineTextAlignment(.center)
+                            
+                            RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
+                        }
                     }
                 }
             }
-            .padding(.top, self.indentLow == 80 ?
-                     50 : categoryIndex == 2 ?
-                     20 : 100)
-            .onChange(of: categoryIndex) {
-                if categoryIndex == 0 {
-                    self.indentLow = 80
-                } else if categoryIndex == 2 {
-                    self.indentLow = 600
-                } else {
-                    self.indentLow = 300
-                }
-            }
-            if categoryIndex != 0 {
-                if categoryIndex == 1 {
-                    displayFilter(geoReader: geoReader)
-                }
-                
-                if categoryIndex == 2 {
-                    VStack{
-                        Text("What should I eat today?")
-                            .font(.largeTitle)
-                            .multilineTextAlignment(.center)
-                        
-                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
-                    }
-                }
-            }
-        }
     }
     
     private func displayFilter(geoReader: GeometryProxy) -> some View {
@@ -420,42 +371,17 @@ struct HomeView: View {
         }
     }
     
-    private func detailsView(geoReader: GeometryProxy, venue: VenueModel, specials: [SpecialModel]) -> some View {
+    private func detailsView(geoReader: GeometryProxy, venue: VenueModel) -> some View {
         VStack{
-            HStack{
-                VStack{
-                    Text("New Specials")
-                        .font(.system(size: 50))
-                        .foregroundColor(.yellow)
-                    
-                    Text("Rome + Fig")
-                        .font(.title3)
-                        .foregroundColor(.gray)
-                    
-                    ZStack{
-                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                            .frame(width: 200, height: 100)
-                            .overlay{
-                                Image("greenLemon")
-                                    .resizable()
-                                    .frame(width: 200, height: 100)
-                                    .scaledToFill()
-                                    .opacity(0.5)
-                            }
-                    }
-                }
-                
-                Button(action: {
-                    self.showBottomTabs.toggle()
-                    self.indentLow = 80
-                    currentVenue = VenueModel(id: "0", name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
-                }){
-                    Image(systemName: "x.circle.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.gray)
-                }
+            if !venue.specials.isEmpty && venue.reviews.isEmpty {
+                specialView(venue: venue)
+            } else if venue.specials.isEmpty && !venue.reviews.isEmpty {
+                reviewView(venue: venue)
+            } else if !venue.specials.isEmpty && !venue.reviews.isEmpty  {
+                specialView(venue: venue)
+                reviewView(venue: venue)
             }
+            
         }
     }
     
@@ -503,8 +429,79 @@ struct HomeView: View {
                 }
             }
         }
-        .onAppear{
-      
+    }
+    
+    private func specialView(venue: VenueModel) -> some View {
+        HStack{
+            VStack{
+                Text("New Specials")
+                    .font(.system(size: 50))
+                    .foregroundColor(.yellow)
+                
+                Text("\(venue.name)")
+                    .font(.title3)
+                    .foregroundColor(.gray)
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                        .frame(width: 200, height: 100)
+                        .overlay{
+                            Image("greenLemon")
+                                .resizable()
+                                .frame(width: 200, height: 100)
+                                .scaledToFill()
+                                .opacity(0.5)
+                        }
+                }
+            }
+            
+            Button(action: {
+                self.showBottomNavBar.toggle()
+                self.indentLow = 80
+                currentVenue = emptyVenue
+            }){
+                Image(systemName: "x.circle.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    private func reviewView(venue: VenueModel) -> some View {
+        HStack{
+            VStack{
+                Text("New Reviews")
+                    .font(.system(size: 50))
+                    .foregroundColor(.yellow)
+                
+                Text("\(venue.name)")
+                    .font(.title3)
+                    .foregroundColor(.gray)
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                        .frame(width: 200, height: 100)
+                        .overlay{
+                            Image("greenLemon")
+                                .resizable()
+                                .frame(width: 200, height: 100)
+                                .scaledToFill()
+                                .opacity(0.5)
+                        }
+                }
+            }
+            
+            Button(action: {
+                self.showBottomNavBar.toggle()
+                self.indentLow = 80
+                currentVenue = emptyVenue
+            }){
+                Image(systemName: "x.circle.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.gray)
+            }
         }
     }
     
