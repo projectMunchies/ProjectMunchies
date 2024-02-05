@@ -13,6 +13,21 @@ struct CategoryTypeModel: Identifiable {
     var icon: String
 }
 
+var filterLvlOne: [CategoryTypeModel] = [
+    CategoryTypeModel(id: 1, name: "Specials", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Portions", icon: "portionIcon"),
+    CategoryTypeModel(id: 4, name: "Prices", icon: "pricesIcon"),
+    CategoryTypeModel(id: 5, name: "Basics", icon: "basicFilterIcon")
+]
+
+var filterSpecialsLvl: [CategoryTypeModel] = [
+    CategoryTypeModel(id: 1, name: "Deals", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Offers", icon: "portionIcon"),
+    CategoryTypeModel(id: 4, name: "Brunch", icon: "pricesIcon"),
+    CategoryTypeModel(id: 5, name: "HappyHour", icon: "basicFilterIcon")
+]
+
+
 var cuisineTypes: [CategoryTypeModel] = [
     CategoryTypeModel(id: 1, name: "Chinese", icon: "chineseFoodIcon"),
     CategoryTypeModel(id: 2, name: "American", icon: "americanFoodIcon"),

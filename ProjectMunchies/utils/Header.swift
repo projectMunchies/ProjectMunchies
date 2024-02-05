@@ -30,7 +30,6 @@ struct Header: View {
                     Spacer()
                     profileIcon(for: geoReader)
                     Spacer()
-                    //                        .frame(width: geoReader.size.width * 0.1)
                 }
             }
         }
@@ -59,19 +58,19 @@ struct Header: View {
         VStack{
             Menu {
                 Button(action: {
-                    selectedView = 0 // My Bunchies
+                    selectedView = 0
                 }) {
                     Label("My Bunchies", systemImage: "person.2.square.stack")
                 }
                 
                 Button(action: {
-                    selectedView = 1 // My Reviews
+                    selectedView = 1
                 }) {
                     Label("My Reviews", systemImage: "star.fill")
                 }
                 
                 Button(action: {
-                    selectedView = 2 // Privacy and Security
+                    selectedView = 2
                 }) {
                     Label("Privacy and Security", systemImage: "lock.fill")
                 }
@@ -85,13 +84,10 @@ struct Header: View {
         .onChange(of: selectedView) {
             switch selectedView {
             case 0:
-                // Navigate to MyBunchiesView
                 isSettingsPresented = true
             case 1:
-                // Navigate to MyReviewsView
                 isSettingsPresented = true
             case 2:
-                // Navigate to SecurityPrivacyView
                 isSettingsPresented = true
             default:
                 break
