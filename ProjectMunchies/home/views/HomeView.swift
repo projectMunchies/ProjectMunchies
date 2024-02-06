@@ -17,6 +17,8 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
+    
+    @State private var isShowingContactPicker = false
     @State private var selectedMenuIndex: Int = 0
     @State private var scale: CGFloat = 0.5
     @State private var searchResults: [MKMapItem] = []
