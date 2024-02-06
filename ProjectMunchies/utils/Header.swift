@@ -10,12 +10,6 @@ import SwiftUI
 struct Header: View {
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
-    //    @State private var foodFilterCategory = "Cuisine"
-    //    @State private var foodFilterType = "Pick"
-    //    @State private var foodFilterGender = "Pick"
-    //    @State private var foodFilterLocation = "Pick"
-    //    @State private var foodFilterAgeRangeFrom: Int = 18
-    //    @State private var foodFilterAgeRangeTo: Int = 70
     @State private var isSettingsPresented: Bool = false
     @State private var selectedView: Int?
     
@@ -42,13 +36,13 @@ struct Header: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: geoReader.size.width * 0.14, height: geoReader.size.height * 0.14)
-                    .position(x:geoReader.size.width * 0.04, y:geoReader.size.height * 0.49)
+                    .position(x:geoReader.size.width * 0.04, y:geoReader.size.height * 0.5)
                 
                 Image("crunchBunchText")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.4)
-                    .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.5)
+                    .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.51)
             }
         }
         
@@ -100,7 +94,6 @@ struct Header: View {
                 MyBunchiesView()
             }
         }
-        
     }
 }
 

@@ -33,6 +33,7 @@ struct HomeView: View {
     @State private var indentHigh: Int = 90
     @State private var showBottomNavBar: Bool = false
     @State private var newSpecials: [SpecialModel] = []
+    @State private var useMapAlerts: Bool = true
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -94,6 +95,8 @@ struct HomeView: View {
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch {
+                            //clean if dirty
+                            self.venues.removeAll()
                             searchForVenues(query: self.searchText)
                         }
                     }
@@ -127,7 +130,14 @@ struct HomeView: View {
             ForEach(self.venues) { venue in
                 Annotation("", coordinate: venue.coordinates) {
                     ZStack{
-                        displayMapAlerts(geoReader: geoReader, venue: venue)
+                        if self.useMapAlerts {
+                            displayMapAlerts(geoReader: geoReader, venue: venue)
+                        } else {
+                            Image(systemName: "mappin.circle.fill")
+                                .resizable()
+                                .frame(width: geoReader.size.width * 0.07, height: geoReader.size.height * 0.04)
+                                .foregroundColor(.orange)
+                        }
                     }
                     .onTapGesture {
                         self.showBottomNavBar.toggle()
@@ -199,6 +209,7 @@ struct HomeView: View {
                     self.venues.append(newMapAlertVenue)
                 }
             }
+            
         }
         self.startSearch = false
     }
@@ -225,86 +236,94 @@ struct HomeView: View {
     }
     
     private func displayFilterSheet(geoReader: GeometryProxy) -> some View {
-            VStack{
-                ScrollView(.horizontal, showsIndicators: false) {
-                    Spacer()
-                        .frame(width: geoReader.size.width)
-                    
-                    HStack{
-                        if self.showBottomNavBar {
-                            ForEach(bottomIcons) { icon in
-                                Button(action: {
-                                    if navbarIndex == icon.id {
-                                        navbarIndex = 0
-                                        filterLvlOneIndices.removeAll()
-                                    } else {
-                                        navbarIndex = icon.id
-                                        self.searchText = icon.name
+        VStack{
+            ScrollView(.horizontal, showsIndicators: false) {
+                Spacer()
+                    .frame(width: geoReader.size.width)
+                
+                HStack{
+                    if self.showBottomNavBar {
+                        ForEach(bottomIcons) { icon in
+                            Button(action: {
+                                if navbarIndex == icon.id {
+                                    navbarIndex = 0
+                                    filterLvlOneIndices.removeAll()
+                                } else {
+                                    navbarIndex = icon.id
+                                    self.searchText = icon.name
+                                }
+                            }){
+                                VStack{
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
+                                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                        
+                                        Image(icon.icon)
+                                            .resizable()
+                                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                            .font(.system(size: 35))
+                                            .foregroundColor(.black)
                                     }
-                                }){
-                                    VStack{
-                                        ZStack{
-                                            Circle()
-                                                .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
-                                                .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
-                                            
-                                            Image(icon.icon)
-                                                .resizable()
-                                                .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
-                                                .font(.system(size: 35))
-                                                .foregroundColor(.black)
-                                        }
-                                        Text(icon.name)
-                                            .foregroundColor(.white)
-                                    }
+                                    Text(icon.name)
+                                        .foregroundColor(.white)
                                 }
                             }
                         }
-                        else {
-                            detailsView(geoReader: geoReader, venue: currentVenue)
-                        }
                     }
-                }
-                .padding(.top, self.indentLow == 90 ?
-                         geoReader.size.height * 0.02 : navbarIndex == 2 ?
-                         geoReader.size.height * 0.02 : geoReader.size.height * 0.05)
-                .onChange(of: navbarIndex) {
-                    if navbarIndex == 0 {
-                        self.indentLow = 90
-                        self.indentHigh = 90
-                    } else {
-                        self.indentLow = 300
-                        self.indentHigh = 300
-                    }
-                }
-                if navbarIndex != 0 {
-                    if navbarIndex == 1 {
-                        displayFilter(geoReader: geoReader)
-                    }
-                    
-                    if navbarIndex == 3 {
-                        VStack{
-                            Text("What should I eat today?")
-                                .font(.largeTitle)
-                                .multilineTextAlignment(.center)
-                            
-                            RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
-                        }
+                    else {
+                        detailsView(geoReader: geoReader, venue: currentVenue)
                     }
                 }
             }
+            .padding(.top, self.indentLow == 90 ?
+                     geoReader.size.height * 0.02 : navbarIndex == 2 ?
+                     geoReader.size.height * 0.02 : geoReader.size.height * 0.05)
+            .onChange(of: navbarIndex) {
+                if navbarIndex == 0 {
+                    self.indentLow = 90
+                    self.indentHigh = 90
+                } else {
+                    self.indentLow = 300
+                    self.indentHigh = 300
+                }
+            }
+            if navbarIndex != 0 {
+                if navbarIndex == 1 {
+                    displayFilter(geoReader: geoReader)
+                }
+                
+                if navbarIndex == 3 {
+                    VStack{
+                        Text("What should I eat today?")
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                        
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
+                    }
+                }
+            }
+        }
     }
     
     private func displayFilter(geoReader: GeometryProxy) -> some View {
         VStack{
-              getFilterLvlOne(geoReader: geoReader)
+            getFilterLvlOne(geoReader: geoReader)
             
             if !filterLvlOneIndices.isEmpty {
-                    getFilterLvlTwo(geoReader: geoReader)
+                getFilterLvlTwo(geoReader: geoReader)
             }
             
             Button(action: {
+                self.searchText = "chipotle"
+                
                 startSearch.toggle()
+                self.useMapAlerts = false
+                
+                self.indentLow = 90
+                self.indentHigh = 90
+                self.navbarIndex = 0
+                self.filterLvlOneIndices.removeAll()
             }){
                 ZStack{
                     Text("")
@@ -534,7 +553,7 @@ struct HomeView: View {
                             } else {
                                 filterLvlOneIndices.append(filterIcon.id)
                             }
-                         
+                            
                         }){
                             VStack{
                                 ZStack{
@@ -582,6 +601,8 @@ struct HomeView: View {
                     getPortionsFilter(geoReader: geoReader)
                 }
             }
+            .frame(height: geoReader.size.height * 0.3)
+            
         }
     }
     
