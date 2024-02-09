@@ -28,12 +28,12 @@ struct SpinningView: View {
 }
 
 struct SpinningEllipse: View {
-    @State private var width: CGFloat = 40
+    @State private var width: CGFloat = 30
     
     var body: some View {
         ZStack{
             Ellipse()
-                .frame(width: width, height: 40)
+                .frame(width: width, height: 30)
                 .foregroundColor(.orange)
             
             Text("2")

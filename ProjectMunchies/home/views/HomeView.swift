@@ -17,9 +17,6 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
-    
-    @State private var isShowingContactPicker = false
-    @State private var selectedMenuIndex: Int = 0
     @State private var scale: CGFloat = 0.5
     @State private var searchResults: [MKMapItem] = []
     @State private var showModal: Bool = false
@@ -36,6 +33,8 @@ struct HomeView: View {
     @State private var showBottomNavBar: Bool = false
     @State private var newSpecials: [SpecialModel] = []
     @State private var useMapAlerts: Bool = true
+    @State private var status: [Bool] = []
+    @State private var timerCount: Int = 0
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -73,6 +72,8 @@ struct HomeView: View {
     var delay: Double = 0
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
+    
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -133,7 +134,7 @@ struct HomeView: View {
                 Annotation("", coordinate: venue.coordinates) {
                     ZStack{
                         if self.useMapAlerts {
-                            displayMapAlerts(geoReader: geoReader, venue: venue)
+                            displayMapAlerts(geoReader: geoReader, venue: venue, index: self.venues.firstIndex(of: venue)!)
                         } else {
                             Image(systemName: "mappin.circle.fill")
                                 .resizable()
@@ -143,6 +144,8 @@ struct HomeView: View {
                     }
                     .onTapGesture {
                         self.showBottomNavBar.toggle()
+                        self.status[self.venues.firstIndex(of: venue)!].toggle()
+                        
                         if self.showBottomNavBar {
                             self.indentLow = 90
                             self.indentHigh = 90
@@ -363,7 +366,7 @@ struct HomeView: View {
         }
     }
     
-    private func displayMapAlerts(geoReader: GeometryProxy, venue: VenueModel) -> some View {
+    private func displayMapAlerts(geoReader: GeometryProxy, venue: VenueModel, index: Int) -> some View {
         ZStack{
             if !venue.specials.isEmpty && !venue.reviews.isEmpty {
                 VStack{
@@ -373,6 +376,7 @@ struct HomeView: View {
                         .foregroundColor(.yellow)
                     
                     PacmanAnimation()
+                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .blue, inActiveTint: .red)
                 }
             } else if !venue.specials.isEmpty  {
                 VStack{
@@ -380,7 +384,9 @@ struct HomeView: View {
                         .bold()
                         .font(.system(size: 15))
                         .foregroundColor(.orange)
+                    
                     SpinningView()
+                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .yellow, inActiveTint: .red)
                 }
                 
             }else if !venue.reviews.isEmpty  {
@@ -403,7 +409,17 @@ struct HomeView: View {
                             }
                         Text("1")
                     }
-                    .frame(width: geoReader.size.width * 0.12, height: geoReader.size.width * 0.12)
+                    .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .red, inActiveTint: .red)
+                    .onReceive(timer) { time in
+                        if self.timerCount < 4 {
+                            //particel animation for all venues
+                            for idx in self.status.indices {
+                                self.status[idx].toggle()
+                            }
+                            timerCount += 1
+                        }
+                    }
+                    .frame(width: geoReader.size.width * 0.10, height: geoReader.size.width * 0.10)
                 }
             }
         }
@@ -513,6 +529,10 @@ struct HomeView: View {
             specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
                 if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
                     combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+                    // append for particle animation
+                    for _ in self.venues {
+                        self.status.append(false)
+                    }
                     for mapAlertVenue in self.venues {
                         searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
                     }
@@ -550,7 +570,7 @@ struct HomeView: View {
                     ForEach(filterLvlOne) { filterIcon in
                         Button(action: {
                             if filterLvlOneIndices.contains(filterIcon.id) {
-                                var index = filterLvlOneIndices.firstIndex(of: filterIcon.id)
+                                let index = filterLvlOneIndices.firstIndex(of: filterIcon.id)
                                 filterLvlOneIndices.remove(at: index!)
                             } else {
                                 filterLvlOneIndices.append(filterIcon.id)

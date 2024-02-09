@@ -46,6 +46,8 @@
 		770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0962A76D0BE004CA5D2 /* SettingsView.swift */; };
 		770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */; };
 		770BF48B2B69770100422D01 /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770BF48A2B69770100422D01 /* OffsetModifier.swift */; };
+		772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BA6912B74922C003C08BE /* ParticleEffect.swift */; };
+		772BA6942B7492B6003C08BE /* Particle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BA6932B7492B6003C08BE /* Particle.swift */; };
 		772C9B0E2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */; };
 		772D044B2B57A9780099859D /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D044A2B57A9780099859D /* VideoModel.swift */; };
 		7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346C2B4FD4630078564B /* CategoryTypeModel.swift */; };
@@ -112,6 +114,8 @@
 		770AD0962A76D0BE004CA5D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
 		770BF48A2B69770100422D01 /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
+		772BA6912B74922C003C08BE /* ParticleEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEffect.swift; sourceTree = "<group>"; };
+		772BA6932B7492B6003C08BE /* Particle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particle.swift; sourceTree = "<group>"; };
 		772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Restaurant_Reviews2.tsv; sourceTree = "<group>"; };
 		772D044A2B57A9780099859D /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		7753346C2B4FD4630078564B /* CategoryTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeModel.swift; sourceTree = "<group>"; };
@@ -411,6 +415,8 @@
 				7772A0262B6943F200652687 /* PacmanAnimation.swift */,
 				7772A0282B6944B800652687 /* SpinningView.swift */,
 				770BF48A2B69770100422D01 /* OffsetModifier.swift */,
+				772BA6912B74922C003C08BE /* ParticleEffect.swift */,
+				772BA6932B7492B6003C08BE /* Particle.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -626,6 +632,7 @@
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
 				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
+				772BA6942B7492B6003C08BE /* Particle.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
 				7772A01A2B67811400652687 /* VenuesViewModel.swift in Sources */,
 				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
@@ -637,6 +644,7 @@
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
 				77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
+				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
