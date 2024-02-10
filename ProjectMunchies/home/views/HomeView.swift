@@ -35,6 +35,8 @@ struct HomeView: View {
     @State private var useMapAlerts: Bool = true
     @State private var status: [Bool] = []
     @State private var timerCount: Int = 0
+    @State private var sheetHeight: CGFloat = .zero
+    @State private var isExpanded: Bool = false
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -253,9 +255,10 @@ struct HomeView: View {
                                 if navbarIndex == icon.id {
                                     navbarIndex = 0
                                     filterLvlOneIndices.removeAll()
+                                  
                                 } else {
                                     navbarIndex = icon.id
-                                    self.searchText = icon.name
+                                   // self.searchText = icon.name
                                 }
                             }){
                                 VStack{
@@ -288,6 +291,9 @@ struct HomeView: View {
                 if navbarIndex == 0 {
                     self.indentLow = 90
                     self.indentHigh = 90
+                } else if navbarIndex == 1 {
+                    self.indentLow = 300
+                    self.indentHigh = 300
                 } else {
                     self.indentLow = 300
                     self.indentHigh = 300
@@ -296,6 +302,68 @@ struct HomeView: View {
             if navbarIndex != 0 {
                 if navbarIndex == 1 {
                     displayFilter(geoReader: geoReader)
+                }
+                
+                if navbarIndex == 2 {
+                    Divider()
+                    
+                    VStack{
+                        HStack{
+                            Text("Recent Reviews")
+                            .font(.title)
+                            
+                            Button(action: {
+                                if self.isExpanded {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        self.indentLow = 300
+                                        self.indentHigh = 300
+                                        self.isExpanded.toggle()
+                                                       }
+                                } else {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        self.indentLow = 800
+                                        self.indentHigh = 800
+                                        self.isExpanded.toggle()
+                                                       }
+                                }
+                            }){
+                                if self.isExpanded {
+                                    Image(systemName: "x.circle.fill")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.gray)
+                                } else {
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 15.0)
+                                            .frame(width: 80, height: 40)
+                                            .foregroundColor(Color("MainColor"))
+                                        
+                                        Text("Expand")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        ScrollView {
+                            ForEach(0..<5, id:\.self) { item in
+                                Button(action: {
+                                    
+                                }){
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                            .frame(width: 370, height: self.isExpanded ? 150 : 50)
+                                            .foregroundColor(Color("MainColor"))
+                                            
+                                        
+                                        Text("this is s atest snste tes fjsd ghjg...")
+                                            .foregroundColor(.green)
+                                    }
+                                }
+                            }
+                        }
+                        .frame(height: self.isExpanded ? geoReader.size.height * 0.77 : geoReader.size.height * 0.18)
+                    }
                 }
                 
                 if navbarIndex == 3 {
@@ -321,10 +389,8 @@ struct HomeView: View {
             
             Button(action: {
                 self.searchText = "chipotle"
-                
                 startSearch.toggle()
                 self.useMapAlerts = false
-                
                 self.indentLow = 90
                 self.indentHigh = 90
                 self.navbarIndex = 0
@@ -356,12 +422,12 @@ struct HomeView: View {
     private func detailsView(geoReader: GeometryProxy, venue: VenueModel) -> some View {
         VStack{
             if !venue.specials.isEmpty && venue.reviews.isEmpty {
-                specialView(venue: venue)
+                newSpecialView(venue: venue)
             } else if venue.specials.isEmpty && !venue.reviews.isEmpty {
-                reviewView(venue: venue)
+                newReviewView(venue: venue)
             } else if !venue.specials.isEmpty && !venue.reviews.isEmpty  {
-                specialView(venue: venue)
-                reviewView(venue: venue)
+                newSpecialView(venue: venue)
+                newReviewView(venue: venue)
             }
         }
     }
@@ -425,7 +491,7 @@ struct HomeView: View {
         }
     }
     
-    private func specialView(venue: VenueModel) -> some View {
+    private func newSpecialView(venue: VenueModel) -> some View {
         HStack{
             VStack{
                 Text("New Specials")
@@ -462,7 +528,7 @@ struct HomeView: View {
         }
     }
     
-    private func reviewView(venue: VenueModel) -> some View {
+    private func newReviewView(venue: VenueModel) -> some View {
         HStack{
             VStack{
                 Text("New Reviews")
