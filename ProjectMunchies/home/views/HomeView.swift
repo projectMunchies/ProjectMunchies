@@ -18,6 +18,7 @@ struct HomeView: View {
     @Binding var position: MapCameraPosition
     
     @State private var scale: CGFloat = 0.5
+    @State private var delay: Double = 0
     @State private var searchResults: [MKMapItem] = []
     @State private var showModal: Bool = false
     @State private var navbarIndex: Int = 0
@@ -71,7 +72,6 @@ struct HomeView: View {
         )
     )
     
-    var delay: Double = 0
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
     
@@ -216,7 +216,6 @@ struct HomeView: View {
                     self.venues.append(newMapAlertVenue)
                 }
             }
-            
         }
         self.startSearch = false
     }
@@ -255,10 +254,10 @@ struct HomeView: View {
                                 if navbarIndex == icon.id {
                                     navbarIndex = 0
                                     filterLvlOneIndices.removeAll()
-                                  
+                                    
                                 } else {
                                     navbarIndex = icon.id
-                                   // self.searchText = icon.name
+                                    // self.searchText = icon.name
                                 }
                             }){
                                 VStack{
@@ -295,6 +294,8 @@ struct HomeView: View {
                     self.indentLow = 300
                     self.indentHigh = 300
                 } else {
+                    self.venues.removeAll()
+                    checkForLiveReviews()
                     self.indentLow = 300
                     self.indentHigh = 300
                 }
@@ -310,7 +311,7 @@ struct HomeView: View {
                     VStack{
                         HStack{
                             Text("Recent Reviews")
-                            .font(.title)
+                                .font(.title)
                             
                             Button(action: {
                                 if self.isExpanded {
@@ -318,13 +319,13 @@ struct HomeView: View {
                                         self.indentLow = 300
                                         self.indentHigh = 300
                                         self.isExpanded.toggle()
-                                                       }
+                                    }
                                 } else {
                                     withAnimation(.easeInOut(duration: 0.3)) {
                                         self.indentLow = 800
                                         self.indentHigh = 800
                                         self.isExpanded.toggle()
-                                                       }
+                                    }
                                 }
                             }){
                                 if self.isExpanded {
@@ -354,7 +355,7 @@ struct HomeView: View {
                                         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                                             .frame(width: 370, height: self.isExpanded ? 150 : 50)
                                             .foregroundColor(Color("MainColor"))
-                                            
+                                        
                                         
                                         Text("this is s atest snste tes fjsd ghjg...")
                                             .foregroundColor(.green)
@@ -463,22 +464,14 @@ struct HomeView: View {
                         .foregroundColor(.pink)
                     
                     ZStack{
-                        Circle()
-                            .foregroundColor(.pink)
-                            .scaleEffect(scale)
-                            .animation(
-                                Animation.easeInOut(duration: 0.6)
-                                    .repeatForever().delay(delay), value: scale
-                            )
-                            .onAppear {
-                                self.scale = 1
-                            }
+                        PulsingCircle()
                         Text("1")
+                            .font(.system(size: 20))
                     }
                     .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .red, inActiveTint: .red)
                     .onReceive(timer) { time in
                         if self.timerCount < 4 {
-                            //particel animation for all venues
+                            //particle animation for all venues
                             for idx in self.status.indices {
                                 self.status[idx].toggle()
                             }
@@ -773,6 +766,24 @@ struct HomeView: View {
             }
             .padding(.leading,geoReader.size.width * 0.03)
             .padding(.top,geoReader.size.height * 0.02)
+        }
+    }
+    
+    private func checkForLiveReviews() {
+        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
+            if !newReviews.isEmpty {
+                getVenuesForReviewAlerts(newReviews: newReviews)
+            }
+        }
+    }
+    
+    private func getVenuesForReviewAlerts(newReviews: [ReviewModel]) {
+        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
+            if !reviewsVenues.isEmpty {
+                for reviewVenue in reviewsVenues {
+                    searchForVenues(query: reviewVenue.address,mapAlertVenue: reviewVenue)
+                }
+            }
         }
     }
 }
