@@ -38,6 +38,9 @@ struct HomeView: View {
     @State private var timerCount: Int = 0
     @State private var sheetHeight: CGFloat = .zero
     @State private var isExpanded: Bool = false
+    @State private var selectedTab: TabModel?
+    @State private var tabProgress: CGFloat = 0.5
+    @State private var selectedView: Int?
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -82,16 +85,13 @@ struct HomeView: View {
             ZStack{
                 Color.black
                     .ignoresSafeArea()
-                ScrollViewReader{ scrollReader in
+                ScrollView {
                     ZStack{
-                        displayMap(for: geoReader, scrollReader: scrollReader)
+                        displayMap(for: geoReader)
                             .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
                         subHeaderSection(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
-                        
-                        //                        displayVenues(for: geoReader)
-                        //                            .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.7)
                     }
                     .onAppear{
                         self.showBottomNavBar.toggle()
@@ -113,7 +113,7 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: .constant(true)) {
-                displayFilterSheet(geoReader: geoReader)
+                mainSheet(geoReader: geoReader)
                     .presentationDetents([.height(CGFloat(indentLow)),.height(CGFloat(indentHigh))])
                     .presentationDragIndicator(.visible)
                     .presentationBackgroundInteraction(
@@ -130,7 +130,7 @@ struct HomeView: View {
         }
     }
     
-    private func displayMap(for geoReader: GeometryProxy, scrollReader: ScrollViewProxy ) -> some View {
+    private func displayMap(for geoReader: GeometryProxy) -> some View {
         Map(position: $position) {
             ForEach(self.venues) { venue in
                 Annotation("", coordinate: venue.coordinates) {
@@ -149,14 +149,11 @@ struct HomeView: View {
                         self.status[self.venues.firstIndex(of: venue)!].toggle()
                         
                         if self.showBottomNavBar {
-                            self.indentLow = 90
-                            self.indentHigh = 90
+                            setSheetBoundary(lowestPoint: 90, highestPoint: 90)
                         } else {
-                            self.indentLow = 200
-                            self.indentHigh = 800
+                            setSheetBoundary(lowestPoint: 200, highestPoint: 800)
                             currentVenue = venue
                         }
-                        //                        scrollReader.scrollTo(currentVenue.id, anchor: .center)
                     }
                 }
             }
@@ -167,31 +164,6 @@ struct HomeView: View {
         .preferredColorScheme(.dark)
         .cornerRadius(30)
         .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.5)
-    }
-    
-    private func displayVenues(for geoReader: GeometryProxy) -> some View {
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                ForEach(venues) { venue in
-                    ZStack{
-                        Text("")
-                            .frame(width: geoReader.size.width * 0.6, height: geoReader.size.height * 0.2)
-                            .foregroundColor(.white)
-                            .background(Color("MainColor").opacity(0.7))
-                            .cornerRadius(30)
-                            .overlay(
-                                VStack{
-                                    Text(venue.name)
-                                        .font(.title2)
-                                        .bold()
-                                    Text(venue.address)
-                                        .font(.system(size: 15))
-                                }
-                            )
-                    }
-                }
-            }
-        }
     }
     
     public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenue) {
@@ -241,7 +213,7 @@ struct HomeView: View {
         travelTime = formatter.string(from: route.expectedTravelTime)
     }
     
-    private func displayFilterSheet(geoReader: GeometryProxy) -> some View {
+    private func mainSheet(geoReader: GeometryProxy) -> some View {
         VStack{
             ScrollView(.horizontal, showsIndicators: false) {
                 Spacer()
@@ -250,133 +222,19 @@ struct HomeView: View {
                 HStack{
                     if self.showBottomNavBar {
                         ForEach(bottomIcons) { icon in
-                            Button(action: {
-                                if navbarIndex == icon.id {
-                                    navbarIndex = 0
-                                    filterLvlOneIndices.removeAll()
-                                    
-                                } else {
-                                    navbarIndex = icon.id
-                                    // self.searchText = icon.name
-                                }
-                            }){
-                                VStack{
-                                    ZStack{
-                                        Circle()
-                                            .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
-                                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
-                                        
-                                        Image(icon.icon)
-                                            .resizable()
-                                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
-                                            .font(.system(size: 35))
-                                            .foregroundColor(.black)
-                                    }
-                                    Text(icon.name)
-                                        .foregroundColor(.white)
-                                }
-                            }
+                            navBarIcon(geoReader: geoReader, icon: icon)
                         }
                     }
                     else {
-                        detailsView(geoReader: geoReader, venue: currentVenue)
+                        venueDetails(geoReader: geoReader, venue: currentVenue)
                     }
                 }
             }
-            .padding(.top, self.indentLow == 90 ?
-                     geoReader.size.height * 0.02 : navbarIndex == 2 ?
-                     geoReader.size.height * 0.02 : geoReader.size.height * 0.05)
+            .padding(.top, positionNavBarHeight(geoReader: geoReader))
             .onChange(of: navbarIndex) {
-                if navbarIndex == 0 {
-                    self.indentLow = 90
-                    self.indentHigh = 90
-                } else if navbarIndex == 1 {
-                    self.indentLow = 300
-                    self.indentHigh = 300
-                } else {
-                    self.venues.removeAll()
-                    checkForLiveReviews()
-                    self.indentLow = 300
-                    self.indentHigh = 300
-                }
+                adjustNavBarHeight(navBarIndex: navbarIndex)
             }
-            if navbarIndex != 0 {
-                if navbarIndex == 1 {
-                    displayFilter(geoReader: geoReader)
-                }
-                
-                if navbarIndex == 2 {
-                    Divider()
-                    
-                    VStack{
-                        HStack{
-                            Text("Recent Reviews")
-                                .font(.title)
-                            
-                            Button(action: {
-                                if self.isExpanded {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        self.indentLow = 300
-                                        self.indentHigh = 300
-                                        self.isExpanded.toggle()
-                                    }
-                                } else {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        self.indentLow = 800
-                                        self.indentHigh = 800
-                                        self.isExpanded.toggle()
-                                    }
-                                }
-                            }){
-                                if self.isExpanded {
-                                    Image(systemName: "x.circle.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundColor(.gray)
-                                } else {
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 15.0)
-                                            .frame(width: 80, height: 40)
-                                            .foregroundColor(Color("MainColor"))
-                                        
-                                        Text("Expand")
-                                            .foregroundColor(.gray)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        ScrollView {
-                            ForEach(0..<5, id:\.self) { item in
-                                Button(action: {
-                                    
-                                }){
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                            .frame(width: 370, height: self.isExpanded ? 150 : 50)
-                                            .foregroundColor(Color("MainColor"))
-                                        
-                                        
-                                        Text("this is s atest snste tes fjsd ghjg...")
-                                            .foregroundColor(.green)
-                                    }
-                                }
-                            }
-                        }
-                        .frame(height: self.isExpanded ? geoReader.size.height * 0.77 : geoReader.size.height * 0.18)
-                    }
-                }
-                
-                if navbarIndex == 3 {
-                    VStack{
-                        Text("What should I eat today?")
-                            .font(.largeTitle)
-                            .multilineTextAlignment(.center)
-                        
-                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
-                    }
-                }
-            }
+            navBarDetails(geoReader: geoReader)
         }
     }
     
@@ -392,8 +250,7 @@ struct HomeView: View {
                 self.searchText = "chipotle"
                 startSearch.toggle()
                 self.useMapAlerts = false
-                self.indentLow = 90
-                self.indentHigh = 90
+                setSheetBoundary(lowestPoint: 90, highestPoint: 90)
                 self.navbarIndex = 0
                 self.filterLvlOneIndices.removeAll()
             }){
@@ -411,16 +268,14 @@ struct HomeView: View {
         }
         .onChange(of: filterLvlOneIndices) {
             if !filterLvlOneIndices.isEmpty {
-                self.indentLow = 500
-                self.indentHigh = 500
+                setSheetBoundary(lowestPoint: 500, highestPoint: 500)
             } else {
-                self.indentLow = 300
-                self.indentHigh = 300
+                setSheetBoundary(lowestPoint: 300, highestPoint: 300)
             }
         }
     }
     
-    private func detailsView(geoReader: GeometryProxy, venue: VenueModel) -> some View {
+    private func venueDetails(geoReader: GeometryProxy, venue: VenueModel) -> some View {
         VStack{
             if !venue.specials.isEmpty && venue.reviews.isEmpty {
                 newSpecialView(venue: venue)
@@ -782,6 +637,290 @@ struct HomeView: View {
             if !reviewsVenues.isEmpty {
                 for reviewVenue in reviewsVenues {
                     searchForVenues(query: reviewVenue.address,mapAlertVenue: reviewVenue)
+                }
+            }
+        }
+    }
+    
+    
+    private func CustomTabBar() -> some View {
+        HStack(spacing: 0) {
+            ForEach(TabModel.allCases, id: \.rawValue) { tab in
+                HStack(spacing: 10) {
+                    Image(systemName: tab.systemImage)
+                    
+                    Text(tab.rawValue)
+                        .font(.callout)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .contentShape(.capsule)
+                .onTapGesture {
+                    /// Updating Tab
+                    withAnimation(.snappy) {
+                        selectedTab = tab
+                    }
+                }
+            }
+        }
+        /// Scrollable Active Tab Indicator
+        .background {
+            GeometryReader {
+                let size = $0.size
+                let capsuleWidth = size.width / CGFloat(TabModel.allCases.count)
+                
+                Capsule()
+                    .fill(.black)
+                    .frame(width: capsuleWidth)
+                    .offset(x: tabProgress * (size.width - capsuleWidth))
+            }
+        }
+        .padding(.horizontal, 15)
+    }
+    
+    
+    private func SampleView(_ color: Color) -> some View {
+        GeometryReader{ proxy in
+            ScrollView(.vertical) {
+                LazyVGrid(columns: Array(repeating: GridItem(), count: 1), content: {
+                    ForEach(liveReviewSamples, id: \.self) { reviewSample in
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(color.gradient)
+                            .frame(height: self.isExpanded ? 150 : 50)
+                            .overlay {
+                                if self.isExpanded {
+                                    VStack{
+                                        Menu {
+                                            Button(action: {
+                                                selectedView = 0
+                                            }) {
+                                                Label("Go to Venue", systemImage: "person.2.square.stack")
+                                            }
+                                            
+                                            Button(action: {
+                                                selectedView = 1
+                                            }) {
+                                                Label("Minimize", systemImage: "star.fill")
+                                            }
+                                            
+                                            Button(action: {
+                                                selectedView = 2
+                                            }) {
+                                                Label("Some other shit", systemImage: "lock.fill")
+                                            }
+                                        } label: {
+                                            ZStack{
+                                                VStack(alignment: .leading) {
+                                                    Image("Guy")
+                                                        .resizable()
+                                                        .frame(width: 60, height: 70)
+                                                        .scaledToFit()
+                                                        .clipShape(Circle())
+                                                    
+                                                    VStack(alignment: .leading) {
+                                                        Text("Bob Snow")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 12))
+                                                        
+                                                        Text("Tampa,FL")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 12))
+                                                    }
+                                                    Spacer(minLength: 0)
+                                                }
+                                                .padding(10)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                
+                                                VStack(alignment: .trailing) {
+                                                    
+                                                    Text("This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 20))
+                                                        .frame(width: proxy.size.width * 0.65)
+                                                    
+                                                    Spacer(minLength: 0)
+                                                    
+                                                    
+                                                    
+                                                    Text("Hold for More")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 12))
+                                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                                }
+                                                .padding(15)
+                                            }
+                                        }
+                                    }
+                                    .onChange(of: selectedView) {
+                                        switch selectedView {
+                                        case 0:
+                                            true
+                                        case 1:
+                                            true
+                                        case 2:
+                                            true
+                                        default:
+                                            break
+                                        }
+                                    }
+                                } else {
+                                    VStack(alignment: .leading) {
+                                        Text("\(reviewSample.body)...")
+                                            .foregroundColor(.white)
+                                        
+                                        Text("Tap To Expand")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 12))
+                                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
+                                    }
+                                    .padding(15)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                
+                            }
+                            .onTapGesture {
+                                if self.isExpanded {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+                                        self.isExpanded.toggle()
+                                    }
+                                } else {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        setSheetBoundary(lowestPoint: 800, highestPoint: 800)
+                                        self.isExpanded.toggle()
+                                    }
+                                }
+                            }
+                    }
+                })
+                .padding(15)
+            }
+            .scrollIndicators(.hidden)
+            .scrollClipDisabled()
+            .mask {
+                Rectangle()
+                    .padding(.bottom, -100)
+            }
+        }
+        
+    }
+    
+    private func setSheetBoundary(lowestPoint: Int, highestPoint: Int) {
+        self.indentLow = lowestPoint
+        self.indentHigh = highestPoint
+    }
+    
+    private func positionNavBarHeight(geoReader: GeometryProxy) -> CGFloat {
+        let result = self.indentLow == 90 ?
+        geoReader.size.height * 0.02 : navbarIndex == 2 ?
+        geoReader.size.height * 0.02 : geoReader.size.height * 0.05
+        
+        return result
+    }
+    
+    private func adjustNavBarHeight(navBarIndex: Int) {
+        switch navBarIndex {
+        case 0:
+            setSheetBoundary(lowestPoint: 90, highestPoint: 90)
+        case 1:
+            setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+        case 2:
+            self.venues.removeAll()
+            checkForLiveReviews()
+            setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+        default:
+            self.venues.removeAll()
+            setSheetBoundary(lowestPoint: 800, highestPoint: 800)
+        }
+    }
+    
+    private func navBarIcon(geoReader: GeometryProxy, icon: CategoryModel) -> some View {
+        VStack{
+            Button(action: {
+                if navbarIndex == icon.id {
+                    navbarIndex = 0
+                    filterLvlOneIndices.removeAll()
+                    
+                } else {
+                    navbarIndex = icon.id
+                }
+            }){
+                VStack{
+                    ZStack{
+                        Circle()
+                            .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
+                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                        
+                        Image(icon.icon)
+                            .resizable()
+                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                            .font(.system(size: 35))
+                            .foregroundColor(.black)
+                    }
+                    Text(icon.name)
+                        .foregroundColor(.white)
+                }
+            }
+        }
+        
+    }
+    
+    private func navBarDetails(geoReader: GeometryProxy) -> some View {
+        VStack{
+            if navbarIndex != 0 {
+                if navbarIndex == 1 {
+                    displayFilter(geoReader: geoReader)
+                }
+                
+                if navbarIndex == 2 {
+                    Divider()
+                    
+                    VStack{
+                        CustomTabBar()
+                        
+                        GeometryReader {
+                            let size = $0.size
+                            ScrollView(.horizontal) {
+                                LazyHStack(spacing: 0) {
+                                    SampleView(.purple)
+                                        .id(TabModel.recent)
+                                        .containerRelativeFrame(.horizontal)
+                                    
+                                    SampleView(.red)
+                                        .id(TabModel.top)
+                                        .containerRelativeFrame(.horizontal)
+                                    
+                                    SampleView(.blue)
+                                        .id(TabModel.popular)
+                                        .containerRelativeFrame(.horizontal)
+                                }
+                                .scrollTargetLayout()
+                                .offsetX { value in
+                                    /// Converting Offset into Progress
+                                    let progress = -value / (size.width * CGFloat(TabModel.allCases.count - 1))
+                                    
+                                    /// Capping Progress BTW 0-1
+                                    tabProgress = max(min(progress, 1), 0)
+                                }
+                            }
+                            .scrollPosition(id: $selectedTab)
+                            .scrollIndicators(.hidden)
+                            .scrollTargetBehavior(.paging)
+                            .scrollClipDisabled()
+                        }
+                        .frame(height: self.isExpanded ? geoReader.size.height * 0.78 : geoReader.size.height * 0.2)
+                    }
+                }
+                
+                if navbarIndex == 3 {
+                    VStack{
+                        Text("What should I eat today?")
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                        
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
+                    }
+                    .frame(height: geoReader.size.height * 0.8)
                 }
             }
         }

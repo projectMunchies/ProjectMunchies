@@ -54,19 +54,13 @@ struct MyBunchiesView: View {
                        .buttonStyle(PlainButtonStyle())
                    }
                    
-                   // Spacer to occupy space below the buttons
                    Spacer()
                    
-                   // Your additional content for the My Bunchies view
                    Text("Here's your bunchies content.")
                        .foregroundColor(.gray)
                        .padding(.bottom, 20)
                    
-                   
-                   
-                   
                    TabView {
-                       // Bunchies Tab
                        NavigationView {
                            ScrollView {
                                ForEach(selectedContacts, id: \.identifier) { contact in
