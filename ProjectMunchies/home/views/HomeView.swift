@@ -146,12 +146,13 @@ struct HomeView: View {
                     }
                     .onTapGesture {
                         self.showBottomNavBar.toggle()
+                        // for each marker on the map
                         self.status[self.venues.firstIndex(of: venue)!].toggle()
                         
                         if self.showBottomNavBar {
                             setSheetBoundary(lowestPoint: 90, highestPoint: 90)
                         } else {
-                            setSheetBoundary(lowestPoint: 200, highestPoint: 800)
+                            setSheetBoundary(lowestPoint: 400, highestPoint: 800)
                             currentVenue = venue
                         }
                     }
@@ -215,26 +216,27 @@ struct HomeView: View {
     
     private func mainSheet(geoReader: GeometryProxy) -> some View {
         VStack{
-            ScrollView(.horizontal, showsIndicators: false) {
-                Spacer()
-                    .frame(width: geoReader.size.width)
-                
-                HStack{
-                    if self.showBottomNavBar {
+            
+            if self.showBottomNavBar {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    Spacer()
+                        .frame(width: geoReader.size.width)
+                    
+                    HStack{
                         ForEach(bottomIcons) { icon in
                             navBarIcon(geoReader: geoReader, icon: icon)
                         }
                     }
-                    else {
-                        venueDetails(geoReader: geoReader, venue: currentVenue)
-                    }
                 }
+                .padding(.top, positionNavBarHeight(geoReader: geoReader))
+                
+                navBarDetails(geoReader: geoReader)
+            } else {
+                venueDetails(geoReader: geoReader, venue: currentVenue)
             }
-            .padding(.top, positionNavBarHeight(geoReader: geoReader))
-            .onChange(of: navbarIndex) {
-                adjustNavBarHeight(navBarIndex: navbarIndex)
-            }
-            navBarDetails(geoReader: geoReader)
+        }
+        .onChange(of: navbarIndex) {
+            adjustNavBarHeight(navBarIndex: navbarIndex)
         }
     }
     
@@ -277,13 +279,19 @@ struct HomeView: View {
     
     private func venueDetails(geoReader: GeometryProxy, venue: VenueModel) -> some View {
         VStack{
-            if !venue.specials.isEmpty && venue.reviews.isEmpty {
-                newSpecialView(venue: venue)
-            } else if venue.specials.isEmpty && !venue.reviews.isEmpty {
-                newReviewView(venue: venue)
-            } else if !venue.specials.isEmpty && !venue.reviews.isEmpty  {
-                newSpecialView(venue: venue)
-                newReviewView(venue: venue)
+            venueDetailsHeader(venue: venue, geoReader: geoReader)
+            HStack{
+                if !venue.specials.isEmpty && !venue.reviews.isEmpty {
+                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
+                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
+                }
+                else if !venue.specials.isEmpty && venue.reviews.isEmpty {
+                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
+                    newReviewView(venue: venue, geoReader: geoReader)
+                } else if !venue.reviews.isEmpty && venue.specials.isEmpty {
+                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
+                    newSpecialView(venue: venue, geoReader: geoReader)
+                }
             }
         }
     }
@@ -339,77 +347,137 @@ struct HomeView: View {
         }
     }
     
-    private func newSpecialView(venue: VenueModel) -> some View {
-        HStack{
-            VStack{
-                Text("New Specials")
-                    .font(.system(size: 50))
-                    .foregroundColor(.yellow)
+    private func venueDetailsHeader(venue: VenueModel, geoReader: GeometryProxy) -> some View {
+        VStack{
+            HStack{
+                Text("Venue")
+                    .font(.system(size: 25))
+                    .foregroundColor(.white)
+                    .padding(.leading)
                 
-                Text("\(venue.name)")
-                    .font(.title3)
-                    .foregroundColor(.gray)
+                Spacer()
                 
-                ZStack{
-                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                        .frame(width: 200, height: 100)
-                        .overlay{
-                            Image("greenLemon")
-                                .resizable()
-                                .frame(width: 200, height: 100)
-                                .scaledToFill()
-                                .opacity(0.5)
-                        }
+                Button(action: {
+                    
+                    self.showBottomNavBar.toggle()
+                    self.indentLow = 90
+                    currentVenue = emptyVenue
+                }) {
+                    VStack(spacing: 0){
+                        Circle()
+                            .frame(width: geoReader.size.width * 0.02, height: geoReader.size.height * 0.02)
+                            .foregroundColor(.white)
+                        
+                        Circle()
+                            .frame(width: geoReader.size.width * 0.02, height: geoReader.size.height * 0.02)
+                            .foregroundColor(.white)
+                    }
                 }
+                .padding(.trailing)
+                
+                
             }
             
-            Button(action: {
-                self.showBottomNavBar.toggle()
-                self.indentLow = 90
-                currentVenue = emptyVenue
-            }){
-                Image(systemName: "x.circle.fill")
-                    .resizable()
-                    .frame(width: 30, height: 30)
+            HStack{
+                Spacer()
+                    .frame(width: geoReader.size.width * 0.06)
+                
+                Text("\(venue.name)")
+                    .font(.system(size: 30))
                     .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                RoundedRectangle(cornerRadius: 25.0)
+                    .frame(width: geoReader.size.height * 0.05, height: geoReader.size.height * 0.08)
+                    .overlay{
+                        Text("5.0")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                    }
+                
+                Spacer()
+                    .frame(width: geoReader.size.width * 0.06)
             }
         }
     }
-    
-    private func newReviewView(venue: VenueModel) -> some View {
-        HStack{
-            VStack{
-                Text("New Reviews")
-                    .font(.system(size: 50))
-                    .foregroundColor(.yellow)
-                
-                Text("\(venue.name)")
-                    .font(.title3)
-                    .foregroundColor(.gray)
-                
-                ZStack{
-                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                        .frame(width: 200, height: 100)
-                        .overlay{
-                            Image("greenLemon")
-                                .resizable()
-                                .frame(width: 200, height: 100)
-                                .scaledToFill()
-                                .opacity(0.5)
+    private func newSpecialView(venue: VenueModel, geoReader: GeometryProxy, isNew: Bool = false) -> some View {
+        VStack{
+            RoundedRectangle(cornerRadius: 25.0)
+                .frame(width: geoReader.size.width * 0.45, height: geoReader.size.width * 0.45)
+                .foregroundColor(.white)
+                .overlay {
+                    VStack{
+                        Text("Specials")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                        
+                        HStack{
+                            Text("3")
+                                .font(.system(size: 60))
+                                .foregroundColor(.black)
+                            
+                            
+                            if isNew {
+                                RoundedRectangle(cornerRadius: 25.0)
+                                    .frame(width: geoReader.size.width * 0.1, height: geoReader.size.width * 0.05)
+                                    .foregroundColor(.green)
+                                    .overlay {
+                                        Text("New")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(.white)
+                                    }
+                                    .padding(.bottom,40)
+                            } else {
+                                Text("+")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.black)
+                                    .padding(.bottom,30)
+                            }
                         }
+                        
+                    }
+                    
                 }
-            }
-            
-            Button(action: {
-                self.showBottomNavBar.toggle()
-                self.indentLow = 80
-                currentVenue = emptyVenue
-            }){
-                Image(systemName: "x.circle.fill")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.gray)
-            }
+        }
+    }
+    
+    private func newReviewView(venue: VenueModel, geoReader: GeometryProxy, isNew: Bool = false) -> some View {
+        VStack{
+            RoundedRectangle(cornerRadius: 25.0)
+                .frame(width: geoReader.size.width * 0.45, height: geoReader.size.width * 0.45)
+                .foregroundColor(.white)
+                .overlay {
+                    VStack{
+                        Text("Reviews")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                        
+                        HStack{
+                            Text("3")
+                                .font(.system(size: 60))
+                                .foregroundColor(.black)
+                            
+                            if isNew {
+                                RoundedRectangle(cornerRadius: 25.0)
+                                    .frame(width: geoReader.size.width * 0.1, height: geoReader.size.width * 0.05)
+                                    .foregroundColor(.green)
+                                    .overlay {
+                                        Text("New")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(.white)
+                                    }
+                                    .padding(.bottom,40)
+                            } else {
+                                Text("+")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.black)
+                                    .padding(.bottom,30)
+                            }
+                        }
+                        
+                    }
+                    
+                }
         }
     }
     
