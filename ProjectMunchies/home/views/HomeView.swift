@@ -41,6 +41,7 @@ struct HomeView: View {
     @State private var selectedTab: TabModel?
     @State private var tabProgress: CGFloat = 0.5
     @State private var selectedView: Int?
+    @State private var isOverlayDisplayed: Bool = false
     @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
     @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
     @State private var searchTextNightSpotsOptions: [String] = ["","",""]
@@ -94,6 +95,7 @@ struct HomeView: View {
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
                     }
                     .onAppear{
+                        self.isOverlayDisplayed.toggle()
                         self.showBottomNavBar.toggle()
                         getUserProfile()
                         checkForNewMapAlerts()
@@ -109,6 +111,12 @@ struct HomeView: View {
                         if self.searchText == "" {
                             self.venues.removeAll()
                         }
+                    }
+                }
+                .blur(radius: isOverlayDisplayed ? 10 : 0 )
+                .overlay {
+                    if isOverlayDisplayed {
+                        reviewsOverlay(geoReader: geoReader)
                     }
                 }
             }
@@ -225,6 +233,8 @@ struct HomeView: View {
                     HStack{
                         ForEach(bottomIcons) { icon in
                             navBarIcon(geoReader: geoReader, icon: icon)
+                                .disabled(self.isOverlayDisplayed)
+                                .opacity(self.isOverlayDisplayed ? 0.2 : 1)
                         }
                     }
                 }
@@ -606,7 +616,6 @@ struct HomeView: View {
                 }
             }
             .frame(height: geoReader.size.height * 0.3)
-            
         }
     }
     
@@ -710,7 +719,6 @@ struct HomeView: View {
         }
     }
     
-    
     private func CustomTabBar() -> some View {
         HStack(spacing: 0) {
             ForEach(TabModel.allCases, id: \.rawValue) { tab in
@@ -745,7 +753,6 @@ struct HomeView: View {
         }
         .padding(.horizontal, 15)
     }
-    
     
     private func SampleView(_ color: Color) -> some View {
         GeometryReader{ proxy in
@@ -991,6 +998,68 @@ struct HomeView: View {
                     .frame(height: geoReader.size.height * 0.8)
                 }
             }
+        }
+    }
+    
+    private func reviewsOverlay(geoReader: GeometryProxy) -> some View {
+        VStack{
+            Button(action: {
+                isOverlayDisplayed.toggle()
+            }) {
+                Image(systemName: "x.circle")
+                    .resizable()
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 30)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing)
+            }
+            
+            Text("Was your food cold?")
+                .font(.system(size: 40))
+                .foregroundColor(.white)
+            
+            Text("Help out the community! Give your review on these recent visits: ")
+                .font(.system(size: 20))
+                .foregroundColor(.white)
+                .padding(.leading)
+                .padding(.trailing)
+            
+            ScrollView {
+                VStack{
+                    ForEach(0..<7) { _ in
+                        Button(action: {
+                            
+                        }) {
+                            HStack {
+                                Image("greenLemon")
+                                    .resizable()
+                                    .frame(width: geoReader.size.width * 0.19, height: geoReader.size.height * 0.19)
+                                    .scaledToFill()
+                                    .clipShape(Circle())
+                                
+                                VStack {
+                                    Text("Miguelotios")
+                                        .font(.system(size: 32))
+                                        .foregroundColor(.white)
+                                    
+                                    Text("3744 Acr rd Tampa Fl")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.white)
+                                }
+                                
+                            }
+                            .frame(width: geoReader.size.width * 0.9, height: geoReader.size.height * 0.2)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(.white, lineWidth: 6)
+                                    .frame(width: geoReader.size.width * 0.89, height: geoReader.size.height * 0.15)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            Spacer()
         }
     }
 }
