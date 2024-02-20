@@ -28,6 +28,7 @@ struct HomeView: View {
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
+    @State private var selectedView: Int?
     @State private var indentLow: Int = 90
     @State private var indentHigh: Int = 90
     @State private var showBottomNavBar: Bool = false

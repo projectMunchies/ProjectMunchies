@@ -75,13 +75,11 @@ struct Header: View {
                     .foregroundColor(.white)
             }
         }
-        .onChange(of: selectedView) {
-            if $0 == 2 {
-                isSettingsPresented = true
-            }
-        }
         .padding(.horizontal, 16)
         .padding(.top, 16)
+        .onChange(of: selectedView) { newValue in
+            isSettingsPresented = true // Set this to true for all views
+        }
         .sheet(isPresented: $isSettingsPresented) {
             NavigationView {
                 if let selectedView = selectedView {
@@ -97,11 +95,6 @@ struct Header: View {
                     }
                 }
             }
-        }
-    }
-    struct Header_Previews: PreviewProvider {
-        static var previews: some View {
-            Header()
         }
     }
 }

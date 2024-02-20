@@ -213,7 +213,6 @@
 		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
 			isa = PBXGroup;
 			children = (
-				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
 				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
 				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
 			);
@@ -269,6 +268,7 @@
 		7772A0182B6780E400652687 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
 				77E383362A7226290084B8A6 /* HomeView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
 			);
