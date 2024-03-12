@@ -16,8 +16,8 @@ struct Header: View {
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
-//                Color.blue
-//                    .ignoresSafeArea()
+                //                Color.blue
+                //                    .ignoresSafeArea()
                 HStack{
                     Spacer()
                     logoWithText(for: geoReader)
@@ -75,30 +75,26 @@ struct Header: View {
                     .foregroundColor(.white)
             }
         }
-        .onChange(of: selectedView) {
-            switch selectedView {
-            case 0:
-                isSettingsPresented = true
-            case 1:
-                isSettingsPresented = true
-            case 2:
-                isSettingsPresented = true
-            default:
-                break
-            }
-        }
         .padding(.horizontal, 16)
         .padding(.top, 16)
+        .onChange(of: selectedView) { newValue in
+            isSettingsPresented = true // Set this to true for all views
+        }
         .sheet(isPresented: $isSettingsPresented) {
             NavigationView {
-                MyBunchiesView()
+                if let selectedView = selectedView {
+                    switch selectedView {
+                    case 0:
+                        MyBunchiesView()
+                    case 1:
+                        MyReviewsView()
+                    case 2:
+                        SettingsView()
+                    default:
+                        EmptyView()
+                    }
+                }
             }
         }
-    }
-}
-
-struct Header_Previews: PreviewProvider {
-    static var previews: some View {
-        Header()
     }
 }

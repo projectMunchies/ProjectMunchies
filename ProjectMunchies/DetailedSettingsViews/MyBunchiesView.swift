@@ -15,19 +15,16 @@ struct MyBunchiesView: View {
     @State private var isShowingContactPicker = false
     @State private var selectedContacts: [CNContact] = []
     
-    
     var body: some View {
-           NavigationView {
-               VStack(spacing: 20) {
-                   HStack {
-                       Text("Bunchies")
-                           .font(.title)
-                           .fontWeight(.bold)
-                           .foregroundColor(.primary)
-                       
-                       Spacer()
-                   }
-
+        NavigationView {
+            VStack(spacing: 20) {
+                HStack {
+                    Text("Bunchies")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    Spacer()
+                }
                    VStack(spacing: 10) {
                        Button(action: {
                            isShowingContactPicker = true
@@ -113,17 +110,17 @@ struct MyBunchiesView: View {
                .sheet(isPresented: $isShowingContactPicker) {
                    // Present modal sheet to add friends
                    ContactPicker(selectedContacts: $selectedContacts)
-               }
-           }
-       }
-        func removeFriend(_ contact: CNContact) {
-            // Remove the contact from the list of friends
-            if let index = selectedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-                selectedContacts.remove(at: index)
             }
         }
     }
-
+    
+    private func removeFriend(_ contact: CNContact) {
+        // Remove the contact from the list of friends
+        if let index = selectedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+            selectedContacts.remove(at: index)
+        }
+    }
+    
     struct ContactPicker: UIViewControllerRepresentable {
         typealias UIViewControllerType = CNContactPickerViewController
         
@@ -160,3 +157,4 @@ struct MyBunchiesView: View {
             }
         }
     }
+}
