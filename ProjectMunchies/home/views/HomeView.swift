@@ -95,7 +95,7 @@ struct HomeView: View {
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
                     }
                     .onAppear{
-                        self.isOverlayDisplayed.toggle()
+                     //   self.isOverlayDisplayed.toggle()
                         self.showBottomNavBar.toggle()
                         getUserProfile()
                         checkForNewMapAlerts()

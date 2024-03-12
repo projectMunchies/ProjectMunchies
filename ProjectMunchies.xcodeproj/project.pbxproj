@@ -64,6 +64,10 @@
 		77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */; };
 		77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */; };
 		77BC66C22B793C7B008C81EE /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66C12B793C7B008C81EE /* TabModel.swift */; };
+		77BC66C52B89F53B008C81EE /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66C42B89F53B008C81EE /* ContentView2.swift */; };
+		77BC66C72B89F5E0008C81EE /* Tab2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66C62B89F5E0008C81EE /* Tab2.swift */; };
+		77BC66CB2B89F80D008C81EE /* BottomSheetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66CA2B89F80D008C81EE /* BottomSheetHelper.swift */; };
+		77BC66CD2B8A1188008C81EE /* fireWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66CC2B8A1188008C81EE /* fireWorks.swift */; };
 		77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5101E2B4BB500005D3EE3 /* RecommendationModal.swift */; };
 		77C510222B4D158C005D3EE3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C510212B4D158C005D3EE3 /* Card.swift */; };
 		77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */; };
@@ -134,6 +138,10 @@
 		77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialModel.swift; sourceTree = "<group>"; };
 		77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircle.swift; sourceTree = "<group>"; };
 		77BC66C12B793C7B008C81EE /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
+		77BC66C42B89F53B008C81EE /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
+		77BC66C62B89F5E0008C81EE /* Tab2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2.swift; sourceTree = "<group>"; };
+		77BC66CA2B89F80D008C81EE /* BottomSheetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetHelper.swift; sourceTree = "<group>"; };
+		77BC66CC2B8A1188008C81EE /* fireWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fireWorks.swift; sourceTree = "<group>"; };
 		77C5101E2B4BB500005D3EE3 /* RecommendationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationModal.swift; sourceTree = "<group>"; };
 		77C510212B4D158C005D3EE3 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerHomeView.swift; sourceTree = "<group>"; };
@@ -321,6 +329,17 @@
 			path = models;
 			sourceTree = "<group>";
 		};
+		77BC66C32B89F516008C81EE /* newMenu */ = {
+			isa = PBXGroup;
+			children = (
+				77BC66C42B89F53B008C81EE /* ContentView2.swift */,
+				77BC66C62B89F5E0008C81EE /* Tab2.swift */,
+				77BC66CA2B89F80D008C81EE /* BottomSheetHelper.swift */,
+				77BC66CC2B8A1188008C81EE /* fireWorks.swift */,
+			);
+			path = newMenu;
+			sourceTree = "<group>";
+		};
 		77DC3ADD2B034C8E009F2B9A /* videoPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +381,7 @@
 		77E3830B2A7225470084B8A6 /* ProjectMunchies */ = {
 			isa = PBXGroup;
 			children = (
+				77BC66C32B89F516008C81EE /* newMenu */,
 				3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */,
 				77B97AB22B6380C500EE6A42 /* liveReviews */,
 				77DC3ADD2B034C8E009F2B9A /* videoPlayer */,
@@ -618,6 +638,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77BC66CB2B89F80D008C81EE /* BottomSheetHelper.swift in Sources */,
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
 				7772A0252B69427500652687 /* LiveReviewWidget.swift in Sources */,
 				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
@@ -637,6 +658,7 @@
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
 				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
+				77BC66C52B89F53B008C81EE /* ContentView2.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
 				772BA6942B7492B6003C08BE /* Particle.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
@@ -644,6 +666,8 @@
 				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
 				77F3E0AE2A87A13C00BC3791 /* Header.swift in Sources */,
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
+				77BC66CD2B8A1188008C81EE /* fireWorks.swift in Sources */,
+				77BC66C72B89F5E0008C81EE /* Tab2.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
 				7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */,
 				77C510222B4D158C005D3EE3 /* Card.swift in Sources */,
