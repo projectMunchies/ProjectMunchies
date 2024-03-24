@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38118C762BA23530001B60CA /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C752BA23530001B60CA /* Group.swift */; };
+		38118C782BA2353B001B60CA /* GroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C772BA2353A001B60CA /* GroupChatView.swift */; };
+		38118C7A2BA235D4001B60CA /* ContactProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C792BA235D4001B60CA /* ContactProfileView.swift */; };
+		38118C7C2BA235E0001B60CA /* GroupEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C7B2BA235E0001B60CA /* GroupEditingView.swift */; };
+		38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C7D2BA3DB47001B60CA /* MessagingView.swift */; };
+		38118C822BAE48BF001B60CA /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C812BAE48BF001B60CA /* Restaurant.swift */; };
 		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
 		388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */; };
-		388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
 		770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0572A76BBC0004CA5D2 /* SignInView.swift */; };
 		770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0592A76BBCB004CA5D2 /* SignUpView.swift */; };
@@ -110,9 +115,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38118C752BA23530001B60CA /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Group.swift; path = ../../../../Downloads/Group.swift; sourceTree = "<group>"; };
+		38118C772BA2353A001B60CA /* GroupChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChatView.swift; path = ../../../../Downloads/GroupChatView.swift; sourceTree = "<group>"; };
+		38118C792BA235D4001B60CA /* ContactProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactProfileView.swift; path = ../../../../Downloads/ContactProfileView.swift; sourceTree = "<group>"; };
+		38118C7B2BA235E0001B60CA /* GroupEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupEditingView.swift; path = ../../../../Downloads/GroupEditingView.swift; sourceTree = "<group>"; };
+		38118C7D2BA3DB47001B60CA /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
+		38118C812BAE48BF001B60CA /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
 		3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
-		388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPrivacyView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		770AD0572A76BBC0004CA5D2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -225,9 +235,13 @@
 		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
 			isa = PBXGroup;
 			children = (
+				38118C7B2BA235E0001B60CA /* GroupEditingView.swift */,
+				38118C792BA235D4001B60CA /* ContactProfileView.swift */,
+				38118C772BA2353A001B60CA /* GroupChatView.swift */,
+				38118C752BA23530001B60CA /* Group.swift */,
 				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
 				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
-				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
+				38118C7D2BA3DB47001B60CA /* MessagingView.swift */,
 			);
 			path = DetailedSettingsViews;
 			sourceTree = "<group>";
@@ -307,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				7772A01E2B67821600652687 /* ReviewsViewModel.swift */,
+				38118C812BAE48BF001B60CA /* Restaurant.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -639,6 +654,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77BC66CB2B89F80D008C81EE /* BottomSheetHelper.swift in Sources */,
+				38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */,
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
 				7772A0252B69427500652687 /* LiveReviewWidget.swift in Sources */,
 				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
@@ -647,6 +663,7 @@
 				770BF48B2B69770100422D01 /* OffsetModifier.swift in Sources */,
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
 				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
+				38118C822BAE48BF001B60CA /* Restaurant.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
 				77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */,
 				7772A01D2B6781AF00652687 /* ProfilesViewModel.swift in Sources */,
@@ -655,11 +672,14 @@
 				7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
+				38118C782BA2353B001B60CA /* GroupChatView.swift in Sources */,
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
+				38118C762BA23530001B60CA /* Group.swift in Sources */,
 				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
 				77BC66C52B89F53B008C81EE /* ContentView2.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
+				38118C7C2BA235E0001B60CA /* GroupEditingView.swift in Sources */,
 				772BA6942B7492B6003C08BE /* Particle.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
 				7772A01A2B67811400652687 /* VenuesViewModel.swift in Sources */,
@@ -677,8 +697,8 @@
 				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
-				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
+				38118C7A2BA235D4001B60CA /* ContactProfileView.swift in Sources */,
 				77E383452A7247460084B8A6 /* MockDataService.swift in Sources */,
 				77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */,
 				77BC66C22B793C7B008C81EE /* TabModel.swift in Sources */,
@@ -914,7 +934,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2P5JTGM3J;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchiesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -934,7 +954,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2P5JTGM3J;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchiesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

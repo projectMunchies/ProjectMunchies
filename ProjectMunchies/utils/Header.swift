@@ -66,7 +66,7 @@ struct Header: View {
                 Button(action: {
                     selectedView = 2
                 }) {
-                    Label("Privacy and Security", systemImage: "lock.fill")
+                    Label("Settings", systemImage: "lock.fill")
                 }
             } label: {
                 Image(systemName: "person.circle")

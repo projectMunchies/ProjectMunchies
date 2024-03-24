@@ -16,6 +16,11 @@ class ReviewsViewModel: ObservableObject {
     let storage = Storage.storage()
     let db = Firestore.firestore()
     
+    
+
+    
+    
+    
     @Published var reviews : [ReviewModel] = []
     @Published var newReviews : [ReviewModel] = []
     @Published var reviewsVenues : [VenueModel] = []
@@ -45,6 +50,69 @@ class ReviewsViewModel: ObservableObject {
                 }
             }
     }
+    
+    func searchVenues(searchText: String, completed: @escaping ([VenueModel]) -> Void) {
+        let query = db.collection("venues")
+            .whereField("name", isGreaterThanOrEqualTo: searchText)
+            .whereField("name", isLessThanOrEqualTo: searchText + "\u{f8ff}")
+            .limit(to: 10)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error searching venues: \(error)")
+                completed([])
+            } else {
+                let venues = querySnapshot?.documents.compactMap { document -> VenueModel? in
+                    let data = document.data()
+                    if let coordinatesData = data["coordinates"] as? [String: Any] {
+                        let latitude = coordinatesData["latitude"] as? Double ?? 0.0
+                        let longitude = coordinatesData["longitude"] as? Double ?? 0.0
+                        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        return VenueModel(
+                            id: document.documentID,
+                            name: data["name"] as? String ?? "",
+                            coordinates: coordinates,
+                            address: data["address"] as? String ?? "",
+                            reviews: [], // Initialize empty reviews array
+                            specials: [] // Initialize empty specials array
+                        )
+                    }
+                    return nil
+                } ?? []
+                completed(venues)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func addNewReview(newReview: ReviewModel, completed: @escaping (Bool) -> Void) {
+        let reviewData: [String: Any] = [
+            "id": newReview.id,
+            "title": newReview.title,
+            "body": newReview.body,
+            "profileId": newReview.profileId,
+            "venueId": newReview.venueId,
+            "timeStamp": newReview.timeStamp
+        ]
+        
+        db.collection("reviews").document(newReview.id).setData(reviewData) { error in
+            if let error = error {
+                print("Error adding new review: \(error)")
+                completed(false)
+            } else {
+                print("New review added successfully")
+                completed(true)
+            }
+        }
+    }
+    
+    
     
     public func getReviewsVenues(newReviews: [ReviewModel] ,completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {
         var query: Query!
