@@ -17,9 +17,6 @@ class HomeViewModel: ObservableObject {
      
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , hobbies: [], reviewIds: [], isMockData: false)
-    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
-    @Published var userFoodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
-    @Published var foodFilters: [FoodFilterModel] = []
     @Published var lastDoc: DocumentSnapshot!
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
@@ -111,73 +108,6 @@ class HomeViewModel: ObservableObject {
         else {
             //will display alert
             completed("image too large")
-        }
-    }
-    
-    public func getUserFilter(completed: @escaping (_ userFilter: FoodFilterModel) -> Void) {
-        db.collection("filters")
-            .whereField("userProfileId", isEqualTo: userProfile.id)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                    completed(FoodFilterModel(id: "", userProfileId: "", category: "", type: "", gender: "", location: "", ageRangeFrom: "", ageRangeTo: "", timeStamp: Date()))
-                } else {
-                    for document in querySnapshot!.documents {
-                        //                        print("\(document.documentID) => \(document.data())")
-                        let data = document.data()
-                        if !data.isEmpty{
-                            self.userFoodFilter = FoodFilterModel(id: data["id"] as? String ?? "", userProfileId: data["userProfileId"] as? String ?? "", category: data["category"] as? String ?? "Cuisine", type: data["type"] as? String ?? "Pick", gender: data["gender"] as? String ?? "Pick", location: data["location"] as? String ?? "Pick", ageRangeFrom: data["ageRangeFrom"] as? String ?? "18", ageRangeTo: data["ageRangeTo"] as? String ?? "70", timeStamp: data["timeStamp"] as? Date ?? Date())
-                        }
-                    }
-                    completed(self.userFoodFilter)
-                }
-            }
-    }
-    
-    public func createUserFilter(userFilter: FoodFilterModel) {
-        let id = UUID().uuidString
-        let docData: [String: Any] = [
-            "id": id,
-            "userProfileId": userProfile.id,
-            "category": userFilter.category,
-            "type": userFilter.type,
-            "gender": userFilter.gender,
-            "location": userFilter.location,
-            "ageRangeFrom": userFilter.ageRangeFrom,
-            "ageRangeTo": userFilter.ageRangeTo,
-            "timeStamp": Date()
-        ]
-        
-        let docRef = db.collection("filters").document(id)
-        
-        docRef.setData(docData) {error in
-            if let error = error{
-                print("Error creating new userFoodFilter: \(error)")
-            } else {
-                print("Successfully created userFoodFilter!")
-            }
-        }
-    }
-    
-    public func updateUserFilter(userFilterId: String, userFilter: FoodFilterModel) {
-        let docData: [String: Any] = [
-            "category": userFilter.category,
-            "type": userFilter.type,
-            "gender": userFilter.gender,
-            "location": userFilter.location,
-            "ageRangeFrom": userFilter.ageRangeFrom,
-            "ageRangeTo": userFilter.ageRangeTo,
-            "timeStamp": Date()
-        ]
-        
-        let docRef = db.collection("filters").document(userFilterId)
-        
-        docRef.updateData(docData) {error in
-            if let error = error{
-                print("Error updating userFilter:\(error)")
-            }else {
-                print("successfully updated userFilter!")
-            }
         }
     }
 }

@@ -88,7 +88,6 @@
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
 		77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0A52A86092500BC3791 /* ImagePicker.swift */; };
 		77F3E0AA2A860C3E00BC3791 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0A92A860C3E00BC3791 /* HomeViewModel.swift */; };
-		77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */; };
 		77F3E0AE2A87A13C00BC3791 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0AD2A87A13C00BC3791 /* Header.swift */; };
 /* End PBXBuildFile section */
 
@@ -165,7 +164,6 @@
 		77E383502A75B78F0084B8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77F3E0A52A86092500BC3791 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		77F3E0A92A860C3E00BC3791 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodFilterModel.swift; sourceTree = "<group>"; };
 		77F3E0AD2A87A13C00BC3791 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -459,7 +457,6 @@
 		77F3E0A82A860C2300BC3791 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */,
 				77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */,
 				7753346C2B4FD4630078564B /* CategoryTypeModel.swift */,
 				7753346E2B4FD5670078564B /* CategoryModel.swift */,
@@ -668,7 +665,6 @@
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
 				77BC66CD2B8A1188008C81EE /* fireWorks.swift in Sources */,
 				77BC66C72B89F5E0008C81EE /* Tab2.swift in Sources */,
-				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
 				7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */,
 				77C510222B4D158C005D3EE3 /* Card.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
