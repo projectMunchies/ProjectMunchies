@@ -16,17 +16,34 @@ struct CategoryTypeModel: Identifiable {
 var filterLvlOne: [CategoryTypeModel] = [
     CategoryTypeModel(id: 1, name: "Specials", icon: "specialsIcon"),
     CategoryTypeModel(id: 2, name: "Portions", icon: "portionIcon"),
-    CategoryTypeModel(id: 4, name: "Prices", icon: "pricesIcon"),
-    CategoryTypeModel(id: 5, name: "Basics", icon: "basicFilterIcon")
+    CategoryTypeModel(id: 3, name: "Prices", icon: "pricesIcon"),
+    CategoryTypeModel(id: 4, name: "Basics", icon: "basicFilterIcon")
 ]
 
 var filterSpecialsLvl: [CategoryTypeModel] = [
-    CategoryTypeModel(id: 1, name: "Deals", icon: "specialsIcon"),
-    CategoryTypeModel(id: 2, name: "Offers", icon: "portionIcon"),
-    CategoryTypeModel(id: 4, name: "Brunch", icon: "pricesIcon"),
-    CategoryTypeModel(id: 5, name: "HappyHour", icon: "basicFilterIcon")
+    CategoryTypeModel(id: 1, name: "Breakfast", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Lunch", icon: "portionIcon"),
+    CategoryTypeModel(id: 3, name: "Brunch", icon: "pricesIcon"),
+    CategoryTypeModel(id: 4, name: "HappyHour", icon: "basicFilterIcon")
 ]
 
+var filterPortionsLvl: [CategoryTypeModel] = [
+    CategoryTypeModel(id: 1, name: "Small", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Medium", icon: "portionIcon"),
+    CategoryTypeModel(id: 3, name: "Large", icon: "pricesIcon"),
+]
+
+var filterPricesLvl: [CategoryTypeModel] = [
+    CategoryTypeModel(id: 1, name: "Cheap", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Moderate", icon: "portionIcon"),
+    CategoryTypeModel(id: 3, name: "Expensive", icon: "pricesIcon"),
+]
+
+var filterBasicsLvl: [CategoryTypeModel] = [
+    CategoryTypeModel(id: 1, name: "Cuisines", icon: "specialsIcon"),
+    CategoryTypeModel(id: 2, name: "Drinks", icon: "portionIcon"),
+    CategoryTypeModel(id: 3, name: "Ratings", icon: "pricesIcon"),
+]
 
 var cuisineTypes: [CategoryTypeModel] = [
     CategoryTypeModel(id: 1, name: "Chinese", icon: "chineseFoodIcon"),

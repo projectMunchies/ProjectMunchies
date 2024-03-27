@@ -23,7 +23,11 @@ struct HomeView: View {
     @State private var showModal: Bool = false
     @State private var navbarIndex: Int = 0
     @State private var filterLvlOneIndices: [Int] = []
-    @State private var filterLvlTwoIndices: [Int] = []
+    @State private var filterSpecialsIndices: [Int] = []
+    @State private var filterPortionsIndices: [Int] = []
+    @State private var filterPricesIndices: [Int] = []
+    @State private var filterBasicsIndices: [Int] = []
+    @State private var filterCusinesIndices: [Int] = []
     @State private var showVenueFilter: Bool = false
     @State private var currentVenue: VenueModel = emptyVenue
     @State private var venues: [VenueModel] = []
@@ -42,29 +46,6 @@ struct HomeView: View {
     @State private var tabProgress: CGFloat = 0.5
     @State private var selectedView: Int?
     @State private var isOverlayDisplayed: Bool = false
-    @State private var searchTextFoodOptions: [String] = ["mexican food","american food","indian food", "japanese food","italian food"]
-    @State private var searchTextDrinkOptions: [String] = ["Juice","Smoothie","Soda", "Coffee"]
-    @State private var searchTextNightSpotsOptions: [String] = ["","",""]
-    @State private var nightSpots: [CLLocationCoordinate2D] = [CLLocationCoordinate2D(
-        latitude: 27.9416957,
-        longitude: -82.4853619
-    ),CLLocationCoordinate2D(
-        latitude: 27.9432414,
-        longitude: -82.4503545
-    ),CLLocationCoordinate2D(
-        latitude: 27.9937694,
-        longitude: -82.6449753
-    ),CLLocationCoordinate2D(
-        latitude: 27.9505663,
-        longitude: -82.463508
-    ),CLLocationCoordinate2D(
-        latitude: 27.9448659,
-        longitude: -82.4614819
-    ),CLLocationCoordinate2D(
-        latitude: 27.9523886,
-        longitude: -82.462625
-    )]
-    
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 27.9506,
@@ -78,7 +59,6 @@ struct HomeView: View {
     
     private let gradient = LinearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     private let stroke = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: [8, 8])
-    
     let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -95,7 +75,7 @@ struct HomeView: View {
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
                     }
                     .onAppear{
-                     //   self.isOverlayDisplayed.toggle()
+                        //   self.isOverlayDisplayed.toggle()
                         self.showBottomNavBar.toggle()
                         getUserProfile()
                         checkForNewMapAlerts()
@@ -605,6 +585,7 @@ struct HomeView: View {
                         .padding(.top,geoReader.size.height * 0.02)
                     
                     getSpecialsFilter(geoReader: geoReader)
+                    
                 }
                 
                 if filterLvlOneIndices.contains(where: {$0 == 2}) {
@@ -613,6 +594,22 @@ struct HomeView: View {
                         .padding(.top,geoReader.size.height * 0.02)
                     
                     getPortionsFilter(geoReader: geoReader)
+                }
+                
+                if filterLvlOneIndices.contains(where: {$0 == 3}) {
+                    Divider()
+                        .background(.white)
+                        .padding(.top,geoReader.size.height * 0.02)
+                    
+                    getPricesFilter(geoReader: geoReader)
+                }
+                
+                if filterLvlOneIndices.contains(where: {$0 == 4}) {
+                    Divider()
+                        .background(.white)
+                        .padding(.top,geoReader.size.height * 0.02)
+                    
+                    getBasicsFilter(geoReader: geoReader)
                 }
             }
             .frame(height: geoReader.size.height * 0.3)
@@ -631,12 +628,17 @@ struct HomeView: View {
                 HStack{
                     ForEach(filterSpecialsLvl) { filterIcon in
                         Button(action: {
-                            filterLvlTwoIndices.append(filterIcon.id)
+                            if filterSpecialsIndices.contains(filterIcon.id) {
+                                let index = filterSpecialsIndices.firstIndex(of: filterIcon.id)
+                                filterSpecialsIndices.remove(at: index!)
+                            } else {
+                                filterSpecialsIndices.append(filterIcon.id)
+                            }
                         }){
                             VStack{
                                 ZStack{
                                     Circle()
-                                        .foregroundColor(self.filterLvlTwoIndices.contains(filterIcon.id) ? .green : .gray)
+                                        .foregroundColor(self.filterSpecialsIndices.contains(filterIcon.id) ? .green : .gray)
                                         .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
                                     
                                     if navbarIndex != 0 {
@@ -670,14 +672,19 @@ struct HomeView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack{
-                    ForEach(filterSpecialsLvl) { filterIcon in
+                    ForEach(filterPortionsLvl) { filterIcon in
                         Button(action: {
-                            filterLvlTwoIndices.append(filterIcon.id)
+                            if filterPortionsIndices.contains(filterIcon.id) {
+                                let index = filterPortionsIndices.firstIndex(of: filterIcon.id)
+                                filterPortionsIndices.remove(at: index!)
+                            } else {
+                                filterPortionsIndices.append(filterIcon.id)
+                            }
                         }){
                             VStack{
                                 ZStack{
                                     Circle()
-                                        .foregroundColor(self.filterLvlTwoIndices.contains(filterIcon.id) ? .green : .gray)
+                                        .foregroundColor(self.filterPortionsIndices.contains(filterIcon.id) ? .green : .gray)
                                         .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
                                     
                                     if navbarIndex != 0 {
@@ -698,6 +705,183 @@ struct HomeView: View {
             }
             .padding(.leading,geoReader.size.width * 0.03)
             .padding(.top,geoReader.size.height * 0.02)
+        }
+    }
+    
+    private func getPricesFilter(geoReader: GeometryProxy) -> some View {
+        VStack{
+            Text("Prices")
+                .bold()
+                .foregroundColor(.white)
+                .font(.title2)
+                .padding(.trailing,geoReader.size.width * 0.7)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack{
+                    ForEach(filterPricesLvl) { filterIcon in
+                        Button(action: {
+                            if filterPricesIndices.contains(filterIcon.id) {
+                                let index = filterPricesIndices.firstIndex(of: filterIcon.id)
+                                filterPricesIndices.remove(at: index!)
+                            } else {
+                                filterPricesIndices.append(filterIcon.id)
+                            }
+                        }){
+                            VStack{
+                                ZStack{
+                                    Circle()
+                                        .foregroundColor(self.filterPricesIndices.contains(filterIcon.id) ? .green : .gray)
+                                        .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                    
+                                    if navbarIndex != 0 {
+                                        Image(filterIcon.icon)
+                                            .resizable()
+                                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                    }
+                                }
+                                
+                                if navbarIndex != 0 {
+                                    Text(filterIcon.name)
+                                        .foregroundColor(.white)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.leading,geoReader.size.width * 0.03)
+            .padding(.top,geoReader.size.height * 0.02)
+        }
+    }
+    
+    private func getBasicsFilter(geoReader: GeometryProxy) -> some View {
+        VStack{
+            Text("Basics")
+                .bold()
+                .foregroundColor(.white)
+                .font(.title2)
+                .padding(.trailing,geoReader.size.width * 0.7)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack{
+                    ForEach(filterBasicsLvl) { filterIcon in
+                        Button(action: {
+                            if filterBasicsIndices.contains(filterIcon.id) {
+                                let index = filterBasicsIndices.firstIndex(of: filterIcon.id)
+                                filterBasicsIndices.remove(at: index!)
+                            } else {
+                                filterBasicsIndices.append(filterIcon.id)
+                            }
+                        }){
+                            VStack{
+                                ZStack{
+                                    Circle()
+                                        .foregroundColor(self.filterBasicsIndices.contains(filterIcon.id) ? .green : .gray)
+                                        .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                    
+                                    if navbarIndex != 0 {
+                                        Image(filterIcon.icon)
+                                            .resizable()
+                                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                    }
+                                }
+                                
+                                if navbarIndex != 0 {
+                                    Text(filterIcon.name)
+                                        .foregroundColor(.white)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.leading,geoReader.size.width * 0.03)
+            .padding(.top,geoReader.size.height * 0.02)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                if(filterBasicsIndices.contains(where: {$0 == 1})) {
+                    HStack{
+                        ForEach(cuisineTypes) { filterIcon in
+                            Button(action: {
+                                if filterCusinesIndices.contains(filterIcon.id) {
+                                    let index = filterCusinesIndices.firstIndex(of: filterIcon.id)
+                                    filterCusinesIndices.remove(at: index!)
+                                } else {
+                                    filterCusinesIndices.append(filterIcon.id)
+                                }
+                            }){
+                                VStack{
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(self.filterCusinesIndices.contains(filterIcon.id) ? .green : .gray)
+                                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                        
+                                        if navbarIndex != 0 {
+                                            Image(filterIcon.icon)
+                                                .resizable()
+                                                .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                        }
+                                    }
+                                    
+                                    if navbarIndex != 0 {
+                                        Text(filterIcon.name)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.leading,geoReader.size.width * 0.03)
+            .padding(.top,geoReader.size.height * 0.02)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                if filterBasicsIndices.contains(where: {$0 == 2}) {
+                    HStack{
+                        ForEach(drinkTypes) { filterIcon in
+                            Button(action: {
+                                if filterCusinesIndices.contains(filterIcon.id) {
+                                    let index = filterCusinesIndices.firstIndex(of: filterIcon.id)
+                                    filterCusinesIndices.remove(at: index!)
+                                } else {
+                                    filterCusinesIndices.append(filterIcon.id)
+                                }
+                            }){
+                                VStack{
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(self.filterCusinesIndices.contains(filterIcon.id) ? .green : .gray)
+                                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                                        
+                                        if navbarIndex != 0 {
+                                            Image(filterIcon.icon)
+                                                .resizable()
+                                                .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                                        }
+                                    }
+                                    
+                                    if navbarIndex != 0 {
+                                        Text(filterIcon.name)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.leading,geoReader.size.width * 0.03)
+            .padding(.top,geoReader.size.height * 0.02)
+            
+            // ScrollView(.horizontal, showsIndicators: false) {
+            if filterBasicsIndices.contains(where: {$0 == 3}) {
+                RatingView(rating: .constant(2))
+                    .padding(.top,geoReader.size.height * 0.001)
+            }
+            // }
+            //            .padding(.leading,geoReader.size.width * 0.03)
+            //            .padding(.top,geoReader.size.height * 0.02)
         }
     }
     
