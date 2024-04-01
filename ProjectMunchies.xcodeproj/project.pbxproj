@@ -13,6 +13,7 @@
 		38118C7C2BA235E0001B60CA /* GroupEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C7B2BA235E0001B60CA /* GroupEditingView.swift */; };
 		38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C7D2BA3DB47001B60CA /* MessagingView.swift */; };
 		38118C822BAE48BF001B60CA /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C812BAE48BF001B60CA /* Restaurant.swift */; };
+		38118C842BB0B070001B60CA /* YouTubePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C832BB0B070001B60CA /* YouTubePlayerView.swift */; };
 		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
 		388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
@@ -121,6 +122,7 @@
 		38118C7B2BA235E0001B60CA /* GroupEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupEditingView.swift; path = ../../../../Downloads/GroupEditingView.swift; sourceTree = "<group>"; };
 		38118C7D2BA3DB47001B60CA /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
 		38118C812BAE48BF001B60CA /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		38118C832BB0B070001B60CA /* YouTubePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerView.swift; sourceTree = "<group>"; };
 		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
 		3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 			children = (
 				77DC3ADE2B034C99009F2B9A /* models */,
 				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
+				38118C832BB0B070001B60CA /* YouTubePlayerView.swift */,
 			);
 			path = videoPlayer;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				77C510222B4D158C005D3EE3 /* Card.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
 				77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */,
+				38118C842BB0B070001B60CA /* YouTubePlayerView.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
 				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,

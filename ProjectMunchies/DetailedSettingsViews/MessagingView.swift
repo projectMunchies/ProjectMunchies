@@ -269,64 +269,118 @@ struct MessageRowView: View {
 
 struct MessageDetailView: View {
     @State var message: MessageThread
-    
-    @State private var inputMessage: String = ""
-    @State private var isShowingImagePicker: Bool = false
-    @State private var selectedImage: UIImage = UIImage()
+       
+       @State private var inputMessage: String = ""
+       @State private var isShowingImagePicker: Bool = false
+       @State private var selectedImage: UIImage = UIImage()
+       @State private var isEditingThreadName = false
+       @State private var newThreadName = ""
+       @State private var isAddingParticipants = false
+       @State private var selectedContacts: [CNContact] = []
     
     var body: some View {
-        VStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(message.messages, id: \.self.text) { message in
-                        MessageBubble(text: message.text, isCurrentUser: message.isCurrentUser)
-                    }
-                }
-            }
-            
-            HStack {
-                // Picture icon button
-                Button(action: {
-                    // Action to open image picker
-                }) {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                        .padding()
-                }
-
-                // Text field for message input
-                TextField("Type a message...", text: $inputMessage)
-                    .padding(.horizontal)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                // Send button
-                Button(action: {
-                    // Action to send the message
-                    sendMessage()
-                }) {
-                    Image(systemName: "paperplane.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                        .padding()
-                }
-            }
-                       .padding()
+           VStack {
+               ScrollView {
+                   LazyVStack {
+                       ForEach(message.messages, id: \.self.text) { message in
+                           MessageBubble(text: message.text, isCurrentUser: message.isCurrentUser)
+                       }
                    }
-                   .padding(.bottom, 20)
-                   .navigationBarTitleDisplayMode(.inline)
-                   .navigationBarTitle(message.title)
                }
                
-               func sendMessage() {
-                   guard !inputMessage.isEmpty else { return }
-                   let newMessage = (text: inputMessage, isCurrentUser: true)
-                   message.messages.append(newMessage)
-                   inputMessage = ""
+               if isEditingThreadName {
+                   TextField("Thread Name", text: $newThreadName)
+                       .textFieldStyle(RoundedBorderTextFieldStyle())
+                       .padding()
+                       .onAppear {
+                           newThreadName = message.title
+                       }
+               } else {
+                   Text(message.title)
+                       .font(.title)
+                       .padding()
+               }
+               
+               HStack {
+                   Button(action: {
+                       isEditingThreadName.toggle()
+                       if !isEditingThreadName {
+                           message.title = newThreadName
+                       }
+                   }) {
+                       Text(isEditingThreadName ? "Save" : "Edit")
+                   }
+                   
+                   Button(action: {
+                       isAddingParticipants = true
+                   }) {
+                       Text("Add Participants")
+                   }
+               }
+               .padding()
+               
+               HStack {
+                   // Picture icon button
+                   Button(action: {
+                       // Action to open image picker
+                       isShowingImagePicker = true
+                   }) {
+                       Image(systemName: "photo")
+                           .resizable()
+                           .frame(width: 30, height: 30)
+                           .foregroundColor(.blue)
+                           .padding()
+                   }
+
+                   // Text field for message input
+                   TextField("Type a message...", text: $inputMessage)
+                       .padding(.horizontal)
+                       .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                   // Send button
+                   Button(action: {
+                       // Action to send the message
+                       sendMessage()
+                   }) {
+                       Image(systemName: "paperplane.fill")
+                           .resizable()
+                           .frame(width: 30, height: 30)
+                           .foregroundColor(.blue)
+                           .padding()
+                   }
+               }
+               .padding()
+           }
+           .padding(.bottom, 20)
+           .navigationBarTitleDisplayMode(.inline)
+           .navigationBarTitle(message.title)
+           .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
+               ImagePicker(selectedImage: $selectedImage)
+           }
+           .sheet(isPresented: $isAddingParticipants) {
+               NavigationView {
+                   ContactPicker(selectedContacts: $selectedContacts)
+                       .navigationBarItems(trailing: Button("Done") {
+                           message.participants.append(contentsOf: selectedContacts)
+                           selectedContacts.removeAll()
+                           isAddingParticipants = false
+                       })
+                       .navigationBarTitle("Add Participants")
                }
            }
+       }
+       
+       func sendMessage() {
+           guard !inputMessage.isEmpty else { return }
+           let newMessage = (text: inputMessage, isCurrentUser: true)
+           message.messages.append(newMessage)
+           inputMessage = ""
+       }
+        func loadImage() {
+            // Handle selected image here
+            // You can send the image as a message or perform any other desired action
+        }
+    }
 
 struct MessageBubble: View {
     let text: String
@@ -366,29 +420,42 @@ struct ContactRowView: View {
             
             Spacer()
             
-            Button(action: {
-                startNewMessageThread(with: contact)
-            }) {
+            NavigationLink(destination: messageThreadView(for: contact)) {
                 Image(systemName: "message")
                     .foregroundColor(.blue)
             }
         }
         .padding()
     }
-    
+
+    func messageThreadView(for contact: CNContact) -> some View {
+        if let existingThread = messages.first(where: { $0.participants.contains(where: { $0.identifier == contact.identifier }) }) {
+            return AnyView(MessageDetailView(message: existingThread))
+        } else {
+            let newThread = MessageThread(title: "\(contact.givenName) \(contact.familyName)", participants: [contact])
+            messages.append(newThread)
+            activeContacts.append(newThread.title)
+            return AnyView(MessageDetailView(message: newThread))
+        }
+    }
     func startNewMessageThread(with contact: CNContact) {
-        let newThread = MessageThread(title: "\(contact.givenName) \(contact.familyName)", participants: [contact])
-        messages.append(newThread)
-        activeContacts.append(newThread.title)
-        // Navigate to the new message thread
-        // You can use a navigation link or programmatic navigation here
+        if let existingThread = messages.first(where: { $0.participants.contains(where: { $0.identifier == contact.identifier }) }) {
+            // Navigate to the existing message thread
+            // You can use a navigation link or programmatic navigation here
+        } else {
+            let newThread = MessageThread(title: "\(contact.givenName) \(contact.familyName)", participants: [contact])
+            messages.append(newThread)
+            activeContacts.append(newThread.title)
+            // Navigate to the new message thread
+            // You can use a navigation link or programmatic navigation here
+        }
     }
 }
 
 struct MessageThread: Identifiable {
     let id = UUID()
-    let title: String
-    let participants: [CNContact]
+    var title: String
+    var participants: [CNContact]
     var messages: [(text: String, isCurrentUser: Bool)] = []
 }
     struct MessagingView_Previews: PreviewProvider {
