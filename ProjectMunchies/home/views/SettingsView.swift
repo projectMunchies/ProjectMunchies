@@ -4,7 +4,6 @@
 //
 //  Created by DotZ3R0 on 7/30/23.
 //
-
 import SwiftUI
 import Firebase
 
@@ -14,20 +13,21 @@ struct SettingsView: View {
     @State private var showSheet = false
     @State private var editInfo = false
     @State var isLargeImageAlert: Bool = false
-    @State private var showHamburgerMenu: Bool = false
-
+    @State private var selectedView: Int?
+    @State private var isSettingsPresented = false
+    
     var body: some View {
         GeometryReader { geoReader in
             ZStack {
-                Color.purple
+                Color.white
                     .ignoresSafeArea()
-
+                
                 VStack {
                     imageSection(for: geoReader)
-
+                    
                     Spacer()
                         .frame(height: geoReader.size.height * 0.08)
-
+                    
                     mainButtons(for: geoReader)
                 }
                 .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
@@ -36,7 +36,7 @@ struct SettingsView: View {
                         .background(Color.white.cornerRadius(20))
                         .padding()
                 }
-
+                
                 Text("Settings")
                     .bold()
                     .foregroundColor(.black)
@@ -44,14 +44,7 @@ struct SettingsView: View {
                     .position(x: geoReader.size.width * 0.2, y: geoReader.size.height * 0.02)
             }
             .position(x: geoReader.frame(in: .local).midX, y: geoReader.frame(in: .local).midY)
-            .disabled(showHamburgerMenu)
-
-            // Display HamburgerMenu
-            if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
-                    .frame(width: geoReader.size.width / 2)
-                    .padding(.trailing, geoReader.size.width * 0.5)
-            }
+            .navigationBarItems(trailing: profileIcon())
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
@@ -62,7 +55,53 @@ struct SettingsView: View {
             }
         }
     }
-
+    
+    // Function to handle profile icon button
+    @ViewBuilder
+    private func profileIcon() -> some View {
+        Menu {
+            Button(action: {
+                selectedView = 0
+            }) {
+                Label("My Bunchies", systemImage: "person.2.square.stack")
+            }
+            
+            Button(action: {
+                selectedView = 1
+            }) {
+                Label("My Reviews", systemImage: "star.fill")
+            }
+        } label: {
+            Image(systemName: "person.circle")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.black)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+        .onChange(of: selectedView) { newValue in
+            isSettingsPresented = true
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+            NavigationView {
+                if let selectedView = selectedView {
+                    switch selectedView {
+                    case 0:
+                        MyBunchiesView()
+                    case 1:
+                        MyReviewsView()
+                    default:
+                        EmptyView()
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
     private func deleteUser() {
         let user = Auth.auth().currentUser
         user?.delete { error in
@@ -74,7 +113,7 @@ struct SettingsView: View {
             }
         }
     }
-
+    
     private func signOutUser() {
         let firebaseAuth = Auth.auth()
         do {
@@ -85,7 +124,7 @@ struct SettingsView: View {
         }
         viewRouter.currentPage = .signinPage
     }
-
+    
     private func imageSection(for geoReader: GeometryProxy) -> some View {
         VStack {
             Image(uiImage: homeViewModel.profileImage)
@@ -94,7 +133,7 @@ struct SettingsView: View {
                 .background(Color.black.opacity(0.2))
                 .aspectRatio(contentMode: .fill)
                 .clipShape(Circle())
-
+            
             if editInfo {
                 Button(action: {
                     showSheet = true
@@ -106,56 +145,6 @@ struct SettingsView: View {
                         .cornerRadius(geoReader.size.height * 0.04)
                         .foregroundColor(Color.white)
                 }
-            }
-                    
-            // Horizontal circular buttons
-            HStack {
-                Button(action: {
-                    // Handle "My Bunchies" action
-                }) {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.white)
-                        .background(Color.gray)
-                        .clipShape(Circle())
-                }
-                .padding()
-                .sheet(isPresented: $showSheet) {
-                    MyBunchiesView()
-                }
-
-                Button(action: {
-                    // Handle "Privacy and Security" action
-                }) {
-                    Image(systemName: "lock.fill")
-                        .resizable()
-                        .frame(width: 38, height: 38)
-                        .font(.system(size: 1))
-                        .foregroundColor(Color(red: 255/255, green: 215/255, blue: 100/255))
-                        .background(Color.black)
-                        .clipShape(Circle())
-                        .overlay(
-                                        Circle()
-                                            .stroke(Color.white, lineWidth: 3)
-                                    )                }
-                .padding()
-
-                Button(action: {
-                    // Handle "My Reviews" action
-                }) {
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .frame(width: 38, height: 38)
-                        .foregroundColor(.white)
-                        .background(Color.gray)
-                        .clipShape(Circle())
-                        .overlay(
-                                        Circle()
-                                            .stroke(Color.white, lineWidth: 3)
-                                    )
-                }
-                .padding()
             }
         }
     }
@@ -177,7 +166,7 @@ struct SettingsView: View {
                     .background(Color.gray)
                     .cornerRadius(geoReader.size.width * 0.06)
             }
-
+            
             Button(action: {
                 signOutUser()
             }) {
@@ -187,7 +176,7 @@ struct SettingsView: View {
                     .cornerRadius(geoReader.size.width * 0.06)
                     .foregroundColor(.white)
             }
-
+            
             Button(action: {
                 deleteUser()
             }) {
@@ -199,10 +188,18 @@ struct SettingsView: View {
             }
         }
     }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+    
+    
+    struct SettingsView_Previews: PreviewProvider {
+        static var previews: some View {
+            let viewRouter = ViewRouter()
+            let homeViewModel = HomeViewModel()
+            
+            return NavigationView {
+                SettingsView()
+                    .environmentObject(viewRouter)
+                    .environmentObject(homeViewModel)
+            }
+        }
     }
 }

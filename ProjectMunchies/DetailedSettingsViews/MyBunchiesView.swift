@@ -5,156 +5,218 @@
 //  Created by Marcus Mckoy on 2/1/24.
 //
 import SwiftUI
-import ContactsUI
 import Contacts
-import MapKit
+import ContactsUI
+import MessageUI
 
+
+
+struct Article: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let link: String
+}
 
 struct MyBunchiesView: View {
-    @State private var isShowingAddFriendsModal = false
-    @State private var isShowingContactPicker = false
-    @State private var selectedContacts: [CNContact] = []
     
+    
+    
+    @State private var articles: [Article] = []
+    @State private var isSettingsPresented = false
+    @State private var selectedView: Int?
+    
+    @State private var userRating: Int?
+    @State private var activeContacts: [String] = []
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                HStack {
-                    Text("Bunchies")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                    Spacer()
-                }
-                   VStack(spacing: 10) {
-                       Button(action: {
-                           isShowingContactPicker = true
-                       }) {
-                           Text("Add from Contacts")
-                               .padding(.vertical, 10)
-                               .padding(.horizontal, 20)
-                               .background(Color.blue)
-                               .foregroundColor(.white)
-                               .cornerRadius(10)
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                       
-                       Button(action: {
-                           // Handle action for creating groups
-                       }) {
-                           Text("Create Groups")
-                               .padding(.vertical, 10)
-                               .padding(.horizontal, 20)
-                               .background(Color.green)
-                               .foregroundColor(.white)
-                               .cornerRadius(10)
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                   }
-                   
+           VStack(spacing: 20) {
+               HStack {
+                   Text("Bunchies")
+                       .font(.title)
+                       .fontWeight(.bold)
+                       .foregroundColor(.primary)
                    Spacer()
-                   
-                   Text("Here's your bunchies content.")
-                       .foregroundColor(.gray)
-                       .padding(.bottom, 20)
-                   
-                   TabView {
-                       NavigationView {
-                           ScrollView {
-                               ForEach(selectedContacts, id: \.identifier) { contact in
-                                   HStack {
-                                       // Green or red light to indicate activity status
-                                       Circle()
-                                           .frame(width: 10, height: 10)
-                                           .foregroundColor(.green) // or .red
-                                       
-                                       Text("\(contact.givenName) \(contact.familyName)")
-                                       
-                                       Spacer()
-                                       
-                                       Button(action: {
-                                           // Remove the contact from the list of friends
-                                           self.removeFriend(contact)
-                                       }) {
-                                           Image(systemName: "minus.circle")
-                                               .foregroundColor(.red)
-                                               .font(.title)
-                                       }
-                                   }
-                                   Divider()
-                               }
-                               .padding(.horizontal)
-                           }
-                           .navigationBarHidden(true)
-                       }
-                       .tabItem {
-                           Image(systemName: "person.2")
-                           Text("Bunchies")
-                       }
-                       
-                       // Chat Tab
-                       Text("Chat")
-                           .tabItem {
-                               Image(systemName: "message")
-                               Text("Chat")
-                           }
-                       
-                       // Random Tab
-                       Text("Random")
-                           .tabItem {
-                               Image(systemName: "shuffle")
-                               Text("Random")
-                           }
+                   profileIcon()
+                   NavigationLink(destination: MessagingView()) {
+                       Image(systemName: "message.circle")
+                           .resizable()
+                           .frame(width: 30, height: 30)
+                           .foregroundColor(.black)
                    }
+                   .padding(.trailing, 10)
                }
-               .padding()
-               .sheet(isPresented: $isShowingContactPicker) {
-                   // Present modal sheet to add friends
-                   ContactPicker(selectedContacts: $selectedContacts)
+               .padding(.horizontal)
+               .padding(.top, 15)
+           
+               VStack(alignment: .leading) {
+                             HStack {
+                                 ForEach(1...5, id: \.self) { index in
+                                     Image(systemName: index <= (userRating ?? 0) ? "star.fill" : "star")
+                                         .foregroundColor(.yellow)
+                                         .onTapGesture {
+                                             self.userRating = index
+                                         }
+                                 }
+                             }
+                             .padding(.horizontal)
+                             .padding(.top, 8)
+                             
+                             Spacer()
+                         }
+                         
+               // Active users
+                          ScrollView(.horizontal, showsIndicators: false) {
+                              HStack(spacing: 10) {
+                                  ForEach(activeContacts, id: \.self) { contact in
+                                      ContactItem(contactName: contact)
+                                  }
+                              }
+                              .padding(.horizontal)
+                          }
+                          
+                          Spacer()
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(articles) { article in
+                        VStack(alignment: .leading) {
+                            Text(article.title)
+                                .font(.headline)
+                            Text(article.description)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .lineLimit(2)
+                            Link("Read more", destination: URL(string: article.link)!)
+                        }
+                        .frame(width: 300) // Adjust width as needed
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                    }
+                }
+                .padding()
             }
         }
+        .onAppear(perform: fetchNews)
     }
-    
-    private func removeFriend(_ contact: CNContact) {
-        // Remove the contact from the list of friends
-        if let index = selectedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-            selectedContacts.remove(at: index)
-        }
-    }
-    
-    struct ContactPicker: UIViewControllerRepresentable {
-        typealias UIViewControllerType = CNContactPickerViewController
-        
-        @Binding var selectedContacts: [CNContact]
 
-        func makeUIViewController(context: Context) -> CNContactPickerViewController {
-            let picker = CNContactPickerViewController()
-            picker.delegate = context.coordinator
-            return picker
+    func fetchNews() {
+        guard let url = URL(string: "https://www.fns.usda.gov/rss-feeds/newsroom") else { return }
+        let parser = XMLParser(contentsOf: url)
+        let delegate = XMLParserDelegateImpl()
+        parser?.delegate = delegate
+        parser?.parse()
+        articles = delegate.articles
+    }
+}
+
+
+struct ContactItem: View {
+    let contactName: String // Accept contact name as parameter
+
+    var body: some View {
+        VStack {
+            Image(systemName: "person.circle")
+                .resizable()
+                .frame(width: 50, height: 50)
+            Text(contactName) // Display contact name
+                .font(.caption)
+                .multilineTextAlignment(.center)
         }
-        
-        func updateUIViewController(_ uiViewController: CNContactPickerViewController, context: Context) {
-            // Update the view controller if needed
+        .padding(10)
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(10)
+    }
+}
+
+class XMLParserDelegateImpl: NSObject, XMLParserDelegate {
+    var articles: [Article] = []
+    private var currentElement: String = ""
+    private var currentTitle: String = ""
+    private var currentDescription: String = ""
+    private var currentLink: String = ""
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        currentElement = elementName
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        switch currentElement {
+        case "title":
+            currentTitle += string
+        case "description":
+            currentDescription += string
+        case "link":
+            currentLink += string
+        default:
+            break
         }
-        
-        func makeCoordinator() -> Coordinator {
-            Coordinator(self)
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "item" {
+            articles.append(Article(title: currentTitle, description: currentDescription, link: currentLink))
+            currentTitle = ""
+            currentDescription = ""
+            currentLink = ""
         }
-        
-        class Coordinator: NSObject, CNContactPickerDelegate {
-            var parent: ContactPicker
-            
-            init(_ parent: ContactPicker) {
-                self.parent = parent
+    }
+}
+
+extension MyBunchiesView {
+    @ViewBuilder
+    func profileIcon() -> some View {
+        Menu {
+            Button(action: {
+                selectedView = 0
+            }) {
+                Label("My Bunchies", systemImage: "person.2.square.stack")
             }
-            
-            func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-                // Append only new contacts to the list of friends
-                for contact in contacts {
-                    if !parent.selectedContacts.contains(where: { $0.identifier == contact.identifier }) {
-                        parent.selectedContacts.append(contact)
+
+            Button(action: {
+                selectedView = 1
+            }) {
+                Label("My Reviews", systemImage: "star.fill")
+            }
+
+            Button(action: {
+                selectedView = 2
+            }) {
+                Label("Settings", systemImage: "gearshape.fill")
+            }
+        } label: {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.black)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+        .onChange(of: selectedView) { newValue in
+            isSettingsPresented = true // Set this to true for all views
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+            NavigationView {
+                if let selectedView = selectedView {
+                    switch selectedView {
+                    case 0:
+                        MyBunchiesView()
+                    case 1:
+                        MyReviewsView()
+                    case 2:
+                        SettingsView()
+                    default:
+                        EmptyView()
                     }
                 }
             }
         }
+    }
+}
+
+struct MyBunchiesView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyBunchiesView()
     }
 }
