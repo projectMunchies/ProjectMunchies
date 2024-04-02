@@ -464,3 +464,32 @@ struct MessageThread: Identifiable {
         }
     }
 
+struct ContactPicker: UIViewControllerRepresentable {
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var selectedContacts: [CNContact]
+    
+    func makeUIViewController(context: Context) -> CNContactPickerViewController {
+        let picker = CNContactPickerViewController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: CNContactPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, CNContactPickerDelegate {
+        var parent: ContactPicker
+        
+        init(_ parent: ContactPicker) {
+            self.parent = parent
+        }
+        
+        func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+            parent.selectedContacts = contacts
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
+}
