@@ -20,8 +20,8 @@ class ReviewsViewModel: ObservableObject {
 
     
     
-   
-            @Published var reviews : [ReviewModel] = []
+    
+    @Published var reviews : [ReviewModel] = []
     @Published var newReviews : [ReviewModel] = []
     @Published var reviewsVenues : [VenueModel] = []
     
@@ -39,21 +39,21 @@ class ReviewsViewModel: ObservableObject {
                     completed([])
                 } else {
                     for document in querySnapshot!.documents {
-                           let data = document.data()
-                           if !data.isEmpty {
-                               let newReview = ReviewModel(
-                                   id: data["id"] as? String ?? "",
-                                   title: data["title"] as? String ?? "",
-                                   body: data["body"] as? String ?? "",
-                                   profileId: data["profileId"] as? String ?? "",
-                                   venueId: data["venueId"] as? String ?? "",
-                                   timeStamp: data["timeStamp"] as? Date ?? Date(),
-                                   thumbsUp: data["thumbsUp"] as? Int ?? 0 // Parse the thumbsUp property
-                               )
-                               
-                               self.newReviews.append(newReview)
-                           }
-                       }
+                            let data = document.data()
+                            if !data.isEmpty {
+                                let newReview = ReviewModel(
+                                    id: data["id"] as? String ?? "",
+                                    title: data["title"] as? String ?? "",
+                                    body: data["body"] as? String ?? "",
+                                    profileId: data["profileId"] as? String ?? "",
+                                    venueId: data["venueId"] as? String ?? "",
+                                    timeStamp: data["timeStamp"] as? Date ?? Date(),
+                                    thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                    rating: data["rating"] as? Int ?? 0 // Add the rating property
+                                )
+                                self.newReviews.append(newReview)
+                            }
+                        }
                     completed(self.newReviews)
                 }
             }
@@ -86,22 +86,26 @@ class ReviewsViewModel: ObservableObject {
         }
     }
     
-    func incrementThumbsUp(for review: ReviewModel) {
+    
+       func incrementThumbsUp(for review: ReviewModel) {
            if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
                var updatedReview = newReviews[index]
                updatedReview.thumbsUp += 1
                newReviews[index] = updatedReview
                
-               // Move the review to reviews
-               newReviews.remove(at: index)
-               reviews.append(updatedReview)
+               // Move the review to reviews if it reaches a certain threshold of thumbs up
+               if updatedReview.thumbsUp >= 10 {
+                   newReviews.remove(at: index)
+                   reviews.append(updatedReview)
+               }
            } else if let index = reviews.firstIndex(where: { $0.id == review.id }) {
                var updatedReview = reviews[index]
                updatedReview.thumbsUp += 1
                reviews[index] = updatedReview
            }
        }
-       
+    
+    
     
     
     var popularReviews: [ReviewModel] {
@@ -109,28 +113,33 @@ class ReviewsViewModel: ObservableObject {
     }
     
     func addNewReview(newReview: ReviewModel, venueName: String, completed: @escaping (Bool) -> Void) {
-        var reviewData: [String: Any] = [
-            "id": newReview.id,
-            "title": venueName,
-            "body": newReview.body,
-            "profileId": newReview.profileId,
-            "venueId": newReview.venueId,
-            "timeStamp": newReview.timeStamp,
-            "thumbsUp": newReview.thumbsUp // Include the thumbsUp property
-        ]
-        reviews.insert(newReview, at: 0)
-        newReviews.insert(newReview, at: 0);
-        db.collection("reviews").document(newReview.id).setData(reviewData) { error in
-            if let error = error {
-                print("Error adding new review: \(error)")
-                completed(false)
-            } else {
-                print("New review added successfully")
-                completed(true)
-            }
-        }
-    }
-    
+           var reviewData: [String: Any] = [
+               "id": newReview.id,
+               "title": venueName,
+               "body": newReview.body,
+               "profileId": newReview.profileId,
+               "venueId": newReview.venueId,
+               "timeStamp": newReview.timeStamp,
+               "thumbsUp": newReview.thumbsUp,
+               "rating": newReview.rating
+           ]
+           
+        DispatchQueue.main.async {
+                self.objectWillChange.send()
+                self.newReviews.insert(newReview, at: 0)
+                
+               
+               self.db.collection("reviews").document(newReview.id).setData(reviewData) { error in
+                   if let error = error {
+                       print("Error adding new review: \(error)")
+                       completed(false)
+                   } else {
+                       print("New review added successfully")
+                       completed(true)
+                   }
+               }
+           }
+       }
     
     public func getReviewsVenues(newReviews: [ReviewModel] ,completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {
         var query: Query!
@@ -178,21 +187,21 @@ class ReviewsViewModel: ObservableObject {
                     completed([])
                 } else {
                     for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                            let review = ReviewModel(
-                                id: data["id"] as? String ?? "",
-                                title: data["title"] as? String ?? "",
-                                body: data["body"] as? String ?? "",
-                                profileId: data["profileId"] as? String ?? "",
-                                venueId: data["venueId"] as? String ?? "",
-                                timeStamp: data["timeStamp"] as? Date ?? Date(),
-                                thumbsUp: data["thumbsUp"] as? Int ?? 0 // Add the thumbsUp property
-                            )
-                            
-                            self.reviews.append(review)
+                            let data = document.data()
+                            if !data.isEmpty {
+                                let review = ReviewModel(
+                                    id: data["id"] as? String ?? "",
+                                    title: data["title"] as? String ?? "",
+                                    body: data["body"] as? String ?? "",
+                                    profileId: data["profileId"] as? String ?? "",
+                                    venueId: data["venueId"] as? String ?? "",
+                                    timeStamp: data["timeStamp"] as? Date ?? Date(),
+                                    thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                    rating: data["rating"] as? Int ?? 0 // Add the rating property
+                                )
+                                self.reviews.append(review)
+                            }
                         }
-                    }
                     completed(self.reviews)
                 }
             }

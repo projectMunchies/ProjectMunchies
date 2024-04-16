@@ -10,24 +10,57 @@ struct MyReviewsView: View {
     @StateObject var viewModel = ReviewsViewModel() // Inject ReviewsViewModel
     @State private var isSettingsPresented = false
     @State private var selectedView: Int?
+    @State private var showAllReviews = false
 
     var body: some View {
         NavigationView {
             VStack {
-                // Display live reviews based on what you post
-                if !viewModel.newReviews.isEmpty {
-                    ForEach(viewModel.newReviews) { review in
-                        // Display each live review
-                        Text(review.title)
-                        Text(review.body)
-                        // Add more properties as needed
+                Spacer().frame(height: 50)
+
+                VStack(alignment: .leading) {
+                    Text("Favorites")
+                        .font(.headline)
+                        .padding(.top)
+
+                    // Display favorite reviews
+                    // Add your code here to show favorite reviews
+
+                    Button(action: {
+                        showAllReviews.toggle()
+                    }) {
+                        Text("All Reviews")
+                            .font(.headline)
+                            .padding(.top)
                     }
-                } else {
-                    Text("No new reviews yet")
+
+                    if showAllReviews {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 16) {
+                                ForEach(viewModel.reviews) { review in
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            Text(review.title)
+                                                .font(.subheadline)
+                                            Text(review.body)
+                                                .font(.caption)
+                                        }
+                                        Spacer()
+                                        HStack {
+                                            ForEach(0..<5) { index in
+                                                Image(systemName: index < review.rating ? "star.fill" : "star")
+                                                    .foregroundColor(.yellow)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .frame(height: 200)
+                    }
                 }
-                Button("Close") {
-                    // Close the sheet
-                }
+                .padding()
+
+                Spacer()
             }
             .padding()
             .onAppear {
@@ -93,6 +126,7 @@ struct MyReviewsView: View {
         }
     }
 }
+
 struct MyReviewsView_Previews: PreviewProvider {
     static var previews: some View {
         MyReviewsView()
