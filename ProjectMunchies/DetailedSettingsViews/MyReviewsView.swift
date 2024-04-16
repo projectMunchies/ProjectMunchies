@@ -49,6 +49,7 @@ struct MyReviewsView: View {
                                             ForEach(0..<5) { index in
                                                 Image(systemName: index < review.rating ? "star.fill" : "star")
                                                     .foregroundColor(.yellow)
+                                                
                                             }
                                         }
                                     }

@@ -20,7 +20,7 @@ class ReviewsViewModel: ObservableObject {
 
     
     
-    
+    @Published private var mutablePopularReviews: [ReviewModel] = []
     @Published var reviews : [ReviewModel] = []
     @Published var newReviews : [ReviewModel] = []
     @Published var reviewsVenues : [VenueModel] = []
@@ -49,7 +49,8 @@ class ReviewsViewModel: ObservableObject {
                                     venueId: data["venueId"] as? String ?? "",
                                     timeStamp: data["timeStamp"] as? Date ?? Date(),
                                     thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                                    rating: data["rating"] as? Int ?? 0 // Add the rating property
+                                    isLiked: data["isLiked"] as? Bool ?? false, // Add the isLiked property
+                                    rating: data["rating"] as? Int ?? 0
                                 )
                                 self.newReviews.append(newReview)
                             }
@@ -87,30 +88,35 @@ class ReviewsViewModel: ObservableObject {
     }
     
     
-       func incrementThumbsUp(for review: ReviewModel) {
-           if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
-               var updatedReview = newReviews[index]
-               updatedReview.thumbsUp += 1
-               newReviews[index] = updatedReview
-               
-               // Move the review to reviews if it reaches a certain threshold of thumbs up
-               if updatedReview.thumbsUp >= 10 {
-                   newReviews.remove(at: index)
-                   reviews.append(updatedReview)
-               }
-           } else if let index = reviews.firstIndex(where: { $0.id == review.id }) {
-               var updatedReview = reviews[index]
-               updatedReview.thumbsUp += 1
-               reviews[index] = updatedReview
-           }
-       }
-    
-    
-    
-    
+   
     var popularReviews: [ReviewModel] {
-        return reviews.sorted(by: { $0.thumbsUp > $1.thumbsUp })
-    }
+           newReviews.filter { $0.isLiked }.sorted { $0.thumbsUp > $1.thumbsUp }
+       }
+            
+            func incrementThumbsUp(for review: ReviewModel) {
+                if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
+                    var updatedReview = newReviews[index]
+                    updatedReview.thumbsUp += 1
+                    newReviews[index] = updatedReview
+                    
+                    // Move the review to mutablePopularReviews
+                    mutablePopularReviews.append(updatedReview)
+                    
+                    // Update the review in the "My Reviews" tab
+                    if let myReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
+                        reviews[myReviewIndex] = updatedReview
+                    }
+                } else if let index = mutablePopularReviews.firstIndex(where: { $0.id == review.id }) {
+                    var updatedReview = mutablePopularReviews[index]
+                    updatedReview.thumbsUp += 1
+                    mutablePopularReviews[index] = updatedReview
+                    
+                    // Update the review in the "My Reviews" tab
+                    if let myReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
+                        reviews[myReviewIndex] = updatedReview
+                    }
+                }
+            }
     
     func addNewReview(newReview: ReviewModel, venueName: String, completed: @escaping (Bool) -> Void) {
            var reviewData: [String: Any] = [
@@ -162,8 +168,17 @@ class ReviewsViewModel: ObservableObject {
                             if !data.isEmpty{
                                 var reviewVenue = VenueModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: data["address"] as? String ?? "", reviews: data["reviews"] as? [ReviewModel] ?? [], specials: data["specials"] as? [SpecialModel] ?? [])
                                 
-                                // after finding matching venue, append associated review
-                                reviewVenue.reviews.append(newReviews.first { $0.venueId == reviewVenue.id } ??  liveReviewSample)
+                                reviewVenue.reviews.append(newReviews.first { $0.venueId == reviewVenue.id } ?? ReviewModel(
+                                                                id: "",
+                                                                title: "",
+                                                                body: "",
+                                                                profileId: "",
+                                                                venueId: "",
+                                                                timeStamp: Date.today(),
+                                                                thumbsUp: 0,
+                                                                isLiked: false, // Add the isLiked property
+                                                                rating: 0
+                                                            ))
                                 
                                 self.reviewsVenues.append(reviewVenue)
                             }
@@ -190,15 +205,16 @@ class ReviewsViewModel: ObservableObject {
                             let data = document.data()
                             if !data.isEmpty {
                                 let review = ReviewModel(
-                                    id: data["id"] as? String ?? "",
-                                    title: data["title"] as? String ?? "",
-                                    body: data["body"] as? String ?? "",
-                                    profileId: data["profileId"] as? String ?? "",
-                                    venueId: data["venueId"] as? String ?? "",
-                                    timeStamp: data["timeStamp"] as? Date ?? Date(),
-                                    thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                                    rating: data["rating"] as? Int ?? 0 // Add the rating property
-                                )
+                                                            id: data["id"] as? String ?? "",
+                                                            title: data["title"] as? String ?? "",
+                                                            body: data["body"] as? String ?? "",
+                                                            profileId: data["profileId"] as? String ?? "",
+                                                            venueId: data["venueId"] as? String ?? "",
+                                                            timeStamp: data["timeStamp"] as? Date ?? Date(),
+                                                            thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                                            isLiked: data["isLiked"] as? Bool ?? false, // Add the isLiked property
+                                                            rating: data["rating"] as? Int ?? 0
+                                                        )
                                 self.reviews.append(review)
                             }
                         }

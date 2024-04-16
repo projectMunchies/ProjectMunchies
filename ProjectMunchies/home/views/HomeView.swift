@@ -889,19 +889,17 @@ struct HomeView: View {
                                     )
                             } else if selectedTab == .popular {
                                 Color.clear
-                                    .id(TabModel.popular)
-                                    .containerRelativeFrame(.horizontal)
-                                    .overlay(
-                                        ScrollView {
-                                            LazyVStack {
-                                                ForEach(reviewsViewModel.popularReviews, id: \.id) { review in
-                                                    ReviewCell(review: review)
-                                                        .environmentObject(reviewsViewModel)
-                                                }
-                                            }
-                                        }
-                                    )
-                            } else {
+                                       .id(TabModel.popular)
+                                       .containerRelativeFrame(.horizontal)
+                                       .overlay(
+                                           VStack {
+                                               List(reviewsViewModel.popularReviews) { review in
+                                                   ReviewCell(review: review)
+                                                       .environmentObject(reviewsViewModel)
+                                               }
+                                           }
+                                       )
+                                          } else {
                                 newReviewForm(geoReader: geoReader)
                                     .frame(width: geoReader.size.width, height: geoReader.size.height)
                             }
@@ -1191,15 +1189,16 @@ struct HomeView: View {
                 """
         
         let newReview = ReviewModel(
-               id: UUID().uuidString,
-               title: selectedVenue?.name ?? "",
-               body: reviewBody,
-               profileId: "user_profile_id",
-               venueId: selectedVenue?.id ?? "",
-               timeStamp: Date(),
-               thumbsUp: 0,
-               rating: rating
-           )
+            id: UUID().uuidString,
+            title: selectedVenue?.name ?? "",
+            body: reviewBody,
+            profileId: "user_profile_id",
+            venueId: selectedVenue?.id ?? "",
+            timeStamp: Date(),
+            thumbsUp: 0,
+            isLiked: false, // Set initial isLiked to false
+            rating: rating
+        )
 
         reviewsViewModel.addNewReview(newReview: newReview, venueName: selectedVenue?.name ?? "") { success in
                 if success {
@@ -1231,7 +1230,6 @@ struct HomeView: View {
         
         @EnvironmentObject private var reviewsViewModel: ReviewsViewModel
         
-        
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
@@ -1261,20 +1259,34 @@ struct HomeView: View {
                     Spacer()
                     
                     Button(action: {
-                        reviewsViewModel.incrementThumbsUp(for: review)
-                    }) {
-                        Image(systemName: "hand.thumbsup")
-                            .foregroundColor(.blue)
-                    }
-                }
-            }
-            .padding()
-            .background(Color.black)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-        }
-    }
-    
+                                       toggleLiked()
+                                   }) {
+                                       HStack {
+                                           Image(systemName: review.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
+                                               .foregroundColor(.blue)
+                                           Text("\(review.thumbsUp)")
+                                               .foregroundColor(.blue)
+                                       }
+                                   }
+                               }
+                           }
+                           .padding()
+                           .background(Color.black)
+                           .cornerRadius(10)
+                           .shadow(radius: 5)
+                       }
+                       
+                       private func toggleLiked() {
+                           if let index = reviewsViewModel.newReviews.firstIndex(where: { $0.id == review.id }) {
+                               reviewsViewModel.newReviews[index].isLiked.toggle()
+                               if reviewsViewModel.newReviews[index].isLiked {
+                                   reviewsViewModel.newReviews[index].thumbsUp += 1
+                               } else {
+                                   reviewsViewModel.newReviews[index].thumbsUp -= 1
+                               }
+                           }
+                       }
+                   }
     private func reviewsOverlay(geoReader: GeometryProxy) -> some View {
         VStack{
             Button(action: {
