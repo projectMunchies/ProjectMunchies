@@ -22,6 +22,7 @@ class HomeViewModel: ObservableObject {
     @Published var foodFilters: [FoodFilterModel] = []
     @Published var lastDoc: DocumentSnapshot!
     
+    
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
         db.collection("profiles")
             .whereField("userId", isEqualTo: Auth.auth().currentUser?.uid as Any)

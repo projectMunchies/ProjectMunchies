@@ -15,6 +15,7 @@ struct SettingsView: View {
     @State var isLargeImageAlert: Bool = false
     @State private var selectedView: Int?
     @State private var isSettingsPresented = false
+    @State private var userProfileId = ""
     
     var body: some View {
         GeometryReader { geoReader in

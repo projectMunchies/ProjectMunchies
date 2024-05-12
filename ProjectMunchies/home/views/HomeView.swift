@@ -20,8 +20,7 @@ struct HomeView: View {
     @State private var scale: CGFloat = 0.5
     @State private var delay: Double = 0
     
-
-   
+    @State private var selectedOccasion = 0
     @State private var searchResults: [VenueModel] = []
     @State private var showSuccessMessage = false
     @State private var selectedVenue: VenueModel?
@@ -53,8 +52,7 @@ struct HomeView: View {
     @State private var isExpanded: Bool = false
 
     @State private var isSearching = false
-    
-
+    @State private var selectedTimeOfDay = 0
     @State private var selectedTab: TabModel?
     @State private var tabProgress: CGFloat = 0.5
     @State private var selectedView: Int?
@@ -766,6 +764,8 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
                 .contentShape(.capsule)
+                .background(selectedTab == tab ? Color.black : Color.clear)
+                .foregroundColor(selectedTab == tab ? .white : .black)
                 .onTapGesture {
                     withAnimation(.snappy) {
                         selectedTab = tab
@@ -773,19 +773,8 @@ struct HomeView: View {
                 }
             }
         }
-        .onChange(of: selectedTab) { _ in
-            setSheetBoundary(lowestPoint: Int(UIScreen.main.bounds.height * 0.65), highestPoint: Int(UIScreen.main.bounds.height * 0.65))
-        }
-        .background {
-            GeometryReader {
-                let size = $0.size
-                let capsuleWidth = size.width / CGFloat(TabModel.allCases.count)
-                Capsule()
-                    .fill(.black)
-                    .frame(width: capsuleWidth)
-                    .offset(x: tabProgress * (size.width - capsuleWidth))
-            }
-        }
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(10)
         .padding(.horizontal, 15)
     }
     private func SampleView(_ color: Color) -> some View {
@@ -794,25 +783,13 @@ struct HomeView: View {
                 LazyVGrid(columns: Array(repeating: GridItem(), count: 1), content: {
                     ForEach(selectedTab == .recent ? reviewsViewModel.newReviews : reviewsViewModel.popularReviews, id: \.id) { review in
                         ReviewCell(review: review)
-                            .onTapGesture {
-                                if self.isExpanded {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        setSheetBoundary(lowestPoint: 300, highestPoint: 300)
-                                        self.isExpanded.toggle()
-                                    }
-                                } else {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        setSheetBoundary(lowestPoint: 800, highestPoint: 800)
-                                        self.isExpanded.toggle()
-                                    }
-                                }
-                            }
+                            .environmentObject(reviewsViewModel)
                     }
                 })
                 .padding(15)
             }
             .scrollIndicators(.hidden)
-            .scrollClipDisabled()
+            .scrollDisabled(true)
             .mask {
                 Rectangle()
                     .padding(.bottom, -100)
@@ -841,10 +818,13 @@ struct HomeView: View {
         case 2:
             self.venues.removeAll()
             checkForLiveReviews()
-            setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+            selectedTab = .recent
+            let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
+            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
         default:
             self.venues.removeAll()
-            setSheetBoundary(lowestPoint: 800, highestPoint: 800)
+            let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
+            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
         }
     }
     
@@ -881,224 +861,293 @@ struct HomeView: View {
     
     private func navBarDetails(geoReader: GeometryProxy) -> some View {
         VStack {
-                if navbarIndex != 0 {
-                    if navbarIndex == 1 {
-                        displayFilter(geoReader: geoReader)
-                    }
-                    
-                    if navbarIndex == 2 {
-                                 Divider()
-                                 
-                                 VStack {
-                                     CustomTabBar()
-                                     
-                                     GeometryReader { proxy in
-                                         let size = proxy.size
-                                         ScrollView(.horizontal) {
-                                             LazyHStack(spacing: 0) {
-                                                 if selectedTab == .recent {
-                                                     SampleView(.purple)
-                                                         .id(TabModel.recent)
-                                                         .containerRelativeFrame(.horizontal)
-                                                 } else if selectedTab == .popular {
-                                                     SampleView(.blue)
-                                                         .id(TabModel.popular)
-                                                         .containerRelativeFrame(.horizontal)
-                                                 } else {
-                                                     newReviewForm(geoReader: geoReader)
-                                                 }
-                                             }
-                                             .scrollTargetLayout()
-                                             .offsetX { value in
-                                                 let progress = -value / (size.width * CGFloat(TabModel.allCases.count - 2))
-                                                 tabProgress = max(min(progress, 1), 0)
-                                             }
-                                         }
-                                         .scrollPosition(id: $selectedTab)
-                                         .scrollIndicators(.hidden)
-                                         .scrollTargetBehavior(.paging)
-                                         .scrollClipDisabled()
-                                     }
-                                     .frame(height: geoReader.size.height * 0.45)
-                                     .ignoresSafeArea(.all, edges: .bottom)
-                                 }
-                             }
-                                
-                                if navbarIndex == 3 {
-                                    VStack {
-                                        Text("What should I eat today?")
-                                            .font(.largeTitle)
-                                            .multilineTextAlignment(.center)
-                                        
-                                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
-                                    }
-                                    .frame(height: geoReader.size.height * 0.45)
-                                }
-                            }
-                        }
-                    }
-
-            private func newReviewForm(geoReader: GeometryProxy) -> some View {
-               
-                    VStack {
-                        Text("Crumb Trails")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding()
-                        
-                        
-                        TabView {
-                            // Party
-                            VStack {
-                                Text("Party")
-                                    .font(.headline)
-                                
-                                Picker("Select an option", selection: $selectedWho) {
-                                    ForEach(0..<8) { index in
-                                        Text("\(index)").tag(index)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
-                            }
-                            
-                            // Location
-                            VStack {
-                                Text("Location")
-                                    .font(.headline)
-                                
-                                TextField("Enter restaurant name", text: $searchText)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .onChange(of: searchText) { newValue in
-                                        searchVenues(searchText: newValue)
-                                    }
-                                
-                                if isSearching {
-                                    ProgressView()
-                                }
-                                
-                                if !searchResults.isEmpty {
-                                    List(searchResults, id: \.id) { venue in
-                                        VStack(alignment: .leading) {
-                                            Text(venue.name)
-                                                .font(.headline)
-                                            Text(venue.address)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
-                                        }
-                                        .onTapGesture {
-                                            selectedVenue = venue
-                                            searchText = venue.name
-                                            searchResults = []
-                                        }
-                                    }
-                                    .listStyle(PlainListStyle())
-                                    .frame(height: 200)
-                                }
-                                
-                                if let venue = selectedVenue {
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            Text(venue.name)
-                                                .font(.headline)
-                                            Text(venue.address)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
-                                        }
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            selectedVenue = nil
-                                            searchText = ""
-                                        }) {
-                                            Image(systemName: "xmark.circle.fill")
-                                                .foregroundColor(.red)
-                                        }
-                                    }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 5)
-                                }
-                            }
-                            // Date & Time
-                            VStack {
-                                Text("Date & Time")
-                                    .font(.headline)
-                                
-                                DatePicker("Select a date", selection: $selectedDate, displayedComponents: .date)
-                                DatePicker("Select a time", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                            }
-                            
-                            // Occasion
-                            VStack {
-                                Text("Occasion")
-                                    .font(.headline)
-                                
-                                TextField("Enter reason", text: $reason)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                            }
-                            
-                            // Order
-                            VStack {
-                                Text("Order")
-                                    .font(.headline)
-                                
-                                TextEditor(text: $description)
-                                    .frame(height: 150)
-                            }
-                            
-                            // Rating
-                            VStack {
-                                Text("Rating")
-                                    .font(.headline)
-                                
-                                HStack {
-                                    ForEach(0..<5) { index in
-                                        Image(systemName: "star.fill")
-                                            .foregroundColor(index < rating ? .yellow : .gray)
-                                            .onTapGesture {
-                                                rating = index + 1
-                                            }
-                                    }
-                                }
-                            }
-                        }
-                        .tabViewStyle(PageTabViewStyle())
-                        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-                        
-                        Button(action: {
-                            addNewReview()
-                        }) {
-                            Text("Submit Review")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                        }
-                        .padding()
-                        
-                        if showSuccessMessage {
-                            VStack {
-                                Image(systemName: "checkmark")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.green)
-                                
-                                Text("Congrats! You submitted a review.")
-                                    .foregroundColor(.white)
-                            }
-                            .padding()
-                            .background(Color.black)
-                            .cornerRadius(10)
-                            .transition(.opacity)
-                        }
-                    }
-                    .background(Color.gray.opacity(0.8))
-                    .cornerRadius(20)
-                    .frame(width: geoReader.size.width * 0.99, height: geoReader.size.height * 0.45)
-                    .ignoresSafeArea(.all, edges: .bottom)
+            if navbarIndex != 0 {
+                if navbarIndex == 1 {
+                    displayFilter(geoReader: geoReader)
                 }
+                
+                if navbarIndex == 2 {
+                    Divider()
                     
-              
+                    let customTabBar = CustomTabBar()
+                    
+                    let scrollView = ScrollView(.horizontal) {
+                        LazyHStack(spacing: 0) {
+                            if selectedTab == .recent {
+                                Color.clear
+                                    .id(TabModel.recent)
+                                    .containerRelativeFrame(.horizontal)
+                                    .overlay(
+                                        ScrollView {
+                                            LazyVStack {
+                                                ForEach(reviewsViewModel.newReviews, id: \.id) { review in
+                                                    ReviewCell(review: review)
+                                                        .environmentObject(reviewsViewModel)
+                                                }
+                                            }
+                                        }
+                                    )
+                            } else if selectedTab == .popular {
+                                Color.clear
+                                       .id(TabModel.popular)
+                                       .containerRelativeFrame(.horizontal)
+                                       .overlay(
+                                           VStack {
+                                               List(reviewsViewModel.popularReviews) { review in
+                                                   ReviewCell(review: review)
+                                                       .environmentObject(reviewsViewModel)
+                                               }
+                                           }
+                                       )
+                                          } else {
+                                newReviewForm(geoReader: geoReader)
+                                    .frame(width: geoReader.size.width, height: geoReader.size.height)
+                            }
+                        }
+                        .scrollTargetLayout()
+                        .offsetX { value in
+                            let progress = -value / (geoReader.size.width * CGFloat(TabModel.allCases.count - 2))
+                            tabProgress = max(min(progress, 1), 0)
+                        }
+                    }
+                    .scrollPosition(id: $selectedTab)
+                    .scrollIndicators(.hidden)
+                    .scrollTargetBehavior(.paging)
+                    .scrollDisabled(true)
+                    
+                    VStack {
+                        customTabBar
+                        
+                        GeometryReader { proxy in
+                            let size = proxy.size
+                            scrollView
+                        }
+                        .frame(height: geoReader.size.height * 0.6)
+                    }
+                    .onChange(of: selectedTab) { newTab in
+                        if newTab == .new {
+                            let fixedHeight = Int(UIScreen.main.bounds.height * 0.75)
+                            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+                        } else {
+                            let fixedHeight = Int(UIScreen.main.bounds.height * 0.751)
+                            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+                        }
+                    }
+                }
+                
+                if navbarIndex == 3 {
+                    VStack {
+                        Text("What should I eat today?")
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                        
+                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
+                    }
+                    .frame(height: geoReader.size.height * 0.45)
+                }
+            }
+        }
+    }
+    private func newReviewForm(geoReader: GeometryProxy) -> some View {
+            VStack {
+                Text("Crumb Trails")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Party
+                        VStack {
+                            Text("Party")
+                                .font(.headline)
+                            
+                            Picker("Select an option", selection: $selectedWho) {
+                                ForEach(0..<8) { index in
+                                    Text("\(index)").tag(index)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        
+                        Divider()
+                            .background(Color.white)
+                            .padding(.vertical)
+                        
+                        // Location
+                        VStack {
+                            Text("Location")
+                                .font(.headline)
+                            
+                            TextField("Enter restaurant name", text: $searchText)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: searchText) { newValue in
+                                    searchVenues(searchText: newValue)
+                                }
+                            
+                            if isSearching {
+                                ProgressView()
+                            }
+                            
+                            if !searchResults.isEmpty {
+                                List(searchResults, id: \.id) { venue in
+                                    VStack(alignment: .leading) {
+                                        Text(venue.name)
+                                            .font(.headline)
+                                        Text(venue.address)
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                    }
+                                    .onTapGesture {
+                                        selectedVenue = venue
+                                        searchText = venue.name
+                                        searchResults = []
+                                    }
+                                }
+                                .listStyle(PlainListStyle())
+                                .frame(height: 110)
+                            }
+                            
+                            if let venue = selectedVenue {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(venue.name)
+                                            .font(.headline)
+                                        Text(venue.address)
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                    
+                                    Button(action: {
+                                        selectedVenue = nil
+                                        searchText = ""
+                                    }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.red)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
+                            }
+                        }
+                        
+                        Divider()
+                            .background(Color.white)
+                            .padding(.vertical)
+                        
+                        // Time of Day
+                        VStack {
+                            Text("Time of Day")
+                                .font(.headline)
+                            
+                            Picker("Select time of day", selection: $selectedTimeOfDay) {
+                                Text("Breakfast").tag(0)
+                                Text("Lunch").tag(1)
+                                Text("Happy Hour").tag(2)
+                                Text("Dinner").tag(3)
+                                Text("After Hours").tag(4)
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                        }
+                        
+                        Divider()
+                            .background(Color.white)
+                            .padding(.vertical)
+                        
+                        // Occasion
+                        VStack {
+                            Text("Occasion")
+                                .font(.headline)
+                            
+                            Picker("Select an occasion", selection: $selectedOccasion) {
+                                Text("Birthday").tag(0)
+                                Text("Anniversary").tag(1)
+                                Text("Accomplishment").tag(2)
+                                Text("Date").tag(3)
+                                Text("Other").tag(4)
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        
+                        Divider()
+                            .background(Color.white)
+                            .padding(.vertical)
+                        
+                        // Order
+                        VStack {
+                            Text("Order")
+                                .font(.headline)
+                            
+                            VStack {
+                                ForEach(0..<5) { index in
+                                    TextField("Enter item \(index + 1)", text: $orderItems[index])
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .padding(.vertical, 4)
+                                }
+                            }
+                            .padding(.vertical)
+                        }
+                        
+                        Divider()
+                            .background(Color.white)
+                            .padding(.vertical)
+                        
+                        // Rating
+                        VStack {
+                            Text("Rating")
+                                .font(.headline)
+                            
+                            HStack {
+                                ForEach(0..<5) { index in
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(index < rating ? .yellow : .gray)
+                                        .onTapGesture {
+                                            rating = index + 1
+                                        }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                }
+                .frame(height: geoReader.size.height * 0.3)
+                
+                Button(action: {
+                    addNewReview()
+                }) {
+                    Text("Submit Review")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                if showSuccessMessage {
+                    VStack {
+                        Image(systemName: "checkmark")
+                            .font(.largeTitle)
+                            .foregroundColor(.green)
+                        
+                        Text("Congrats! You submitted a review.")
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    .transition(.opacity)
+                }
+            }
+            .background(Color.gray.opacity(0.8))
+            .cornerRadius(20)
+            .frame(width: geoReader.size.width * 0.92, height: geoReader.size.height * 0.18)
+        }
+        
+        @State private var orderItems = Array(repeating: "", count: 5)
+    
     
     
     func searchVenues(searchText: String) {
@@ -1114,12 +1163,30 @@ struct HomeView: View {
     }
     
     func addNewReview() {
+        let timeOfDay: String
+            switch selectedTimeOfDay {
+            case 0:
+                timeOfDay = "Breakfast"
+            case 1:
+                timeOfDay = "Lunch"
+            case 2:
+                timeOfDay = "Happy Hour"
+            case 3:
+                timeOfDay = "Dinner"
+            case 4:
+                timeOfDay = "After Hours"
+            default:
+                timeOfDay = "Unknown"
+            }
+        
+        
+        
         let reviewBody = """
-            Party: \(selectedWho)
-            Occasion: \(reason)
-            Order: \(description)
-            Rating: \(rating)
-            """
+                Party: \(selectedWho)
+                Time of Day: \(timeOfDay)
+                Occasion: \(reason)
+                Order: \(description)
+                """
         
         let newReview = ReviewModel(
             id: UUID().uuidString,
@@ -1128,61 +1195,98 @@ struct HomeView: View {
             profileId: "user_profile_id",
             venueId: selectedVenue?.id ?? "",
             timeStamp: Date(),
-            thumbsUp: 0
+            thumbsUp: 0,
+            isLiked: false, // Set initial isLiked to false
+            rating: rating
         )
-        
+
         reviewsViewModel.addNewReview(newReview: newReview, venueName: selectedVenue?.name ?? "") { success in
-            if success {
-                // Clear the input fields
-                selectedWho = 0
-                reason = ""
-                description = ""
-                selectedVenue = nil
-                searchText = ""
-                rating = 0 // Reset the rating
-                
-                showSuccessMessage = true
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    showSuccessMessage = false
-                }
-                
-                // Refresh the live reviews
-                checkForLiveReviews()
-            }
-        }
-    }
-    
+                if success {
+                    // Insert the new review at the beginning of the array
+                    withAnimation {
+                        reviewsViewModel.newReviews.insert(newReview, at: 0)
+                    }
+                   selectedWho = 0
+                   selectedTimeOfDay = 0
+                   reason = ""
+                   description = ""
+                   selectedVenue = nil
+                   searchText = ""
+                   rating = 0
+
+                   showSuccessMessage = true
+
+                   DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                       showSuccessMessage = false
+                   }
+
+                   // Refresh the live reviews
+                   checkForLiveReviews()
+               }
+           }
+       }
     struct ReviewCell: View {
         let review: ReviewModel
+        
         @EnvironmentObject private var reviewsViewModel: ReviewsViewModel
         
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(review.profileId)
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                    
+                    Spacer()
+                    
+                    Text(review.timeStamp.timeAgoDisplay())
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                
                 Text(review.title)
                     .font(.headline)
+                
                 Text(review.body)
                     .font(.subheadline)
                 
                 HStack {
-                    Spacer()
-                    Button(action: {
-                        reviewsViewModel.incrementThumbsUp(for: review)
-                    }) {
-                        Image(systemName: "hand.thumbsup")
-                            .foregroundColor(.blue)
-                        Text("\(review.thumbsUp)")
-                                             .font(.subheadline)
-                                             .foregroundColor(.black)
+                    ForEach(0..<5) { index in
+                        Image(systemName: "star.fill")
+                            .foregroundColor(index < review.rating ? .yellow : .gray)
                     }
-                }
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-        }
-    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                                       toggleLiked()
+                                   }) {
+                                       HStack {
+                                           Image(systemName: review.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
+                                               .foregroundColor(.blue)
+                                           Text("\(review.thumbsUp)")
+                                               .foregroundColor(.blue)
+                                       }
+                                   }
+                               }
+                           }
+                           .padding()
+                           .background(Color.black)
+                           .cornerRadius(10)
+                           .shadow(radius: 5)
+                       }
+                       
+                       private func toggleLiked() {
+                           if let index = reviewsViewModel.newReviews.firstIndex(where: { $0.id == review.id }) {
+                               reviewsViewModel.newReviews[index].isLiked.toggle()
+                               if reviewsViewModel.newReviews[index].isLiked {
+                                   reviewsViewModel.newReviews[index].thumbsUp += 1
+                               } else {
+                                   reviewsViewModel.newReviews[index].thumbsUp -= 1
+                               }
+                           }
+                       }
+                   }
     private func reviewsOverlay(geoReader: GeometryProxy) -> some View {
         VStack{
             Button(action: {
