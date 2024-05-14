@@ -41,13 +41,16 @@ struct MyReviewsView: View {
                     if showAllReviews {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 16) {
-                                ForEach(viewModel.allReviews) { review in
+                                ForEach(viewModel.allReviews.sorted(by: { $0.timeStamp > $1.timeStamp })) { review in
                                     HStack {
                                         VStack(alignment: .leading) {
                                             Text(review.title)
                                                 .font(.subheadline)
                                             Text(review.body)
                                                 .font(.caption)
+                                            Text(Date().timeAgoDisplay(from: review.timeStamp))
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
                                         }
                                         Spacer()
                                         HStack {
@@ -76,13 +79,16 @@ struct MyReviewsView: View {
                     if showLikedReviews {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 16) {
-                                ForEach(viewModel.likedReviews) { review in
+                                ForEach(viewModel.likedReviews.sorted(by: { $0.timeStamp > $1.timeStamp })) { review in
                                     HStack {
                                         VStack(alignment: .leading) {
                                             Text(review.title)
                                                 .font(.subheadline)
                                             Text(review.body)
                                                 .font(.caption)
+                                            Text(Date().timeAgoDisplay(from: review.timeStamp))
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
                                         }
                                         Spacer()
                                         HStack {
@@ -99,62 +105,56 @@ struct MyReviewsView: View {
                     }
                 }
                 .padding()
-                                
-                                Spacer()
-                            }
-                            .onAppear {
-                                viewModel.fetchAllReviews { _ in }
-                                viewModel.fetchLikedReviews { reviews in
-                                    // Handle the fetched liked reviews if needed
-                                    print("Fetched \(reviews.count) liked reviews")
-                                }
-                            }
-                            .navigationBarItems(trailing: profileIcon())
-                        }
-                    }
-                    
-                    @ViewBuilder
-                    func profileIcon() -> some View {
-                        Menu {
-                            Button(action: {
-                                selectedView = 1
-                                isSettingsPresented = true
-                            }) {
-                                Label("My Reviews", systemImage: "star.fill")
-                            }
-                            
-                            Button(action: {
-                                selectedView = 2
-                                isSettingsPresented = true
-                            }) {
-                                Label("Settings", systemImage: "gearshape.fill")
-                            }
-                        } label: {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.top, 16)
-                        .sheet(isPresented: $isSettingsPresented) {
-                            switch selectedView {
-                            case 1:
-                                MyReviewsView()
-                                    .onDisappear {
-                                        // Update the necessary state variables to show the navbarDetails and homeView
-                                        // For example:
-                                        // self.showNavbarDetails = true
-                                        // self.showHomeView = true
-                                    }
-                            case 2:
-                                SettingsView()
-                            default:
-                                EmptyView()
-                            }
-                        }
-                    }
+                
+                Spacer()
+            }
+            .onAppear {
+                viewModel.fetchAllReviews { _ in }
+                viewModel.fetchLikedReviews { reviews in
+                    // Handle the fetched liked reviews if needed
+                    print("Fetched \(reviews.count) liked reviews")
                 }
+            }
+            .navigationBarItems(trailing: profileIcon())
+        }
+    }
+    
+    @ViewBuilder
+    func profileIcon() -> some View {
+        Menu {
+            Button(action: {
+                selectedView = 0
+                isSettingsPresented = true
+            }) {
+                Label("My Bunchies", systemImage: "person.2.square.stack")
+            }
+            
+            Button(action: {
+                selectedView = 2
+                isSettingsPresented = true
+            }) {
+                Label("Settings", systemImage: "gearshape.fill")
+            }
+        } label: {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.black)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+        .sheet(isPresented: $isSettingsPresented) {
+            switch selectedView {
+            case 0:
+                MyBunchiesView()
+            case 2:
+                SettingsView()
+            default:
+                EmptyView()
+            }
+        }
+    }
+}
 
                 struct MyReviewsView_Previews: PreviewProvider {
                     static var previews: some View {

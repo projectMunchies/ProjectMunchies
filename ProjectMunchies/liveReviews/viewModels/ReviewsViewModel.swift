@@ -17,7 +17,7 @@ class ReviewsViewModel: ObservableObject {
     let db = Firestore.firestore()
     
     
-
+    
     
     
     @Published private var mutablePopularReviews: [ReviewModel] = []
@@ -28,40 +28,57 @@ class ReviewsViewModel: ObservableObject {
     @Published var allReviews: [ReviewModel] = []
     @Published var likedReviews: [ReviewModel] = []
     
+    
+    
+    
+    
     public func getAllNewReviews(completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
         var query: Query!
         
         query = db.collection("reviews")
             .whereField("timeStamp", isGreaterThanOrEqualTo: Date.today().previous(.sunday))
+            .order(by: "timeStamp", descending: true)
             .limit(to: 10)
         
-        query
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting new reviews documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                            let data = document.data()
-                            if !data.isEmpty {
-                                let newReview = ReviewModel(
-                                    id: data["id"] as? String ?? "",
-                                    title: data["title"] as? String ?? "",
-                                    body: data["body"] as? String ?? "",
-                                    profileId: data["profileId"] as? String ?? "",
-                                    venueId: data["venueId"] as? String ?? "",
-                                    timeStamp: data["timeStamp"] as? Date ?? Date(),
-                                    thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                                    isLiked: data["isLiked"] as? Bool ?? false, // Add the isLiked property
-                                    rating: data["rating"] as? Int ?? 0
-                                )
-                                self.newReviews.append(newReview)
-                            }
+        query.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting new reviews documents: \(err)")
+                completed([])
+            } else {
+                var uniqueReviews: [ReviewModel] = []
+                
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if !data.isEmpty {
+                        let timestamp = data["timeStamp"] as? Timestamp
+                        let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                        
+                        let newReview = ReviewModel(
+                            id: data["id"] as? String ?? "",
+                            title: data["title"] as? String ?? "",
+                            body: data["body"] as? String ?? "",
+                            profileId: data["profileId"] as? String ?? "",
+                            venueId: data["venueId"] as? String ?? "",
+                            timeStamp: reviewCreationDate,
+                            thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                            isLiked: data["isLiked"] as? Bool ?? false,
+                            rating: data["rating"] as? Int ?? 0
+                        )
+                        
+                        if !uniqueReviews.contains(where: { $0.id == newReview.id }) {
+                            uniqueReviews.append(newReview)
                         }
-                    completed(self.newReviews)
+                    }
                 }
+                
+                self.newReviews = uniqueReviews
+                completed(uniqueReviews)
             }
+        }
     }
+    
+    
+    
     
     func searchVenues(searchText: String, completed: @escaping ([VenueModel]) -> Void) {
         let query = db.collection("venues")
@@ -90,56 +107,69 @@ class ReviewsViewModel: ObservableObject {
         }
     }
     
-    
-   
+    var reviewsWithElapsedTime: [(ReviewModel, String)] {
+        liveReviewSamples.map { review in
+            let elapsedTime = Date().timeAgoDisplay(from: review.timeStamp)
+            return (review, elapsedTime)
+        }
+    }
     var popularReviews: [ReviewModel] {
-           newReviews.filter { $0.isLiked }.sorted { $0.thumbsUp > $1.thumbsUp }
-       }
-            
+        newReviews.filter { $0.isLiked && $0.thumbsUp > 0 }.sorted { $0.thumbsUp > $1.thumbsUp }
+    }
+    
     func addToLikedReviews(review: ReviewModel) {
         if !likedReviews.contains(where: { $0.id == review.id }) {
             likedReviews.append(review)
             print("Review added to liked reviews: \(review.id)") // Add this print statement
         }
     }
-        
-        func removeFromLikedReviews(reviewId: String) {
-            likedReviews.removeAll(where: { $0.id == reviewId })
-        }
+    
+    func removeFromLikedReviews(reviewId: String) {
+        likedReviews.removeAll(where: { $0.id == reviewId })
+    }
     
     func fetchAllReviews(completed: @escaping ([ReviewModel]) -> Void) {
-         let query = db.collection("reviews")
-             .order(by: "timeStamp", descending: true)
-             .limit(to: 10)
-         
-         query.getDocuments { (querySnapshot, error) in
-             if let error = error {
-                 print("Error fetching all reviews: \(error)")
-                 completed([])
-             } else {
-                 let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
-                     let data = document.data()
-                     return ReviewModel(
-                         id: data["id"] as? String ?? "",
-                         title: data["title"] as? String ?? "",
-                         body: data["body"] as? String ?? "",
-                         profileId: data["profileId"] as? String ?? "",
-                         venueId: data["venueId"] as? String ?? "",
-                         timeStamp: data["timeStamp"] as? Date ?? Date(),
-                         thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                         isLiked: data["isLiked"] as? Bool ?? false,
-                         rating: data["rating"] as? Int ?? 0
-                     )
-                 } ?? []
-                 
-                 DispatchQueue.main.async {
-                     self.allReviews = allReviews
-                     completed(allReviews)
-                 }
-             }
-         }
-     }
-    
+        let query = db.collection("reviews")
+            .order(by: "timeStamp", descending: true)
+            .limit(to: 10)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching all reviews: \(error)")
+                completed([])
+            } else {
+                var uniqueReviews: [ReviewModel] = []
+                
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let timestamp = data["timeStamp"] as? Timestamp
+                    let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                    
+                    let review = ReviewModel(
+                        id: data["id"] as? String ?? "",
+                        title: data["title"] as? String ?? "",
+                        body: data["body"] as? String ?? "",
+                        profileId: data["profileId"] as? String ?? "",
+                        venueId: data["venueId"] as? String ?? "",
+                        timeStamp: reviewCreationDate,
+                        thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                        isLiked: data["isLiked"] as? Bool ?? false,
+                        rating: data["rating"] as? Int ?? 0
+                    )
+                    
+                    if !uniqueReviews.contains(where: { $0.id == review.id }) {
+                        uniqueReviews.append(review)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.allReviews = uniqueReviews
+                    completed(uniqueReviews)
+                }
+            }
+        }
+    }
+
     func fetchLikedReviews(completion: @escaping ([ReviewModel]) -> Void) {
         let query = db.collection("reviews")
             .whereField("isLiked", isEqualTo: true)
@@ -149,50 +179,57 @@ class ReviewsViewModel: ObservableObject {
                 print("Error fetching liked reviews: \(error)")
                 completion([])
             } else {
-                let likedReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
+                var uniqueReviews: [ReviewModel] = []
+                
+                for document in querySnapshot!.documents {
                     let data = document.data()
-                    return ReviewModel(
+                    let timestamp = data["timeStamp"] as? Timestamp
+                    let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                    
+                    let review = ReviewModel(
                         id: data["id"] as? String ?? "",
                         title: data["title"] as? String ?? "",
                         body: data["body"] as? String ?? "",
                         profileId: data["profileId"] as? String ?? "",
                         venueId: data["venueId"] as? String ?? "",
-                        timeStamp: data["timeStamp"] as? Date ?? Date(),
+                        timeStamp: reviewCreationDate,
                         thumbsUp: data["thumbsUp"] as? Int ?? 0,
                         isLiked: data["isLiked"] as? Bool ?? false,
                         rating: data["rating"] as? Int ?? 0
                     )
-                } ?? []
+                    
+                    if !uniqueReviews.contains(where: { $0.id == review.id }) {
+                        uniqueReviews.append(review)
+                    }
+                }
                 
                 DispatchQueue.main.async {
-                    self.likedReviews = likedReviews
-                    completion(likedReviews)
+                    self.likedReviews = uniqueReviews
+                    completion(uniqueReviews)
                 }
             }
         }
     }
-        
     func incrementThumbsUp(for review: ReviewModel) {
-            if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
-                var updatedReview = newReviews[index]
-                updatedReview.thumbsUp += 1
-                updatedReview.isLiked = true // Set isLiked to true
-                newReviews[index] = updatedReview
-                
-                // Add the review to likedReviews if it's not already present
-                if !likedReviews.contains(where: { $0.id == review.id }) {
-                    likedReviews.append(updatedReview)
-                }
+        if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
+            var updatedReview = newReviews[index]
+            updatedReview.thumbsUp += 1
+            updatedReview.isLiked = true // Set isLiked to true
+            newReviews[index] = updatedReview
+            
+            // Add the review to likedReviews if it's not already present
+            if !likedReviews.contains(where: { $0.id == review.id }) {
+                likedReviews.append(updatedReview)
             }
         }
+    }
     func addNewReview(newReview: ReviewModel, venueName: String, completed: @escaping (Bool) -> Void) {
-           var reviewData: [String: Any] = [
+        var reviewData: [String: Any] = [
             "id": newReview.id,
             "title": venueName,
             "body": newReview.body,
             "profileId": newReview.profileId,
             "venueId": newReview.venueId,
-            "timeStamp": newReview.timeStamp,
             "thumbsUp": newReview.thumbsUp,
             "rating": newReview.rating
         ]
@@ -200,7 +237,6 @@ class ReviewsViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.objectWillChange.send()
             self.newReviews.insert(newReview, at: 0)
-            
             
             self.db.collection("reviews").document(newReview.id).setData(reviewData) { error in
                 if let error = error {
@@ -217,9 +253,9 @@ class ReviewsViewModel: ObservableObject {
         }
     }
     
-    public func getReviewsVenues(newReviews: [ReviewModel] ,completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {
+    public func getReviewsVenues(newReviews: [ReviewModel], completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {
         var query: Query!
-    
+        
         if !newReviews.isEmpty {
             var venueIds = newReviews.map { $0.venueId }
             
@@ -235,20 +271,19 @@ class ReviewsViewModel: ObservableObject {
                     } else {
                         for document in querySnapshot!.documents {
                             let data = document.data()
-                            if !data.isEmpty{
-                                var reviewVenue = VenueModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: data["address"] as? String ?? "", reviews: data["reviews"] as? [ReviewModel] ?? [], specials: data["specials"] as? [SpecialModel] ?? [])
+                            if !data.isEmpty {
+                                var reviewVenue = VenueModel(
+                                    id: data["id"] as? String ?? "",
+                                    name: data["name"] as? String ?? "",
+                                    coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
+                                    address: data["address"] as? String ?? "",
+                                    reviews: data["reviews"] as? [ReviewModel] ?? [],
+                                    specials: data["specials"] as? [SpecialModel] ?? []
+                                )
                                 
-                                reviewVenue.reviews.append(newReviews.first { $0.venueId == reviewVenue.id } ?? ReviewModel(
-                                                                id: "",
-                                                                title: "",
-                                                                body: "",
-                                                                profileId: "",
-                                                                venueId: "",
-                                                                timeStamp: Date.today(),
-                                                                thumbsUp: 0,
-                                                                isLiked: false, // Add the isLiked property
-                                                                rating: 0
-                                                            ))
+                                if let review = newReviews.first(where: { $0.venueId == reviewVenue.id }) {
+                                    reviewVenue.reviews.append(review)
+                                }
                                 
                                 self.reviewsVenues.append(reviewVenue)
                             }
@@ -272,22 +307,28 @@ class ReviewsViewModel: ObservableObject {
                     completed([])
                 } else {
                     for document in querySnapshot!.documents {
-                            let data = document.data()
-                            if !data.isEmpty {
-                                let review = ReviewModel(
-                                                            id: data["id"] as? String ?? "",
-                                                            title: data["title"] as? String ?? "",
-                                                            body: data["body"] as? String ?? "",
-                                                            profileId: data["profileId"] as? String ?? "",
-                                                            venueId: data["venueId"] as? String ?? "",
-                                                            timeStamp: data["timeStamp"] as? Date ?? Date(),
-                                                            thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                                                            isLiked: data["isLiked"] as? Bool ?? false, // Add the isLiked property
-                                                            rating: data["rating"] as? Int ?? 0
-                                                        )
-                                self.reviews.append(review)
-                            }
+                        let data = document.data()
+                        if !data.isEmpty {
+                            let timestamp = data["timeStamp"] as? Timestamp
+                            let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                            
+                            let createdAtTimestamp = data["createdAt"] as? Timestamp
+                            let createdAt = createdAtTimestamp?.dateValue() ?? Date()
+                            
+                            let review = ReviewModel(
+                                id: data["id"] as? String ?? "",
+                                     title: data["title"] as? String ?? "",
+                                     body: data["body"] as? String ?? "",
+                                     profileId: data["profileId"] as? String ?? "",
+                                     venueId: data["venueId"] as? String ?? "",
+                                     timeStamp: reviewCreationDate,
+                                     thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                     isLiked: data["isLiked"] as? Bool ?? false,
+                                     rating: data["rating"] as? Int ?? 0
+                            )
+                            self.reviews.append(review)
                         }
+                    }
                     completed(self.reviews)
                 }
             }

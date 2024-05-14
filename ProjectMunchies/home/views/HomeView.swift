@@ -868,53 +868,55 @@ struct HomeView: View {
                 }
                 
                 if navbarIndex == 2 {
-                    Divider()
-                    
-                    let customTabBar = CustomTabBar()
-                    
-                    let scrollView = ScrollView(.horizontal) {
-                        LazyHStack(spacing: 0) {
-                            if selectedTab == .recent {
-                                Color.clear
-                                    .id(TabModel.recent)
-                                    .containerRelativeFrame(.horizontal)
-                                    .overlay(
-                                        ScrollView {
-                                            LazyVStack {
-                                                ForEach(reviewsViewModel.newReviews, id: \.id) { review in
-                                                    ReviewCell(review: review)
-                                                        .environmentObject(reviewsViewModel)
-                                                }
-                                            }
-                                        }
-                                    )
-                            } else if selectedTab == .popular {
-                                Color.clear
-                                    .id(TabModel.popular)
-                                    .containerRelativeFrame(.horizontal)
-                                    .overlay(
-                                        VStack {
-                                            List(reviewsViewModel.popularReviews) { review in
-                                                ReviewCell(review: review)
-                                                    .environmentObject(reviewsViewModel)
-                                            }
-                                        }
-                                    )
-                            } else {
-                                newReviewForm(geoReader: geoReader)
-                                    .frame(width: geoReader.size.width, height: geoReader.size.height)
-                            }
-                        }
-                        .scrollTargetLayout()
-                        .offsetX { value in
-                            let progress = -value / (geoReader.size.width * CGFloat(TabModel.allCases.count - 2))
-                            tabProgress = max(min(progress, 1), 0)
-                        }
-                    }
-                        .scrollPosition(id: $selectedTab)
-                        .scrollIndicators(.hidden)
-                        .scrollTargetBehavior(.paging)
-                        .scrollDisabled(true)
+                           Divider()
+                           
+                           let customTabBar = CustomTabBar()
+                           
+                           let scrollView = ScrollView(.horizontal) {
+                               LazyHStack(spacing: 0) {
+                                   if selectedTab == .recent {
+                                       Color.clear
+                                           .id(TabModel.recent)
+                                           .containerRelativeFrame(.horizontal)
+                                           .overlay(
+                                               ScrollView {
+                                                   LazyVStack {
+                                                       ForEach(reviewsViewModel.newReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
+                                                           ReviewCell(review: review)
+                                                               .environmentObject(reviewsViewModel)
+                                                       }
+                                                   }
+                                               }
+                                           )
+                                   } else if selectedTab == .popular {
+                                       Color.clear
+                                           .id(TabModel.popular)
+                                           .containerRelativeFrame(.horizontal)
+                                           .overlay(
+                                               ScrollView {
+                                                   LazyVStack {
+                                                       ForEach(reviewsViewModel.popularReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
+                                                           ReviewCell(review: review)
+                                                               .environmentObject(reviewsViewModel)
+                                                       }
+                                                   }
+                                               }
+                                           )
+                                   } else {
+                                       newReviewForm(geoReader: geoReader)
+                                           .frame(width: geoReader.size.width, height: geoReader.size.height)
+                                   }
+                               }
+                               .scrollTargetLayout()
+                               .offsetX { value in
+                                   let progress = -value / (geoReader.size.width * CGFloat(TabModel.allCases.count - 2))
+                                   tabProgress = max(min(progress, 1), 0)
+                               }
+                           }
+                           .scrollPosition(id: $selectedTab)
+                           .scrollIndicators(.hidden)
+                           .scrollTargetBehavior(.paging)
+                           .scrollDisabled(true)
                     
                     VStack {
                         customTabBar
@@ -1195,10 +1197,11 @@ struct HomeView: View {
             body: reviewBody,
             profileId: "user_profile_id",
             venueId: selectedVenue?.id ?? "",
-            timeStamp: Date(),
+            timeStamp: Date(), // Set the timeStamp to the current date and time
             thumbsUp: 0,
-            isLiked: false, // Set initial isLiked to false
+            isLiked: false,
             rating: rating
+            // Set the createdAt property to the current date and time
         )
         
         reviewsViewModel.addNewReview(newReview: newReview, venueName: selectedVenue?.name ?? "") { success in
@@ -1232,50 +1235,53 @@ struct HomeView: View {
         @EnvironmentObject private var reviewsViewModel: ReviewsViewModel
         
         var body: some View {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(review.profileId)
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                    
-                    Spacer()
-                    
-                    Text(review.timeStamp.timeAgoDisplay())
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                
-                Text(review.title)
-                    .font(.headline)
-                
-                Text(review.body)
-                    .font(.subheadline)
-                
-                HStack {
-                    ForEach(0..<5) { index in
-                        Image(systemName: "star.fill")
-                            .foregroundColor(index < review.rating ? .yellow : .gray)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        toggleLiked()
-                    }) {
-                        HStack {
-                            Image(systemName: review.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
-                                .foregroundColor(.blue)
-                            Text("\(review.thumbsUp)")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                }
-            }
-            .padding()
-            .background(Color.black)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-        }
+              VStack(alignment: .leading, spacing: 0) {
+                  HStack {
+                      Text(review.profileId)
+                          .font(.headline)
+                          .foregroundColor(.blue)
+                      
+                      Spacer()
+                      
+                      Text(Date().timeAgoDisplay(from: review.timeStamp))
+                          .font(.subheadline)
+                          .foregroundColor(.gray)
+                  }
+                  .padding(.bottom, 4)
+                  
+                  Text(review.title)
+                      .font(.headline)
+                      .padding(.bottom, 2)
+                  
+                  Text(review.body)
+                      .font(.subheadline)
+                      .padding(.bottom, 4)
+                  
+                  HStack {
+                      ForEach(0..<5) { index in
+                          Image(systemName: "star.fill")
+                              .foregroundColor(index < review.rating ? .yellow : .gray)
+                      }
+                      
+                      Spacer()
+                      
+                      Button(action: {
+                          toggleLiked()
+                      }) {
+                          HStack {
+                              Image(systemName: review.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
+                                  .foregroundColor(.blue)
+                              
+                              Text("\(review.thumbsUp)")
+                                  .foregroundColor(.blue)
+                          }
+                      }
+                  }
+              }
+              .padding()
+              .background(Color.black)
+              .cornerRadius(10)
+          }
         
         private func toggleLiked() {
             if let index = reviewsViewModel.newReviews.firstIndex(where: { $0.id == review.id }) {
@@ -1366,6 +1372,7 @@ struct HomeView: View {
             }
         }
     }
+    
     
     struct HomeView_Previews: PreviewProvider {
         static var previews: some View {

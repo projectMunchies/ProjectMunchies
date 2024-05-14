@@ -9,16 +9,15 @@ import Foundation
 
 struct ReviewModel: Identifiable, Hashable {
     let id: String
-     let title: String
-     let body: String
-     let profileId: String
-     let venueId: String
-     let timeStamp: Date
-     var thumbsUp: Int
-     var isLiked: Bool // Add this property
-     let rating: Int
- }
-
+    let title: String
+    let body: String
+    let profileId: String
+    let venueId: String
+    let timeStamp: Date
+    var thumbsUp: Int
+    var isLiked: Bool
+    let rating: Int
+}
 
 
 

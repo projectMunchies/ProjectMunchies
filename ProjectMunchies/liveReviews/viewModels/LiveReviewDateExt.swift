@@ -7,25 +7,30 @@
 
 import Foundation
 
-extension Date {
-    func timeAgoDisplay() -> String {
-        let calendar = Calendar.current
-        let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())!
-        let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())!
-        let dayAgo = calendar.date(byAdding: .day, value: -1, to: Date())!
 
-        if minuteAgo < self {
-            let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
-            return "\(diff)s ago"
-        } else if hourAgo < self {
-            let diff = Calendar.current.dateComponents([.minute], from: self, to: Date()).minute ?? 0
-            return "\(diff)m ago"
-        } else if dayAgo < self {
-            let diff = Calendar.current.dateComponents([.hour], from: self, to: Date()).hour ?? 0
-            return "\(diff)h ago"
+
+
+extension Date {
+    func timeAgoDisplay(from createdAt: Date) -> String {
+        let now = Date()
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: createdAt, to: now)
+
+        let years = components.year ?? 0
+        let months = components.month ?? 0
+        let days = components.day ?? 0
+        let hours = components.hour ?? 0
+        let minutes = components.minute ?? 0
+
+        if years > 0 {
+            return years == 1 ? "1 year ago" : "\(years) years ago"
+        } else if months > 0 {
+            return months == 1 ? "1 month ago" : "\(months) months ago"
+        } else if days > 0 {
+            return days == 1 ? "1 day ago" : "\(days) days ago"
+        } else if hours > 0 {
+            return hours == 1 ? "1 hour ago" : "\(hours) hours ago"
         } else {
-            let diff = Calendar.current.dateComponents([.day], from: self, to: Date()).day ?? 0
-            return "\(diff)d ago"
+            return minutes == 1 ? "1 minute ago" : "\(minutes) minutes ago"
         }
     }
 }
