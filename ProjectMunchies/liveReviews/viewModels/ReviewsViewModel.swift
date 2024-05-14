@@ -24,8 +24,10 @@ class ReviewsViewModel: ObservableObject {
     @Published var reviews : [ReviewModel] = []
     @Published var newReviews : [ReviewModel] = []
     @Published var reviewsVenues : [VenueModel] = []
-    @Published var allReviews: [ReviewModel] = []
     @Published var submittedReviews: [ReviewModel] = []
+    @Published var allReviews: [ReviewModel] = []
+    @Published var likedReviews: [ReviewModel] = []
+    
     public func getAllNewReviews(completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
         var query: Query!
         
@@ -94,68 +96,95 @@ class ReviewsViewModel: ObservableObject {
            newReviews.filter { $0.isLiked }.sorted { $0.thumbsUp > $1.thumbsUp }
        }
             
-            func incrementThumbsUp(for review: ReviewModel) {
-                if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
-                    var updatedReview = newReviews[index]
-                    updatedReview.thumbsUp += 1
-                    newReviews[index] = updatedReview
-                    
-                    // Move the review to mutablePopularReviews
-                    mutablePopularReviews.append(updatedReview)
-                    
-                    // Update the review in the "My Reviews" tab
-                    if let myReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
-                        reviews[myReviewIndex] = updatedReview
-                    }
-                } else if let index = mutablePopularReviews.firstIndex(where: { $0.id == review.id }) {
-                    var updatedReview = mutablePopularReviews[index]
-                    updatedReview.thumbsUp += 1
-                    mutablePopularReviews[index] = updatedReview
-                    
-                    // Update the review in the "My Reviews" tab
-                    if let myReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
-                        reviews[myReviewIndex] = updatedReview
-                    }
-                }
-            }
-    
+    func addToLikedReviews(review: ReviewModel) {
+        if !likedReviews.contains(where: { $0.id == review.id }) {
+            likedReviews.append(review)
+            print("Review added to liked reviews: \(review.id)") // Add this print statement
+        }
+    }
+        
+        func removeFromLikedReviews(reviewId: String) {
+            likedReviews.removeAll(where: { $0.id == reviewId })
+        }
     
     func fetchAllReviews(completed: @escaping ([ReviewModel]) -> Void) {
-            let query = db.collection("reviews")
-                .order(by: "timeStamp", descending: true)
-                .limit(to: 10)
-            
-            query.getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("Error fetching all reviews: \(error)")
-                    completed([])
-                } else {
-                    let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
-                        let data = document.data()
-                        return ReviewModel(
-                            id: data["id"] as? String ?? "",
-                            title: data["title"] as? String ?? "",
-                            body: data["body"] as? String ?? "",
-                            profileId: data["profileId"] as? String ?? "",
-                            venueId: data["venueId"] as? String ?? "",
-                            timeStamp: data["timeStamp"] as? Date ?? Date(),
-                            thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                            isLiked: data["isLiked"] as? Bool ?? false,
-                            rating: data["rating"] as? Int ?? 0
-                        )
-                    } ?? []
-                    
-                    DispatchQueue.main.async {
-                        self.allReviews = allReviews
-                        completed(allReviews)
-                    }
+         let query = db.collection("reviews")
+             .order(by: "timeStamp", descending: true)
+             .limit(to: 10)
+         
+         query.getDocuments { (querySnapshot, error) in
+             if let error = error {
+                 print("Error fetching all reviews: \(error)")
+                 completed([])
+             } else {
+                 let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
+                     let data = document.data()
+                     return ReviewModel(
+                         id: data["id"] as? String ?? "",
+                         title: data["title"] as? String ?? "",
+                         body: data["body"] as? String ?? "",
+                         profileId: data["profileId"] as? String ?? "",
+                         venueId: data["venueId"] as? String ?? "",
+                         timeStamp: data["timeStamp"] as? Date ?? Date(),
+                         thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                         isLiked: data["isLiked"] as? Bool ?? false,
+                         rating: data["rating"] as? Int ?? 0
+                     )
+                 } ?? []
+                 
+                 DispatchQueue.main.async {
+                     self.allReviews = allReviews
+                     completed(allReviews)
+                 }
+             }
+         }
+     }
+    
+    func fetchLikedReviews(completion: @escaping ([ReviewModel]) -> Void) {
+        let query = db.collection("reviews")
+            .whereField("isLiked", isEqualTo: true)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching liked reviews: \(error)")
+                completion([])
+            } else {
+                let likedReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
+                    let data = document.data()
+                    return ReviewModel(
+                        id: data["id"] as? String ?? "",
+                        title: data["title"] as? String ?? "",
+                        body: data["body"] as? String ?? "",
+                        profileId: data["profileId"] as? String ?? "",
+                        venueId: data["venueId"] as? String ?? "",
+                        timeStamp: data["timeStamp"] as? Date ?? Date(),
+                        thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                        isLiked: data["isLiked"] as? Bool ?? false,
+                        rating: data["rating"] as? Int ?? 0
+                    )
+                } ?? []
+                
+                DispatchQueue.main.async {
+                    self.likedReviews = likedReviews
+                    completion(likedReviews)
                 }
             }
         }
-    
-    
-    
-    
+    }
+        
+    func incrementThumbsUp(for review: ReviewModel) {
+            if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
+                var updatedReview = newReviews[index]
+                updatedReview.thumbsUp += 1
+                updatedReview.isLiked = true // Set isLiked to true
+                newReviews[index] = updatedReview
+                
+                // Add the review to likedReviews if it's not already present
+                if !likedReviews.contains(where: { $0.id == review.id }) {
+                    likedReviews.append(updatedReview)
+                }
+            }
+        }
     func addNewReview(newReview: ReviewModel, venueName: String, completed: @escaping (Bool) -> Void) {
            var reviewData: [String: Any] = [
             "id": newReview.id,

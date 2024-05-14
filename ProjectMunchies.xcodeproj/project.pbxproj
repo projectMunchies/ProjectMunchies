@@ -62,7 +62,6 @@
 		7772A01D2B6781AF00652687 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A01C2B6781AF00652687 /* ProfilesViewModel.swift */; };
 		7772A01F2B67821600652687 /* ReviewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A01E2B67821600652687 /* ReviewsViewModel.swift */; };
 		7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0202B67822F00652687 /* SpecialsViewModel.swift */; };
-		7772A0252B69427500652687 /* LiveReviewWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0242B69427500652687 /* LiveReviewWidget.swift */; };
 		7772A0272B6943F200652687 /* PacmanAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0262B6943F200652687 /* PacmanAnimation.swift */; };
 		7772A0292B6944B800652687 /* SpinningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0282B6944B800652687 /* SpinningView.swift */; };
 		77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB42B6380F600EE6A42 /* ReviewModel.swift */; };
@@ -141,7 +140,6 @@
 		7772A01C2B6781AF00652687 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 		7772A01E2B67821600652687 /* ReviewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewModel.swift; sourceTree = "<group>"; };
 		7772A0202B67822F00652687 /* SpecialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsViewModel.swift; sourceTree = "<group>"; };
-		7772A0242B69427500652687 /* LiveReviewWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveReviewWidget.swift; sourceTree = "<group>"; };
 		7772A0262B6943F200652687 /* PacmanAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacmanAnimation.swift; sourceTree = "<group>"; };
 		7772A0282B6944B800652687 /* SpinningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningView.swift; sourceTree = "<group>"; };
 		77B97AB42B6380F600EE6A42 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 		7772A0222B69423C00652687 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				7772A0242B69427500652687 /* LiveReviewWidget.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -656,7 +653,6 @@
 				77BC66CB2B89F80D008C81EE /* BottomSheetHelper.swift in Sources */,
 				38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */,
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
-				7772A0252B69427500652687 /* LiveReviewWidget.swift in Sources */,
 				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
 				7772A0292B6944B800652687 /* SpinningView.swift in Sources */,
 				7772A01F2B67821600652687 /* ReviewsViewModel.swift in Sources */,
