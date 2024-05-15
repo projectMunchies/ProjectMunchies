@@ -1226,6 +1226,7 @@ struct HomeView: View {
                 
                 // Refresh the live reviews
                 checkForLiveReviews()
+                
             }
         }
     }

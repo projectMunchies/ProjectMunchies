@@ -16,21 +16,13 @@ class ReviewsViewModel: ObservableObject {
     let storage = Storage.storage()
     let db = Firestore.firestore()
     
-    
-    
-    
-    
     @Published private var mutablePopularReviews: [ReviewModel] = []
-    @Published var reviews : [ReviewModel] = []
-    @Published var newReviews : [ReviewModel] = []
-    @Published var reviewsVenues : [VenueModel] = []
+    @Published var reviews: [ReviewModel] = []
+    @Published var newReviews: [ReviewModel] = []
+    @Published var reviewsVenues: [VenueModel] = []
     @Published var submittedReviews: [ReviewModel] = []
     @Published var allReviews: [ReviewModel] = []
     @Published var likedReviews: [ReviewModel] = []
-    
-    
-    
-    
     
     public func getAllNewReviews(completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
         var query: Query!
@@ -76,9 +68,6 @@ class ReviewsViewModel: ObservableObject {
             }
         }
     }
-    
-    
-    
     
     func searchVenues(searchText: String, completed: @escaping ([VenueModel]) -> Void) {
         let query = db.collection("venues")
@@ -169,7 +158,7 @@ class ReviewsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func fetchLikedReviews(completion: @escaping ([ReviewModel]) -> Void) {
         let query = db.collection("reviews")
             .whereField("isLiked", isEqualTo: true)
@@ -210,6 +199,7 @@ class ReviewsViewModel: ObservableObject {
             }
         }
     }
+    
     func incrementThumbsUp(for review: ReviewModel) {
         if let index = newReviews.firstIndex(where: { $0.id == review.id }) {
             var updatedReview = newReviews[index]
@@ -223,6 +213,7 @@ class ReviewsViewModel: ObservableObject {
             }
         }
     }
+    
     func addNewReview(newReview: ReviewModel, venueName: String, completed: @escaping (Bool) -> Void) {
         var reviewData: [String: Any] = [
             "id": newReview.id,
@@ -230,7 +221,9 @@ class ReviewsViewModel: ObservableObject {
             "body": newReview.body,
             "profileId": newReview.profileId,
             "venueId": newReview.venueId,
+            "timeStamp": Timestamp(date: newReview.timeStamp),
             "thumbsUp": newReview.thumbsUp,
+            "isLiked": newReview.isLiked,
             "rating": newReview.rating
         ]
         
@@ -246,8 +239,8 @@ class ReviewsViewModel: ObservableObject {
                     print("New review added successfully")
                     completed(true)
                     
-                    // Append the new review to the submittedReviews array
-                    self.submittedReviews.append(newReview)
+                    // Fetch all reviews after adding a new review
+                    self.fetchAllReviews { _ in }
                 }
             }
         }
@@ -317,14 +310,14 @@ class ReviewsViewModel: ObservableObject {
                             
                             let review = ReviewModel(
                                 id: data["id"] as? String ?? "",
-                                     title: data["title"] as? String ?? "",
-                                     body: data["body"] as? String ?? "",
-                                     profileId: data["profileId"] as? String ?? "",
-                                     venueId: data["venueId"] as? String ?? "",
-                                     timeStamp: reviewCreationDate,
-                                     thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                                     isLiked: data["isLiked"] as? Bool ?? false,
-                                     rating: data["rating"] as? Int ?? 0
+                                title: data["title"] as? String ?? "",
+                                body: data["body"] as? String ?? "",
+                                profileId: data["profileId"] as? String ?? "",
+                                venueId: data["venueId"] as? String ?? "",
+                                timeStamp: reviewCreationDate,
+                                thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                isLiked: data["isLiked"] as? Bool ?? false,
+                                rating: data["rating"] as? Int ?? 0
                             )
                             self.reviews.append(review)
                         }

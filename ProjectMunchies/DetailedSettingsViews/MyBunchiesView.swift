@@ -80,14 +80,7 @@ struct MyBunchiesView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                 Spacer()
-                profileIcon()
-                NavigationLink(destination: MessagingView()) {
-                    Image(systemName: "message.circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.black)
-                }
-                .padding(.trailing, 10)
+               
             }
             .padding(.horizontal)
             .padding(.top, 15)

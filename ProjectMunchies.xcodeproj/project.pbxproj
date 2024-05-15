@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38118C762BA23530001B60CA /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C752BA23530001B60CA /* Group.swift */; };
-		38118C7A2BA235D4001B60CA /* ContactProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C792BA235D4001B60CA /* ContactProfileView.swift */; };
-		38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C7D2BA3DB47001B60CA /* MessagingView.swift */; };
 		38118C822BAE48BF001B60CA /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C812BAE48BF001B60CA /* Restaurant.swift */; };
 		38118C842BB0B070001B60CA /* YouTubePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C832BB0B070001B60CA /* YouTubePlayerView.swift */; };
 		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
@@ -114,9 +111,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		38118C752BA23530001B60CA /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Group.swift; path = ../../../../Downloads/Group.swift; sourceTree = "<group>"; };
-		38118C792BA235D4001B60CA /* ContactProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactProfileView.swift; path = ../../../../Downloads/ContactProfileView.swift; sourceTree = "<group>"; };
-		38118C7D2BA3DB47001B60CA /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
 		38118C812BAE48BF001B60CA /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		38118C832BB0B070001B60CA /* YouTubePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerView.swift; sourceTree = "<group>"; };
 		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
@@ -233,11 +227,8 @@
 		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
 			isa = PBXGroup;
 			children = (
-				38118C792BA235D4001B60CA /* ContactProfileView.swift */,
-				38118C752BA23530001B60CA /* Group.swift */,
 				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
 				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
-				38118C7D2BA3DB47001B60CA /* MessagingView.swift */,
 			);
 			path = DetailedSettingsViews;
 			sourceTree = "<group>";
@@ -651,7 +642,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				77BC66CB2B89F80D008C81EE /* BottomSheetHelper.swift in Sources */,
-				38118C7E2BA3DB48001B60CA /* MessagingView.swift in Sources */,
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
 				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
 				7772A0292B6944B800652687 /* SpinningView.swift in Sources */,
@@ -670,7 +660,6 @@
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
-				38118C762BA23530001B60CA /* Group.swift in Sources */,
 				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
 				77BC66C52B89F53B008C81EE /* ContentView2.swift in Sources */,
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
@@ -694,7 +683,6 @@
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
-				38118C7A2BA235D4001B60CA /* ContactProfileView.swift in Sources */,
 				77E383452A7247460084B8A6 /* MockDataService.swift in Sources */,
 				77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */,
 				77BC66C22B793C7B008C81EE /* TabModel.swift in Sources */,

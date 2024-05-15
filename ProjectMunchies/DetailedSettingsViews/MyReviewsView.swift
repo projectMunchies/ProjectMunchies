@@ -15,7 +15,7 @@ struct MyReviewsView: View {
     @State private var showAllReviews = false
     @State private var submittedReviews: [ReviewModel] = []
     @State private var showLikedReviews = false
-    
+    @State private var refreshViewToggle = false
     
     
     var body: some View {
@@ -109,15 +109,18 @@ struct MyReviewsView: View {
                 Spacer()
             }
             .onAppear {
-                viewModel.fetchAllReviews { _ in }
-                viewModel.fetchLikedReviews { reviews in
-                    // Handle the fetched liked reviews if needed
-                    print("Fetched \(reviews.count) liked reviews")
-                }
-            }
-            .navigationBarItems(trailing: profileIcon())
+                           viewModel.fetchAllReviews { _ in }
+                           viewModel.fetchLikedReviews { reviews in
+                               print("Fetched \(reviews.count) liked reviews")
+                           }
+                       }
+                       .navigationBarItems(trailing: profileIcon())
+                       .id(refreshViewToggle) // Add this line to trigger view refresh
+                   }
+               }
+    func refreshView() {
+            refreshViewToggle.toggle()
         }
-    }
     
     @ViewBuilder
     func profileIcon() -> some View {
