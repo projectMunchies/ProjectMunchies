@@ -232,18 +232,18 @@ class ReviewsViewModel: ObservableObject {
             self.newReviews.insert(newReview, at: 0)
             
             self.db.collection("reviews").document(newReview.id).setData(reviewData) { error in
-                if let error = error {
-                    print("Error adding new review: \(error)")
-                    completed(false)
-                } else {
-                    print("New review added successfully")
-                    completed(true)
-                    
-                    // Fetch all reviews after adding a new review
-                    self.fetchAllReviews { _ in }
+                    if let error = error {
+                        print("Error adding new review: \(error)")
+                        completed(false)
+                    } else {
+                        print("New review added successfully")
+                        completed(true)
+                        
+                        // Fetch new reviews after adding a new review
+                        self.getAllNewReviews { _ in }
+                    }
                 }
             }
-        }
     }
     
     public func getReviewsVenues(newReviews: [ReviewModel], completed: @escaping (_ reviewsVenues: [VenueModel]) -> Void) {

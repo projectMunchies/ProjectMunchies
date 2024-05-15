@@ -16,7 +16,7 @@ struct MyReviewsView: View {
     @State private var submittedReviews: [ReviewModel] = []
     @State private var showLikedReviews = false
     @State private var refreshViewToggle = false
-    
+    @State private var userReviews: [ReviewModel] = []
     
     var body: some View {
         NavigationView {
@@ -41,7 +41,7 @@ struct MyReviewsView: View {
                     if showAllReviews {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 16) {
-                                ForEach(viewModel.allReviews.sorted(by: { $0.timeStamp > $1.timeStamp })) { review in
+                                ForEach(viewModel.newReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
                                     HStack {
                                         VStack(alignment: .leading) {
                                             Text(review.title)
@@ -109,15 +109,14 @@ struct MyReviewsView: View {
                 Spacer()
             }
             .onAppear {
-                           viewModel.fetchAllReviews { _ in }
-                           viewModel.fetchLikedReviews { reviews in
-                               print("Fetched \(reviews.count) liked reviews")
-                           }
-                       }
-                       .navigationBarItems(trailing: profileIcon())
-                       .id(refreshViewToggle) // Add this line to trigger view refresh
-                   }
-               }
+                            viewModel.getAllNewReviews { _ in }
+                            viewModel.fetchLikedReviews { reviews in
+                                print("Fetched \(reviews.count) liked reviews")
+                            }
+                        }
+                        .navigationBarItems(trailing: profileIcon())
+                    }
+                }
     func refreshView() {
             refreshViewToggle.toggle()
         }

@@ -17,6 +17,7 @@ struct ReviewModel: Identifiable, Hashable {
     var thumbsUp: Int
     var isLiked: Bool
     let rating: Int
+    
 }
 
 
