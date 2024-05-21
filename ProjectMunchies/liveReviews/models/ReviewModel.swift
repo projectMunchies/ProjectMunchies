@@ -21,7 +21,6 @@ struct ReviewModel: Identifiable, Hashable {
 }
 
 
-
 var liveReviewSamples: [ReviewModel] = [
     ReviewModel(
         id: "fasdf343",

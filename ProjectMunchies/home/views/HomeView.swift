@@ -100,6 +100,7 @@ struct HomeView: View {
     let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
+        
         GeometryReader{ geoReader in
             ZStack{
                 Color.black
@@ -1182,8 +1183,6 @@ struct HomeView: View {
             timeOfDay = "Unknown"
         }
         
-        
-        
         let reviewBody = """
                 Party: \(selectedWho)
                 Time of Day: \(timeOfDay)
@@ -1191,17 +1190,17 @@ struct HomeView: View {
                 Order: \(description)
                 """
         
+        // Use the user's profile ID instead of "user_profileId"
         let newReview = ReviewModel(
             id: UUID().uuidString,
             title: selectedVenue?.name ?? "",
             body: reviewBody,
-            profileId: "user_profile_id",
+            profileId: homeViewModel.userProfile.id, // Use the user's profile ID from the HomeViewModel
             venueId: selectedVenue?.id ?? "",
-            timeStamp: Date(), // Set the timeStamp to the current date and time
+            timeStamp: Date(),
             thumbsUp: 0,
             isLiked: false,
             rating: rating
-            // Set the createdAt property to the current date and time
         )
         
         reviewsViewModel.addNewReview(newReview: newReview, venueName: selectedVenue?.name ?? "") { success in
