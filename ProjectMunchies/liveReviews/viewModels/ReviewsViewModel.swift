@@ -12,7 +12,6 @@ import FirebaseStorage
 import FirebaseAuth
 import MapKit
 
-
 class ReviewsViewModel: ObservableObject {
     let storage = Storage.storage()
     let db = Firestore.firestore()
@@ -24,12 +23,12 @@ class ReviewsViewModel: ObservableObject {
     @Published var submittedReviews: [ReviewModel] = []
     @Published var userReviews: [ReviewModel] = []
     @Published var userLikedReviews: [ReviewModel] = []
+    @Published var userRating: [String: Int] = [:]
     
     public func getAllNewReviews(completed: @escaping (_ newReviews: [ReviewModel]) -> Void) {
         var query: Query!
         
         query = db.collection("reviews")
-            .whereField("timeStamp", isGreaterThanOrEqualTo: Date.today().previous(.sunday))
             .order(by: "timeStamp", descending: true)
         
         query.getDocuments() { (querySnapshot, err) in
@@ -49,7 +48,7 @@ class ReviewsViewModel: ObservableObject {
                             id: data["id"] as? String ?? "",
                             title: data["title"] as? String ?? "",
                             body: data["body"] as? String ?? "",
-                            profileId: data["profileId"] as? String ?? "",
+                            username: data["username"] as? String ?? "",
                             venueId: data["venueId"] as? String ?? "",
                             timeStamp: reviewCreationDate,
                             thumbsUp: data["thumbsUp"] as? Int ?? 0,
@@ -95,12 +94,6 @@ class ReviewsViewModel: ObservableObject {
         }
     }
     
-    var reviewsWithElapsedTime: [(ReviewModel, String)] {
-        liveReviewSamples.map { review in
-            let elapsedTime = Date().timeAgoDisplay(from: review.timeStamp)
-            return (review, elapsedTime)
-        }
-    }
     var popularReviews: [ReviewModel] {
         newReviews.filter { $0.isLiked && $0.thumbsUp > 0 }.sorted { $0.thumbsUp > $1.thumbsUp }
     }
@@ -134,7 +127,7 @@ class ReviewsViewModel: ObservableObject {
             "id": newReview.id,
             "title": venueName,
             "body": newReview.body,
-            "profileId": newReview.profileId,
+            "username": newReview.username,
             "venueId": newReview.venueId,
             "timeStamp": Timestamp(date: newReview.timeStamp),
             "thumbsUp": newReview.thumbsUp,
@@ -168,7 +161,6 @@ class ReviewsViewModel: ObservableObject {
             
             query = db.collection("venues")
                 .whereField("id", in: venueIds)
-            
             
             query.getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -205,7 +197,6 @@ class ReviewsViewModel: ObservableObject {
         
         query = db.collection("reviews")
         
-        
         query.getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting reviews documents: \(err)")
@@ -217,14 +208,11 @@ class ReviewsViewModel: ObservableObject {
                         let timestamp = data["timeStamp"] as? Timestamp
                         let reviewCreationDate = timestamp?.dateValue() ?? Date()
                         
-                        let createdAtTimestamp = data["createdAt"] as? Timestamp
-                        let createdAt = createdAtTimestamp?.dateValue() ?? Date()
-                        
                         let review = ReviewModel(
                             id: data["id"] as? String ?? "",
                             title: data["title"] as? String ?? "",
                             body: data["body"] as? String ?? "",
-                            profileId: data["profileId"] as? String ?? "",
+                            username: data["username"] as? String ?? "",
                             venueId: data["venueId"] as? String ?? "",
                             timeStamp: reviewCreationDate,
                             thumbsUp: data["thumbsUp"] as? Int ?? 0,
@@ -239,70 +227,93 @@ class ReviewsViewModel: ObservableObject {
         }
     }
     
-    func getUserReviews(userId: String, completion: @escaping ([ReviewModel]) -> Void) {
-        db.collection("reviews")
+    public func getUserReviews(profileId: String, completed: @escaping ([ReviewModel]) -> Void) {
+        var query: Query!
+        
+        query = db.collection("reviews")
             .order(by: "timeStamp", descending: true)
-            .getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting user reviews: \(error)")
-                    completion([])
-                } else {
-                    let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
-                        let data = document.data()
+        
+        query.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting user reviews documents: \(err)")
+                completed([])
+            } else {
+                let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
+                    let data = document.data()
+                    if !data.isEmpty {
                         let timestamp = data["timeStamp"] as? Timestamp
                         let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                        
                         return ReviewModel(
                             id: data["id"] as? String ?? "",
                             title: data["title"] as? String ?? "",
                             body: data["body"] as? String ?? "",
-                            profileId: data["profileId"] as? String ?? "",
+                            username: data["username"] as? String ?? "",
                             venueId: data["venueId"] as? String ?? "",
                             timeStamp: reviewCreationDate,
                             thumbsUp: data["thumbsUp"] as? Int ?? 0,
                             isLiked: data["isLiked"] as? Bool ?? false,
                             rating: data["rating"] as? Int ?? 0
                         )
-                    } ?? []
-                    
-                    let userReviews = allReviews.filter { $0.profileId == userId  }
-                    completion(userReviews)
-                }
-            }
-    }
-    
-    
-    
-    func getUserLikedReviews(userId: String, completion: @escaping ([ReviewModel]) -> Void) {
-        db.collection("reviews")
-            .order(by: "timeStamp", descending: true)
-            .getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting user reviews: \(error)")
-                    completion([])
-                } else {
-                    let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
-                        let data = document.data()
-                        let timestamp = data["timeStamp"] as? Timestamp
-                        let reviewCreationDate = timestamp?.dateValue() ?? Date()
-                        return ReviewModel(
-                            id: data["id"] as? String ?? "",
-                            title: data["title"] as? String ?? "",
-                            body: data["body"] as? String ?? "",
-                            profileId: data["profileId"] as? String ?? "",
-                            venueId: data["venueId"] as? String ?? "",
-                            timeStamp: reviewCreationDate,
-                            thumbsUp: data["thumbsUp"] as? Int ?? 0,
-                            isLiked: data["isLiked"] as? Bool ?? false,
-                            rating: data["rating"] as? Int ?? 0
-                        )
-                    } ?? []
-                    
-                    let userLikedReviews = allReviews.filter { review in
-                        return review.profileId == userId && review.thumbsUp > 0
+                    } else {
+                        return nil
                     }
-                    
-                    completion(userLikedReviews)
+                } ?? []
+                
+                let userReviews = allReviews.filter { $0.username == profileId }
+                self.userReviews = userReviews
+                
+                if let username = userReviews.first?.username {
+                    self.calculateUserRating(for: username)
                 }
+                
+                completed(userReviews)
             }
+        }
     }
-}
+
+    func calculateUserRating(for username: String) {
+        var totalThumbsUp = 0
+        let userReviews = self.userReviews.filter { $0.username == username }
+        for review in userReviews {
+            totalThumbsUp += review.thumbsUp
+        }
+        
+        let maxThumbsUpForFullRating = 20
+        let ratingValue = Double(totalThumbsUp) / Double(maxThumbsUpForFullRating) * 5.0
+        userRating[username] = Int(round(ratingValue))
+    }
+            func getUserLikedReviews(profileId: String, completion: @escaping ([ReviewModel]) -> Void) {
+                db.collection("reviews")
+                    .order(by: "timeStamp", descending: true)
+                    .getDocuments { (querySnapshot, error) in
+                        if let error = error {
+                            print("Error getting user liked reviews: \(error)")
+                            completion([])
+                        } else {
+                            let allReviews = querySnapshot?.documents.compactMap { document -> ReviewModel? in
+                                let data = document.data()
+                                let timestamp = data["timeStamp"] as? Timestamp
+                                let reviewCreationDate = timestamp?.dateValue() ?? Date()
+                                return ReviewModel(
+                                    id: data["id"] as? String ?? "",
+                                    title: data["title"] as? String ?? "",
+                                    body: data["body"] as? String ?? "",
+                                    username: data["username"] as? String ?? "",
+                                    venueId: data["venueId"] as? String ?? "",
+                                    timeStamp: reviewCreationDate,
+                                    thumbsUp: data["thumbsUp"] as? Int ?? 0,
+                                    isLiked: data["isLiked"] as? Bool ?? false,
+                                    rating: data["rating"] as? Int ?? 0
+                                )
+                            } ?? []
+                            
+                            let userLikedReviews = allReviews.filter { review in
+                                review.username == profileId && review.thumbsUp > 0
+                            }
+                            
+                            completion(userLikedReviews)
+                        }
+                    }
+            }
+        }

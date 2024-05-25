@@ -11,7 +11,7 @@ struct ReviewModel: Identifiable, Hashable {
     let id: String
     let title: String
     let body: String
-    let profileId: String
+    var username: String
     let venueId: String
     let timeStamp: Date
     var thumbsUp: Int
@@ -26,7 +26,7 @@ var liveReviewSamples: [ReviewModel] = [
         id: "fasdf343",
         title: "Example1",
         body: "Happy Hour Man these nuggets is cool a f",
-        profileId: "38923832",
+        username: "38923832",
         venueId: "fw5665",
         timeStamp: Date.today(),
         thumbsUp: 0,
@@ -37,7 +37,7 @@ var liveReviewSamples: [ReviewModel] = [
         id: "fadfew343443f34",
         title: "Example2",
         body: "Ehh not really fan of these fries",
-        profileId: "Drew",
+        username: "Drew",
         venueId: "g65rh76u76",
         timeStamp: Date.today().next(.sunday),
         thumbsUp: 0,
@@ -48,7 +48,7 @@ var liveReviewSamples: [ReviewModel] = [
         id: "453f4f43f34f",
         title: "Example3",
         body: "These waffles are only good on the weekend",
-        profileId: "389293898023",
+        username: "389293898023",
         venueId: "gw6euye67uy67",
         timeStamp: Date.today().next(.sunday),
         thumbsUp: 0,
@@ -59,7 +59,7 @@ var liveReviewSamples: [ReviewModel] = [
         id: "6h556hgg5",
         title: "Example1",
         body: "No Im not liking Chipotle right now",
-        profileId: "2348934894",
+        username: "2348934894",
         venueId: "hy67hr7h67h",
         timeStamp: Date.today().next(.sunday),
         thumbsUp: 0,

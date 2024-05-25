@@ -12,6 +12,8 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var username: String = ""
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
@@ -88,23 +90,24 @@ struct SignUpView: View {
                 } else {
                     if let snapshot = querySnapshot, snapshot.isEmpty {
                         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                            if error != nil {
-                                print(error?.localizedDescription ?? "")
-                            } else {
-                                if let user = result?.user {
-                                    db.collection("profiles").document(user.uid).setData([
-                                        "id": username,
-                                        "email": email
-                                    ]) { error in
-                                        if let error = error {
-                                            print("Error adding user document: \(error)")
-                                        } else {
-                                            print("User document added successfully")
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                  if error != nil {
+                                      print(error?.localizedDescription ?? "")
+                                  } else {
+                                      if let user = result?.user {
+                                          db.collection("profiles").document(user.uid).setData([
+                                              "id": username,
+                                              "email": email
+                                          ]) { error in
+                                              if let error = error {
+                                                  print("Error adding user document: \(error)")
+                                              } else {
+                                                  print("User document added successfully")
+                                                  presentationMode.wrappedValue.dismiss()
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
                     } else {
                         print("Username already exists. Please choose a different username.")
                     }

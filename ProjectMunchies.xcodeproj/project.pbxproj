@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		38118C822BAE48BF001B60CA /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C812BAE48BF001B60CA /* Restaurant.swift */; };
 		38118C842BB0B070001B60CA /* YouTubePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38118C832BB0B070001B60CA /* YouTubePlayerView.swift */; };
-		383374C02BFCE2A200B96EB1 /* ProfileIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383374BF2BFCE2A100B96EB1 /* ProfileIconView.swift */; };
+		3866E4262BFFC381007CB030 /* SheetBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866E4252BFFC381007CB030 /* SheetBackgroundView.swift */; };
 		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
 		388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */; };
 		38C88A032BEC4ADF00D79342 /* LiveReviewDateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C88A022BEC4ADF00D79342 /* LiveReviewDateExt.swift */; };
+		38DE54902C00B760006CABBB /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE548F2C00B760006CABBB /* ContactsView.swift */; };
+		38DE54932C00F3DA006CABBB /* InvitationPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE54922C00F3DA006CABBB /* InvitationPreviewView.swift */; };
+		38DE54952C021C70006CABBB /* FoodDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE54942C021C70006CABBB /* FoodDiscover.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
 		770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0572A76BBC0004CA5D2 /* SignInView.swift */; };
 		770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0592A76BBCB004CA5D2 /* SignUpView.swift */; };
@@ -114,10 +117,16 @@
 /* Begin PBXFileReference section */
 		38118C812BAE48BF001B60CA /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		38118C832BB0B070001B60CA /* YouTubePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerView.swift; sourceTree = "<group>"; };
-		383374BF2BFCE2A100B96EB1 /* ProfileIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileIconView.swift; sourceTree = "<group>"; };
+		3866E4252BFFC381007CB030 /* SheetBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetBackgroundView.swift; sourceTree = "<group>"; };
+		3866E4282C00AF64007CB030 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		3866E42D2C00B104007CB030 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
 		3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
 		38C88A022BEC4ADF00D79342 /* LiveReviewDateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveReviewDateExt.swift; sourceTree = "<group>"; };
+		38DE548F2C00B760006CABBB /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		38DE54912C00EEBF006CABBB /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		38DE54922C00F3DA006CABBB /* InvitationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationPreviewView.swift; sourceTree = "<group>"; };
+		38DE54942C021C70006CABBB /* FoodDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiscover.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		770AD0572A76BBC0004CA5D2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -226,11 +235,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3866E4272C00AF64007CB030 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3866E42D2C00B104007CB030 /* Contacts.framework */,
+				3866E4282C00AF64007CB030 /* ContactsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
 			isa = PBXGroup;
 			children = (
 				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
 				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
+				38DE54942C021C70006CABBB /* FoodDiscover.swift */,
 			);
 			path = DetailedSettingsViews;
 			sourceTree = "<group>";
@@ -365,11 +384,13 @@
 		77E383002A7225470084B8A6 = {
 			isa = PBXGroup;
 			children = (
+				38DE54912C00EEBF006CABBB /* Config.xcconfig */,
 				77DC3AE42B064ECA009F2B9A /* exampleMp4.mp4 */,
 				77E3830B2A7225470084B8A6 /* ProjectMunchies */,
 				77E3831C2A7225490084B8A6 /* ProjectMunchiesTests */,
 				77E383262A7225490084B8A6 /* ProjectMunchiesUITests */,
 				77E3830A2A7225470084B8A6 /* Products */,
+				3866E4272C00AF64007CB030 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -447,7 +468,9 @@
 				772BA6912B74922C003C08BE /* ParticleEffect.swift */,
 				772BA6932B7492B6003C08BE /* Particle.swift */,
 				77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */,
-				383374BF2BFCE2A100B96EB1 /* ProfileIconView.swift */,
+				3866E4252BFFC381007CB030 /* SheetBackgroundView.swift */,
+				38DE548F2C00B760006CABBB /* ContactsView.swift */,
+				38DE54922C00F3DA006CABBB /* InvitationPreviewView.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -658,9 +681,11 @@
 				7772A01D2B6781AF00652687 /* ProfilesViewModel.swift in Sources */,
 				77F3E0AA2A860C3E00BC3791 /* HomeViewModel.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
+				3866E4262BFFC381007CB030 /* SheetBackgroundView.swift in Sources */,
 				7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
+				38DE54952C021C70006CABBB /* FoodDiscover.swift in Sources */,
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
 				388855102B6ED2E700DB1D53 /* MyReviewsView.swift in Sources */,
@@ -673,6 +698,7 @@
 				38C88A032BEC4ADF00D79342 /* LiveReviewDateExt.swift in Sources */,
 				77F3E0AE2A87A13C00BC3791 /* Header.swift in Sources */,
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
+				38DE54932C00F3DA006CABBB /* InvitationPreviewView.swift in Sources */,
 				77BC66CD2B8A1188008C81EE /* fireWorks.swift in Sources */,
 				77BC66C72B89F5E0008C81EE /* Tab2.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
@@ -681,8 +707,8 @@
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
 				77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */,
 				38118C842BB0B070001B60CA /* YouTubePlayerView.swift in Sources */,
-				383374C02BFCE2A200B96EB1 /* ProfileIconView.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
+				38DE54902C00B760006CABBB /* ContactsView.swift in Sources */,
 				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
@@ -729,6 +755,7 @@
 /* Begin XCBuildConfiguration section */
 		77E3832B2A7225490084B8A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -789,6 +816,7 @@
 		};
 		77E3832C2A7225490084B8A6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -843,6 +871,7 @@
 		};
 		77E3832E2A7225490084B8A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -879,6 +908,7 @@
 		};
 		77E3832F2A7225490084B8A6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -915,6 +945,7 @@
 		};
 		77E383312A7225490084B8A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -935,6 +966,7 @@
 		};
 		77E383322A7225490084B8A6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -955,6 +987,7 @@
 		};
 		77E383342A7225490084B8A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -973,6 +1006,7 @@
 		};
 		77E383352A7225490084B8A6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE54912C00EEBF006CABBB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

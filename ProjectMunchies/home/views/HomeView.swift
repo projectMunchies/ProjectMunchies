@@ -18,6 +18,8 @@ struct HomeView: View {
     @Binding var startSearch: Bool
     @Binding var position: MapCameraPosition
     
+    @State private var profileImage = UIImage(named: "defaultProfileImage") ?? UIImage()
+    
     @State private var scale: CGFloat = 0.5
     @State private var delay: Double = 0
     
@@ -41,6 +43,7 @@ struct HomeView: View {
     @State private var description = ""
     @State private var rating = 0
     
+    
     @State private var travelTime: String?
     @State private var indentLow: Int = 90
     @State private var indentHigh: Int = 90
@@ -56,7 +59,7 @@ struct HomeView: View {
     @State private var selectedTimeOfDay = 0
     @State private var selectedTab: TabModel?
     @State private var tabProgress: CGFloat = 0.5
-    @State private var selectedView: Int?
+    
     @State private var newReviewTitle: String = ""
     @State private var newReviewBody: String = ""
     @State private var isOverlayDisplayed: Bool = false
@@ -152,10 +155,13 @@ struct HomeView: View {
     }
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
-        HStack {
-            Header()
-        }
-    }
+           HStack {
+               Header(profileImage: $profileImage)
+           }
+       }
+        
+    
+
     
     private func displayMap(for geoReader: GeometryProxy) -> some View {
         Map(position: $position) {
@@ -237,6 +243,15 @@ struct HomeView: View {
         self.startSearch = false
     }
     
+    
+    private func mainSheetContent(geoReader: GeometryProxy) -> some View {
+        mainSheet(geoReader: geoReader)
+            .presentationDetents([.height(CGFloat(indentLow)), .height(CGFloat(indentHigh))])
+            .presentationDragIndicator(.visible)
+            .presentationBackgroundInteraction(.enabled)
+            .interactiveDismissDisabled(false)
+    }
+    
     private func fetchRouteFrom(_ source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: source))
@@ -259,33 +274,32 @@ struct HomeView: View {
     }
     
     private func mainSheet(geoReader: GeometryProxy) -> some View {
-        VStack{
-            
-            if self.showBottomNavBar {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    Spacer()
-                        .frame(width: geoReader.size.width)
-                    
-                    HStack{
-                        ForEach(bottomIcons) { icon in
-                            navBarIcon(geoReader: geoReader, icon: icon)
-                                .disabled(self.isOverlayDisplayed)
-                                .opacity(self.isOverlayDisplayed ? 0.2 : 1)
-                        }
-                    }
-                }
-                .padding(.top, positionNavBarHeight(geoReader: geoReader))
-                
-                navBarDetails(geoReader: geoReader)
-            } else {
-                venueDetails(geoReader: geoReader, venue: currentVenue)
-            }
-        }
-        .onChange(of: navbarIndex) {
-            adjustNavBarHeight(navBarIndex: navbarIndex)
-        }
-    }
-    
+          VStack{
+              
+              if self.showBottomNavBar {
+                  ScrollView(.horizontal, showsIndicators: false) {
+                      Spacer()
+                          .frame(width: geoReader.size.width)
+                      
+                      HStack{
+                          ForEach(bottomIcons) { icon in
+                              navBarIcon(geoReader: geoReader, icon: icon)
+                                  .disabled(self.isOverlayDisplayed)
+                                  .opacity(self.isOverlayDisplayed ? 0.2 : 1)
+                          }
+                      }
+                  }
+                  .padding(.top, positionNavBarHeight(geoReader: geoReader))
+                  
+                  navBarDetails(geoReader: geoReader)
+              } else {
+                  venueDetails(geoReader: geoReader, venue: currentVenue)
+              }
+          }
+          .onChange(of: navbarIndex) {
+              adjustNavBarHeight(navBarIndex: navbarIndex)
+          }
+      }
     private func displayFilter(geoReader: GeometryProxy) -> some View {
         VStack{
             getFilterLvlOne(geoReader: geoReader)
@@ -804,154 +818,154 @@ struct HomeView: View {
     }
     
     private func positionNavBarHeight(geoReader: GeometryProxy) -> CGFloat {
-        let result = self.indentLow == 90 ?
-        geoReader.size.height * 0.02 : navbarIndex == 2 ?
-        geoReader.size.height * 0.02 : geoReader.size.height * 0.05
-        
-        return result
-    }
-    
-    private func adjustNavBarHeight(navBarIndex: Int) {
-        switch navBarIndex {
-        case 0:
-            setSheetBoundary(lowestPoint: 90, highestPoint: 90)
-        case 1:
-            setSheetBoundary(lowestPoint: 300, highestPoint: 300)
-        case 2:
-            self.venues.removeAll()
-            checkForLiveReviews()
-            selectedTab = .recent
-            let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
-            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
-        default:
-            self.venues.removeAll()
-            let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
-            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
-        }
-    }
-    
-    private func navBarIcon(geoReader: GeometryProxy, icon: CategoryModel) -> some View {
-        VStack{
-            Button(action: {
-                if navbarIndex == icon.id {
-                    navbarIndex = 0
-                    filterLvlOneIndices.removeAll()
-                    
-                } else {
-                    navbarIndex = icon.id
-                }
-            }){
-                VStack{
-                    ZStack{
-                        Circle()
-                            .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
-                            .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
-                        
-                        Image(icon.icon)
-                            .resizable()
-                            .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
-                            .font(.system(size: 35))
-                            .foregroundColor(.black)
-                    }
-                    Text(icon.name)
-                        .foregroundColor(.white)
-                }
-            }
-        }
-        
-    }
-    
-    private func navBarDetails(geoReader: GeometryProxy) -> some View {
-        VStack {
-            if navbarIndex != 0 {
-                if navbarIndex == 1 {
-                    displayFilter(geoReader: geoReader)
-                }
-                
-                if navbarIndex == 2 {
-                           Divider()
-                           
-                           let customTabBar = CustomTabBar()
-                           
-                           let scrollView = ScrollView(.horizontal) {
-                               LazyHStack(spacing: 0) {
-                                   if selectedTab == .recent {
-                                       Color.clear
-                                           .id(TabModel.recent)
-                                           .containerRelativeFrame(.horizontal)
-                                           .overlay(
-                                               ScrollView {
-                                                   LazyVStack {
-                                                       ForEach(reviewsViewModel.newReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
-                                                           ReviewCell(review: review)
-                                                               .environmentObject(reviewsViewModel)
-                                                       }
-                                                   }
-                                               }
-                                           )
-                                   } else if selectedTab == .popular {
-                                       Color.clear
-                                           .id(TabModel.popular)
-                                           .containerRelativeFrame(.horizontal)
-                                           .overlay(
-                                               ScrollView {
-                                                   LazyVStack {
-                                                       ForEach(reviewsViewModel.popularReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
-                                                           ReviewCell(review: review)
-                                                               .environmentObject(reviewsViewModel)
-                                                       }
-                                                   }
-                                               }
-                                           )
-                                   } else {
-                                       newReviewForm(geoReader: geoReader)
-                                           .frame(width: geoReader.size.width, height: geoReader.size.height)
-                                   }
-                               }
-                               .scrollTargetLayout()
-                               .offsetX { value in
-                                   let progress = -value / (geoReader.size.width * CGFloat(TabModel.allCases.count - 2))
-                                   tabProgress = max(min(progress, 1), 0)
-                               }
-                           }
-                           .scrollPosition(id: $selectedTab)
-                           .scrollIndicators(.hidden)
-                           .scrollTargetBehavior(.paging)
-                           .scrollDisabled(true)
-                    
-                    VStack {
-                        customTabBar
-                        
-                        GeometryReader { proxy in
-                            let size = proxy.size
-                            scrollView
-                        }
-                        .frame(height: geoReader.size.height * 0.6)
-                    }
-                    .onChange(of: selectedTab) { newTab in
-                        if newTab == .new {
-                            let fixedHeight = Int(UIScreen.main.bounds.height * 0.75)
-                            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
-                        } else {
-                            let fixedHeight = Int(UIScreen.main.bounds.height * 0.751)
-                            setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
-                        }
-                    }
-                }
-                
-                if navbarIndex == 3 {
-                    VStack {
-                        Text("What should I eat today?")
-                            .font(.largeTitle)
-                            .multilineTextAlignment(.center)
-                        
-                        RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
-                    }
-                    .frame(height: geoReader.size.height * 0.45)
-                }
-            }
-        }
-    }
+         let result = self.indentLow == 90 ?
+         geoReader.size.height * 0.02 : navbarIndex == 2 ?
+         geoReader.size.height * 0.02 : geoReader.size.height * 0.05
+         
+         return result
+     }
+     
+     private func adjustNavBarHeight(navBarIndex: Int) {
+         switch navBarIndex {
+         case 0:
+             setSheetBoundary(lowestPoint: 90, highestPoint: 90)
+         case 1:
+             setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+         case 2:
+             self.venues.removeAll()
+             checkForLiveReviews()
+             selectedTab = .recent
+             let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
+             setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+         default:
+             self.venues.removeAll()
+             let fixedHeight = Int(UIScreen.main.bounds.height * 0.65)
+             setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+         }
+     }
+     
+     private func navBarIcon(geoReader: GeometryProxy, icon: CategoryModel) -> some View {
+         VStack{
+             Button(action: {
+                 if navbarIndex == icon.id {
+                     navbarIndex = 0
+                     filterLvlOneIndices.removeAll()
+                     
+                 } else {
+                     navbarIndex = icon.id
+                 }
+             }){
+                 VStack{
+                     ZStack{
+                         Circle()
+                             .foregroundColor(self.navbarIndex == icon.id ? .green : .gray)
+                             .frame(width: geoReader.size.width * 0.3, height: geoReader.size.height * 0.07)
+                         
+                         Image(icon.icon)
+                             .resizable()
+                             .frame(width: geoReader.size.width * 0.09, height: geoReader.size.height * 0.04)
+                             .font(.system(size: 35))
+                             .foregroundColor(.black)
+                     }
+                     Text(icon.name)
+                         .foregroundColor(.white)
+                 }
+             }
+         }
+         
+     }
+     
+     private func navBarDetails(geoReader: GeometryProxy) -> some View {
+         VStack {
+             if navbarIndex != 0 {
+                 if navbarIndex == 1 {
+                     displayFilter(geoReader: geoReader)
+                 }
+                 
+                 if navbarIndex == 2 {
+                            Divider()
+                            
+                            let customTabBar = CustomTabBar()
+                            
+                            let scrollView = ScrollView(.horizontal) {
+                                LazyHStack(spacing: 0) {
+                                    if selectedTab == .recent {
+                                        Color.clear
+                                            .id(TabModel.recent)
+                                            .containerRelativeFrame(.horizontal)
+                                            .overlay(
+                                                ScrollView {
+                                                    LazyVStack {
+                                                        ForEach(reviewsViewModel.newReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
+                                                            ReviewCell(review: review)
+                                                                .environmentObject(reviewsViewModel)
+                                                        }
+                                                    }
+                                                }
+                                            )
+                                    } else if selectedTab == .popular {
+                                        Color.clear
+                                            .id(TabModel.popular)
+                                            .containerRelativeFrame(.horizontal)
+                                            .overlay(
+                                                ScrollView {
+                                                    LazyVStack {
+                                                        ForEach(reviewsViewModel.popularReviews.sorted(by: { $0.timeStamp > $1.timeStamp }), id: \.id) { review in
+                                                            ReviewCell(review: review)
+                                                                .environmentObject(reviewsViewModel)
+                                                        }
+                                                    }
+                                                }
+                                            )
+                                    } else {
+                                        newReviewForm(geoReader: geoReader)
+                                            .frame(width: geoReader.size.width, height: geoReader.size.height)
+                                    }
+                                }
+                                .scrollTargetLayout()
+                                .offsetX { value in
+                                    let progress = -value / (geoReader.size.width * CGFloat(TabModel.allCases.count - 2))
+                                    tabProgress = max(min(progress, 1), 0)
+                                }
+                            }
+                            .scrollPosition(id: $selectedTab)
+                            .scrollIndicators(.hidden)
+                            .scrollTargetBehavior(.paging)
+                            .scrollDisabled(true)
+                     
+                     VStack {
+                         customTabBar
+                         
+                         GeometryReader { proxy in
+                             let size = proxy.size
+                             scrollView
+                         }
+                         .frame(height: geoReader.size.height * 0.6)
+                     }
+                     .onChange(of: selectedTab) { newTab in
+                         if newTab == .new {
+                             let fixedHeight = Int(UIScreen.main.bounds.height * 0.75)
+                             setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+                         } else {
+                             let fixedHeight = Int(UIScreen.main.bounds.height * 0.751)
+                             setSheetBoundary(lowestPoint: fixedHeight, highestPoint: fixedHeight)
+                         }
+                     }
+                 }
+                 
+                 if navbarIndex == 3 {
+                     VStack {
+                         Text("What should I eat today?")
+                             .font(.largeTitle)
+                             .multilineTextAlignment(.center)
+                         
+                         RecommendationModal(showModal: $showModal, startSearch: $startSearch, searchText: $searchText, position: $position, showVenueFilter: $showVenueFilter, venue: $currentVenue)
+                     }
+                     .frame(height: geoReader.size.height * 0.45)
+                 }
+             }
+         }
+     }
     private func newReviewForm(geoReader: GeometryProxy) -> some View {
         VStack {
             Text("Crumb Trails")
@@ -1195,7 +1209,7 @@ struct HomeView: View {
             id: UUID().uuidString,
             title: selectedVenue?.name ?? "",
             body: reviewBody,
-            profileId: homeViewModel.userProfile.id, // Use the user's profile ID from the HomeViewModel
+            username: homeViewModel.userProfile.username,
             venueId: selectedVenue?.id ?? "",
             timeStamp: Date(),
             thumbsUp: 0,
@@ -1237,7 +1251,7 @@ struct HomeView: View {
         var body: some View {
               VStack(alignment: .leading, spacing: 0) {
                   HStack {
-                      Text(review.profileId)
+                      Text(review.username)
                           .font(.headline)
                           .foregroundColor(.blue)
                       

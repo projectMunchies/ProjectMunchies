@@ -1,0 +1,13 @@
+//
+//  Config.xcconfig
+//  ProjectMunchies
+//
+//  Created by Marcus Mckoy on 5/24/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+TWILIO_ACCOUNT_SID = ACc6bc773b13d683b84dc86cd5cd45ccf5
+TWILIO_AUTH_TOKEN = cfa32fa42ec83619a8ad233cce52c776
+TWILIO_MESSAGING_SERVICE_SID = MG6fae5fb067d2754edc3472b94a99c2db
