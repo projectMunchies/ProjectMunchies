@@ -10,13 +10,15 @@ import SwiftUI
 struct Header: View {
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
-    @State private var selectedView: ViewSelection?
-    @Binding var profileImage: UIImage
-
+    @State private var isSettingsPresented: Bool = false
+    @State private var selectedView: Int?
+    
     var body: some View {
-        GeometryReader { geoReader in
-            ZStack {
-                HStack {
+        GeometryReader{ geoReader in
+            ZStack{
+                //                Color.blue
+                //                    .ignoresSafeArea()
+                HStack{
                     Spacer()
                     logoWithText(for: geoReader)
                     Spacer()
@@ -26,60 +28,73 @@ struct Header: View {
             }
         }
     }
-
-    func logoWithText(for geoReader: GeometryProxy) -> some View {
-        HStack {
-            ZStack {
+    
+    public func logoWithText(for geoReader: GeometryProxy) -> some View {
+        HStack{
+            ZStack{
                 Image("crunchBunchAppIcon")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: geoReader.size.width * 0.14, height: geoReader.size.height * 0.14)
-                    .position(x: geoReader.size.width * 0.04, y: geoReader.size.height * 0.5)
+                    .position(x:geoReader.size.width * 0.04, y:geoReader.size.height * 0.5)
+                
                 Image("crunchBunchText")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.4)
-                    .position(x: geoReader.size.width * 0.3, y: geoReader.size.height * 0.51)
+                    .position(x:geoReader.size.width * 0.3, y:geoReader.size.height * 0.51)
             }
         }
+        
     }
-
-    func profileIcon(for geoReader: GeometryProxy) -> some View {
-        VStack {
-            Button(action: {
-                selectedView = .myBunchies
-            }) {
-                if profileImage.size.width > 0 {
-                    Image(uiImage: profileImage)
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .clipShape(Circle())
-                        .foregroundColor(.white)
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.white)
+    
+    public func profileIcon(for geoReader: GeometryProxy) -> some View {
+        VStack{
+            Menu {
+                Button(action: {
+                    selectedView = 0
+                }) {
+                    Label("My Bunchies", systemImage: "person.2.square.stack")
                 }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .sheet(item: $selectedView) { selectedView in
-                switch selectedView {
-                case .myBunchies:
-                    MyBunchiesView(profileImage: $profileImage)
-                        .ignoresSafeArea()
-                        .background()
+                
+                Button(action: {
+                    selectedView = 1
+                }) {
+                    Label("My Reviews", systemImage: "star.fill")
                 }
+                
+                Button(action: {
+                    selectedView = 2
+                }) {
+                    Label("Privacy and Security", systemImage: "lock.fill")
+                }
+            } label: {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
             }
         }
-    }
-
-    enum ViewSelection: Identifiable {
-        case myBunchies
-
-        var id: Int {
-            hashValue
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+        .onChange(of: selectedView) { newValue in
+            isSettingsPresented = true // Set this to true for all views
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+            NavigationView {
+                if let selectedView = selectedView {
+                    switch selectedView {
+                    case 0:
+                        MyBunchiesView()
+                    case 1:
+                        MyReviewsView()
+                    case 2:
+                        SettingsView()
+                    default:
+                        EmptyView()
+                    }
+                }
+            }
         }
     }
 }

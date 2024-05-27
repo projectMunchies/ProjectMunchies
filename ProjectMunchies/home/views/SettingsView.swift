@@ -4,60 +4,65 @@
 //
 //  Created by DotZ3R0 on 7/30/23.
 //
+
 import SwiftUI
 import Firebase
 
 struct SettingsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var homeViewModel = HomeViewModel()
-    @State private var showImagePicker = false
+    @State private var showSheet = false
     @State private var editInfo = false
     @State var isLargeImageAlert: Bool = false
-    @State private var userProfileId = ""
-    @Binding var profileImage: UIImage
-    
+    @State private var showHamburgerMenu: Bool = false
+
     var body: some View {
-        NavigationStack {
-            GeometryReader { geoReader in
-                ZStack {
-                    Color.white
-                    
-                    VStack {
-                        
-                        
-                        imageSection(for: geoReader)
-                        
-                        Spacer()
-                            .frame(height: geoReader.size.height * 0.08)
-                        
-                        mainButtons(for: geoReader)
-                    }
-                    .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
-                    
-                    Text("Settings")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.largeTitle)
-                        .position(x: geoReader.size.width * 0.2, y: geoReader.size.height * 0.02)
+        GeometryReader { geoReader in
+            ZStack {
+                Color.purple
+                    .ignoresSafeArea()
+
+                VStack {
+                    imageSection(for: geoReader)
+
+                    Spacer()
+                        .frame(height: geoReader.size.height * 0.08)
+
+                    mainButtons(for: geoReader)
                 }
-                .position(x: geoReader.frame(in: .local).midX, y: geoReader.frame(in: .local).midY)
-            }
-            .navigationBarBackButtonHidden(true)
-            .onAppear {
-                homeViewModel.getUserProfile { userProfileId in
-                    if userProfileId != "" {
-                        homeViewModel.getImageStorageFile(profileId: userProfileId)
-                    }
+                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
+                .sheet(isPresented: $showSheet) {
+                    ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
+                        .background(Color.white.cornerRadius(20))
+                        .padding()
                 }
+
+                Text("Settings")
+                    .bold()
+                    .foregroundColor(.black)
+                    .font(.largeTitle)
+                    .position(x: geoReader.size.width * 0.2, y: geoReader.size.height * 0.02)
             }
-            .sheet(isPresented: $showImagePicker, onDismiss: nil) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
-                    .background(Color.white.cornerRadius(20))
-                    .padding()
+            .position(x: geoReader.frame(in: .local).midX, y: geoReader.frame(in: .local).midY)
+            .disabled(showHamburgerMenu)
+
+            // Display HamburgerMenu
+            if self.showHamburgerMenu {
+                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
+                    .frame(width: geoReader.size.width / 2)
+                    .padding(.trailing, geoReader.size.width * 0.5)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            homeViewModel.getUserProfile { userProfileId in
+                if userProfileId != "" {
+                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+                }
             }
         }
     }
-    
+
     private func deleteUser() {
         let user = Auth.auth().currentUser
         user?.delete { error in
@@ -69,7 +74,7 @@ struct SettingsView: View {
             }
         }
     }
-    
+
     private func signOutUser() {
         let firebaseAuth = Auth.auth()
         do {
@@ -80,7 +85,7 @@ struct SettingsView: View {
         }
         viewRouter.currentPage = .signinPage
     }
-    
+
     private func imageSection(for geoReader: GeometryProxy) -> some View {
         VStack {
             Image(uiImage: homeViewModel.profileImage)
@@ -89,10 +94,10 @@ struct SettingsView: View {
                 .background(Color.black.opacity(0.2))
                 .aspectRatio(contentMode: .fill)
                 .clipShape(Circle())
-            
+
             if editInfo {
                 Button(action: {
-                    showImagePicker = true
+                    showSheet = true
                 }) {
                     Text("Upload Image")
                         .font(.headline)
@@ -102,12 +107,58 @@ struct SettingsView: View {
                         .foregroundColor(Color.white)
                 }
             }
-        }
-        .onChange(of: homeViewModel.profileImage) { newImage in
-            profileImage = newImage
+                    
+            // Horizontal circular buttons
+            HStack {
+                Button(action: {
+                    // Handle "My Bunchies" action
+                }) {
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .background(Color.gray)
+                        .clipShape(Circle())
+                }
+                .padding()
+                .sheet(isPresented: $showSheet) {
+                    MyBunchiesView()
+                }
+
+                Button(action: {
+                    // Handle "Privacy and Security" action
+                }) {
+                    Image(systemName: "lock.fill")
+                        .resizable()
+                        .frame(width: 38, height: 38)
+                        .font(.system(size: 1))
+                        .foregroundColor(Color(red: 255/255, green: 215/255, blue: 100/255))
+                        .background(Color.black)
+                        .clipShape(Circle())
+                        .overlay(
+                                        Circle()
+                                            .stroke(Color.white, lineWidth: 3)
+                                    )                }
+                .padding()
+
+                Button(action: {
+                    // Handle "My Reviews" action
+                }) {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .frame(width: 38, height: 38)
+                        .foregroundColor(.white)
+                        .background(Color.gray)
+                        .clipShape(Circle())
+                        .overlay(
+                                        Circle()
+                                            .stroke(Color.white, lineWidth: 3)
+                                    )
+                }
+                .padding()
+            }
         }
     }
-    
     private func mainButtons(for geoReader: GeometryProxy) -> some View {
         VStack {
             Button(action: {
@@ -115,8 +166,6 @@ struct SettingsView: View {
                     homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
                         if message == "image too large" {
                             isLargeImageAlert.toggle()
-                        } else {
-                            profileImage = homeViewModel.profileImage
                         }
                     }
                 }
@@ -128,7 +177,7 @@ struct SettingsView: View {
                     .background(Color.gray)
                     .cornerRadius(geoReader.size.width * 0.06)
             }
-            
+
             Button(action: {
                 signOutUser()
             }) {
@@ -138,7 +187,7 @@ struct SettingsView: View {
                     .cornerRadius(geoReader.size.width * 0.06)
                     .foregroundColor(.white)
             }
-            
+
             Button(action: {
                 deleteUser()
             }) {
@@ -150,22 +199,10 @@ struct SettingsView: View {
             }
         }
     }
-    
-    
-    
-    struct SettingsView_Previews: PreviewProvider {
-        static var previews: some View {
-            
-            let viewRouter = ViewRouter()
-            let homeViewModel = HomeViewModel()
-            
-            let previewImage = UIImage(named: "defaultProfileImage") ?? UIImage()
-            
-            return NavigationView {
-                SettingsView(profileImage: .constant(previewImage))
-                    .environmentObject(viewRouter)
-                    .environmentObject(homeViewModel)
-            }
-        }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }

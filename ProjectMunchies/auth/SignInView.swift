@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct SignInView: View {
-    @State private var emailOrUsername: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     
     var body: some View {
@@ -32,7 +32,7 @@ struct SignInView: View {
                             .padding(.trailing,geoReader.size.width * 0.8)
                             .opacity(0.6)
                         
-                        TextField("Email", text: $emailOrUsername)
+                        TextField("Email", text: $email)
                             .frame(width: 360, height: 60)
                             .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
                             .background(Color(red: 0.949, green: 0.949, blue: 0.97))
@@ -80,39 +80,17 @@ struct SignInView: View {
         }
     }
     
-    private func login() {
-           let db = Firestore.firestore()
-           
-           if emailOrUsername.contains("@") {
-               Auth.auth().signIn(withEmail: emailOrUsername, password: password) { (result, error) in
-                   if error != nil {
-                       print(error?.localizedDescription ?? "")
-                   } else {
-                       print("Successfully logged in")
-                   }
-               }
-           } else {
-               db.collection("profiles").whereField("id", isEqualTo: emailOrUsername).getDocuments { (querySnapshot, error) in
-                   if let error = error {
-                       print("Error getting user document: \(error)")
-                   } else {
-                       if let document = querySnapshot?.documents.first {
-                           let email = document.data()["email"] as? String ?? ""
-                           Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-                               if error != nil {
-                                   print(error?.localizedDescription ?? "")
-                               } else {
-                                   print("Successfully logged in")
-                               }
-                           }
-                       } else {
-                           print("User not found")
-                       }
-                   }
-               }
-           }
-       }
-   }
+    private func login(){
+        Auth.auth().signIn(withEmail: email, password: password){ (result,error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            }else{
+                print("successfully logged in")
+            }
+        }
+    }
+}
+
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
         SignInView()

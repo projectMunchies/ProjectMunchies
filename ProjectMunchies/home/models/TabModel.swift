@@ -9,20 +9,17 @@ import SwiftUI
 
 enum TabModel: String, CaseIterable {
     case recent = "Recent"
-
+    case top = "Top"
     case popular = "Popular"
-    case new = "New"
     
     var systemImage: String {
         switch self {
         case .recent:
             return "message.badge"
-       
+        case .top:
+            return "arrow.up.message"
         case .popular:
             return "bubble.left.and.bubble.right"
-        case .new:
-            return "plus.circle.fill"
-        
         }
     }
 }
