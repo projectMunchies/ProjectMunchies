@@ -10,7 +10,7 @@ import Firebase
 
 struct SettingsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var homeViewModel = ProfilesViewModel()
     @State private var showSheet = false
     @State private var editInfo = false
     @State var isLargeImageAlert: Bool = false
@@ -55,9 +55,9 @@ struct SettingsView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            homeViewModel.getUserProfile { userProfileId in
-                if userProfileId != "" {
-                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+            homeViewModel.getUserProfile { userProfile in
+                if userProfile.id != "" {
+//                    homeViewModel.getImageStorageFile(profileId: userProfileId)
                 }
             }
         }
@@ -163,11 +163,11 @@ struct SettingsView: View {
         VStack {
             Button(action: {
                 if editInfo {
-                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
-                        if message == "image too large" {
-                            isLargeImageAlert.toggle()
-                        }
-                    }
+//                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
+//                        if message == "image too large" {
+//                            isLargeImageAlert.toggle()
+//                        }
+//                    }
                 }
                 editInfo.toggle()
             }) {

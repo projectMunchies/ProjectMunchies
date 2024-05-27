@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct HomeView: View {
-    @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var profilesViewModel = ProfilesViewModel()
     @StateObject private var reviewsViewModel = ReviewsViewModel()
     @StateObject private var specialsViewModel = SpecialsViewModel()
     
@@ -492,16 +492,12 @@ struct HomeView: View {
     }
     
     private func getUserProfile() {
-        homeViewModel.getUserProfile() {(userProfileId) -> Void in
-            if userProfileId != "" {
+        profilesViewModel.getUserProfile() {(userProfileId) -> Void in
+            if userProfileId.id != "" {
                 //get profileImage
-                homeViewModel.getImageStorageFile(profileId: userProfileId)
+//                profilesViewModel.getImageStorageFile(profileId: userProfileId)
             } else {
-                homeViewModel.createUserProfile() {(newUserProfileId) -> Void in
-                    if newUserProfileId != "" {
-                        //add a popover to add images in the future
-                    }
-                }
+                profilesViewModel.createUserProfile()
             }
         }
     }
