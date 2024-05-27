@@ -16,11 +16,12 @@ class HomeViewModel: ObservableObject {
     let db = Firestore.firestore()
      
     @Published var profileImage: UIImage = UIImage()
-    @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , hobbies: [], reviewIds: [], isMockData: false)
+    @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "", age: "", fcmTokens: [], messageThreadIds: [], occupation: "", hobbies: [], reviewIds: [], isMockData: false, username: "")
     @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
     @Published var userFoodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
     @Published var foodFilters: [FoodFilterModel] = []
     @Published var lastDoc: DocumentSnapshot!
+    
     
     public func getUserProfile(completed: @escaping (_ userProfileId: String) -> Void) {
         db.collection("profiles")
@@ -33,7 +34,21 @@ class HomeViewModel: ObservableObject {
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if !data.isEmpty{
-                            self.userProfile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], reviewIds: data["reviewIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false)
+                            self.userProfile = ProfileModel(
+                                id: data["id"] as? String ?? "",
+                                fullName: data["fullName"] as? String ?? "",
+                                location: data["location"] as? String ?? "",
+                                description: data["description"] as? String ?? "",
+                                gender: data["gender"] as? String ?? "",
+                                age: data["age"] as? String ?? "",
+                                fcmTokens: data["fcmTokens"] as? [String] ?? [],
+                                messageThreadIds: data["messageThreadIds"] as? [String] ?? [],
+                                occupation: data["occupation"] as? String ?? "",
+                                hobbies: data["hobbies"] as? [String] ?? [],
+                                reviewIds: data["reviewIds"] as? [String] ?? [],
+                                isMockData: data["isMockData"] as? Bool ?? false,
+                                username: data["username"] as? String ?? "" // Add this line
+                            )
                         }
                     }
                     completed(self.userProfile.id)
@@ -51,6 +66,7 @@ class HomeViewModel: ObservableObject {
             "gender": "",
             "userId": Auth.auth().currentUser?.uid as Any,
             "messageThreadIds": [],
+            "username": "yourDefaultUsername" // Add this line, replace with the default username you want to set initially
         ]
         
         let docRef = db.collection("profiles").document(id)
@@ -181,4 +197,3 @@ class HomeViewModel: ObservableObject {
         }
     }
 }
-
