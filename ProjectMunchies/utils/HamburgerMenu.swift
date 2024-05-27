@@ -17,7 +17,7 @@ struct HamburgerMenu: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading){
-                    
+                    NavigationLink(destination: SettingsView()) {
                         HStack{
                             Image(systemName: "gear")
                                 .foregroundColor(.gray)
@@ -51,7 +51,7 @@ struct HamburgerMenu: View {
        // }
       
     }
-
+}
 
 struct HamburgerMenu_Previews: PreviewProvider {
     static var previews: some View {

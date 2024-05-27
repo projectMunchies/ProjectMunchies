@@ -11,8 +11,6 @@ import Firebase
 struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var username: String = ""
-    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -40,7 +38,7 @@ struct SignUpView: View {
                             .background(Color(red: 0.949, green: 0.949, blue: 0.97))
                             .foregroundColor(.black)
                             .cornerRadius(30)
-                        
+                         
                         Text("Password:")
                             .font(.system(size: 15))
                             .foregroundColor(.black)
@@ -82,45 +80,21 @@ struct SignUpView: View {
         }
     }
     
-    private func signUp() {
-            let db = Firestore.firestore()
-            db.collection("profiles").whereField("id", isEqualTo: username).getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("Error checking username: \(error)")
-                } else {
-                    if let snapshot = querySnapshot, snapshot.isEmpty {
-                        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                                  if error != nil {
-                                      print(error?.localizedDescription ?? "")
-                                  } else {
-                                      if let user = result?.user {
-                                          db.collection("profiles").document(user.uid).setData([
-                                              "id": username,
-                                              "email": email
-                                          ]) { error in
-                                              if let error = error {
-                                                  print("Error adding user document: \(error)")
-                                              } else {
-                                                  print("User document added successfully")
-                                                  presentationMode.wrappedValue.dismiss()
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                    } else {
-                        print("Username already exists. Please choose a different username.")
-                    }
-                }
+    private func signUp(){
+        Auth.auth().createUser(withEmail: email, password: password){ (result,error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            }else{
+                print("successfully signed up")
             }
         }
     }
-    
-    
-    struct SignUpView_Previews: PreviewProvider {
-        static var previews: some View {
-            SignUpView()
-        }
+}
+
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpView()
     }
+}
 
 
