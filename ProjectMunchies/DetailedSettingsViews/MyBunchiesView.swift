@@ -1,160 +1,147 @@
-//
-//  MyBunchiesView.swift
-//  ProjectMunchies
-//
-//  Created by Marcus Mckoy on 2/1/24.
-//
 import SwiftUI
-import ContactsUI
-import Contacts
-import MapKit
-
+import FirebaseAuth
+import FirebaseFirestore
 
 struct MyBunchiesView: View {
-    @State private var isShowingAddFriendsModal = false
-    @State private var isShowingContactPicker = false
-    @State private var selectedContacts: [CNContact] = []
+    @ObservedObject var reviewsViewModel = ReviewsViewModel()
+    
+    @StateObject private var homeViewModel = HomeViewModel()
+    @Binding var profileImage: UIImage
+    
+    @State private var username: String = ""
+    @State private var rating: Int?
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                HStack {
-                    Text("Bunchies")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                    Spacer()
-                }
-                   VStack(spacing: 10) {
-                       Button(action: {
-                           isShowingContactPicker = true
-                       }) {
-                           Text("Add from Contacts")
-                               .padding(.vertical, 10)
-                               .padding(.horizontal, 20)
-                               .background(Color.blue)
-                               .foregroundColor(.white)
-                               .cornerRadius(10)
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                       
-                       Button(action: {
-                           // Handle action for creating groups
-                       }) {
-                           Text("Create Groups")
-                               .padding(.vertical, 10)
-                               .padding(.horizontal, 20)
-                               .background(Color.green)
-                               .foregroundColor(.white)
-                               .cornerRadius(10)
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                   }
-                   
-                   Spacer()
-                   
-                   Text("Here's your bunchies content.")
-                       .foregroundColor(.gray)
-                       .padding(.bottom, 20)
-                   
-                   TabView {
-                       NavigationView {
-                           ScrollView {
-                               ForEach(selectedContacts, id: \.identifier) { contact in
-                                   HStack {
-                                       // Green or red light to indicate activity status
-                                       Circle()
-                                           .frame(width: 10, height: 10)
-                                           .foregroundColor(.green) // or .red
-                                       
-                                       Text("\(contact.givenName) \(contact.familyName)")
-                                       
-                                       Spacer()
-                                       
-                                       Button(action: {
-                                           // Remove the contact from the list of friends
-                                           self.removeFriend(contact)
-                                       }) {
-                                           Image(systemName: "minus.circle")
-                                               .foregroundColor(.red)
-                                               .font(.title)
-                                       }
-                                   }
-                                   Divider()
-                               }
-                               .padding(.horizontal)
-                           }
-                           .navigationBarHidden(true)
-                       }
-                       .tabItem {
-                           Image(systemName: "person.2")
-                           Text("Bunchies")
-                       }
-                       
-                       // Chat Tab
-                       Text("Chat")
-                           .tabItem {
-                               Image(systemName: "message")
-                               Text("Chat")
-                           }
-                       
-                       // Random Tab
-                       Text("Random")
-                           .tabItem {
-                               Image(systemName: "shuffle")
-                               Text("Random")
-                           }
-                   }
-               }
-               .padding()
-               .sheet(isPresented: $isShowingContactPicker) {
-                   // Present modal sheet to add friends
-                   ContactPicker(selectedContacts: $selectedContacts)
-            }
-        }
-    }
-    
-    private func removeFriend(_ contact: CNContact) {
-        // Remove the contact from the list of friends
-        if let index = selectedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-            selectedContacts.remove(at: index)
-        }
-    }
-    
-    struct ContactPicker: UIViewControllerRepresentable {
-        typealias UIViewControllerType = CNContactPickerViewController
-        
-        @Binding var selectedContacts: [CNContact]
+        TabView {
+            NavigationStack {
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("Bunchies")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                    }
+                    .padding(.top, 15)
+                    
+                    if let rating = rating {
+                        HStack(spacing: 4) {
+                            ForEach(0..<5) { index in
+                                Image(systemName: index < rating ? "star.fill" : "star")
+                                    .foregroundColor(.yellow)
+                            }
+                        }
+                    }
+                    
+                    VStack(spacing: 20) {
+                        HStack(spacing: 20) {
+                            NavigationLink(destination: MyReviewsView(reviewsViewModel: reviewsViewModel)) {
+                                ButtonView(title: "My Reviews", imageName: "star.fill")
+                            }
 
-        func makeUIViewController(context: Context) -> CNContactPickerViewController {
-            let picker = CNContactPickerViewController()
-            picker.delegate = context.coordinator
-            return picker
-        }
-        
-        func updateUIViewController(_ uiViewController: CNContactPickerViewController, context: Context) {
-            // Update the view controller if needed
-        }
-        
-        func makeCoordinator() -> Coordinator {
-            Coordinator(self)
-        }
-        
-        class Coordinator: NSObject, CNContactPickerDelegate {
-            var parent: ContactPicker
-            
-            init(_ parent: ContactPicker) {
-                self.parent = parent
-            }
-            
-            func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-                // Append only new contacts to the list of friends
-                for contact in contacts {
-                    if !parent.selectedContacts.contains(where: { $0.identifier == contact.identifier }) {
-                        parent.selectedContacts.append(contact)
+//                            NavigationLink(destination: ContactsView()) {
+//                                ButtonView(title: "Contacts", imageName: "person.fill")
+//                            }
+                        }
+
+                        NavigationLink(destination: FoodDiscover()) {
+                            ButtonView(title: "Food Discover", imageName: "fork.knife")
+                        }
+                    }
+                    .padding()
+                    .aspectRatio(1, contentMode: .fit)
+                    Spacer()
+                                   }
+                .onAppear {
+                    fetchUserReviews()
+                    getCurrentUsername { username in
+                        self.username = username
+                        self.rating = reviewsViewModel.userRating[username]
                     }
                 }
+                .navigationBarBackButtonHidden(true)
+            }
+            .tabItem {
+                Image(systemName: "fork.knife")
+                Text("Bunchies")
+            }
+            
+            SettingsView(profileImage: $profileImage)
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
+        }
+    }
+    
+    private func fetchUserReviews() {
+        getCurrentUsername { username in
+            reviewsViewModel.getUserReviews(profileId: username) { _ in }
+            reviewsViewModel.getUserLikedReviews(profileId: username) { likedReviews in
+                reviewsViewModel.userLikedReviews = likedReviews
             }
         }
+    }
+    
+    private func getCurrentUsername(completion: @escaping (String) -> Void) {
+        let currentUser = Auth.auth().currentUser
+        let username = currentUser?.email?.components(separatedBy: "@").first ?? ""
+        print("Current username: \(username)")
+        completion(username)
+    }
+}
+
+struct ReviewCell: View {
+    let review: ReviewModel
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(review.username)
+                .font(.headline)
+            Text(review.body)
+                .font(.subheadline)
+            Text(Date().timeAgoDisplay(from: review.timeStamp))
+                .font(.caption)
+                .foregroundColor(.gray)
+            HStack {
+                ForEach(0..<5) { index in
+                    Image(systemName: index < review.rating ? "star.fill" : "star")
+                        .foregroundColor(.yellow)
+                }
+            }
+        }
+        .padding()
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(10)
+    }
+}
+
+struct ButtonView: View {
+    let title: String
+    let imageName: String
+    
+    var body: some View {
+        VStack {
+            Image(systemName: imageName)
+                .font(.title)
+                .foregroundColor(.white)
+            
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.white)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color.blue)
+        .cornerRadius(10)
+        .aspectRatio(1, contentMode: .fit)
+    }
+}
+
+struct MyBunchiesView_Previews: PreviewProvider {
+    static var previews: some View {
+        let defaultImage = UIImage(named: "defaultProfileImage") ?? UIImage()
+        MyBunchiesView(profileImage: .constant(defaultImage))
     }
 }
