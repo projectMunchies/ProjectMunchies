@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class ProfilesViewModel: ObservableObject {
     private let profilesService = ProfilesService()
-     
+    
     @Published var profileImage: UIImage = UIImage()
     @Published var lastDoc: DocumentSnapshot!
     @Published var userProfile: ProfileModel = ProfileModel(
@@ -30,30 +30,29 @@ class ProfilesViewModel: ObservableObject {
         profileImage: UIImage()
     )
     
-    public func getUserProfile(completed: @escaping (_ proflie: ProfileModel) -> Void) {
-        profilesService.getProfile(profileId: Auth.auth().currentUser?.uid ?? "") {(userProfile) -> Void in
-            if(userProfile.id != "") {
-                self.userProfile = userProfile
-                completed(userProfile)
-            }
+    public func getUserProfile() async throws {
+        let userProfile =  try await profilesService.getProfile(profileId: Auth.auth().currentUser?.uid ?? "")
+        
+        if(userProfile.id != "") {
+            self.userProfile = userProfile
         }
     }
     
-    public func createUserProfile() {
-        profilesService.createProfile() {(createdProfile) -> Void in
-            if(createdProfile.id != "") {
-                self.userProfile = createdProfile
-            }
+    public func createUserProfile() async throws {
+        var createdProfile = try await profilesService.createProfile()
+        if(createdProfile.id != "") {
+            self.userProfile = createdProfile
         }
+        
     }
     
-    public func getProfile(requestId: String, completed: @escaping (_ proflie: ProfileModel) -> Void) {
-        profilesService.getProfile(profileId: requestId) {(userProfile) -> Void in
-            if(userProfile.id != "") {
-                self.userProfile = userProfile
-                completed(userProfile)
-            }
-        }
-    }
+    //    public func getProfile(requestId: String, completed: @escaping (_ proflie: ProfileModel) -> Void) {
+    //        profilesService.getProfile(profileId: requestId) {(userProfile) -> Void in
+    //            if(userProfile.id != "") {
+    //                self.userProfile = userProfile
+    //                completed(userProfile)
+    //            }
+    //        }
+    //    }
 }
 

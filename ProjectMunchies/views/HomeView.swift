@@ -94,11 +94,17 @@ struct HomeView: View {
                         subHeaderSection(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
                     }
-                    .onAppear{
-                     //   self.isOverlayDisplayed.toggle()
-                        self.showBottomNavBar.toggle()
-                        getUserProfile()
-                        checkForNewMapAlerts()
+                    .task{
+                        do {
+                            //self.isOverlayDisplayed.toggle()
+                            self.showBottomNavBar.toggle()
+                           try await getUserProfile()
+                            checkForNewMapAlerts()
+                        } catch {
+                            print("fsdfds")
+                        }
+                          
+                  
                     }
                     .onChange(of: startSearch) {
                         if self.startSearch {
@@ -491,15 +497,8 @@ struct HomeView: View {
         }
     }
     
-    private func getUserProfile() {
-        profilesViewModel.getUserProfile() {(userProfileId) -> Void in
-            if userProfileId.id != "" {
-                //get profileImage
-//                profilesViewModel.getImageStorageFile(profileId: userProfileId)
-            } else {
-                profilesViewModel.createUserProfile()
-            }
-        }
+    private func getUserProfile() async throws {
+        try await profilesViewModel.getUserProfile()
     }
     
     private func checkForNewMapAlerts() {
@@ -514,18 +513,18 @@ struct HomeView: View {
     
     private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
         reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
-//            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
-////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
-////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
-////                    // append for particle animation
-////                    for _ in self.venues {
-////                        self.status.append(false)
-////                    }
-////                    for mapAlertVenue in self.venues {
-////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
-////                    }
-////                }
-//            }
+            //            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
+            ////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
+            ////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+            ////                    // append for particle animation
+            ////                    for _ in self.venues {
+            ////                        self.status.append(false)
+            ////                    }
+            ////                    for mapAlertVenue in self.venues {
+            ////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
+            ////                    }
+            ////                }
+            //            }
         }
     }
     

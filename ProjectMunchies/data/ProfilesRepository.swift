@@ -12,40 +12,34 @@ import Firebase
 class ProfilesRespository: ObservableObject{
     let db = Firestore.firestore()
     
-    public func Get(profileId: String ,completed: @escaping (_ profile: ProfileModel) -> Void) {
+    public func Get(profileId: String) async throws -> ProfileModel {
         var profile = emptyProfileModel
-        
-        db.collection("profiles")
+        let snapshot = try await db.collection("profiles")
             .whereField("userId", isEqualTo: profileId as String)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                    completed(emptyProfileModel)
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                            profile = ProfileModel(id: data["id"] as? String ?? "", fullName: data["fullName"] as? String ?? "", location: data["location"] as? String ?? "", description: data["description"] as? String ?? "", gender: data["gender"] as? String ?? "", age: data["age"] as? String ?? "", fcmTokens: data["fcmTokens"] as? [String] ?? [], messageThreadIds: data["messageThreadIds"] as? [String] ?? [],occupation: data["occupation"] as? String ?? "", hobbies: data["hobbies"] as? [String] ?? [], reviewIds: data["reviewIds"] as? [String] ?? [], isMockData: data["isMockData"] as? Bool ?? false, profileImage: UIImage())
-                        }
-                    }
-                    completed(profile)
-                }
-            }
+            .getDocuments()
+        
+        snapshot.documents.forEach { documentSnapshot in
+            let documentData = documentSnapshot.data()
+            
+            profile.id = documentData["id"] as! String
+            profile.fullName = documentData["fullName"] as! String
+            profile.location = documentData["location"] as? String ?? ""
+            profile.description = documentData["description"] as? String ?? ""
+            profile.gender = documentData["gender"] as! String
+            profile.age = documentData["age"] as! String
+            profile.fcmTokens = documentData["fcmTokens"] as? [String] ?? []
+            profile.messageThreadIds = documentData["messageThreadIds"] as? [String] ?? []
+            profile.occupation = documentData["occupation"] as? String ?? ""
+            profile.hobbies = documentData["hobbies"] as? [String] ?? []
+            profile.reviewIds = documentData["reviewIds"] as? [String] ?? []
+            profile.isMockData = documentData["isMockData"] as? Bool ?? false
+        }
+        return profile
     }
     
-    public func Create(newId: String, newProfile: [String: Any], completed: @escaping (_ createdProfile: [String: Any]) -> Void) {
+    public func Create(newId: String, newProfile: [String: Any]) async throws {
         let docRef = db.collection("profiles").document(newId)
-        let emptyDocData: [String: Any] = [:]
-        
-        docRef.setData(newProfile) {error in
-            if let error = error{
-                print("Error creating new userProfile: \(error)")
-                completed(emptyDocData)
-            } else {
-                print("Successfully created userProfile!")
-                completed(newProfile)
-            }
-        }
+        try await docRef.setData(newProfile)
     }
 }
 

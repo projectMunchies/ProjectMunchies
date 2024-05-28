@@ -55,11 +55,12 @@ struct SettingsView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            homeViewModel.getUserProfile { userProfile in
-                if userProfile.id != "" {
-//                    homeViewModel.getImageStorageFile(profileId: userProfileId)
-                }
-            }
+          //  homeViewModel.getUserProfile
+            //{ userProfile in
+//                if userProfile.id != "" {
+////                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+//                }
+            // }
         }
     }
 

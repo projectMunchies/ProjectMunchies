@@ -14,20 +14,22 @@ import FirebaseAuth
 class FbStorageRespository: ObservableObject {
     let storage = Storage.storage()
     
-    public func Get(profileId: String, completed: @escaping (_ uiImage: UIImage) -> Void) {
+    public func Get(profileId: String) async -> UIImage {
+        var responseImage = UIImage()
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
         
         // Download in memory with a maximum allowed size of 2MB (2 * 1024 * 1024 bytes)
         imageRef.getData(maxSize: Int64(2 * 1024 * 1024)) { data, error in
             if let error = error {
                 print("Error getting file: ", error)
-                completed(UIImage())
             } else {
                 let image = UIImage(data: data!)
-                completed(image!)
+                responseImage = image!
                 
             }
         }
+        
+        return responseImage
     }
     
     public func uploadStorageFile(image: UIImage, profileId: String,completed: @escaping (_ message: String) -> Void){

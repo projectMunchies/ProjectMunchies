@@ -14,21 +14,16 @@ class ProfilesService: ObservableObject {
     private let profilesRespository = ProfilesRespository()
     private let fbStorageRespository = FbStorageRespository()
     
-    public func getProfile(profileId: String, completed: @escaping (_ profileResult: ProfileModel) -> Void) {
-        profilesRespository.Get(profileId: profileId) { [self](responseProfile) -> Void in
-            if responseProfile.id != "" {
-                fbStorageRespository.Get(profileId: responseProfile.id) {(uiImage) -> Void in
-                    if uiImage.size.width != 0 {
-                        var result = responseProfile
-                        result.profileImage = uiImage
-                        completed(result)
-                    }
-                }
-            }
-        }
+    public func getProfile(profileId: String) async throws -> ProfileModel {
+        let responseProfile = try await profilesRespository.Get(profileId: profileId)
+        let profileImage = await fbStorageRespository.Get(profileId: responseProfile.id)
+        
+        var result = responseProfile
+        result.profileImage = profileImage
+        return result
     }
     
-    public func createProfile(completed: @escaping (_ profileResult: ProfileModel) -> Void) {
+    public func createProfile() async throws -> ProfileModel {
         let id = UUID().uuidString
         var newProfile = ProfileModel(
             id: id,
@@ -56,12 +51,7 @@ class ProfilesService: ObservableObject {
             "messageThreadIds": [],
         ]
         
-        profilesRespository.Create(newId: id, newProfile: docData) {(responseProfile) -> Void in
-            if !responseProfile.isEmpty {
-              // create new profile image
-                
-            }
-        }
-    
+        try await profilesRespository.Create(newId: id, newProfile: docData)
+        return newProfile
     }
 }
