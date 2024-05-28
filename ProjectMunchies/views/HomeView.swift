@@ -25,7 +25,7 @@ struct HomeView: View {
     @State private var filterLvlOneIndices: [Int] = []
     @State private var filterLvlTwoIndices: [Int] = []
     @State private var showVenueFilter: Bool = false
-    @State private var currentVenue: VenueModel = emptyVenue
+    @State private var currentVenue: VenueModel = emptyVenueModel
     @State private var venues: [VenueModel] = []
     @State private var route: MKRoute?
     @State private var travelTime: String?
@@ -175,7 +175,7 @@ struct HomeView: View {
         .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.5)
     }
     
-    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenue) {
+    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenueModel) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .pointOfInterest
@@ -371,7 +371,7 @@ struct HomeView: View {
                     
                     self.showBottomNavBar.toggle()
                     self.indentLow = 90
-                    currentVenue = emptyVenue
+                    currentVenue = emptyVenueModel
                 }) {
                     VStack(spacing: 0){
                         Circle()
@@ -514,18 +514,18 @@ struct HomeView: View {
     
     private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
         reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
-            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
-                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
-                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
-                    // append for particle animation
-                    for _ in self.venues {
-                        self.status.append(false)
-                    }
-                    for mapAlertVenue in self.venues {
-                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
-                    }
-                }
-            }
+//            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
+////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
+////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+////                    // append for particle animation
+////                    for _ in self.venues {
+////                        self.status.append(false)
+////                    }
+////                    for mapAlertVenue in self.venues {
+////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
+////                    }
+////                }
+//            }
         }
     }
     

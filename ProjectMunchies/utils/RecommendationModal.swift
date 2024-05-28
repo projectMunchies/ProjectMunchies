@@ -189,6 +189,6 @@ struct RecommendationModal: View {
 }
 
 #Preview {
-    RecommendationModal(showModal: .constant(true), startSearch: .constant(false), searchText: .constant(""),position: .constant(MapCameraPosition.automatic), showVenueFilter: .constant(false), venue: .constant(emptyVenue))
+    RecommendationModal(showModal: .constant(true), startSearch: .constant(false), searchText: .constant(""),position: .constant(MapCameraPosition.automatic), showVenueFilter: .constant(false), venue: .constant(emptyVenueModel))
 }
 

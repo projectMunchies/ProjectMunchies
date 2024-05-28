@@ -6,23 +6,29 @@
 //
 
 import Foundation
-import UIKit
 import Firebase
-import FirebaseStorage
 import FirebaseAuth
 
 class ProfilesViewModel: ObservableObject {
-    
-    private let profilesRespository = ProfilesRespository()
-    private let fbStorageRespository = FbStorageRespository()
     private let profilesService = ProfilesService()
      
     @Published var profileImage: UIImage = UIImage()
-    @Published var userProfile: ProfileModel = ProfileModel(id: "", fullName: "", location: "", description: "", gender: "",age: "", fcmTokens: [], messageThreadIds: [], occupation: "" , hobbies: [], reviewIds: [], isMockData: false, profileImage: UIImage())
-    @Published var foodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
-    @Published var userFoodFilter: FoodFilterModel = FoodFilterModel(id: "",userProfileId: "",category: "Cuisine", type: "Pick", gender: "Pick", location: "Pick", ageRangeFrom: "18", ageRangeTo: "70", timeStamp: Date())
-    @Published var foodFilters: [FoodFilterModel] = []
     @Published var lastDoc: DocumentSnapshot!
+    @Published var userProfile: ProfileModel = ProfileModel(
+        id: "",
+        fullName: "",
+        location: "",
+        description: "",
+        gender: "",
+        age: "",
+        fcmTokens: [],
+        messageThreadIds: [],
+        occupation: "" ,
+        hobbies: [],
+        reviewIds: [],
+        isMockData: false,
+        profileImage: UIImage()
+    )
     
     public func getUserProfile(completed: @escaping (_ proflie: ProfileModel) -> Void) {
         profilesService.getProfile(profileId: Auth.auth().currentUser?.uid ?? "") {(userProfile) -> Void in

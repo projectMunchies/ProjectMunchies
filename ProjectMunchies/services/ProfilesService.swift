@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import Firebase
 import FirebaseAuth
 
 class ProfilesService: ObservableObject {
@@ -16,7 +15,7 @@ class ProfilesService: ObservableObject {
     private let fbStorageRespository = FbStorageRespository()
     
     public func getProfile(profileId: String, completed: @escaping (_ profileResult: ProfileModel) -> Void) {
-        profilesRespository.Get(profileId: Auth.auth().currentUser?.uid ?? "") { [self](responseProfile) -> Void in
+        profilesRespository.Get(profileId: profileId) { [self](responseProfile) -> Void in
             if responseProfile.id != "" {
                 fbStorageRespository.Get(profileId: responseProfile.id) {(uiImage) -> Void in
                     if uiImage.size.width != 0 {
@@ -29,12 +28,27 @@ class ProfilesService: ObservableObject {
         }
     }
     
-    
     public func createProfile(completed: @escaping (_ profileResult: ProfileModel) -> Void) {
         let id = UUID().uuidString
+        var newProfile = ProfileModel(
+            id: id,
+            fullName: Auth.auth().currentUser?.displayName ?? "",
+            location: "",
+            description: "",
+            gender: "",
+            age: "",
+            fcmTokens: [],
+            messageThreadIds: [],
+            occupation: "",
+            hobbies: [],
+            reviewIds: [],
+            isMockData: false,
+            profileImage: UIImage()
+        )
+        
         let docData: [String: Any] = [
-            "id": id,
-            "fullName": Auth.auth().currentUser?.displayName as Any,
+            "id": newProfile.id,
+            "fullName": newProfile.fullName,
             "location": "",
             "description": "",
             "gender": "",
@@ -42,9 +56,10 @@ class ProfilesService: ObservableObject {
             "messageThreadIds": [],
         ]
         
-        profilesRespository.Create() { [self](responseProfile) -> Void in
-            if responseProfile.id != "" {
+        profilesRespository.Create(newId: id, newProfile: docData) {(responseProfile) -> Void in
+            if !responseProfile.isEmpty {
               // create new profile image
+                
             }
         }
     

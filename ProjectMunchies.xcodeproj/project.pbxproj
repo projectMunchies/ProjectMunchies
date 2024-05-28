@@ -84,6 +84,8 @@
 		77EBA5132C04DCAD00437FCE /* ProfilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */; };
 		77EBA5152C05001B00437FCE /* FbStorageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5142C05001B00437FCE /* FbStorageRepository.swift */; };
 		77EBA5172C05082500437FCE /* ProfilesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5162C05082500437FCE /* ProfilesService.swift */; };
+		77EBA5192C052C9E00437FCE /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5182C052C9E00437FCE /* VenuesService.swift */; };
+		77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA51A2C052D2300437FCE /* VenuesRepository.swift */; };
 		77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0A52A86092500BC3791 /* ImagePicker.swift */; };
 		77F3E0AA2A860C3E00BC3791 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0A92A860C3E00BC3791 /* ProfilesViewModel.swift */; };
 		77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */; };
@@ -159,6 +161,8 @@
 		77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesRepository.swift; sourceTree = "<group>"; };
 		77EBA5142C05001B00437FCE /* FbStorageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FbStorageRepository.swift; sourceTree = "<group>"; };
 		77EBA5162C05082500437FCE /* ProfilesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesService.swift; sourceTree = "<group>"; };
+		77EBA5182C052C9E00437FCE /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
+		77EBA51A2C052D2300437FCE /* VenuesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesRepository.swift; sourceTree = "<group>"; };
 		77F3E0A52A86092500BC3791 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		77F3E0A92A860C3E00BC3791 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 		77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodFilterModel.swift; sourceTree = "<group>"; };
@@ -218,26 +222,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */ = {
-			isa = PBXGroup;
-			children = (
-				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
-				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
-				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
-			);
-			path = DetailedSettingsViews;
-			sourceTree = "<group>";
-		};
-		770AD0562A76BBAB004CA5D2 /* auth */ = {
-			isa = PBXGroup;
-			children = (
-				77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */,
-				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
-				770AD0592A76BBCB004CA5D2 /* SignUpView.swift */,
-			);
-			path = auth;
-			sourceTree = "<group>";
-		};
 		770C75AF2AE40EEC00A0AF91 /* mockData */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,57 +229,6 @@
 				77E383442A7247460084B8A6 /* MockDataService.swift */,
 			);
 			path = mockData;
-			sourceTree = "<group>";
-		};
-		7772A0222B69423C00652687 /* views */ = {
-			isa = PBXGroup;
-			children = (
-				7772A0242B69427500652687 /* LiveReviewWidget.swift */,
-			);
-			path = views;
-			sourceTree = "<group>";
-		};
-		7772A0232B69424900652687 /* viewModels */ = {
-			isa = PBXGroup;
-			children = (
-				7772A01E2B67821600652687 /* ReviewsViewModel.swift */,
-			);
-			path = viewModels;
-			sourceTree = "<group>";
-		};
-		77B97AB22B6380C500EE6A42 /* liveReviews */ = {
-			isa = PBXGroup;
-			children = (
-				7772A0232B69424900652687 /* viewModels */,
-				7772A0222B69423C00652687 /* views */,
-				77B97AB32B6380DA00EE6A42 /* models */,
-			);
-			path = liveReviews;
-			sourceTree = "<group>";
-		};
-		77B97AB32B6380DA00EE6A42 /* models */ = {
-			isa = PBXGroup;
-			children = (
-				77B97AB42B6380F600EE6A42 /* ReviewModel.swift */,
-			);
-			path = models;
-			sourceTree = "<group>";
-		};
-		77DC3ADD2B034C8E009F2B9A /* videoPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				77DC3ADE2B034C99009F2B9A /* models */,
-				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
-			);
-			path = videoPlayer;
-			sourceTree = "<group>";
-		};
-		77DC3ADE2B034C99009F2B9A /* models */ = {
-			isa = PBXGroup;
-			children = (
-				772D044A2B57A9780099859D /* VideoModel.swift */,
-			);
-			path = models;
 			sourceTree = "<group>";
 		};
 		77E383002A7225470084B8A6 = {
@@ -326,16 +259,10 @@
 				77EBA5102C04D95C00437FCE /* models */,
 				77EBA50F2C04D94D00437FCE /* views */,
 				77EBA50E2C04D94100437FCE /* services */,
-				77EBA50D2C04D93700437FCE /* extentsions */,
+				77EBA50D2C04D93700437FCE /* extensions */,
 				77EBA50C2C04D93100437FCE /* data */,
-				3888550C2B6C1DC700DB1D53 /* DetailedSettingsViews */,
-				77B97AB22B6380C500EE6A42 /* liveReviews */,
-				77DC3ADD2B034C8E009F2B9A /* videoPlayer */,
 				77F3E0A42A8608CD00BC3791 /* utils */,
-				770AD0562A76BBAB004CA5D2 /* auth */,
 				770C75AF2AE40EEC00A0AF91 /* mockData */,
-				77E3830E2A7225470084B8A6 /* ContentView.swift */,
-				77E3834A2A738D480084B8A6 /* Extensions.swift */,
 				77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */,
 				77E383102A7225490084B8A6 /* Assets.xcassets */,
 				77E383502A75B78F0084B8A6 /* Info.plist */,
@@ -375,21 +302,24 @@
 			children = (
 				77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */,
 				77EBA5142C05001B00437FCE /* FbStorageRepository.swift */,
+				77EBA51A2C052D2300437FCE /* VenuesRepository.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
 		};
-		77EBA50D2C04D93700437FCE /* extentsions */ = {
+		77EBA50D2C04D93700437FCE /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				77E3834A2A738D480084B8A6 /* Extensions.swift */,
 			);
-			path = extentsions;
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		77EBA50E2C04D94100437FCE /* services */ = {
 			isa = PBXGroup;
 			children = (
 				77EBA5162C05082500437FCE /* ProfilesService.swift */,
+				77EBA5182C052C9E00437FCE /* VenuesService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -397,6 +327,14 @@
 		77EBA50F2C04D94D00437FCE /* views */ = {
 			isa = PBXGroup;
 			children = (
+				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
+				3888550F2B6ED2E700DB1D53 /* MyReviewsView.swift */,
+				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
+				7772A0242B69427500652687 /* LiveReviewWidget.swift */,
+				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
+				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
+				770AD0592A76BBCB004CA5D2 /* SignUpView.swift */,
+				77E3830E2A7225470084B8A6 /* ContentView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
 				77E383362A7226290084B8A6 /* HomeView.swift */,
 			);
@@ -406,6 +344,8 @@
 		77EBA5102C04D95C00437FCE /* models */ = {
 			isa = PBXGroup;
 			children = (
+				77B97AB42B6380F600EE6A42 /* ReviewModel.swift */,
+				772D044A2B57A9780099859D /* VideoModel.swift */,
 				77E383482A7388F50084B8A6 /* ProfileModel.swift */,
 				7753346C2B4FD4630078564B /* CategoryTypeModel.swift */,
 				77BC66C12B793C7B008C81EE /* TabModel.swift */,
@@ -420,6 +360,7 @@
 		77EBA5112C04D96400437FCE /* viewModels */ = {
 			isa = PBXGroup;
 			children = (
+				7772A01E2B67821600652687 /* ReviewsViewModel.swift */,
 				7772A0192B67811400652687 /* VenuesViewModel.swift */,
 				7772A0202B67822F00652687 /* SpecialsViewModel.swift */,
 				77F3E0A92A860C3E00BC3791 /* ProfilesViewModel.swift */,
@@ -430,6 +371,7 @@
 		77F3E0A42A8608CD00BC3791 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */,
 				770AD09A2A778AEA004CA5D2 /* HamburgerMenu.swift */,
 				77E383402A7242A40084B8A6 /* SearchBar.swift */,
 				77C510212B4D158C005D3EE3 /* Card.swift */,
@@ -625,6 +567,8 @@
 				77E383372A7226290084B8A6 /* HomeView.swift in Sources */,
 				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
+				77EBA5192C052C9E00437FCE /* VenuesService.swift in Sources */,
+				77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */,
 				77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */,
 				77F3E0AA2A860C3E00BC3791 /* ProfilesViewModel.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,

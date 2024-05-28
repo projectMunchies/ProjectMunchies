@@ -24,6 +24,24 @@ struct ProfileModel: Identifiable, Equatable, Hashable{
     var profileImage: UIImage
 }
 
+var emptyProfileModel = ProfileModel(
+    id: "",
+    fullName: "",
+    location: "",
+    description: "",
+    gender: "",
+    age: "",
+    fcmTokens: [],
+    messageThreadIds: [],
+    occupation: "",
+    hobbies: [],
+    reviewIds: [],
+    isMockData: false,
+    profileImage: UIImage()
+)
+
+
+
 var mockProfiles: [ProfileModel] = [
     ProfileModel(
         id: "rh2389fnwo",
