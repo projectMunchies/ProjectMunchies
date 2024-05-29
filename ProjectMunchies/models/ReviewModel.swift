@@ -16,7 +16,7 @@ struct ReviewModel: Identifiable, Hashable {
     var timeStamp: Date
 }
 
-var liveReviewSample: ReviewModel =  ReviewModel(id: "", title: "", body: "", profileId: "", venueId: "", timeStamp: Date.today())
+var liveReviewSample: ReviewModel =  ReviewModel(id: UUID().uuidString, title: "", body: "", profileId: "", venueId: "", timeStamp: Date.today())
 
 var liveReviewSamples: [ReviewModel] = [
     ReviewModel(id: "fasdf343", title: "Example1", body: "Happy Hour Man these nuggets is cool a f", profileId: "38923832", venueId: "fw5665", timeStamp: Date.today()),
