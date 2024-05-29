@@ -12,10 +12,11 @@ struct AutoScrollView: View {
     var items: [ReviewModel]
     
     @State private var data = [ReviewModel]()
-    @State private var selectedView: Int?
+    @State private var selectedMenuItem: Int = 0
     @State private var isExpanded: Bool = false
     @State private var indentLow: Int = 90
     @State private var indentHigh: Int = 90
+    @State private var selectedIndex: Int = -1
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -26,30 +27,30 @@ struct AutoScrollView: View {
                     ScrollViewReader{ sr in
                         VStack {
                             ForEach(self.data.indices, id:\.self) { index in
-                                
-                                
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(color.gradient)
-                                    .frame(height: self.isExpanded ? 150 : 50)
+                                    .frame(height: self.isExpanded && self.selectedIndex == index ? 150 : 50)
                                     .overlay {
-                                        IsExpandedView(proxy: proxy, index: index, data: self.data, isExpanded: self.isExpanded)
-                                        
+                                        OverlayView(proxy: proxy, index: index, data: self.data, isExpanded: self.isExpanded, selectedMenuItem: self.$selectedMenuItem,selectedIndex: self.$selectedIndex)
                                     }
                                     .onTapGesture {
-                                        if self.isExpanded {
+                                        if self.isExpanded && selectedIndex == index {
                                             withAnimation(.easeInOut(duration: 0.3)) {
                                                 setSheetBoundary(lowestPoint: 300, highestPoint: 300)
+                                                self.selectedIndex = -1
                                                 self.isExpanded.toggle()
                                             }
                                         } else {
                                             withAnimation(.easeInOut(duration: 0.3)) {
                                                 setSheetBoundary(lowestPoint: 800, highestPoint: 800)
+                                                self.selectedIndex = index
                                                 self.isExpanded.toggle()
                                             }
                                         }
                                     }
                             }
-                        }.onChange(of: self.data.count) { _ in
+                        }
+                        .onChange(of: self.data.count) { _ in
                             withAnimation {
                                 sr.scrollTo(self.data.count - 1)
                             }
@@ -58,7 +59,17 @@ struct AutoScrollView: View {
                 }
             }
             .onReceive(timer) { time in
-                data.append(ReviewModel(id:"\(UUID().uuidString)", title: "", body: "", profileId: "", venueId: "", timeStamp: Date.today()))
+                data.append(
+                    ReviewModel(
+                        id:"\(UUID().uuidString)",
+                        title: "",
+                        body: "",
+                        userId: "",
+                        venueId: "",
+                        timeStamp: Date.today(),
+                        rating: 0,
+                        activityId: ""
+                    ))
             }
         }
     }
@@ -73,102 +84,136 @@ struct AutoScrollView: View {
     AutoScrollView(color: Color.blue, items: liveReviewSamples)
 }
 
-struct IsExpandedView: View {
+struct OverlayView: View {
     var proxy: GeometryProxy
     var index: Int
+    
     var data: [ReviewModel]
     var isExpanded: Bool
+    @Binding var selectedMenuItem: Int
+    @Binding var selectedIndex: Int
     
-    @State private var selectedView: Int?
+    
     @State private var indentLow: Int = 90
     @State private var indentHigh: Int = 90
     
     var body: some View {
-        if self.isExpanded {
-            VStack{
-                Menu {
-                    Button(action: {
-                        selectedView = 0
-                    }) {
-                        Label("Go to Venue", systemImage: "person.2.square.stack")
-                    }
-                    
-                    Button(action: {
-                        selectedView = 1
-                    }) {
-                        Label("Minimize", systemImage: "star.fill")
-                    }
-                    
-                    Button(action: {
-                        selectedView = 2
-                    }) {
-                        Label("Some other shit", systemImage: "lock.fill")
-                    }
-                } label: {
-                    ZStack{
-                        VStack(alignment: .leading) {
-                            Image("Guy")
-                                .resizable()
-                                .frame(width: 60, height: 70)
-                                .scaledToFit()
-                                .clipShape(Circle())
-                            
-                            VStack(alignment: .leading) {
-                                Text("Bob Snow")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 12))
-                                
-                                Text("Tampa,FL")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 12))
-                            }
-                            Spacer(minLength: 0)
-                        }
-                        .padding(10)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        VStack(alignment: .trailing) {
-                            
-                            Text("This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks")
-                                .foregroundColor(.white)
-                                .font(.system(size: 20))
-                                .frame(width: proxy.size.width * 0.65)
-                            
-                            Spacer(minLength: 0)
-                            
-                            Text("Hold for More")
-                                .foregroundColor(.white)
-                                .font(.system(size: 12))
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
-                        .padding(15)
-                    }
-                }
-            }
-            .onChange(of: selectedView) {
-                switch selectedView {
-                case 0:
-                    true
-                case 1:
-                    true
-                case 2:
-                    true
-                default:
-                    break
-                }
-            }
+        if self.isExpanded && selectedIndex == index {
+            ExpandedCell(selectedMenuItem: self.$selectedMenuItem, proxy: proxy)
         } else {
+            Cell(data: self.data, index: index)
+        }
+    }
+}
+
+private struct Cell: View {
+    var data: [ReviewModel]
+    var index: Int
+    
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("item \(self.data[index].id)")
+                .foregroundColor(.white)
+            
+            Text("Tap To Expand")
+                .foregroundColor(.white)
+                .font(.system(size: 12))
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
+        }
+        .padding(15)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct ExpandedCell: View {
+    @Binding var selectedMenuItem: Int
+    var proxy: GeometryProxy
+    
+    var body: some View {
+        VStack{
+            Menu {
+                // On hold will display widget for extra options
+                MenuWidget()
+            } label: {
+                Details()
+            }
+        }
+        .onChange(of: selectedMenuItem) {
+            switch selectedMenuItem {
+            case 0:
+                true
+            case 1:
+                true
+            case 2:
+                true
+            default:
+                break
+            }
+        }
+    }
+    
+    private func MenuWidget() -> some View{
+        VStack{
+            Button(action: {
+                selectedMenuItem = 0
+            }) {
+                Label("Go to Venue", systemImage: "person.2.square.stack")
+            }
+            
+            Button(action: {
+                selectedMenuItem = 1
+            }) {
+                Label("Minimize", systemImage: "star.fill")
+            }
+            
+            Button(action: {
+                selectedMenuItem = 2
+            }) {
+                Label("Some other shit", systemImage: "lock.fill")
+            }
+            
+        }
+    }
+    
+    private func Details() -> some View{
+        ZStack{
             VStack(alignment: .leading) {
-                Text("item \(self.data[index].id)")
-                    .foregroundColor(.white)
+                Image("Guy")
+                    .resizable()
+                    .frame(width: 60, height: 70)
+                    .scaledToFit()
+                    .clipShape(Circle())
                 
-                Text("Tap To Expand")
+                VStack(alignment: .leading) {
+                    Text("Bob Snow")
+                        .foregroundColor(.white)
+                        .font(.system(size: 12))
+                    
+                    Text("Tampa,FL")
+                        .foregroundColor(.white)
+                        .font(.system(size: 12))
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack(alignment: .trailing) {
+                
+                Text("This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks This shit was cold of fuck I hate it f this place on my momma! I aint even lying either this shit sucks")
+                    .foregroundColor(.white)
+                    .font(.system(size: 20))
+                    .frame(width: proxy.size.width * 0.65)
+                
+                Spacer(minLength: 0)
+                
+                Text("Hold for More")
                     .foregroundColor(.white)
                     .font(.system(size: 12))
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(15)
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
