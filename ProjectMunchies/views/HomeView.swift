@@ -826,39 +826,39 @@ struct HomeView: View {
                     Divider()
                     
                     VStack{
-//                        CustomTabBar()
-//
-//                        GeometryReader {
-//                            let size = $0.size
-//                            ScrollView(.horizontal) {
-//                                LazyHStack(spacing: 0) {
-//                                    SampleView(.purple)
-//                                        .id(TabModel.recent)
-//                                        .containerRelativeFrame(.horizontal)
-//                                    
-//                                    SampleView(.red)
-//                                        .id(TabModel.top)
-//                                        .containerRelativeFrame(.horizontal)
-//                                    
-//                                    SampleView(.blue)
-//                                        .id(TabModel.popular)
-//                                        .containerRelativeFrame(.horizontal)
-//                                }
-//                                .scrollTargetLayout()
-//                                .offsetX { value in
-//                                    /// Converting Offset into Progress
-//                                    let progress = -value / (size.width * CGFloat(TabModel.allCases.count - 1))
-//                                    
-//                                    /// Capping Progress BTW 0-1
-//                                    tabProgress = max(min(progress, 1), 0)
-//                                }
-//                            }
-//                            .scrollPosition(id: $selectedTab)
-//                            .scrollIndicators(.hidden)
-//                            .scrollTargetBehavior(.paging)
-//                            .scrollClipDisabled()
-//                        }
-//                        .frame(height: self.isExpanded ? geoReader.size.height * 0.78 : geoReader.size.height * 0.2)
+                        CustomTabBar()
+
+                        GeometryReader {
+                            let size = $0.size
+                            ScrollView(.horizontal) {
+                                LazyHStack(spacing: 0) {
+                                    SampleView(.purple)
+                                        .id(TabModel.recent)
+                                        .containerRelativeFrame(.horizontal)
+                                    
+                                    SampleView(.red)
+                                        .id(TabModel.top)
+                                        .containerRelativeFrame(.horizontal)
+                                    
+                                    SampleView(.blue)
+                                        .id(TabModel.popular)
+                                        .containerRelativeFrame(.horizontal)
+                                }
+                                .scrollTargetLayout()
+                                .offsetX { value in
+                                    /// Converting Offset into Progress
+                                    let progress = -value / (size.width * CGFloat(TabModel.allCases.count - 1))
+                                    
+                                    /// Capping Progress BTW 0-1
+                                    tabProgress = max(min(progress, 1), 0)
+                                }
+                            }
+                            .scrollPosition(id: $selectedTab)
+                            .scrollIndicators(.hidden)
+                            .scrollTargetBehavior(.paging)
+                            .scrollClipDisabled()
+                        }
+                        .frame(height: self.isExpanded ? geoReader.size.height * 0.78 : geoReader.size.height * 0.2)
                     }
                     .frame(height: self.indentHigh == 600 ? 500 : 200)
                 }

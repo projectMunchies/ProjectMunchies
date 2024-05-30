@@ -87,7 +87,7 @@ struct Header: View {
                     case 0:
                         MyBunchiesView()
                     case 1:
-                        MyReviewsView()
+                        LiveReviewsView()
                     case 2:
                         SettingsView()
                     default:
