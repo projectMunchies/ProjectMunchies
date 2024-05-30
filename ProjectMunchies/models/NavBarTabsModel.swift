@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Tabs
-enum Tab: String, CaseIterable {
+enum NavBarTabsModel: String, CaseIterable {
     case filter = "Filter"
     case liveReviews = "Live Reviews"
     case crunchAI = "CrunchAI"

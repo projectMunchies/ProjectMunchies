@@ -1,5 +1,5 @@
 //
-//  TabModel.swift
+//  LiveReviewTabsModel.swift
 //  ProjectMunchies
 //
 //  Created by DotZ3R0 on 2/11/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TabModel: String, CaseIterable {
+enum LiveReviewTabsModel: String, CaseIterable {
     case recent = "Recent"
     case top = "Top"
     case popular = "Popular"

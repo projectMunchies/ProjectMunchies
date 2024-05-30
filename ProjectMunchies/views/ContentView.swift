@@ -28,7 +28,8 @@ struct ContentView: View {
     var body: some View {
         GeometryReader{ geoReader in
             ZStack{
-                HomeView(searchText: self.$searchText, startSearch: self.$startSearch, position: $position)
+//                HomeView(searchText: self.$searchText, startSearch: self.$startSearch, position: $position)
+                HomeView()
                     .tag(0)
                     .toolbar(.hidden, for: .tabBar)
             }

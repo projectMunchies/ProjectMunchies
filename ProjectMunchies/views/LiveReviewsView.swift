@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct LiveReviewsView: View {
-    @State private var selectedTab: TabModel?
+    @State private var selectedTab: LiveReviewTabsModel?
     @State private var tabProgress: CGFloat = 0.5
     @State private var isExpanded: Bool = false
     
@@ -20,21 +20,21 @@ struct LiveReviewsView: View {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 0) {
                             SampleView(.purple)
-                                .id(TabModel.recent)
+                                .id(LiveReviewTabsModel.recent)
                                 .containerRelativeFrame(.horizontal)
                             
                             SampleView(.red)
-                                .id(TabModel.top)
+                                .id(LiveReviewTabsModel.top)
                                 .containerRelativeFrame(.horizontal)
                             
                             SampleView(.blue)
-                                .id(TabModel.popular)
+                                .id(LiveReviewTabsModel.popular)
                                 .containerRelativeFrame(.horizontal)
                         }
                         .scrollTargetLayout()
                         .offsetX { value in
                             /// Converting Offset into Progress
-                            let progress = -value / (size.width * CGFloat(TabModel.allCases.count - 1))
+                            let progress = -value / (size.width * CGFloat(LiveReviewTabsModel.allCases.count - 1))
                             
                             /// Capping Progress BTW 0-1
                             tabProgress = max(min(progress, 1), 0)
@@ -52,7 +52,7 @@ struct LiveReviewsView: View {
     
     private func CustomTabBar() -> some View {
         HStack(spacing: 0) {
-            ForEach(TabModel.allCases, id: \.rawValue) { tab in
+            ForEach(LiveReviewTabsModel.allCases, id: \.rawValue) { tab in
                 HStack(spacing: 10) {
                     Image(systemName: tab.systemImage)
                     
@@ -74,7 +74,7 @@ struct LiveReviewsView: View {
         .background {
             GeometryReader {
                 let size = $0.size
-                let capsuleWidth = size.width / CGFloat(TabModel.allCases.count)
+                let capsuleWidth = size.width / CGFloat(LiveReviewTabsModel.allCases.count)
                 
                 Capsule()
                     .fill(.blue)

@@ -73,5 +73,5 @@ fileprivate extension UIView {
 }
 
 #Preview {
-    ContentView2()
+    HomeView()
 }
