@@ -18,7 +18,7 @@ struct AutoScrollView: View {
     @State private var indentHigh: Int = 90
     @State private var selectedIndex: Int = -1
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         GeometryReader { proxy in
@@ -62,12 +62,12 @@ struct AutoScrollView: View {
                 data.append(
                     ReviewModel(
                         id:"\(UUID().uuidString)",
-                        title: "",
+                        title: "This is the title",
                         body: "",
                         userId: "",
                         venueId: "",
                         timeStamp: Date.today(),
-                        rating: 0,
+                        rating: 3,
                         activityId: ""
                     ))
             }
@@ -96,12 +96,13 @@ struct OverlayView: View {
     
     @State private var indentLow: Int = 90
     @State private var indentHigh: Int = 90
+    @State private var starRating: Int = 4
     
     var body: some View {
         if self.isExpanded && selectedIndex == index {
-            ExpandedCell(selectedMenuItem: self.$selectedMenuItem, proxy: proxy)
+            ExpandedCell(selectedMenuItem: self.$selectedMenuItem, proxy: proxy, starRating: self.$starRating)
         } else {
-            Cell(data: self.data, index: index)
+            Cell(data: self.data, index: index, starRating: self.$starRating)
         }
     }
 }
@@ -109,17 +110,26 @@ struct OverlayView: View {
 private struct Cell: View {
     var data: [ReviewModel]
     var index: Int
-    
+    @Binding var starRating: Int
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("item \(self.data[index].id)")
-                .foregroundColor(.white)
+        ZStack {
+            VStack(alignment: .center) {
+                Text("\(self.data[index].title)")
+                    .font(.system(size: 25))
+                    .bold()
+                    .foregroundColor(.white)
+                
+                RatingView(rating: self.$starRating)
+                // not sure why font works here and not frame
+                    .font(.system(size: 12))
+            }
             
             Text("Tap To Expand")
                 .foregroundColor(.white)
-                .font(.system(size: 12))
+                .font(.system(size: 10))
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
+            
         }
         .padding(15)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -129,15 +139,15 @@ private struct Cell: View {
 private struct ExpandedCell: View {
     @Binding var selectedMenuItem: Int
     var proxy: GeometryProxy
+    @Binding var starRating: Int
     
     var body: some View {
         VStack{
-            Menu {
-                // On hold will display widget for extra options
-                MenuWidget()
-            } label: {
-                Details()
-            }
+            Details()
+                .contextMenu {
+                    // on long press contextMenu modifier display this
+                    MenuWidget()
+                }
         }
         .onChange(of: selectedMenuItem) {
             switch selectedMenuItem {

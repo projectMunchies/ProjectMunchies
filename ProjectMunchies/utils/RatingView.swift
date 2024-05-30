@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RatingView: View {
-    @Binding var rating: Int
     var label = ""
     var maximumRating = 5
+
+    @Binding var rating: Int
     
     var body: some View {
             StarRatingSlider(
@@ -20,7 +21,7 @@ struct RatingView: View {
                      spacing: 8
                  ) { active, i in
                      Image(systemName: "star.fill")
-                         .font(.system(size: 40))
+                         .scaledToFit()
                          .foregroundColor(active ? .yellow : .gray.opacity(0.3))
                  }
                  .animation(.easeOut(duration: 0.1), value: rating)
@@ -29,7 +30,7 @@ struct RatingView: View {
 
 struct RatingView_Previews: PreviewProvider {
     static var previews: some View {
-        RatingView(rating: .constant(4))
+        RatingView(label: "", rating: .constant(4))
     }
 }
 
