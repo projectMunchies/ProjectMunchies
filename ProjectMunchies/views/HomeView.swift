@@ -64,7 +64,9 @@ struct HomeView: View {
     func TabBar() -> some View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
-                if(tab != .bunchies && tab != .reviews) {
+                
+                // filters out views in the profileIcon so there not displayed in navbar
+                if(tab != .bunchies && tab != .reviews && tab != .settings) {
                     Button(action: { activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
