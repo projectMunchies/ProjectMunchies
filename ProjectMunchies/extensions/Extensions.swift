@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import MapKit
 
 extension DragGesture.Value {
     func percentage(in geometry: GeometryProxy) -> CGFloat {
@@ -121,4 +122,12 @@ public func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool
     return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
 }
 
+
+extension MKCoordinateRegion {
+    /// Apple Mark Region
+    static var applePark: MKCoordinateRegion {
+        let center = CLLocationCoordinate2D(latitude: 37.334606, longitude: -122.009102)
+        return .init(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
+    }
+}
 

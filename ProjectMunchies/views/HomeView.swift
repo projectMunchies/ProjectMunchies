@@ -1,5 +1,5 @@
 //
-//  ContentView2.swift
+//  HomeView.swift
 //  ProjectMunchies
 //
 //  Created by DotZ3R0 on 5/30/24.
@@ -12,7 +12,7 @@ struct HomeView: View {
     @State private var showSheet: Bool = false
     @State private var activeTab: NavBarTabsModel = .filter
     @State private var ignoreTabBar: Bool = false
-    @State private var heightIndent: Set<PresentationDetent> = [.height(60), .medium, .large]
+    @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -25,7 +25,7 @@ struct HomeView: View {
                     .preferredColorScheme(.dark)
             }
             
-            subHeaderSection()
+            SubHeaderSection()
                 .position(x: 200, y: 10)
             
             /// Tab Bar
@@ -45,29 +45,12 @@ struct HomeView: View {
                     
                     Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     
-                    if (activeTab == .filter) {
-                        FilterView()
-                    } else if (activeTab == .liveReviews) {
-                        LiveReviewsView()
-                    } else if (activeTab == .bunchies) {
-                        MyBunchiesView(heightIndent: self.$heightIndent, activeTab: self.$activeTab)
-                    } else if (activeTab == .crunchAI) {
-                        CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
-                            center: CLLocationCoordinate2D(
-                                latitude: 27.9506,
-                                longitude: -82.4572
-                            ),
-                            span: MKCoordinateSpan(
-                                latitudeDelta: 0.1,
-                                longitudeDelta: 0.1
-                            )
-                        ))))
-                    }
+                    SheetViews(activeTab: self.activeTab)
                 })
                 .padding()
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .presentationDetents(self.heightIndent)
+            .presentationDetents(self.sheetIndents)
             .presentationCornerRadius(20)
             .presentationBackground(.regularMaterial)
             .presentationBackgroundInteraction(.enabled(upThrough: .large))
@@ -98,26 +81,46 @@ struct HomeView: View {
                     })
                     .buttonStyle(.plain)
                 }
-               
+                
             }
         }
     }
     
-    private func subHeaderSection() -> some View {
+    @ViewBuilder
+    private func SubHeaderSection() -> some View {
         HStack {
-            Header(heightIndent: self.$heightIndent, activeTab: self.$activeTab)
+            Header(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+        }
+    }
+    
+    
+    public func SheetViews(activeTab: NavBarTabsModel) -> some View {
+        VStack{
+            switch (activeTab) {
+            case .filter:
+                FilterView()
+            case .liveReviews:
+                LiveReviewsView()
+            case .crunchAI:
+                CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(
+                        latitude: 27.9506,
+                        longitude: -82.4572
+                    ),
+                    span: MKCoordinateSpan(
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.1
+                    )
+                ))))
+            case .bunchies:
+                MyBunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+            case .reviews:
+                EmptyView()
+            }
         }
     }
 }
 
 #Preview {
     HomeView()
-}
-
-extension MKCoordinateRegion {
-    /// Apple Mark Region
-    static var applePark: MKCoordinateRegion {
-        let center = CLLocationCoordinate2D(latitude: 37.334606, longitude: -122.009102)
-        return .init(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
-    }
 }

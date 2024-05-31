@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Header: View {
-    @Binding var heightIndent: Set<PresentationDetent>
+    @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var activeTab: NavBarTabsModel
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
@@ -55,7 +55,7 @@ struct Header: View {
             Menu {
                 Button(action: {
                     selectedView = 0
-                    self.heightIndent = [.medium, .large]
+                    self.sheetIndents = [.medium, .large]
                     self.activeTab = .bunchies
                 }) {
                     Label("My Bunchies", systemImage: "person.2.square.stack")

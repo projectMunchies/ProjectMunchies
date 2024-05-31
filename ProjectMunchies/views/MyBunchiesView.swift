@@ -11,7 +11,7 @@ import MapKit
 
 
 struct MyBunchiesView: View {
-    @Binding var heightIndent: Set<PresentationDetent>
+    @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var activeTab: NavBarTabsModel
     @State private var isShowingAddFriendsModal = false
     @State private var isShowingContactPicker = false
@@ -29,7 +29,7 @@ struct MyBunchiesView: View {
                 
                    VStack(spacing: 10) {
                        Button(action: {
-                           self.heightIndent = [.height(60), .medium, .large]
+                           self.sheetIndents = [.height(60), .medium, .large]
                            self.activeTab = .filter
                        }) {
                            Text("Close")
