@@ -93,7 +93,6 @@ struct HomeView: View {
         }
     }
     
-    
     public func SheetViews(activeTab: NavBarTabsModel) -> some View {
         VStack{
             switch (activeTab) {

@@ -14,10 +14,10 @@ struct FilterView: View {
     
     var body: some View {
         VStack{
-            getFilterLvlOne()
+            GetFilterLvlOne()
             
             if !filterLvlOneIndices.isEmpty {
-                getFilterLvlTwo()
+                GetFilterLvlTwo()
             }
             
             Button(action: {
@@ -40,42 +40,14 @@ struct FilterView: View {
             }
             .padding(.top)
         }
-        
     }
     
-    private func getFilterLvlOne() -> some View {
+    private func GetFilterLvlOne() -> some View {
         LazyVStack{
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 30){
                     ForEach(filterLvlOne) { filterIcon in
-                        Button(action: {
-                            if filterLvlOneIndices.contains(filterIcon.id) {
-                                let index = filterLvlOneIndices.firstIndex(of: filterIcon.id)
-                                filterLvlOneIndices.remove(at: index!)
-                            } else {
-                                filterLvlOneIndices.append(filterIcon.id)
-                            }
-                            
-                        }){
-                            VStack{
-                                ZStack{
-                                    Circle()
-                                        .foregroundColor(filterLvlOneIndices.contains(filterIcon.id) ? .green : .gray)
-                                        .frame(width: 60, height: 60)
-                                    
-                                    if navbarIndex == 0 {
-                                        Image(filterIcon.icon)
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                    }
-                                }
-                                
-                                if navbarIndex == 0 {
-                                    Text(filterIcon.name)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                        }
+                        FilterButton(filterIcon: filterIcon)
                     }
                 }
             }
@@ -83,27 +55,27 @@ struct FilterView: View {
         }
     }
     
-    private func getFilterLvlTwo() -> some View {
+    private func GetFilterLvlTwo() -> some View {
         LazyVStack{
             ScrollView{
                 if filterLvlOneIndices.contains(where: {$0 == 1}) {
                     Divider()
                         .background(.gray)
                     
-                    getSpecialsFilter()
+                    GetSpecialsFilter()
                 }
                 
                 if filterLvlOneIndices.contains(where: {$0 == 2}) {
                     Divider()
                         .background(.gray)
                     
-                    getPortionsFilter()
+                    GetPortionsFilter()
                 }
             }
         }
     }
     
-    private func getSpecialsFilter() -> some View {
+    private func GetSpecialsFilter() -> some View {
         VStack{
             Text("Specials")
                 .bold()
@@ -142,7 +114,7 @@ struct FilterView: View {
         }
     }
     
-    private func getPortionsFilter() -> some View {
+    private func GetPortionsFilter() -> some View {
         VStack{
             Text("Portions")
                 .bold()
@@ -178,6 +150,34 @@ struct FilterView: View {
                 }
             }
             .padding(.leading, 20)
+        }
+    }
+    
+    private func FilterButton(filterIcon: CategoryTypeModel) -> some View {
+        VStack{
+            Button(action: {
+                if filterLvlOneIndices.contains(filterIcon.id) {
+                    let index = filterLvlOneIndices.firstIndex(of: filterIcon.id)
+                    filterLvlOneIndices.remove(at: index!)
+                } else {
+                    filterLvlOneIndices.append(filterIcon.id)
+                }
+                
+            }){
+                VStack{
+                    ZStack{
+                        Circle()
+                            .foregroundColor(filterLvlOneIndices.contains(filterIcon.id) ? .green : .gray)
+                            .frame(width: 60, height: 60)
+                        
+                        Image(filterIcon.icon)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                    Text(filterIcon.name)
+                        .foregroundColor(.white)
+                }
+            }
         }
     }
 }

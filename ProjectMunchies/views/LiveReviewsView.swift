@@ -12,60 +12,29 @@ struct LiveReviewsView: View {
     @State private var isExpanded: Bool = false
     
     var body: some View {
-            VStack {
+        VStack {
+            Button(action: {
                 
-                Button(action: {
+            }){
+                ZStack{
+                    Text("")
+                        .frame(width: 350, height: 60)
+                        .background(.blue)
+                        .cornerRadius(30)
                     
-                }){
-                    ZStack{
-                        Text("")
-                            .frame(width: 350, height: 60)
-                            .background(.blue)
-                            .cornerRadius(30)
-                        
-                        Text("Add New Review")
-                            .bold()
-                            .font(.system(size: 20))
-                            .foregroundColor(.white)
-                    }
+                    Text("Add New Review")
+                        .bold()
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
                 }
-                .padding()
-                
-                CustomTabBar()
-
-                GeometryReader {
-                    let size = $0.size
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 0) {
-                            SampleView(.purple)
-                                .id(LiveReviewTabsModel.recent)
-                                .containerRelativeFrame(.horizontal)
-                            
-                            SampleView(.red)
-                                .id(LiveReviewTabsModel.top)
-                                .containerRelativeFrame(.horizontal)
-                            
-                            SampleView(.blue)
-                                .id(LiveReviewTabsModel.popular)
-                                .containerRelativeFrame(.horizontal)
-                        }
-                        .scrollTargetLayout()
-                        .offsetX { value in
-                            /// Converting Offset into Progress
-                            let progress = -value / (size.width * CGFloat(LiveReviewTabsModel.allCases.count - 1))
-                            
-                            /// Capping Progress BTW 0-1
-                            tabProgress = max(min(progress, 1), 0)
-                        }
-                    }
-                    .scrollPosition(id: $selectedTab)
-                    .scrollIndicators(.hidden)
-                    .scrollTargetBehavior(.paging)
-                    .scrollClipDisabled()
-                }
-               .frame(height: self.isExpanded ? 200 : 400)
             }
-          //  .padding()
+            .padding()
+            
+            CustomTabBar()
+            
+            TabViews()
+                .frame(height: self.isExpanded ? 200 : 400)
+        }
     }
     
     private func CustomTabBar() -> some View {
@@ -103,9 +72,39 @@ struct LiveReviewsView: View {
         .padding(.horizontal, 15)
     }
     
-    private func SampleView(_ color: Color) -> some View {
-        GeometryReader{ proxy in
-            AutoScrollView(color: color, items: liveReviewSamples)
+    private func TabViews() -> some View {
+        VStack{
+            GeometryReader {
+                let size = $0.size
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 0) {
+                        AutoScrollView(color: .purple, items: liveReviewSamples)
+                            .id(LiveReviewTabsModel.recent)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        AutoScrollView(color: .red, items: liveReviewSamples)
+                            .id(LiveReviewTabsModel.top)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        AutoScrollView(color: .blue, items: liveReviewSamples)
+                            .id(LiveReviewTabsModel.popular)
+                            .containerRelativeFrame(.horizontal)
+                    }
+                    .scrollTargetLayout()
+                    .offsetX { value in
+                        /// Converting Offset into Progress
+                        let progress = -value / (size.width * CGFloat(LiveReviewTabsModel.allCases.count - 1))
+                        
+                        /// Capping Progress BTW 0-1
+                        tabProgress = max(min(progress, 1), 0)
+                    }
+                }
+                .scrollPosition(id: $selectedTab)
+                .scrollIndicators(.hidden)
+                .scrollTargetBehavior(.paging)
+                .scrollClipDisabled()
+            }
+            
         }
     }
 }
