@@ -9,6 +9,8 @@ import SwiftUI
 import Firebase
 
 struct SettingsView: View {
+    @Binding var sheetIndents: Set<PresentationDetent>
+    @Binding var activeTab: NavBarTabsModel
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var homeViewModel = ProfilesViewModel()
     @State private var showSheet = false
@@ -123,7 +125,7 @@ struct SettingsView: View {
                 }
                 .padding()
                 .sheet(isPresented: $showSheet) {
-                   // MyBunchiesView()
+                   // BunchiesView()
                 }
 
                 Button(action: {
@@ -204,6 +206,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(sheetIndents: .constant([.height(60),.medium, .large]), activeTab: .constant(.settings))
     }
 }

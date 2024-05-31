@@ -63,14 +63,19 @@ struct Header: View {
                 
                 Button(action: {
                     selectedView = 1
+                    self.sheetIndents = [.medium, .large]
+                    self.activeTab = .reviews
+                    
                 }) {
                     Label("My Reviews", systemImage: "star.fill")
                 }
                 
                 Button(action: {
                     selectedView = 2
+                    self.sheetIndents = [.medium, .large]
+                    self.activeTab = .settings
                 }) {
-                    Label("Privacy and Security", systemImage: "lock.fill")
+                    Label("Settings", systemImage: "lock.fill")
                 }
             } label: {
                 Image(systemName: "person.circle")

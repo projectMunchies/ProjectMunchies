@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */; };
+		3888550E2B6C1E2000DB1D53 /* BunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */; };
 		388855102B6ED2E700DB1D53 /* LiveReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */; };
 		388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
@@ -50,6 +50,7 @@
 		772BA6942B7492B6003C08BE /* Particle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BA6932B7492B6003C08BE /* Particle.swift */; };
 		772C9B0E2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */; };
 		772D044B2B57A9780099859D /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D044A2B57A9780099859D /* VideoModel.swift */; };
+		774157072C0A190C0076C73D /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157062C0A190C0076C73D /* ReviewsView.swift */; };
 		7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346C2B4FD4630078564B /* CategoryTypeModel.swift */; };
 		7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346E2B4FD5670078564B /* CategoryModel.swift */; };
 		77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */; };
@@ -115,7 +116,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBunchiesView.swift; sourceTree = "<group>"; };
+		3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchiesView.swift; sourceTree = "<group>"; };
 		3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveReviewsView.swift; sourceTree = "<group>"; };
 		388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPrivacyView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 		772BA6932B7492B6003C08BE /* Particle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particle.swift; sourceTree = "<group>"; };
 		772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Restaurant_Reviews2.tsv; sourceTree = "<group>"; };
 		772D044A2B57A9780099859D /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		774157062C0A190C0076C73D /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
 		7753346C2B4FD4630078564B /* CategoryTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeModel.swift; sourceTree = "<group>"; };
 		7753346E2B4FD5670078564B /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueModel.swift; sourceTree = "<group>"; };
@@ -339,7 +341,7 @@
 			children = (
 				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
 				3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */,
-				3888550D2B6C1E2000DB1D53 /* MyBunchiesView.swift */,
+				3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */,
 				77EBA5212C08AB6900437FCE /* HomeView.swift */,
 				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
 				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
@@ -350,6 +352,7 @@
 				77EBA51C2C067EB900437FCE /* AutoScrollView.swift */,
 				77EBA5272C08D69000437FCE /* FilterView.swift */,
 				77EBA5292C08D6A100437FCE /* CrunchAIView.swift */,
+				774157062C0A190C0076C73D /* ReviewsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -574,7 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
-				3888550E2B6C1E2000DB1D53 /* MyBunchiesView.swift in Sources */,
+				3888550E2B6C1E2000DB1D53 /* BunchiesView.swift in Sources */,
 				7772A0292B6944B800652687 /* SpinningView.swift in Sources */,
 				7772A01F2B67821600652687 /* ReviewsViewModel.swift in Sources */,
 				770BF48B2B69770100422D01 /* OffsetModifier.swift in Sources */,
@@ -600,6 +603,7 @@
 				77E3830F2A7225470084B8A6 /* ContentView.swift in Sources */,
 				772BA6942B7492B6003C08BE /* Particle.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
+				774157072C0A190C0076C73D /* ReviewsView.swift in Sources */,
 				77EBA5222C08AB6900437FCE /* HomeView.swift in Sources */,
 				77EBA5132C04DCAD00437FCE /* ProfilesRepository.swift in Sources */,
 				77EBA5242C08ABA200437FCE /* NavBarTabsModel.swift in Sources */,

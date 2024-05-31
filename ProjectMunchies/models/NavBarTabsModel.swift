@@ -17,6 +17,7 @@ enum NavBarTabsModel: String, CaseIterable {
     // needs to be here to display on mainSheet
     case bunchies = "Bunchies"
     case reviews = "Reviews"
+    case settings = "Settings"
     
     
     var symbol: String {
@@ -30,6 +31,8 @@ enum NavBarTabsModel: String, CaseIterable {
         case .bunchies:
             "circle.grid.2x2.fill"
         case .reviews:
+            "circle.grid.2x2.fill"
+        case .settings:
             "circle.grid.2x2.fill"
         }
     }

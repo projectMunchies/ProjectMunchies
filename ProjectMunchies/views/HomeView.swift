@@ -28,7 +28,6 @@ struct HomeView: View {
             SubHeaderSection()
                 .position(x: 200, y: 10)
             
-            /// Tab Bar
             TabBar()
                 .frame(height: 49)
                 .background(.regularMaterial)
@@ -61,7 +60,6 @@ struct HomeView: View {
         }
     }
     
-    /// Tab Bar
     @ViewBuilder
     func TabBar() -> some View {
         HStack(spacing: 0) {
@@ -112,9 +110,11 @@ struct HomeView: View {
                     )
                 ))))
             case .bunchies:
-                MyBunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+                BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             case .reviews:
-                EmptyView()
+                ReviewsView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+            case .settings:
+                SettingsView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             }
         }
     }

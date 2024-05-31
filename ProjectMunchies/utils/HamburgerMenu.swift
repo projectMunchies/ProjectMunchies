@@ -17,7 +17,7 @@ struct HamburgerMenu: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading){
-                    NavigationLink(destination: SettingsView()) {
+                    NavigationLink(destination: EmptyView()) {
                         HStack{
                             Image(systemName: "gear")
                                 .foregroundColor(.gray)

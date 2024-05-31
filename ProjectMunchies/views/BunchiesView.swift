@@ -1,5 +1,5 @@
 //
-//  MyBunchiesView.swift
+//  BunchiesView.swift
 //  ProjectMunchies
 //
 //  Created by Marcus Mckoy on 2/1/24.
@@ -10,7 +10,7 @@ import Contacts
 import MapKit
 
 
-struct MyBunchiesView: View {
+struct BunchiesView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var activeTab: NavBarTabsModel
     @State private var isShowingAddFriendsModal = false
