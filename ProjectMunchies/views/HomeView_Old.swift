@@ -140,7 +140,7 @@ struct HomeView_Old: View {
     
     private func subHeaderSection(for geoReader: GeometryProxy) -> some View {
         HStack {
-            Header()
+         //   Header(sheetIndents: self.$sheetIndents)
         }
     }
     
@@ -940,19 +940,18 @@ struct HomeView_Old: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
+struct HomeView_Old_Previews: PreviewProvider {
     static var previews: some View {
-//        HomeView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
-//            center: CLLocationCoordinate2D(
-//                latitude: 27.9506,
-//                longitude: -82.4572
-//            ),
-//            span: MKCoordinateSpan(
-//                latitudeDelta: 0.1,
-//                longitudeDelta: 0.1
-//            )
-//        ))))
+        HomeView_Old(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: 27.9506,
+                longitude: -82.4572
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+            )
+        ))))
         
-        HomeView()
     }
 }

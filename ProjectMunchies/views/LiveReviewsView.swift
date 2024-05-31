@@ -13,6 +13,24 @@ struct LiveReviewsView: View {
     
     var body: some View {
             VStack {
+                
+                Button(action: {
+                    
+                }){
+                    ZStack{
+                        Text("")
+                            .frame(width: 350, height: 60)
+                            .background(.blue)
+                            .cornerRadius(30)
+                        
+                        Text("Add New Review")
+                            .bold()
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                    }
+                }
+                .padding()
+                
                 CustomTabBar()
 
                 GeometryReader {

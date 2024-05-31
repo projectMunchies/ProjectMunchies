@@ -12,6 +12,7 @@ struct HomeView: View {
     @State private var showSheet: Bool = false
     @State private var activeTab: NavBarTabsModel = .filter
     @State private var ignoreTabBar: Bool = false
+    @State private var heightIndent: Set<PresentationDetent> = [.height(60), .medium, .large]
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -32,21 +33,24 @@ struct HomeView: View {
                 .frame(height: 49)
                 .background(.regularMaterial)
         }
-        .task {
+        .task() {
             showSheet = true
         }
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
-                VStack(alignment: .leading, spacing: 10, content: {
+                VStack(alignment: .leading, spacing: 15, content: {
                     Text(activeTab.rawValue)
                         .font(.title2)
                         .fontWeight(.semibold)
+                    
                     Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     
                     if (activeTab == .filter) {
                         FilterView()
                     } else if (activeTab == .liveReviews) {
                         LiveReviewsView()
+                    } else if (activeTab == .bunchies) {
+                        MyBunchiesView(heightIndent: self.$heightIndent, activeTab: self.$activeTab)
                     } else if (activeTab == .crunchAI) {
                         CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
                             center: CLLocationCoordinate2D(
@@ -63,7 +67,7 @@ struct HomeView: View {
                 .padding()
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .presentationDetents([.height(60), .medium, .large])
+            .presentationDetents(self.heightIndent)
             .presentationCornerRadius(20)
             .presentationBackground(.regularMaterial)
             .presentationBackgroundInteraction(.enabled(upThrough: .large))
@@ -79,27 +83,29 @@ struct HomeView: View {
     func TabBar() -> some View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
-                Button(action: { activeTab = tab }, label: {
-                    VStack(spacing: 2){
-                        Image(systemName: tab.symbol)
-                            .font(.title2)
-                        
-                        Text(tab.rawValue)
-                            .font(.caption2)
-                    }
-                    .foregroundStyle(activeTab == tab ? Color.accentColor : .gray)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .contentShape(.rect)
-                })
-                .buttonStyle(.plain)
-                
+                if(tab != .bunchies && tab != .reviews) {
+                    Button(action: { activeTab = tab }, label: {
+                        VStack(spacing: 2){
+                            Image(systemName: tab.symbol)
+                                .font(.title2)
+                            
+                            Text(tab.rawValue)
+                                .font(.caption2)
+                        }
+                        .foregroundStyle(activeTab == tab ? Color.accentColor : .gray)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .contentShape(.rect)
+                    })
+                    .buttonStyle(.plain)
+                }
+               
             }
         }
     }
     
     private func subHeaderSection() -> some View {
         HStack {
-            Header()
+            Header(heightIndent: self.$heightIndent, activeTab: self.$activeTab)
         }
     }
 }

@@ -123,7 +123,7 @@ struct SettingsView: View {
                 }
                 .padding()
                 .sheet(isPresented: $showSheet) {
-                    MyBunchiesView()
+                   // MyBunchiesView()
                 }
 
                 Button(action: {

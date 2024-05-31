@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Header: View {
+    @Binding var heightIndent: Set<PresentationDetent>
+    @Binding var activeTab: NavBarTabsModel
     @State private var showPrefPopover: Bool = false
     @State private var showIntroPopover: Bool = false
     @State private var isSettingsPresented: Bool = false
@@ -53,6 +55,8 @@ struct Header: View {
             Menu {
                 Button(action: {
                     selectedView = 0
+                    self.heightIndent = [.medium, .large]
+                    self.activeTab = .bunchies
                 }) {
                     Label("My Bunchies", systemImage: "person.2.square.stack")
                 }
@@ -78,23 +82,14 @@ struct Header: View {
         .padding(.horizontal, 16)
         .padding(.top, 16)
         .onChange(of: selectedView) { newValue in
-            isSettingsPresented = true // Set this to true for all views
+            isSettingsPresented = true
         }
-        .sheet(isPresented: $isSettingsPresented) {
-            NavigationView {
-                if let selectedView = selectedView {
-                    switch selectedView {
-                    case 0:
-                        MyBunchiesView()
-                    case 1:
-                        LiveReviewsView()
-                    case 2:
-                        SettingsView()
-                    default:
-                        EmptyView()
-                    }
-                }
-            }
-        }
+//        .sheet(isPresented: $isSettingsPresented) {
+//
+//        }
     }
+}
+
+#Preview {
+    HomeView()
 }

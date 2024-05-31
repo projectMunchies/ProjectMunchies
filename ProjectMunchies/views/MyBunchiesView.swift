@@ -11,6 +11,8 @@ import MapKit
 
 
 struct MyBunchiesView: View {
+    @Binding var heightIndent: Set<PresentationDetent>
+    @Binding var activeTab: NavBarTabsModel
     @State private var isShowingAddFriendsModal = false
     @State private var isShowingContactPicker = false
     @State private var selectedContacts: [CNContact] = []
@@ -18,14 +20,26 @@ struct MyBunchiesView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                HStack {
                     Text("Bunchies")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
+                
                     Spacer()
-                }
+                
                    VStack(spacing: 10) {
+                       Button(action: {
+                           self.heightIndent = [.height(60), .medium, .large]
+                           self.activeTab = .filter
+                       }) {
+                           Text("Close")
+                               .padding(.vertical, 10)
+                               .padding(.horizontal, 20)
+                               .background(Color.blue)
+                               .foregroundColor(.white)
+                               .cornerRadius(10)
+                       }
+                       .buttonStyle(PlainButtonStyle())
                        Button(action: {
                            isShowingContactPicker = true
                        }) {
@@ -107,10 +121,14 @@ struct MyBunchiesView: View {
                    }
                }
                .padding()
-               .sheet(isPresented: $isShowingContactPicker) {
-                   // Present modal sheet to add friends
-                   ContactPicker(selectedContacts: $selectedContacts)
-            }
+               .onAppear{
+                  // self.heightIndent = 200
+               }
+//               .sheet(isPresented: $isShowingContactPicker) {
+//                   // Present modal sheet to add friends
+//                   ContactPicker(selectedContacts: $selectedContacts)
+//
+//            }
         }
     }
     
