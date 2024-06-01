@@ -88,8 +88,8 @@ struct HomeView_Old: View {
                     .ignoresSafeArea()
                 ScrollView {
                     ZStack{
-                        displayMap(for: geoReader)
-                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
+//                        displayMap(for: geoReader)
+//                            .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
                         
                         subHeaderSection(for: geoReader)
                             .position(x:geoReader.size.width * 0.5, y:geoReader.size.height * 0.02)
@@ -98,8 +98,8 @@ struct HomeView_Old: View {
                         do {
                             //self.isOverlayDisplayed.toggle()
                             self.showBottomNavBar.toggle()
-                           try await getUserProfile()
-                            checkForNewMapAlerts()
+//                           try await getUserProfile()
+//                            checkForNewMapAlerts()
                         } catch {
                             print("fsdfds")
                         }
@@ -110,7 +110,7 @@ struct HomeView_Old: View {
                         if self.startSearch {
                             //clean if dirty
                             self.venues.removeAll()
-                            searchForVenues(query: self.searchText)
+                          //  searchForVenues(query: self.searchText)
                         }
                     }
                     .onChange(of: searchText) {
@@ -144,68 +144,68 @@ struct HomeView_Old: View {
         }
     }
     
-    private func displayMap(for geoReader: GeometryProxy) -> some View {
-        Map(position: $position) {
-            ForEach(self.venues) { venue in
-                Annotation("", coordinate: venue.coordinates) {
-                    ZStack{
-                        if self.useMapAlerts {
-                            displayMapAlerts(geoReader: geoReader, venue: venue, index: self.venues.firstIndex(of: venue)!)
-                        } else {
-                            Image(systemName: "mappin.circle.fill")
-                                .resizable()
-                                .frame(width: geoReader.size.width * 0.07, height: geoReader.size.height * 0.04)
-                                .foregroundColor(.orange)
-                        }
-                    }
-                    .onTapGesture {
-                        self.showBottomNavBar.toggle()
-                        // for each marker on the map
-                        self.status[self.venues.firstIndex(of: venue)!].toggle()
-                        
-                        if self.showBottomNavBar {
-                            setSheetBoundary(lowestPoint: 90, highestPoint: 90)
-                        } else {
-                            setSheetBoundary(lowestPoint: 400, highestPoint: 800)
-                            currentVenue = venue
-                        }
-                    }
-                }
-            }
-        }
-        .onMapCameraChange { mapCameraUpdateContext in
-            self.region = mapCameraUpdateContext.region
-        }
-        .preferredColorScheme(.dark)
-        .cornerRadius(30)
-        .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.5)
-    }
-    
-    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenueModel) {
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = query
-        request.resultTypes = .pointOfInterest
-        request.region = self.region
-        Task {
-            let search = MKLocalSearch(request: request)
-            let response = try? await search.start()
-            searchResults = response?.mapItems ?? []
-            
-            for result in searchResults {
-                // if venue is empty
-                if mapAlertVenue.id == "" {
-                    let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinates: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
-                    self.venues.append(venue)
-                } else {
-                    var newMapAlertVenue = mapAlertVenue
-                    newMapAlertVenue.coordinates = result.placemark.coordinate
-                    self.venues.removeAll(where: { $0.id == mapAlertVenue.id })
-                    self.venues.append(newMapAlertVenue)
-                }
-            }
-        }
-        self.startSearch = false
-    }
+//    private func displayMap(for geoReader: GeometryProxy) -> some View {
+//        Map(position: $position) {
+//            ForEach(self.venues) { venue in
+//                Annotation("", coordinate: venue.coordinates) {
+//                    ZStack{
+//                        if self.useMapAlerts {
+//                            displayMapAlerts(geoReader: geoReader, venue: venue, index: self.venues.firstIndex(of: venue)!)
+//                        } else {
+//                            Image(systemName: "mappin.circle.fill")
+//                                .resizable()
+//                                .frame(width: geoReader.size.width * 0.07, height: geoReader.size.height * 0.04)
+//                                .foregroundColor(.orange)
+//                        }
+//                    }
+//                    .onTapGesture {
+//                        self.showBottomNavBar.toggle()
+//                        // for each marker on the map
+//                        self.status[self.venues.firstIndex(of: venue)!].toggle()
+//                        
+//                        if self.showBottomNavBar {
+//                            setSheetBoundary(lowestPoint: 90, highestPoint: 90)
+//                        } else {
+//                            setSheetBoundary(lowestPoint: 400, highestPoint: 800)
+//                            currentVenue = venue
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        .onMapCameraChange { mapCameraUpdateContext in
+//            self.region = mapCameraUpdateContext.region
+//        }
+//        .preferredColorScheme(.dark)
+//        .cornerRadius(30)
+//        .frame(width: geoReader.size.width * 1.0, height: geoReader.size.height * 1.5)
+//    }
+//    
+//    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenueModel) {
+//        let request = MKLocalSearch.Request()
+//        request.naturalLanguageQuery = query
+//        request.resultTypes = .pointOfInterest
+//        request.region = self.region
+//        Task {
+//            let search = MKLocalSearch(request: request)
+//            let response = try? await search.start()
+//            searchResults = response?.mapItems ?? []
+//            
+//            for result in searchResults {
+//                // if venue is empty
+//                if mapAlertVenue.id == "" {
+//                    let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinates: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
+//                    self.venues.append(venue)
+//                } else {
+//                    var newMapAlertVenue = mapAlertVenue
+//                    newMapAlertVenue.coordinates = result.placemark.coordinate
+//                    self.venues.removeAll(where: { $0.id == mapAlertVenue.id })
+//                    self.venues.append(newMapAlertVenue)
+//                }
+//            }
+//        }
+//        self.startSearch = false
+//    }
     
     private func fetchRouteFrom(_ source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
         let request = MKDirections.Request()
@@ -248,7 +248,7 @@ struct HomeView_Old: View {
                 
                 navBarDetails(geoReader: geoReader)
             } else {
-                venueDetails(geoReader: geoReader, venue: currentVenue)
+               // venueDetails(geoReader: geoReader, venue: currentVenue)
             }
         }
         .onChange(of: navbarIndex) {
@@ -293,75 +293,75 @@ struct HomeView_Old: View {
         }
     }
     
-    private func venueDetails(geoReader: GeometryProxy, venue: VenueModel) -> some View {
-        VStack{
-            venueDetailsHeader(venue: venue, geoReader: geoReader)
-            HStack{
-                if !venue.specials.isEmpty && !venue.reviews.isEmpty {
-                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
-                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
-                }
-                else if !venue.specials.isEmpty && venue.reviews.isEmpty {
-                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
-                    newReviewView(venue: venue, geoReader: geoReader)
-                } else if !venue.reviews.isEmpty && venue.specials.isEmpty {
-                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
-                    newSpecialView(venue: venue, geoReader: geoReader)
-                }
-            }
-        }
-    }
-    
-    private func displayMapAlerts(geoReader: GeometryProxy, venue: VenueModel, index: Int) -> some View {
-        ZStack{
-            if !venue.specials.isEmpty && !venue.reviews.isEmpty {
-                VStack{
-                    Text("New!")
-                        .bold()
-                        .font(.system(size: 15))
-                        .foregroundColor(.yellow)
-                    
-                    PacmanAnimation()
-                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .blue, inActiveTint: .red)
-                }
-            } else if !venue.specials.isEmpty  {
-                VStack{
-                    Text("New \nSpecial")
-                        .bold()
-                        .font(.system(size: 15))
-                        .foregroundColor(.orange)
-                    
-                    SpinningView()
-                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .yellow, inActiveTint: .red)
-                }
-                
-            }else if !venue.reviews.isEmpty  {
-                VStack{
-                    Text("New \nReview")
-                        .bold()
-                        .font(.system(size: 15))
-                        .foregroundColor(.pink)
-                    
-                    ZStack{
-                        PulsingCircle()
-                        Text("1")
-                            .font(.system(size: 20))
-                    }
-                    .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .red, inActiveTint: .red)
-                    .onReceive(timer) { time in
-                        if self.timerCount < 4 {
-                            //particle animation for all venues
-                            for idx in self.status.indices {
-                                self.status[idx].toggle()
-                            }
-                            timerCount += 1
-                        }
-                    }
-                    .frame(width: geoReader.size.width * 0.10, height: geoReader.size.width * 0.10)
-                }
-            }
-        }
-    }
+//    private func venueDetails(geoReader: GeometryProxy, venue: VenueModel) -> some View {
+//        VStack{
+//            venueDetailsHeader(venue: venue, geoReader: geoReader)
+//            HStack{
+//                if !venue.specials.isEmpty && !venue.reviews.isEmpty {
+//                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
+//                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
+//                }
+//                else if !venue.specials.isEmpty && venue.reviews.isEmpty {
+//                    newSpecialView(venue: venue, geoReader: geoReader, isNew: true)
+//                    newReviewView(venue: venue, geoReader: geoReader)
+//                } else if !venue.reviews.isEmpty && venue.specials.isEmpty {
+//                    newReviewView(venue: venue, geoReader: geoReader, isNew: true)
+//                    newSpecialView(venue: venue, geoReader: geoReader)
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func displayMapAlerts(geoReader: GeometryProxy, venue: VenueModel, index: Int) -> some View {
+//        ZStack{
+//            if !venue.specials.isEmpty && !venue.reviews.isEmpty {
+//                VStack{
+//                    Text("New!")
+//                        .bold()
+//                        .font(.system(size: 15))
+//                        .foregroundColor(.yellow)
+//                    
+//                    PacmanAnimation()
+//                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .blue, inActiveTint: .red)
+//                }
+//            } else if !venue.specials.isEmpty  {
+//                VStack{
+//                    Text("New \nSpecial")
+//                        .bold()
+//                        .font(.system(size: 15))
+//                        .foregroundColor(.orange)
+//                    
+//                    SpinningView()
+//                        .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .yellow, inActiveTint: .red)
+//                }
+//                
+//            }else if !venue.reviews.isEmpty  {
+//                VStack{
+//                    Text("New \nReview")
+//                        .bold()
+//                        .font(.system(size: 15))
+//                        .foregroundColor(.pink)
+//                    
+//                    ZStack{
+//                        PulsingCircle()
+//                        Text("1")
+//                            .font(.system(size: 20))
+//                    }
+//                    .particleEffect(systemImage: "suit.heart.fill", font: .largeTitle, status: self.status[index], activeTint: .red, inActiveTint: .red)
+//                    .onReceive(timer) { time in
+//                        if self.timerCount < 4 {
+//                            //particle animation for all venues
+//                            for idx in self.status.indices {
+//                                self.status[idx].toggle()
+//                            }
+//                            timerCount += 1
+//                        }
+//                    }
+//                    .frame(width: geoReader.size.width * 0.10, height: geoReader.size.width * 0.10)
+//                }
+//            }
+//        }
+//    }
     
     private func venueDetailsHeader(venue: VenueModel, geoReader: GeometryProxy) -> some View {
         VStack{
@@ -497,36 +497,36 @@ struct HomeView_Old: View {
         }
     }
     
-    private func getUserProfile() async throws {
-        try await profilesViewModel.getUserProfile()
-    }
+//    private func getUserProfile() async throws {
+//     //   try await profilesViewModel.getUserProfile()
+//    }
     
-    private func checkForNewMapAlerts() {
-        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
-            specialsViewModel.getAllNewSpecials {(newSpecials) -> Void in
-                if !newReviews.isEmpty || !newSpecials.isEmpty {
-                    getVenuesForMapAlerts(newReviews: newReviews, newSpecials: newSpecials)
-                }
-            }
-        }
-    }
-    
-    private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
-        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
-            //            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
-            ////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
-            ////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
-            ////                    // append for particle animation
-            ////                    for _ in self.venues {
-            ////                        self.status.append(false)
-            ////                    }
-            ////                    for mapAlertVenue in self.venues {
-            ////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
-            ////                    }
-            ////                }
-            //            }
-        }
-    }
+//    private func checkForNewMapAlerts() {
+//        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
+//            specialsViewModel.getAllNewSpecials {(newSpecials) -> Void in
+//                if !newReviews.isEmpty || !newSpecials.isEmpty {
+//                    getVenuesForMapAlerts(newReviews: newReviews, newSpecials: newSpecials)
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
+//        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
+//            //            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
+//            ////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
+//            ////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+//            ////                    // append for particle animation
+//            ////                    for _ in self.venues {
+//            ////                        self.status.append(false)
+//            ////                    }
+//            ////                    for mapAlertVenue in self.venues {
+//            ////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
+//            ////                    }
+//            ////                }
+//            //            }
+//        }
+//    }
     
     private func combineVenues(reviewsVenues: [VenueModel], specialsVenues : [VenueModel]) {
         for reviewVenue in reviewsVenues {
@@ -539,7 +539,7 @@ struct HomeView_Old: View {
             if isMatchingVenue {
                 var matchingVenue =  self.venues.first(where: {$0.id == specialVenue.id})
                 //merge specials and reviews to same venue
-                matchingVenue?.specials.append(contentsOf: specialVenue.specials)
+              //  matchingVenue?.specials.append(contentsOf: specialVenue.specials)
                 //remove the original venues from array
                 self.venues.removeAll(where: {$0.id == matchingVenue?.id})
                 //add merged venue
@@ -696,23 +696,23 @@ struct HomeView_Old: View {
         }
     }
     
-    private func checkForLiveReviews() {
-        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
-            if !newReviews.isEmpty {
-                getVenuesForReviewAlerts(newReviews: newReviews)
-            }
-        }
-    }
-    
-    private func getVenuesForReviewAlerts(newReviews: [ReviewModel]) {
-        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
-            if !reviewsVenues.isEmpty {
-                for reviewVenue in reviewsVenues {
-                    searchForVenues(query: reviewVenue.address,mapAlertVenue: reviewVenue)
-                }
-            }
-        }
-    }
+//    private func checkForLiveReviews() {
+//        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
+//            if !newReviews.isEmpty {
+//                getVenuesForReviewAlerts(newReviews: newReviews)
+//            }
+//        }
+//    }
+//    
+//    private func getVenuesForReviewAlerts(newReviews: [ReviewModel]) {
+//        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
+//            if !reviewsVenues.isEmpty {
+//                for reviewVenue in reviewsVenues {
+//                    searchForVenues(query: reviewVenue.address,mapAlertVenue: reviewVenue)
+//                }
+//            }
+//        }
+//    }
     
     private func CustomTabBar() -> some View {
         HStack(spacing: 0) {
@@ -776,7 +776,7 @@ struct HomeView_Old: View {
             setSheetBoundary(lowestPoint: 300, highestPoint: 300)
         case 2:
             self.venues.removeAll()
-            checkForLiveReviews()
+          //  checkForLiveReviews()
             setSheetBoundary(lowestPoint: 300, highestPoint: 600)
         default:
             self.venues.removeAll()

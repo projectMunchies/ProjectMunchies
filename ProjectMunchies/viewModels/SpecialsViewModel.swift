@@ -6,71 +6,26 @@
 //
 
 import Foundation
-import UIKit
-import MapKit
-import Firebase
-import FirebaseStorage
-import FirebaseAuth
 
 class SpecialsViewModel: ObservableObject {
-    let storage = Storage.storage()
-    let db = Firestore.firestore()
+    private let service = SpecialsService()
     
-    @Published var specials : [SpecialModel] = []
-    @Published var newSpecials : [SpecialModel] = []
-    @Published var specialsVenues : [VenueModel] = []
+    @Published var special: SpecialModel = emptySpecialModel
+    @Published var specials: [SpecialModel] = []
+    @Published var recentSpecials : [SpecialModel] = []
     
-    public func getAllNewSpecials(completed: @escaping (_ newSpecials: [SpecialModel]) -> Void) {
-        var query: Query!
-        
-        query = db.collection("specials")
-            .whereField("creationDate", isGreaterThanOrEqualTo: Date.today().previous(.sunday))
-            .limit(to: 10)
-        
-        query
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting new specials documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                           let newSpecial = SpecialModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", type: data["type"] as? String ?? "", venueId: data["venueId"] as? String ?? "", description: data["description"] as? String ?? "", creationDate: data["creationDate"] as? Date ?? Date(), expirationDate: data["expirationDate"] as? Date ?? Date())
-                            
-                            self.newSpecials.append(newSpecial)
-                        }
-                    }
-                    completed(self.newSpecials)
-                }
-            }
+    public func GetSpecial(specialId: String) async throws {
+        var special = try await service.GetSpecial(specialId: specialId)
+        self.special = special
     }
     
-    public func getSpecials(profileId: String, completed: @escaping (_ specials: [SpecialModel]) -> Void) {
-        var query: Query!
-        
-        query = db.collection("specials")
-            .limit(to: 10)
-        
-        query
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting specials documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                           let special = SpecialModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", type: data["type"] as? String ?? "", venueId: data["venueId"] as? String ?? "", description: data["description"] as? String ?? "", creationDate: data["creationDate"] as? Date ?? Date(), expirationDate: data["expirationDate"] as? Date ?? Date())
-                            
-                            self.specials.append(special)
-                        }
-                    }
-                    completed(self.specials)
-                }
-            }
+    public func GetSpecials(specialIds: [String]) async throws {
+        var specials = try await service.GetSpecials(specialIds: specialIds)
+        self.specials = specials
     }
     
-    
-
+    public func GetRecentSpecials(date: Date) async throws {
+        var recentSpecials = try await service.GetAfterDate(date: date)
+        self.recentSpecials = recentSpecials
+    }
 }

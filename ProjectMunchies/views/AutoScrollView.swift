@@ -61,15 +61,17 @@ struct AutoScrollView: View {
             .onReceive(timer) { time in
                 data.append(
                     ReviewModel(
-                        id:"\(UUID().uuidString)",
-                        title: "This is the title",
+                        id: UUID().uuidString,
+                        rating: 0,
                         body: "",
+                        title: "",
                         userId: "",
                         venueId: "",
                         timeStamp: Date.today(),
-                        rating: 3,
                         activityId: ""
                     ))
+                
+                
             }
         }
     }

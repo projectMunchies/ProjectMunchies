@@ -6,61 +6,55 @@
 //
 
 import Foundation
-import MapKit
 import Firebase
 
-class VenuesRespository: ObservableObject{
+class VenuesRepository: ObservableObject{
     let db = Firestore.firestore()
     
-    public func Get(venueId: String ,completed: @escaping (_ venue: VenueModel) -> Void) {
+    public func Get(venueId: String) async throws -> VenueModel {
         var venue = emptyVenueModel
-        var query: Query!
-        
-        query = db.collection("venues")
+        let snapshot = try await db.collection("venues")
             .whereField("id", isEqualTo: venueId)
             .limit(to: 1)
+            .getDocuments()
         
-        query
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting venue document: \(err)")
-                    completed(emptyVenueModel)
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                            venue = VenueModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: data["address"] as? String ?? "", reviews: data["reviews"] as? [ReviewModel] ?? [], specials: data["specials"] as? [SpecialModel] ?? [])
-                        }
-                    }
-                    completed(venue)
-                }
-            }
+        snapshot.documents.forEach { documentSnapshot in
+            let documentData = documentSnapshot.data()
+            
+            venue.id = documentData["id"] as! String
+            venue.name = documentData["name"] as! String
+            venue.rating = documentData["rating"] as? Int ?? 0
+            venue.address = documentData["address"] as? String ?? ""
+            venue.hasBrunch = documentData["hasBrunch"] as? Bool ?? false
+            venue.reviewIds = documentData["reviewIds"] as? [String] ?? []
+            venue.specialIds = documentData["specialIds"] as? [String] ?? []
+            venue.hasHappyHour = documentData["hasHappyHour"] as? Bool ?? false
+        }
+        return venue
     }
     
-    public func GetAll(venueIds: [String], completed: @escaping (_ venues: [VenueModel]) -> Void) {
-        var query: Query!
+    public func Get(venueIds: [String]) async throws -> [VenueModel] {
         var venues: [VenueModel] = []
-        
-        query = db.collection("venues")
+        let snapshot = try await db.collection("venues")
             .whereField("id", in: venueIds)
             .limit(to: 10)
+            .getDocuments()
         
-        query
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting specialsVenues documents: \(err)")
-                    completed([])
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if !data.isEmpty{
-                            var venue = VenueModel(id: data["id"] as? String ?? "", name: data["name"] as? String ?? "", coordinates: data["coordinates"] as? CLLocationCoordinate2D ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: data["address"] as? String ?? "", reviews: data["reviews"] as? [ReviewModel] ?? [], specials: data["specials"] as? [SpecialModel] ?? [])
-                            
-                            venues.append(venue)
-                        }
-                    }
-                    completed(venues)
-                }
-            }
+        snapshot.documents.forEach { documentSnapshot in
+            let documentData = documentSnapshot.data()
+            var venue = emptyVenueModel
+            
+            venue.id = documentData["id"] as! String
+            venue.name = documentData["name"] as! String
+            venue.rating = documentData["rating"] as? Int ?? 0
+            venue.address = documentData["address"] as? String ?? ""
+            venue.hasBrunch = documentData["hasBrunch"] as? Bool ?? false
+            venue.reviewIds = documentData["reviewIds"] as? [String] ?? []
+            venue.specialIds = documentData["specialIds"] as? [String] ?? []
+            venue.hasHappyHour = documentData["hasHappyHour"] as? Bool ?? false
+            
+            venues.append(venue)
+        }
+        return venues
     }
 }

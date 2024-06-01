@@ -8,66 +8,66 @@
 import Foundation
 
 struct ReviewModel: Identifiable, Hashable {
-    let id: String
-    let title: String
-    let body: String
-    let userId: String
-    let venueId: String
-    let timeStamp: Date
-    let rating: Int
-    let activityId: String
+    var id: String
+    var rating: Int
+    var body: String
+    var title: String
+    var userId: String
+    var venueId: String
+    var timeStamp: Date
+    var activityId: String
 }
 
-var liveReviewSample: ReviewModel =  ReviewModel(
-    id: UUID().uuidString, 
-    title: "",
+var emptyReviewModel: ReviewModel =  ReviewModel(
+    id: UUID().uuidString,
+    rating: 0,
     body: "",
+    title: "",
     userId: "",
     venueId: "",
     timeStamp: Date.today(),
-    rating: 0,
     activityId: ""
 )
 
 var liveReviewSamples: [ReviewModel] = [
     ReviewModel(
         id: UUID().uuidString,
-        title: "",
+        rating: 0,
         body: "",
+        title: "",
         userId: "",
         venueId: "",
         timeStamp: Date.today(),
-        rating: 0,
         activityId: ""
     ),
     ReviewModel(
         id: UUID().uuidString,
-        title: "",
+        rating: 0,
         body: "",
+        title: "",
         userId: "",
         venueId: "",
         timeStamp: Date.today(),
-        rating: 0,
         activityId: ""
     ),
     ReviewModel(
         id: UUID().uuidString,
-        title: "",
+        rating: 0,
         body: "",
+        title: "",
         userId: "",
         venueId: "",
         timeStamp: Date.today(),
-        rating: 0,
         activityId: ""
     ),
     ReviewModel(
         id: UUID().uuidString,
-        title: "",
+        rating: 0,
         body: "",
+        title: "",
         userId: "",
         venueId: "",
         timeStamp: Date.today(),
-        rating: 0,
         activityId: ""
     ),
 ]

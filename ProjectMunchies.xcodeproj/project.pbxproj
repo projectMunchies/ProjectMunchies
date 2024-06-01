@@ -51,6 +51,10 @@
 		772C9B0E2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */; };
 		772D044B2B57A9780099859D /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D044A2B57A9780099859D /* VideoModel.swift */; };
 		774157072C0A190C0076C73D /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157062C0A190C0076C73D /* ReviewsView.swift */; };
+		774157092C0AE0AE0076C73D /* ReviewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157082C0AE0AE0076C73D /* ReviewsRepository.swift */; };
+		7741570B2C0B1FA10076C73D /* SpecialsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */; };
+		7741570D2C0B224E0076C73D /* SpecialsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570C2C0B224E0076C73D /* SpecialsService.swift */; };
+		7741570F2C0B22580076C73D /* ReviewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570E2C0B22580076C73D /* ReviewsService.swift */; };
 		7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346C2B4FD4630078564B /* CategoryTypeModel.swift */; };
 		7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346E2B4FD5670078564B /* CategoryModel.swift */; };
 		77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */; };
@@ -131,6 +135,10 @@
 		772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Restaurant_Reviews2.tsv; sourceTree = "<group>"; };
 		772D044A2B57A9780099859D /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		774157062C0A190C0076C73D /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
+		774157082C0AE0AE0076C73D /* ReviewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRepository.swift; sourceTree = "<group>"; };
+		7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsRepository.swift; sourceTree = "<group>"; };
+		7741570C2C0B224E0076C73D /* SpecialsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsService.swift; sourceTree = "<group>"; };
+		7741570E2C0B22580076C73D /* ReviewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsService.swift; sourceTree = "<group>"; };
 		7753346C2B4FD4630078564B /* CategoryTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeModel.swift; sourceTree = "<group>"; };
 		7753346E2B4FD5670078564B /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueModel.swift; sourceTree = "<group>"; };
@@ -315,6 +323,8 @@
 				77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */,
 				77EBA5142C05001B00437FCE /* FbStorageRepository.swift */,
 				77EBA51A2C052D2300437FCE /* VenuesRepository.swift */,
+				774157082C0AE0AE0076C73D /* ReviewsRepository.swift */,
+				7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -332,6 +342,8 @@
 			children = (
 				77EBA5162C05082500437FCE /* ProfilesService.swift */,
 				77EBA5182C052C9E00437FCE /* VenuesService.swift */,
+				7741570C2C0B224E0076C73D /* SpecialsService.swift */,
+				7741570E2C0B22580076C73D /* ReviewsService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -591,11 +603,13 @@
 				77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */,
 				77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */,
 				77F3E0AA2A860C3E00BC3791 /* ProfilesViewModel.swift in Sources */,
+				774157092C0AE0AE0076C73D /* ReviewsRepository.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */,
 				77EBA51D2C067EB900437FCE /* AutoScrollView.swift in Sources */,
 				77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */,
 				77F3E0A62A86092500BC3791 /* ImagePicker.swift in Sources */,
+				7741570F2C0B22580076C73D /* ReviewsService.swift in Sources */,
 				77EBA5172C05082500437FCE /* ProfilesService.swift in Sources */,
 				77C5101F2B4BB500005D3EE3 /* RecommendationModal.swift in Sources */,
 				77DC3AE02B034CC9009F2B9A /* VideoPlayerHomeView.swift in Sources */,
@@ -610,6 +624,7 @@
 				7772A01A2B67811400652687 /* VenuesViewModel.swift in Sources */,
 				77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */,
 				77F3E0AE2A87A13C00BC3791 /* Header.swift in Sources */,
+				7741570D2C0B224E0076C73D /* SpecialsService.swift in Sources */,
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
 				7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */,
@@ -619,6 +634,7 @@
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
 				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
+				7741570B2C0B1FA10076C73D /* SpecialsRepository.swift in Sources */,
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
 				77EBA5152C05001B00437FCE /* FbStorageRepository.swift in Sources */,
 				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,

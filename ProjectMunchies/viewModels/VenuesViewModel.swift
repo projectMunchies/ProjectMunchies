@@ -6,30 +6,20 @@
 //
 
 import Foundation
-import UIKit
-import MapKit
-import Firebase
-import FirebaseStorage
-import FirebaseAuth
 
 class VenuesViewModel: ObservableObject {
-    private let venuesService = VenuesService()
-     
-    @Published var profileImage: UIImage = UIImage()
-    @Published var specialsVenues : [VenueModel] = []
-    @Published var reviewsVenues : [VenueModel] = []
-    @Published var venue = VenueModel(
-        id: "",
-        name: "",
-        coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
-        address: "", 
-        reviews: [],
-        specials: []
-    )
-    
-    
-    
-    
+    private let service = VenuesService()
 
+    @Published var venue = emptyVenueModel
+    @Published var venues: [VenueModel] = []
+    
+    public func GetVenue(venueId: String) async throws {
+        var venue = try await service.GetVenue(venueId: venueId)
+        self.venue = venue
+    }
+    
+    public func GetVenues(venueIds: [String]) async throws {
+        var venues = try await service.GetVenues(venueIds: venueIds)
+        self.venues = venues
+    }
 }
-

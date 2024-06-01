@@ -68,10 +68,7 @@ extension Date {
         
         return date!
     }
-}
-
-// MARK: Helper Date methods
-extension Date {
+    
     func getWeekDaysInEnglish() -> [String] {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "en_US_POSIX")
@@ -118,10 +115,9 @@ extension View {
 
 extension CLLocationCoordinate2D: Equatable {}
 
-public func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+public func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
     return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
 }
-
 
 extension MKCoordinateRegion {
     /// Apple Mark Region

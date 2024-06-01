@@ -10,20 +10,19 @@ import UIKit
 import FirebaseAuth
 
 class ProfilesService: ObservableObject {
+    private let profilesRespository = ProfilesRepository()
+    private let fbStorageRespository = FbStorageRepository()
     
-    private let profilesRespository = ProfilesRespository()
-    private let fbStorageRespository = FbStorageRespository()
-    
-    public func getProfile(profileId: String) async throws -> ProfileModel {
+    public func GetProfile(profileId: String) async throws -> ProfileModel {
         let responseProfile = try await profilesRespository.Get(profileId: profileId)
-        let profileImage = await fbStorageRespository.Get(profileId: responseProfile.id)
+        let profileImage = try await fbStorageRespository.Get(profileId: responseProfile.id)
         
         var result = responseProfile
         result.profileImage = profileImage
         return result
     }
     
-    public func createProfile() async throws -> ProfileModel {
+    public func CreateProfile() async throws -> ProfileModel {
         let id = UUID().uuidString
         var newProfile = ProfileModel(
             id: id,

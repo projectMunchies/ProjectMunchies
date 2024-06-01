@@ -6,53 +6,30 @@
 //
 
 import Foundation
+import UIKit
 import Firebase
-import FirebaseAuth
 
 class ProfilesViewModel: ObservableObject {
-    private let profilesService = ProfilesService()
+    private let service = ProfilesService()
     
     @Published var profileImage: UIImage = UIImage()
-    @Published var lastDoc: DocumentSnapshot!
-    @Published var userProfile: ProfileModel = ProfileModel(
-        id: "",
-        fullName: "",
-        location: "",
-        description: "",
-        gender: "",
-        age: "",
-        fcmTokens: [],
-        messageThreadIds: [],
-        occupation: "" ,
-        hobbies: [],
-        reviewIds: [],
-        isMockData: false,
-        profileImage: UIImage()
-    )
+    @Published var userProfile: ProfileModel = emptyProfileModel
     
-    public func getUserProfile() async throws {
-        let userProfile =  try await profilesService.getProfile(profileId: Auth.auth().currentUser?.uid ?? "")
+    public func GetUserProfile() async throws {
+        let userProfile =  try await service.GetProfile(profileId: Auth.auth().currentUser?.uid ?? "")
         
         if(userProfile.id != "") {
             self.userProfile = userProfile
         }
     }
     
-    public func createUserProfile() async throws {
-        var createdProfile = try await profilesService.createProfile()
+    public func CreateUserProfile() async throws {
+        let  createdProfile = try await service.CreateProfile()
+        
         if(createdProfile.id != "") {
             self.userProfile = createdProfile
         }
         
     }
-    
-    //    public func getProfile(requestId: String, completed: @escaping (_ proflie: ProfileModel) -> Void) {
-    //        profilesService.getProfile(profileId: requestId) {(userProfile) -> Void in
-    //            if(userProfile.id != "") {
-    //                self.userProfile = userProfile
-    //                completed(userProfile)
-    //            }
-    //        }
-    //    }
 }
 

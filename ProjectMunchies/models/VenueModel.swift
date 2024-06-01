@@ -8,31 +8,34 @@
 import Foundation
 import MapKit
 
-struct VenueModel: Identifiable, Hashable, Equatable {
-    //Needed to conform to Equatable
-    static func == (lhs: VenueModel, rhs: VenueModel) -> Bool {
-        return lhs.id == rhs.id && lhs.coordinates == rhs.coordinates
-    }
+struct VenueModel: Identifiable{
+//    //Needed to conform to Equatable
+//    static func == (lhs: VenueModel, rhs: VenueModel) -> Bool {
+//        return lhs.id == rhs.id && lhs.coordinates == rhs.coordinates
+//    }
+//    
+//    //Needed to conform to Hashable
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id)
+//    }
     
-    //Needed to conform to Hashable
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    let id: String
+    var id: String
     var name: String
-    var coordinates: CLLocationCoordinate2D
+    var rating: Int
     var address: String
-    var reviews: [ReviewModel]
-    var specials: [SpecialModel]
+    var hasBrunch: Bool
+    var reviewIds: [String]
+    var specialIds: [String]
+    var hasHappyHour: Bool
+//    var coordinates: CLLocationCoordinate2D
+//    var reviews: [ReviewModel]
+//    var specials: [SpecialModel]
 }
 
-var emptyVenueModel = VenueModel(id: "",  name: "", coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), address: "", reviews: [], specials: [])
+var emptyVenueModel = VenueModel(id: "",  name: "", rating: 0,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: true)
 
 var venuesSample: [VenueModel] = [
-    VenueModel(id: "0", name: "bdgd", coordinates: CLLocationCoordinate2D(latitude: 27.9432414,
-                                                  longitude: -82.4503545), address: "", reviews: [], specials: []),
-    VenueModel(id: "1", name: "gdf", coordinates: CLLocationCoordinate2D(latitude: 27.9626861,
-                                                  longitude: -82.4937287), address: "", reviews: [], specials: []),
-    VenueModel(id: "2", name: "4yg4", coordinates: CLLocationCoordinate2D(latitude: 28.024146, longitude: -82.452467), address: "", reviews: [], specials: [])
+    VenueModel(id: "1",  name: "venueOne", rating: 0,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: true),
+    VenueModel(id: "2",  name: "venueTwo", rating: 3,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: false),
+    VenueModel(id: "3",  name: "venueThree", rating: 5,address: "", hasBrunch: false, reviewIds: [], specialIds: [], hasHappyHour: true)
 ]

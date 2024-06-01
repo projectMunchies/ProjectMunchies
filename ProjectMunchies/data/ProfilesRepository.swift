@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Firebase
 
-class ProfilesRespository: ObservableObject{
+class ProfilesRepository: ObservableObject{
     let db = Firestore.firestore()
     
     public func Get(profileId: String) async throws -> ProfileModel {
@@ -42,9 +42,5 @@ class ProfilesRespository: ObservableObject{
         try await docRef.setData(newProfile)
     }
 }
-
-//protocol Repository {
-//    func get() -> Pro
-//}
 
 

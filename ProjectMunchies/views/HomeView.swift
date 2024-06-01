@@ -34,6 +34,7 @@ struct HomeView: View {
         }
         .task() {
             showSheet = true
+          //  GetNewMapAlerts()
         }
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
@@ -120,6 +121,56 @@ struct HomeView: View {
             }
         }
     }
+    
+    
+//    private func GetNewMapAlerts() async {
+//        reviewsViewModel.getAllNewReviews {(newReviews) -> Void in
+//            specialsViewModel.getAllNewSpecials {(newSpecials) -> Void in
+//                if !newReviews.isEmpty || !newSpecials.isEmpty {
+//                    getVenuesForMapAlerts(newReviews: newReviews, newSpecials: newSpecials)
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
+//        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
+//            //            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
+//            ////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
+//            ////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
+//            ////                    // append for particle animation
+//            ////                    for _ in self.venues {
+//            ////                        self.status.append(false)
+//            ////                    }
+//            ////                    for mapAlertVenue in self.venues {
+//            ////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
+//            ////                    }
+//            ////                }
+//            //            }
+//        }
+//    }
+//    
+//    private func combineVenues(reviewsVenues: [VenueModel], specialsVenues : [VenueModel]) {
+//        for reviewVenue in reviewsVenues {
+//            self.venues.append(reviewVenue)
+//        }
+//        
+//        for specialVenue in specialsVenues {
+//            let isMatchingVenue =  self.venues.contains(where: {$0.id == specialVenue.id})
+//            
+//            if isMatchingVenue {
+//                var matchingVenue =  self.venues.first(where: {$0.id == specialVenue.id})
+//                //merge specials and reviews to same venue
+//                matchingVenue?.specials.append(contentsOf: specialVenue.specials)
+//                //remove the original venues from array
+//                self.venues.removeAll(where: {$0.id == matchingVenue?.id})
+//                //add merged venue
+//                self.venues.append(matchingVenue!)
+//            } else {
+//                self.venues.append(specialVenue)
+//            }
+//        }
+//    }
 }
 
 #Preview {

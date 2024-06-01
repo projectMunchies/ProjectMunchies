@@ -7,14 +7,12 @@
 
 import Foundation
 import UIKit
-import Firebase
 import FirebaseStorage
-import FirebaseAuth
 
-class FbStorageRespository: ObservableObject {
+class FbStorageRepository: ObservableObject {
     let storage = Storage.storage()
     
-    public func Get(profileId: String) async -> UIImage {
+    public func Get(profileId: String) async throws -> UIImage {
         var responseImage = UIImage()
         let imageRef = storage.reference().child("\(String(describing: profileId))"+"/images/image.jpg")
         
