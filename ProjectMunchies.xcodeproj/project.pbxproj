@@ -57,6 +57,7 @@
 		7741570F2C0B22580076C73D /* ReviewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570E2C0B22580076C73D /* ReviewsService.swift */; };
 		774157122C0C2AE30076C73D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157112C0C2AE30076C73D /* SearchView.swift */; };
 		774157162C0C2CF10076C73D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157152C0C2CF10076C73D /* LocationManager.swift */; };
+		774157182C0FB0500076C73D /* CreateReviewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157172C0FB0500076C73D /* CreateReviewOverlay.swift */; };
 		7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346C2B4FD4630078564B /* CategoryTypeModel.swift */; };
 		7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7753346E2B4FD5670078564B /* CategoryModel.swift */; };
 		77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */; };
@@ -81,7 +82,6 @@
 		77E3831E2A7225490084B8A6 /* ProjectMunchiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3831D2A7225490084B8A6 /* ProjectMunchiesTests.swift */; };
 		77E383282A7225490084B8A6 /* ProjectMunchiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383272A7225490084B8A6 /* ProjectMunchiesUITests.swift */; };
 		77E3832A2A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383292A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift */; };
-		77E383372A7226290084B8A6 /* HomeView_Old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383362A7226290084B8A6 /* HomeView_Old.swift */; };
 		77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383402A7242A40084B8A6 /* SearchBar.swift */; };
 		77E383452A7247460084B8A6 /* MockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383442A7247460084B8A6 /* MockDataService.swift */; };
 		77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E383482A7388F50084B8A6 /* ProfileModel.swift */; };
@@ -143,6 +143,7 @@
 		7741570E2C0B22580076C73D /* ReviewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsService.swift; sourceTree = "<group>"; };
 		774157112C0C2AE30076C73D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		774157152C0C2CF10076C73D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		774157172C0FB0500076C73D /* CreateReviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewOverlay.swift; sourceTree = "<group>"; };
 		7753346C2B4FD4630078564B /* CategoryTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeModel.swift; sourceTree = "<group>"; };
 		7753346E2B4FD5670078564B /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueModel.swift; sourceTree = "<group>"; };
@@ -169,7 +170,6 @@
 		77E383232A7225490084B8A6 /* ProjectMunchiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectMunchiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E383272A7225490084B8A6 /* ProjectMunchiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesUITests.swift; sourceTree = "<group>"; };
 		77E383292A7225490084B8A6 /* ProjectMunchiesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMunchiesUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		77E383362A7226290084B8A6 /* HomeView_Old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView_Old.swift; sourceTree = "<group>"; };
 		77E383402A7242A40084B8A6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		77E383442A7247460084B8A6 /* MockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataService.swift; sourceTree = "<group>"; };
 		77E383482A7388F50084B8A6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
@@ -366,11 +366,11 @@
 				770AD0592A76BBCB004CA5D2 /* SignUpView.swift */,
 				77E3830E2A7225470084B8A6 /* ContentView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
-				77E383362A7226290084B8A6 /* HomeView_Old.swift */,
 				77EBA51C2C067EB900437FCE /* AutoScrollView.swift */,
 				77EBA5272C08D69000437FCE /* FilterView.swift */,
 				77EBA5292C08D6A100437FCE /* CrunchAIView.swift */,
 				774157062C0A190C0076C73D /* ReviewsView.swift */,
+				774157172C0FB0500076C73D /* CreateReviewOverlay.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -600,7 +600,6 @@
 				7772A01F2B67821600652687 /* ReviewsViewModel.swift in Sources */,
 				770BF48B2B69770100422D01 /* OffsetModifier.swift in Sources */,
 				774157162C0C2CF10076C73D /* LocationManager.swift in Sources */,
-				77E383372A7226290084B8A6 /* HomeView_Old.swift in Sources */,
 				77E383492A7388F50084B8A6 /* ProfileModel.swift in Sources */,
 				77EBA5282C08D69000437FCE /* FilterView.swift in Sources */,
 				770AD09B2A778AEA004CA5D2 /* HamburgerMenu.swift in Sources */,
@@ -610,6 +609,7 @@
 				77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */,
 				77598A6C2B0FE50100C9C5F3 /* VenueModel.swift in Sources */,
 				77F3E0AA2A860C3E00BC3791 /* ProfilesViewModel.swift in Sources */,
+				774157182C0FB0500076C73D /* CreateReviewOverlay.swift in Sources */,
 				774157092C0AE0AE0076C73D /* ReviewsRepository.swift in Sources */,
 				770AD0972A76D0BE004CA5D2 /* SettingsView.swift in Sources */,
 				7753346D2B4FD4630078564B /* CategoryTypeModel.swift in Sources */,

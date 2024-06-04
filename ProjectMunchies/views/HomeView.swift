@@ -15,6 +15,7 @@ struct HomeView: View {
     @State var navigationTag: String?
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
+    @State private var isCreateReviewOverlay: Bool = false
     @State private var activeTab: NavBarTabsModel = .filter
     @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
     
@@ -24,6 +25,7 @@ struct HomeView: View {
                 .environmentObject(locationManager)
                 .navigationBarHidden(true)
                 .preferredColorScheme(.dark)
+                .disabled(isCreateReviewOverlay)
             
             SubHeaderSection()
                 .position(x: 200, y: 10)
@@ -34,10 +36,14 @@ struct HomeView: View {
         }
         .task() {
             do {
-                showSheet = true
-                // bottomMaskForSheet() sometimes doesnt show on startup. this prevents that
+                // fix bug on startup for bottomMaskForSheet()
                 ignoreTabBar.toggle()
                 try await GetNewMapAlerts()
+                
+              //  self.isCreateReviewOverlay.toggle()
+                if !isCreateReviewOverlay {
+                    showSheet = true
+                }
             } catch {
                 // HANDLE ERROR
             }
@@ -61,6 +67,12 @@ struct HomeView: View {
             .presentationBackgroundInteraction(.enabled(upThrough: .large))
             .interactiveDismissDisabled()
             .bottomMaskForSheet(mask: !ignoreTabBar)
+        }
+        .blur(radius: isCreateReviewOverlay ? 10 : 0 )
+        .overlay {
+            if isCreateReviewOverlay {
+                CreateReviewOverlay(isCreateReviewOverlay: self.$isCreateReviewOverlay, showSheet: self.$showSheet)
+            }
         }
     }
     
@@ -124,75 +136,8 @@ struct HomeView: View {
     }
     
     private func GetNewMapAlerts() async throws {
-        try await  venuesViewModel.GetMapAlerts()
+        try await venuesViewModel.GetMapAlerts()
     }
-    
-    //    public func searchForVenues(query: String, mapAlertVenue: VenueModel = emptyVenueModel) {
-    //        let request = MKLocalSearch.Request()
-    //        request.naturalLanguageQuery = query
-    //        request.resultTypes = .pointOfInterest
-    //        request.region = self.region
-    //        Task {
-    //            let search = MKLocalSearch(request: request)
-    //            let response = try? await search.start()
-    //            searchResults = response?.mapItems ?? []
-    //
-    //            for result in searchResults {
-    //                // if venue is empty
-    //                if mapAlertVenue.id == "" {
-    //                    let venue = VenueModel(id: UUID().uuidString, name: result.name ?? "", coordinates: result.placemark.coordinate, address: result.placemark.title ?? "", reviews: [], specials: [])
-    //                    self.venues.append(venue)
-    //                } else {
-    //                    var newMapAlertVenue = mapAlertVenue
-    //                    newMapAlertVenue.coordinates = result.placemark.coordinate
-    //                    self.venues.removeAll(where: { $0.id == mapAlertVenue.id })
-    //                    self.venues.append(newMapAlertVenue)
-    //                }
-    //            }
-    //        }
-    //        self.startSearch = false
-    //    }
-    
-    
-    //
-    //    private func getVenuesForMapAlerts(newReviews: [ReviewModel], newSpecials: [SpecialModel]) {
-    //        reviewsViewModel.getReviewsVenues(newReviews: newReviews) {(reviewsVenues) -> Void in
-    //            //            specialsViewModel.getSpecialsVenues(newSpecials: newSpecials) {(specialsVenues) -> Void in
-    //            ////                if !reviewsVenues.isEmpty || !specialsVenues.isEmpty {
-    //            ////                    combineVenues(reviewsVenues: reviewsVenues,specialsVenues: specialsVenues)
-    //            ////                    // append for particle animation
-    //            ////                    for _ in self.venues {
-    //            ////                        self.status.append(false)
-    //            ////                    }
-    //            ////                    for mapAlertVenue in self.venues {
-    //            ////                        searchForVenues(query: mapAlertVenue.address,mapAlertVenue: mapAlertVenue)
-    //            ////                    }
-    //            ////                }
-    //            //            }
-    //        }
-    //    }
-    //
-    //    private func combineVenues(reviewsVenues: [VenueModel], specialsVenues : [VenueModel]) {
-    //        for reviewVenue in reviewsVenues {
-    //            self.venues.append(reviewVenue)
-    //        }
-    //
-    //        for specialVenue in specialsVenues {
-    //            let isMatchingVenue =  self.venues.contains(where: {$0.id == specialVenue.id})
-    //
-    //            if isMatchingVenue {
-    //                var matchingVenue =  self.venues.first(where: {$0.id == specialVenue.id})
-    //                //merge specials and reviews to same venue
-    //                matchingVenue?.specials.append(contentsOf: specialVenue.specials)
-    //                //remove the original venues from array
-    //                self.venues.removeAll(where: {$0.id == matchingVenue?.id})
-    //                //add merged venue
-    //                self.venues.append(matchingVenue!)
-    //            } else {
-    //                self.venues.append(specialVenue)
-    //            }
-    //        }
-    //    }
 }
 
 #Preview {
