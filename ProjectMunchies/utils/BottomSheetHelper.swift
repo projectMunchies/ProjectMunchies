@@ -16,8 +16,6 @@ extension View {
     }
 }
 
-
-/// Helpers
 fileprivate struct SheetRootViewFinder: UIViewRepresentable {
     var mask: Bool
     var height: CGFloat

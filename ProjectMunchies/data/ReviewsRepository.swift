@@ -27,7 +27,8 @@ class ReviewsRepository: ObservableObject{
             review.title = documentData["title"] as! String
             review.userId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
-            review.timeStamp = documentData["timeStamp"] as! Date
+            let timeStamp = documentData["timeStamp"] as! Timestamp
+            review.timeStamp = timeStamp.dateValue()
             review.activityId = documentData["activityId"] as? String ?? ""
         }
         return review
@@ -50,7 +51,8 @@ class ReviewsRepository: ObservableObject{
             review.title = documentData["title"] as! String
             review.userId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
-            review.timeStamp = documentData["timeStamp"] as! Date
+            let timeStamp = documentData["timeStamp"] as! Timestamp
+            review.timeStamp = timeStamp.dateValue()
             review.activityId = documentData["activityId"] as? String ?? ""
             
             reviews.append(review)
@@ -60,6 +62,7 @@ class ReviewsRepository: ObservableObject{
     
     public func GetAfter(date: Date) async throws -> [ReviewModel] {
         var reviews: [ReviewModel] = []
+        
         let snapshot = try await db.collection("reviews")
             .whereField("creationDate", isGreaterThan: date)
             .limit(to: 10)
@@ -75,7 +78,8 @@ class ReviewsRepository: ObservableObject{
             review.title = documentData["title"] as! String
             review.userId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
-            review.timeStamp = documentData["timeStamp"] as! Date
+            let timeStamp = documentData["timeStamp"] as! Timestamp
+            review.timeStamp = timeStamp.dateValue()
             review.activityId = documentData["activityId"] as? String ?? ""
             
             reviews.append(review)

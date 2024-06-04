@@ -15,17 +15,17 @@ class SpecialsViewModel: ObservableObject {
     @Published var recentSpecials : [SpecialModel] = []
     
     public func GetSpecial(specialId: String) async throws {
-        var special = try await service.GetSpecial(specialId: specialId)
+        let special = try await service.GetSpecial(specialId: specialId)
         self.special = special
     }
     
     public func GetSpecials(specialIds: [String]) async throws {
-        var specials = try await service.GetSpecials(specialIds: specialIds)
+        let specials = try await service.GetSpecials(specialIds: specialIds)
         self.specials = specials
     }
     
     public func GetRecentSpecials(date: Date) async throws {
-        var recentSpecials = try await service.GetAfterDate(date: date)
+        let recentSpecials = try await service.GetAfterDate(date: date)
         self.recentSpecials = recentSpecials
     }
 }

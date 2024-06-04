@@ -18,7 +18,6 @@ struct BunchiesView: View {
     @State private var selectedContacts: [CNContact] = []
     
     var body: some View {
-        NavigationView {
             VStack(spacing: 20) {
                     Text("Bunchies")
                         .font(.title)
@@ -72,7 +71,6 @@ struct BunchiesView: View {
                        .padding(.bottom, 20)
                    
                    TabView {
-                       NavigationView {
                            ScrollView {
                                ForEach(selectedContacts, id: \.identifier) { contact in
                                    HStack {
@@ -99,7 +97,6 @@ struct BunchiesView: View {
                                .padding(.horizontal)
                            }
                            .navigationBarHidden(true)
-                       }
                        .tabItem {
                            Image(systemName: "person.2")
                            Text("Bunchies")
@@ -129,7 +126,6 @@ struct BunchiesView: View {
 //                   ContactPicker(selectedContacts: $selectedContacts)
 //
 //            }
-        }
     }
     
     private func removeFriend(_ contact: CNContact) {

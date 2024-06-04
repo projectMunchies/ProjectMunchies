@@ -26,8 +26,10 @@ class SpecialsRepository: ObservableObject{
             special.type = documentData["type"] as? String ?? ""
             special.venueId = documentData["venueId"] as! String
             special.description = documentData["description"] as? String ?? ""
-            special.creationDate = documentData["creationDate"] as! Date
-            special.expirationDate = documentData["expirationDate"] as? Date ?? Date.today()
+            let creationDate = documentData["creationDate"] as! Timestamp
+            special.creationDate = creationDate.dateValue()
+            let expirationDate = documentData["expirationDate"] as! Timestamp
+            special.expirationDate = expirationDate.dateValue()
         }
         return special
     }
@@ -48,8 +50,10 @@ class SpecialsRepository: ObservableObject{
             special.type = documentData["type"] as? String ?? ""
             special.venueId = documentData["venueId"] as! String
             special.description = documentData["description"] as? String ?? ""
-            special.creationDate = documentData["creationDate"] as! Date
-            special.expirationDate = documentData["expirationDate"] as? Date ?? Date.today()
+            let creationDate = documentData["creationDate"] as! Timestamp
+            special.creationDate = creationDate.dateValue()
+            let expirationDate = documentData["expirationDate"] as! Timestamp
+            special.expirationDate = expirationDate.dateValue()
             
             specials.append(special)
         }
@@ -58,6 +62,7 @@ class SpecialsRepository: ObservableObject{
     
     public func GetAfter(date: Date) async throws -> [SpecialModel] {
         var specials: [SpecialModel] = []
+        
         let snapshot = try await db.collection("specials")
             .whereField("creationDate", isGreaterThan: date)
             .limit(to: 10)
@@ -72,11 +77,12 @@ class SpecialsRepository: ObservableObject{
             special.type = documentData["type"] as? String ?? ""
             special.venueId = documentData["venueId"] as! String
             special.description = documentData["description"] as? String ?? ""
-            special.creationDate = documentData["creationDate"] as! Date
-            special.expirationDate = documentData["expirationDate"] as? Date ?? Date.today()
+            let creationDate = documentData["creationDate"] as! Timestamp
+            special.creationDate = creationDate.dateValue()
+            let expirationDate = documentData["expirationDate"] as! Timestamp
+            special.expirationDate = expirationDate.dateValue()
             
             specials.append(special)
-            
         }
         return specials
     }

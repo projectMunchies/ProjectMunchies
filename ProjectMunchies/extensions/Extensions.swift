@@ -120,9 +120,18 @@ public func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Boo
 }
 
 extension MKCoordinateRegion {
-    /// Apple Mark Region
     static var applePark: MKCoordinateRegion {
         let center = CLLocationCoordinate2D(latitude: 37.334606, longitude: -122.009102)
+        return .init(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
+    }
+    
+    static var londonTower: MKCoordinateRegion {
+        let center = CLLocationCoordinate2D(latitude: 51.508, longitude: -0.076)
+        return .init(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
+    }
+    
+    static var downtownTampa: MKCoordinateRegion {
+        let center = CLLocationCoordinate2D(latitude: 27.964157, longitude: -82.452606)
         return .init(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
     }
 }

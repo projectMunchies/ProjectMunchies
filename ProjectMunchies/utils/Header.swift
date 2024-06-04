@@ -14,6 +14,7 @@ struct Header: View {
     @State private var showIntroPopover: Bool = false
     @State private var isSettingsPresented: Bool = false
     @State private var selectedView: Int?
+    @State var navigationTag: String?
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -24,11 +25,14 @@ struct Header: View {
                     Spacer()
                     logoWithText(for: geoReader)
                     Spacer()
-                    profileIcon(for: geoReader)
+                    searchButton(for: geoReader)
                     Spacer()
+                    profileIcon(for: geoReader)
+                   
                 }
             }
         }
+     
     }
     
     public func logoWithText(for geoReader: GeometryProxy) -> some View {
@@ -89,9 +93,18 @@ struct Header: View {
         .onChange(of: selectedView) { newValue in
             isSettingsPresented = true
         }
-//        .sheet(isPresented: $isSettingsPresented) {
-//
-//        }
+    }
+    
+    public func searchButton(for geoReader: GeometryProxy) -> some View {
+        VStack{
+            NavigationLink(destination: SearchView()){
+                Image(systemName: "magnifyingglass.circle")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+            }
+            .position(x:geoReader.size.width * 0.37, y:geoReader.size.height * 0.51)
+        }
     }
 }
 
