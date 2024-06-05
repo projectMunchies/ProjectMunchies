@@ -10,6 +10,7 @@
 		3888550E2B6C1E2000DB1D53 /* BunchiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */; };
 		388855102B6ED2E700DB1D53 /* LiveReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */; };
 		388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */; };
+		38D00E812C1009CD00AFCF55 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D00E802C1009CD00AFCF55 /* ProfileView.swift */; };
 		77071F532AEF726A00EA3200 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77071F522AEF726A00EA3200 /* RatingView.swift */; };
 		770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0572A76BBC0004CA5D2 /* SignInView.swift */; };
 		770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD0592A76BBCB004CA5D2 /* SignUpView.swift */; };
@@ -125,6 +126,7 @@
 		3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchiesView.swift; sourceTree = "<group>"; };
 		3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveReviewsView.swift; sourceTree = "<group>"; };
 		388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPrivacyView.swift; sourceTree = "<group>"; };
+		38D00E802C1009CD00AFCF55 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		77071F522AEF726A00EA3200 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		770AD0572A76BBC0004CA5D2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		770AD0592A76BBCB004CA5D2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				77EBA5292C08D6A100437FCE /* CrunchAIView.swift */,
 				774157062C0A190C0076C73D /* ReviewsView.swift */,
 				774157172C0FB0500076C73D /* CreateReviewOverlay.swift */,
+				38D00E802C1009CD00AFCF55 /* ProfileView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				7741570D2C0B224E0076C73D /* SpecialsService.swift in Sources */,
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
+				38D00E812C1009CD00AFCF55 /* ProfileView.swift in Sources */,
 				7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */,
 				77C510222B4D158C005D3EE3 /* Card.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
@@ -884,7 +888,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2P5JTGM3J;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchiesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -904,7 +908,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2P5JTGM3J;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchiesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
