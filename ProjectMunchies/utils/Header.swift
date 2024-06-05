@@ -27,7 +27,7 @@ struct Header: View {
                     Spacer()
                     searchButton(for: geoReader)
                     Spacer()
-                    profileIcon(for: geoReader)
+                    messageIcon(for: geoReader)
                    
                 }
             }
@@ -54,35 +54,13 @@ struct Header: View {
         
     }
     
-    public func profileIcon(for geoReader: GeometryProxy) -> some View {
-        VStack{
-            Menu {
-                Button(action: {
-                    selectedView = 0
-                    self.sheetIndents = [.medium, .large]
-                    self.activeTab = .bunchies
-                }) {
-                    Label("My Bunchies", systemImage: "person.2.square.stack")
-                }
-                
-                Button(action: {
-                    selectedView = 1
-                    self.sheetIndents = [.medium, .large]
-                    self.activeTab = .reviews
-                    
-                }) {
-                    Label("My Reviews", systemImage: "star.fill")
-                }
-                
-                Button(action: {
-                    selectedView = 2
-                    self.sheetIndents = [.medium, .large]
-                    self.activeTab = .settings
-                }) {
-                    Label("Settings", systemImage: "lock.fill")
-                }
-            } label: {
-                Image(systemName: "person.circle")
+    public func messageIcon(for geoReader: GeometryProxy) -> some View {
+        VStack {
+            Button(action: {
+                self.sheetIndents = [.medium, .large]
+                self.activeTab = .bunchies
+            }) {
+                Image(systemName: "message.and.waveform")
                     .resizable()
                     .frame(width: 30, height: 30)
                     .foregroundColor(.white)
@@ -90,10 +68,8 @@ struct Header: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 16)
-        .onChange(of: selectedView) { newValue in
-            isSettingsPresented = true
-        }
     }
+    
     
     public func searchButton(for geoReader: GeometryProxy) -> some View {
         VStack{

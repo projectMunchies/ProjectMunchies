@@ -81,7 +81,7 @@ struct HomeView: View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
                 // filters out views in the profileIcon so there not displayed in navbar
-                if(tab != .bunchies && tab != .reviews && tab != .settings) {
+                if(tab != .bunchies) {
                     Button(action: { activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
@@ -114,6 +114,8 @@ struct HomeView: View {
                 FilterView()
             case .liveReviews:
                 LiveReviewsView()
+            case .explore:
+                VideoPlayerHomeView(showOverlay: false)
             case .crunchAI:
                 CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
                     center: CLLocationCoordinate2D(
@@ -127,10 +129,8 @@ struct HomeView: View {
                 ))))
             case .bunchies:
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
-            case .reviews:
-                ReviewsView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
-            case .settings:
-                SettingsView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+            case .profile:
+                ProfileView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             }
         }
     }
