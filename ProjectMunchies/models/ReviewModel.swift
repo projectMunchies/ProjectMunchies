@@ -12,7 +12,7 @@ struct ReviewModel: Identifiable, Hashable {
     var rating: Int
     var body: String
     var title: String
-    var userId: String
+    var profileId: String
     var venueId: String
     var timeStamp: Date
     var activityId: String
@@ -23,7 +23,7 @@ var emptyReviewModel: ReviewModel =  ReviewModel(
     rating: 0,
     body: "",
     title: "",
-    userId: "",
+    profileId: "",
     venueId: "",
     timeStamp: Date.today(),
     activityId: ""
@@ -35,7 +35,7 @@ var liveReviewSamples: [ReviewModel] = [
         rating: 0,
         body: "",
         title: "",
-        userId: "",
+        profileId: "",
         venueId: "",
         timeStamp: Date.today(),
         activityId: ""
@@ -45,7 +45,7 @@ var liveReviewSamples: [ReviewModel] = [
         rating: 0,
         body: "",
         title: "",
-        userId: "",
+        profileId: "",
         venueId: "",
         timeStamp: Date.today(),
         activityId: ""
@@ -55,7 +55,7 @@ var liveReviewSamples: [ReviewModel] = [
         rating: 0,
         body: "",
         title: "",
-        userId: "",
+        profileId: "",
         venueId: "",
         timeStamp: Date.today(),
         activityId: ""
@@ -65,7 +65,7 @@ var liveReviewSamples: [ReviewModel] = [
         rating: 0,
         body: "",
         title: "",
-        userId: "",
+        profileId: "",
         venueId: "",
         timeStamp: Date.today(),
         activityId: ""

@@ -8,7 +8,6 @@
 import SwiftUI
 import CoreLocation
 import MapKit
-// MARK: Combine Framework to watch Textfield Change
 import Combine
 
 class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -38,8 +37,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         
         // MARK: Search Textfield Watching
         cancellable = $searchText
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .removeDuplicates()
+            .dropFirst()
             .sink(receiveValue: { value in
                 if value != "" {
                     self.fetchPlaces(value: value)
@@ -59,6 +58,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
                 let response = try await MKLocalSearch(request: request).start()
                 // We can also use Mainactor to publish changes in the Main Thread
                 await MainActor.run(body: {
+               
                     self.fetchedPlaces = response.mapItems.compactMap({ item -> CLPlacemark? in
                         return item.placemark
                     })
@@ -95,12 +95,19 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         
     }
     
+    func search(value: String) {
+        print("this be passes: \(value)")
+        searchText = value
+    }
+    
     // MARK: Add draggable pin to MapView
-    func addDraggablePin(coordinate: CLLocationCoordinate2D) {
+    func addDraggablePin(coordinate: CLLocationCoordinate2D, annotations: [MKPointAnnotation] = []) {
         let annotation = MKPointAnnotation()
+
         annotation.coordinate = coordinate
         annotation.title = "Food will be delivered here"
         mapView.addAnnotation(annotation)
+        mapView.addAnnotations(annotations)
     }
     
     // MARK: Enabling dragging
@@ -108,6 +115,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "DELIVERYPIN")
         marker.isDraggable = true
         marker.canShowCallout = false
+        marker.animatesWhenAdded = true
+        marker.markerTintColor = .yellow
         
         return marker
     }
@@ -131,8 +140,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
             }
         }
     }
-    
-    
+
     // MARK: Displaying new location data
     func reverseLocationCoordinate(location: CLLocation)async throws -> CLPlacemark?{
         let place = try await CLGeocoder().reverseGeocodeLocation(location).first

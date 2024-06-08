@@ -18,20 +18,19 @@ class VenuesViewModel: ObservableObject {
     @Published var venues: [VenueModel] = []
     @Published var reviewVenues: [VenueModel] = []
     @Published var specialVenues: [VenueModel] = []
-    @Published var venueLocations: [VenueLocation] = []
     
     public func GetVenue(venueId: String) async throws {
-        var venue = try await service.GetVenue(venueId: venueId)
+        let venue = try await service.GetVenue(venueId: venueId)
         self.venue = venue
     }
     
     public func GetVenues(venueIds: [String]) async throws {
-        var venues = try await service.GetVenues(venueIds: venueIds)
+        let venues = try await service.GetVenues(venueIds: venueIds)
         self.venues = venues
     }
     
     public func GetMapAlerts() async throws {
-        let twoWeeksAgo = Date().previous(.friday, considerToday: true)
+        let twoWeeksAgo = Date().previous(.monday, considerToday: true)
         
         try await reviewsViewModel.GetRecentReviews(date: twoWeeksAgo)
         try await specialsViewModel.GetRecentSpecials(date: twoWeeksAgo)
@@ -42,12 +41,6 @@ class VenuesViewModel: ObservableObject {
         reviewsViewModel.recentReviews.forEach{reviewVenueIds.append($0.venueId)}
         specialsViewModel.recentSpecials.forEach{specialVenueIds.append($0.venueId)}
         
-//        self.venueLocations = [
-//            VenueLocation(name: "Chiptole", coordinate: CLLocationCoordinate2D(latitude: 27.9601701, longitude: -82.50759)),
-//            VenueLocation(name: "Ricks on the River", coordinate: CLLocationCoordinate2D(latitude: 27.9628309, longitude: -82.4763924))
-//        ]
-        
-        
         if(!reviewVenueIds.isEmpty) {
             self.reviewVenues = try await service.GetVenues(venueIds: reviewVenueIds)
         }
@@ -56,10 +49,4 @@ class VenuesViewModel: ObservableObject {
             self.specialVenues = try await service.GetVenues(venueIds: specialVenueIds)
         }
     }
-}
-
-struct VenueLocation: Identifiable {
-    let id = UUID()
-    var name: String
-    var coordinate: CLLocationCoordinate2D
 }

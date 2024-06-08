@@ -65,7 +65,7 @@ struct AutoScrollView: View {
                         rating: 2,
                         body: "",
                         title: "This is the Title",
-                        userId: "",
+                        profileId: "",
                         venueId: "",
                         timeStamp: Date.today(),
                         activityId: ""

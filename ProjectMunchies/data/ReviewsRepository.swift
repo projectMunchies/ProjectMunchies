@@ -25,7 +25,7 @@ class ReviewsRepository: ObservableObject{
             review.rating = documentData["rating"] as? Int ?? 0
             review.body = documentData["body"] as! String
             review.title = documentData["title"] as! String
-            review.userId = documentData["userId"] as! String
+            review.profileId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
             let timeStamp = documentData["timeStamp"] as! Timestamp
             review.timeStamp = timeStamp.dateValue()
@@ -49,7 +49,7 @@ class ReviewsRepository: ObservableObject{
             review.rating = documentData["rating"] as? Int ?? 0
             review.body = documentData["body"] as! String
             review.title = documentData["title"] as! String
-            review.userId = documentData["userId"] as! String
+            review.profileId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
             let timeStamp = documentData["timeStamp"] as! Timestamp
             review.timeStamp = timeStamp.dateValue()
@@ -64,7 +64,7 @@ class ReviewsRepository: ObservableObject{
         var reviews: [ReviewModel] = []
         
         let snapshot = try await db.collection("reviews")
-            .whereField("creationDate", isGreaterThan: date)
+            .whereField("timeStamp", isGreaterThan: date)
             .limit(to: 10)
             .getDocuments()
         
@@ -76,7 +76,7 @@ class ReviewsRepository: ObservableObject{
             review.rating = documentData["rating"] as? Int ?? 0
             review.body = documentData["body"] as! String
             review.title = documentData["title"] as! String
-            review.userId = documentData["userId"] as! String
+            review.profileId = documentData["profileId"] as! String
             review.venueId = documentData["venueId"] as! String
             let timeStamp = documentData["timeStamp"] as! Timestamp
             review.timeStamp = timeStamp.dateValue()

@@ -51,6 +51,8 @@
 		772BA6942B7492B6003C08BE /* Particle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BA6932B7492B6003C08BE /* Particle.swift */; };
 		772C9B0E2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */; };
 		772D044B2B57A9780099859D /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D044A2B57A9780099859D /* VideoModel.swift */; };
+		7736A5932C1262EC00842D0D /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7736A5922C1262EC00842D0D /* VenueView.swift */; };
+		7736A5952C135F8600842D0D /* VenueModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7736A5942C135F8600842D0D /* VenueModelDTO.swift */; };
 		774157072C0A190C0076C73D /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157062C0A190C0076C73D /* ReviewsView.swift */; };
 		774157092C0AE0AE0076C73D /* ReviewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157082C0AE0AE0076C73D /* ReviewsRepository.swift */; };
 		7741570B2C0B1FA10076C73D /* SpecialsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */; };
@@ -138,6 +140,8 @@
 		772BA6932B7492B6003C08BE /* Particle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particle.swift; sourceTree = "<group>"; };
 		772C9B0D2AB2C1F200D157F8 /* Restaurant_Reviews2.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Restaurant_Reviews2.tsv; sourceTree = "<group>"; };
 		772D044A2B57A9780099859D /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		7736A5922C1262EC00842D0D /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
+		7736A5942C135F8600842D0D /* VenueModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueModelDTO.swift; sourceTree = "<group>"; };
 		774157062C0A190C0076C73D /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
 		774157082C0AE0AE0076C73D /* ReviewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRepository.swift; sourceTree = "<group>"; };
 		7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsRepository.swift; sourceTree = "<group>"; };
@@ -365,15 +369,16 @@
 				774157112C0C2AE30076C73D /* SearchView.swift */,
 				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
 				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
-				770AD0592A76BBCB004CA5D2 /* SignUpView.swift */,
 				77E3830E2A7225470084B8A6 /* ContentView.swift */,
 				770AD0962A76D0BE004CA5D2 /* SettingsView.swift */,
 				77EBA51C2C067EB900437FCE /* AutoScrollView.swift */,
+				770AD0592A76BBCB004CA5D2 /* SignUpView.swift */,
 				77EBA5272C08D69000437FCE /* FilterView.swift */,
 				77EBA5292C08D6A100437FCE /* CrunchAIView.swift */,
 				774157062C0A190C0076C73D /* ReviewsView.swift */,
 				774157172C0FB0500076C73D /* CreateReviewOverlay.swift */,
 				38D00E802C1009CD00AFCF55 /* ProfileView.swift */,
+				7736A5922C1262EC00842D0D /* VenueView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				7753346E2B4FD5670078564B /* CategoryModel.swift */,
 				77598A6B2B0FE50100C9C5F3 /* VenueModel.swift */,
 				77F3E0AB2A8693DC00BC3791 /* FoodFilterModel.swift */,
+				7736A5942C135F8600842D0D /* VenueModelDTO.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -636,11 +642,13 @@
 				77F3E0AE2A87A13C00BC3791 /* Header.swift in Sources */,
 				7741570D2C0B224E0076C73D /* SpecialsService.swift in Sources */,
 				77071F532AEF726A00EA3200 /* RatingView.swift in Sources */,
+				7736A5932C1262EC00842D0D /* VenueView.swift in Sources */,
 				77F3E0AC2A8693DC00BC3791 /* FoodFilterModel.swift in Sources */,
 				38D00E812C1009CD00AFCF55 /* ProfileView.swift in Sources */,
 				7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */,
 				77C510222B4D158C005D3EE3 /* Card.swift in Sources */,
 				77E383412A7242A40084B8A6 /* SearchBar.swift in Sources */,
+				7736A5952C135F8600842D0D /* VenueModelDTO.swift in Sources */,
 				77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */,
 				770AD05A2A76BBCB004CA5D2 /* SignUpView.swift in Sources */,
 				772BA6922B74922C003C08BE /* ParticleEffect.swift in Sources */,

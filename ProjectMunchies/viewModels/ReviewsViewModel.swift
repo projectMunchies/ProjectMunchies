@@ -15,17 +15,17 @@ class ReviewsViewModel: ObservableObject {
     @Published var recentReviews : [ReviewModel] = []
     
     public func GetReview(reviewId: String) async throws {
-        var review = try await service.GetReview(reviewId: reviewId)
+        let review = try await service.GetReview(reviewId: reviewId)
         self.review = review
     }
     
     public func GetReviews(reviewIds: [String]) async throws {
-        var reviews = try await service.GetReviews(reviewIds: reviewIds)
+        let reviews = try await service.GetReviews(reviewIds: reviewIds)
         self.reviews = reviews
     }
     
     public func GetRecentReviews(date: Date) async throws {
-        var recentReviews = try await service.GetAfterDate(date: date)
+        let recentReviews = try await service.GetAfterDate(date: date)
         self.recentReviews = recentReviews
     }
 }

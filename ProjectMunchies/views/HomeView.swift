@@ -36,17 +36,21 @@ struct HomeView: View {
         }
         .task() {
             do {
-                // fix bug on startup for bottomMaskForSheet()
+                // fixes bug on startup for bottomMaskForSheet()
                 ignoreTabBar.toggle()
-                try await GetNewMapAlerts()
                 
-              //  self.isCreateReviewOverlay.toggle()
                 if !isCreateReviewOverlay {
                     showSheet = true
                 }
+                
+                try await getNewMapAlerts()
+
             } catch {
                 // HANDLE ERROR
             }
+        }
+        .onChange(of: locationManager.fetchedPlaces) {
+            displayMapMarkers()
         }
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
@@ -57,6 +61,7 @@ struct HomeView: View {
                     
                     Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     SheetViews(activeTab: self.activeTab)
+                    
                 })
                 .padding()
             })
@@ -80,8 +85,8 @@ struct HomeView: View {
     func TabBar() -> some View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
-                // filters out views in the profileIcon so there not displayed in navbar
-                if(tab != .bunchies) {
+                // filters out views not in the navBar
+                if(tab != .bunchies || tab != .venue) {
                     Button(action: { activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
@@ -131,12 +136,78 @@ struct HomeView: View {
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             case .profile:
                 ProfileView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+            case .venue:
+                VenueView(sheetIndent: self.$sheetIndents, activeTab: self.$activeTab)
+                    .environmentObject(locationManager)
             }
         }
     }
     
-    private func GetNewMapAlerts() async throws {
+    private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
+         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
+         locationManager.search(value: venuesViewModel.specialVenues.first!.name)
+    }
+    
+    private func displayMapMarkers() {
+        if let places = locationManager.fetchedPlaces,!places.isEmpty {
+            
+            let venueDTOS = createVenueDTOs(places: places)
+            let annotations = createAnnotations(venueDTOS: venueDTOS)
+            
+            if (!annotations.isEmpty) {
+                plotPoints(coordinate: annotations.first!, annotations: annotations)
+            }
+            
+            self.activeTab = .venue
+        }
+    }
+    
+    private func createVenueDTOs(places: [CLPlacemark]) -> [VenueModelDTO] {
+        var venueDTOs: [VenueModelDTO] = []
+        
+        for place in places  {
+            let venueDTO = VenueModelDTO(
+                id: "",
+                name: place.name!,
+                coordinates: place.location!.coordinate
+            )
+            venueDTOs.append(venueDTO)
+        }
+        
+        return venueDTOs
+    }
+    
+    
+    private func createAnnotations(venueDTOS: [VenueModelDTO]) -> [MKPointAnnotation] {
+        var annotations:[MKPointAnnotation] = []
+        
+        for venueDTO in venueDTOS {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = venueDTO.coordinates
+            annotation.title = venueDTO.name
+            
+            annotations.append(annotation)
+        }
+        
+        return annotations
+    }
+    
+    private func plotPoints(coordinate: MKPointAnnotation, annotations: [MKPointAnnotation]) {
+        //focus in on specific location
+        let coord = CLLocationCoordinate2D(latitude: 27.9642178, longitude: -82.5230926)
+        let mkPlaceMark = MKPlacemark(
+            coordinate: coord,
+            addressDictionary: ["name": "What is in Mkplaemark?"]
+        )
+        let place2 = CLPlacemark(placemark: mkPlaceMark)
+        
+        if let coordinate = place2.location?.coordinate{
+            //                    locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            //                    locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
+            //                    locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
+        }
     }
 }
 

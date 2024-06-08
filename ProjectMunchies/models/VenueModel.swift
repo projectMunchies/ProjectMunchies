@@ -34,8 +34,8 @@ struct VenueModel: Identifiable{
 
 var emptyVenueModel = VenueModel(id: "",  name: "", rating: 0,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: true)
 
-var venuesSample: [VenueModel] = [
-    VenueModel(id: "1",  name: "venueOne", rating: 0,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: true),
-    VenueModel(id: "2",  name: "venueTwo", rating: 3,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: false),
-    VenueModel(id: "3",  name: "venueThree", rating: 5,address: "", hasBrunch: false, reviewIds: [], specialIds: [], hasHappyHour: true)
+var venuesSamples: [VenueModel] = [
+    VenueModel(id: "1",  name: "Chipotle", rating: 0,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: true),
+    VenueModel(id: "2",  name: "Culver's", rating: 3,address: "", hasBrunch: true, reviewIds: [], specialIds: [], hasHappyHour: false),
+    VenueModel(id: "3",  name: "Dominoes", rating: 5,address: "", hasBrunch: false, reviewIds: [], specialIds: [], hasHappyHour: true)
 ]

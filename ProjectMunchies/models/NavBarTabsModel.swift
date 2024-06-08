@@ -16,12 +16,9 @@ enum NavBarTabsModel: String, CaseIterable {
     case crunchAI = "CrunchAI"
     case profile = "Profile"
     
-    // tabs in profileIcon cant be display in NavBar
-    // needs to be here to display on mainSheet
+    // sheetViews not in navBar
     case bunchies = "Bunchies"
-
-  
-    
+    case venue = "Venue"
     
     var symbol: String {
         switch self  {
@@ -37,6 +34,8 @@ enum NavBarTabsModel: String, CaseIterable {
             "circle.grid.2x2.fill"
         case .profile:
             "gearshape.circle"
+        case .venue:
+            "circle.grid.2x2.fill"
      
         }
     }
