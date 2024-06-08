@@ -86,7 +86,7 @@ struct HomeView: View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
                 // filters out views not in the navBar
-                if(tab != .bunchies || tab != .venue) {
+                if(tab != .bunchies && tab != .venue) {
                     Button(action: { activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
