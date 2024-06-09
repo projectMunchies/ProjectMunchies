@@ -11,24 +11,18 @@ import MapKit
 import Combine
 
 class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocationManagerDelegate {
+    var cancellable: AnyCancellable?
+    @Published var searchText: String = ""
+    @Published var userLocation: CLLocation?
+    @Published var pickedLocation: CLLocation?
+    @Published var pickedPlaceMark: CLPlacemark?
+    @Published var fetchedPlaces: [CLPlacemark]?
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
     
-    // MARK: Search Bar Text
-    @Published var searchText: String = ""
-    var cancellable: AnyCancellable?
-    @Published var fetchedPlaces: [CLPlacemark]?
-    
-    // MARK: User location
-    @Published var userLocation: CLLocation?
-    
-    // MARK: Final location
-    @Published var pickedLocation: CLLocation?
-    @Published var pickedPlaceMark: CLPlacemark?
-    
     override init() {
         super.init()
-        // MARK: Setting Delegates
+        
         manager.delegate = self
         mapView.delegate = self
         
@@ -38,7 +32,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         // MARK: Search Textfield Watching
         cancellable = $searchText
             .removeDuplicates()
-            .dropFirst()
             .sink(receiveValue: { value in
                 if value != "" {
                     self.fetchPlaces(value: value)
@@ -105,7 +98,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         let annotation = MKPointAnnotation()
 
         annotation.coordinate = coordinate
-        annotation.title = "Food will be delivered here"
+        annotation.title = "WHat is this title for?"
         mapView.addAnnotation(annotation)
         mapView.addAnnotations(annotations)
     }

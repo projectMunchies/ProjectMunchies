@@ -178,7 +178,6 @@ struct HomeView: View {
         return venueDTOs
     }
     
-    
     private func createAnnotations(venueDTOS: [VenueModelDTO]) -> [MKPointAnnotation] {
         var annotations:[MKPointAnnotation] = []
         
@@ -194,15 +193,13 @@ struct HomeView: View {
     }
     
     private func plotPoints(coordinate: MKPointAnnotation, annotations: [MKPointAnnotation]) {
-        //focus in on specific location
-        let coord = CLLocationCoordinate2D(latitude: 27.9642178, longitude: -82.5230926)
-        let mkPlaceMark = MKPlacemark(
-            coordinate: coord,
+        let placeMark = MKPlacemark(
+            coordinate: annotations.first!.coordinate,
             addressDictionary: ["name": "What is in Mkplaemark?"]
         )
-        let place2 = CLPlacemark(placemark: mkPlaceMark)
+        let closestPlace = CLPlacemark(placemark: placeMark)
         
-        if let coordinate = place2.location?.coordinate{
+        if let coordinate = closestPlace.location?.coordinate{
             //                    locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
             //                    locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
             locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
