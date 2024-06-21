@@ -26,13 +26,13 @@ struct Header: View {
                     logoWithText(for: geoReader)
                     Spacer()
                     searchButton(for: geoReader)
-                    Spacer()
-                    messageIcon(for: geoReader)
-                   
+                    //                    Spacer()
+                    //                    messageIcon(for: geoReader)
+                    
                 }
             }
         }
-     
+        
     }
     
     public func logoWithText(for geoReader: GeometryProxy) -> some View {
@@ -54,22 +54,22 @@ struct Header: View {
         
     }
     
-    public func messageIcon(for geoReader: GeometryProxy) -> some View {
-        VStack {
-            Button(action: {
-                self.sheetIndents = [.medium, .large]
-                self.activeTab = .bunchies
-            }) {
-                Image(systemName: "message.and.waveform")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.white)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 16)
-    }
-    
+    //    public func messageIcon(for geoReader: GeometryProxy) -> some View {
+    //        VStack {
+    //            Button(action: {
+    //                self.sheetIndents = [.medium, .large]
+    //                self.activeTab = .bunchies
+    //            }) {
+    //                Image(systemName: "message.and.waveform")
+    //                    .resizable()
+    //                    .frame(width: 30, height: 30)
+    //                    .foregroundColor(.white)
+    //            }
+    //        }
+    //        .padding(.horizontal, 16)
+    //        .padding(.top, 16)
+    //    }
+    //
     
     public func searchButton(for geoReader: GeometryProxy) -> some View {
         VStack{

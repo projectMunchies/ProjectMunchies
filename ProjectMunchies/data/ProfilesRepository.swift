@@ -13,7 +13,7 @@ class ProfilesRepository: ObservableObject{
     let db = Firestore.firestore()
     
     public func Get(profileId: String) async throws -> ProfileModel {
-        var profile = emptyProfileModel
+        var profile = ProfileModel.emptyProfileModel
         let snapshot = try await db.collection("profiles")
             .whereField("userId", isEqualTo: profileId as String)
             .getDocuments()
@@ -37,10 +37,19 @@ class ProfilesRepository: ObservableObject{
         return profile
     }
     
-    public func Create(newId: String, newProfile: [String: Any]) async throws {
-        let docRef = db.collection("profiles").document(newId)
-        try await docRef.setData(newProfile)
+    public func Create(userId: String, newProfile: [String: Any]) async throws {
+        do {
+            let newProfileId = UUID().uuidString
+            var updatedProfile = newProfile
+            updatedProfile["userId"] = userId
+            updatedProfile["id"] = newProfileId
+            
+            let docRef = db.collection("profiles").document(newProfileId)
+            try await docRef.setData(updatedProfile)
+            print("Profile created successfully in Firestore")
+        } catch {
+            print("Error creating profile in Firestore: \(error.localizedDescription)")
+            throw error
+        }
     }
 }
-
-

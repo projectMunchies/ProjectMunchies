@@ -7,11 +7,16 @@
 
 import SwiftUI
 import MapKit
+import Contacts
+import ContactsUI
 
 struct HomeView: View {
     @StateObject var locationManager: LocationManager = .init()
     @StateObject private var venuesViewModel = VenuesViewModel()
     
+    @State private var showBunchiesView = false
+    @State private var showChatView = false
+    @State private var selectedChatContact: CNContact?
     @State var navigationTag: String?
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
@@ -44,7 +49,7 @@ struct HomeView: View {
                 }
                 
                 try await getNewMapAlerts()
-
+                
             } catch {
                 // HANDLE ERROR
             }
@@ -86,9 +91,9 @@ struct HomeView: View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
                 // filters out views not in the navBar
-                if(tab != .bunchies && tab != .venue) {
+                if tab != .venue {
                     Button(action: { activeTab = tab }, label: {
-                        VStack(spacing: 2){
+                        VStack(spacing: 2) {
                             Image(systemName: tab.symbol)
                                 .font(.title2)
                             
@@ -112,8 +117,9 @@ struct HomeView: View {
         }
     }
     
+    
     public func SheetViews(activeTab: NavBarTabsModel) -> some View {
-        VStack{
+        VStack {
             switch (activeTab) {
             case .filter:
                 FilterView()
@@ -122,7 +128,7 @@ struct HomeView: View {
             case .explore:
                 VideoPlayerHomeView(showOverlay: false)
             case .crunchAI:
-                CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region (MKCoordinateRegion(
+                CrunchAIView(searchText: .constant(""), startSearch: .constant(false), position: .constant(MapCameraPosition.region(MKCoordinateRegion(
                     center: CLLocationCoordinate2D(
                         latitude: 27.9506,
                         longitude: -82.4572
@@ -132,10 +138,9 @@ struct HomeView: View {
                         longitudeDelta: 0.1
                     )
                 ))))
-            case .bunchies:
-                BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             case .profile:
                 ProfileView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+                
             case .venue:
                 VenueView(sheetIndent: self.$sheetIndents, activeTab: self.$activeTab)
                     .environmentObject(locationManager)
@@ -145,10 +150,15 @@ struct HomeView: View {
     
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
-         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
-         locationManager.search(value: venuesViewModel.specialVenues.first!.name)
+        
+        if let firstReviewVenue = venuesViewModel.reviewVenues.first {
+            locationManager.search(value: firstReviewVenue.name)
+        }
+        
+        if let firstSpecialVenue = venuesViewModel.specialVenues.first {
+            locationManager.search(value: firstSpecialVenue.name)
+        }
     }
-    
     private func displayMapMarkers() {
         if let places = locationManager.fetchedPlaces,!places.isEmpty {
             

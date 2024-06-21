@@ -23,9 +23,12 @@ class ProfilesService: ObservableObject {
     }
     
     public func CreateProfile() async throws -> ProfileModel {
-        let id = UUID().uuidString
-        var newProfile = ProfileModel(
-            id: id,
+        guard let userId = Auth.auth().currentUser?.uid else {
+            throw NSError(domain: "ProfileService", code: 0, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found"])
+        }
+        
+        let newProfile = ProfileModel(
+            id: "",  // Leave the id empty, as it will be generated in the repository
             fullName: Auth.auth().currentUser?.displayName ?? "",
             location: "",
             description: "",
@@ -41,16 +44,23 @@ class ProfilesService: ObservableObject {
         )
         
         let docData: [String: Any] = [
-            "id": newProfile.id,
             "fullName": newProfile.fullName,
             "location": "",
             "description": "",
             "gender": "",
-            "userId": Auth.auth().currentUser?.uid as Any,
+            "age": "",
+            "fcmTokens": [],
             "messageThreadIds": [],
+            "occupation": "",
+            "hobbies": [],
+            "reviewIds": [],
+            "isMockData": false
         ]
         
-        try await profilesRespository.Create(newId: id, newProfile: docData)
-        return newProfile
+        try await profilesRespository.Create(userId: userId, newProfile: docData)
+        
+        // Fetch the created profile to get the generated profile id
+        let createdProfile = try await profilesRespository.Get(profileId: userId)
+        return createdProfile
     }
 }

@@ -16,8 +16,7 @@ enum NavBarTabsModel: String, CaseIterable {
     case crunchAI = "CrunchAI"
     case profile = "Profile"
     
-    // sheetViews not in navBar
-    case bunchies = "Bunchies"
+   
     case venue = "Venue"
     
     var symbol: String {
@@ -30,8 +29,7 @@ enum NavBarTabsModel: String, CaseIterable {
             "globe.badge.chevron.backward"
         case .crunchAI:
             "circle.grid.2x2.fill"
-        case .bunchies:
-            "circle.grid.2x2.fill"
+
         case .profile:
             "gearshape.circle"
         case .venue:
@@ -40,3 +38,4 @@ enum NavBarTabsModel: String, CaseIterable {
         }
     }
 }
+
