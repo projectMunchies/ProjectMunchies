@@ -86,7 +86,7 @@ struct HomeView: View {
         HStack(spacing: 0) {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
                 // filters out views not in the navBar
-                if(tab != .bunchies && tab != .venue) {
+                if(tab != .venue) {
                     Button(action: { activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
@@ -132,8 +132,7 @@ struct HomeView: View {
                         longitudeDelta: 0.1
                     )
                 ))))
-            case .bunchies:
-                BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+           
             case .profile:
                 ProfileView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
             case .venue:
@@ -145,8 +144,14 @@ struct HomeView: View {
     
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
-         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
-         locationManager.search(value: venuesViewModel.specialVenues.first!.name)
+        
+        if let firstReviewVenue = venuesViewModel.reviewVenues.first {
+            locationManager.search(value: firstReviewVenue.name)
+        }
+        
+        if let firstSpecialVenue = venuesViewModel.specialVenues.first {
+            locationManager.search(value: firstSpecialVenue.name)
+        }
     }
     
     private func displayMapMarkers() {
