@@ -24,8 +24,8 @@ class SpecialsViewModel: ObservableObject {
         self.specials = specials
     }
     
-    public func GetRecentSpecials(date: Date) async throws {
-        let recentSpecials = try await service.GetAfterDate(date: date)
+    public func GetRecentSpecials() async throws {
+        let recentSpecials = try await service.GetRecentSpecials()
         self.recentSpecials = recentSpecials
     }
 }

@@ -20,8 +20,8 @@ class SpecialsService: ObservableObject {
         return specials
     }
     
-    public func GetAfterDate(date: Date) async throws -> [SpecialModel] {
-        let specials = try await specialsRepository.GetAfter(date: date)
+    public func GetRecentSpecials() async throws -> [SpecialModel] {
+        let specials = try await specialsRepository.GetRecent()
         return specials
     }
     

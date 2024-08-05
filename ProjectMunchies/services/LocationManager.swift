@@ -47,11 +47,11 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
             do{
                 let request = MKLocalSearch.Request()
                 request.naturalLanguageQuery = value.lowercased()
+                request.region = .downtownTampa
                 
                 let response = try await MKLocalSearch(request: request).start()
                 // We can also use Mainactor to publish changes in the Main Thread
                 await MainActor.run(body: {
-               
                     self.fetchedPlaces = response.mapItems.compactMap({ item -> CLPlacemark? in
                         return item.placemark
                     })
@@ -89,7 +89,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
     
     func search(value: String) {
-        print("this be passes: \(value)")
         searchText = value
     }
     

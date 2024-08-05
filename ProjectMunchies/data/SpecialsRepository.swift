@@ -60,11 +60,12 @@ class SpecialsRepository: ObservableObject{
         return specials
     }
     
-    public func GetAfter(date: Date) async throws -> [SpecialModel] {
+    public func GetRecent() async throws -> [SpecialModel] {
         var specials: [SpecialModel] = []
         
         let snapshot = try await db.collection("specials")
-            .whereField("creationDate", isGreaterThan: date)
+            .whereField("id", isNotEqualTo: "")
+            .order(by: "creationDate", descending: true)
             .limit(to: 10)
             .getDocuments()
         

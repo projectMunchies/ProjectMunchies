@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 
+@MainActor
 class VenuesViewModel: ObservableObject {
      private var reviewsViewModel = ReviewsViewModel()
      private var specialsViewModel = SpecialsViewModel()
@@ -33,7 +34,7 @@ class VenuesViewModel: ObservableObject {
         let twoWeeksAgo = Date().previous(.monday, considerToday: true)
         
         try await reviewsViewModel.GetRecentReviews(date: twoWeeksAgo)
-        try await specialsViewModel.GetRecentSpecials(date: twoWeeksAgo)
+        try await specialsViewModel.GetRecentSpecials()
         
         var reviewVenueIds: [String] = []
         var specialVenueIds: [String] = []
