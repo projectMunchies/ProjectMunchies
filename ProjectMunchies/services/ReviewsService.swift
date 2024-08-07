@@ -20,8 +20,8 @@ class ReviewsService: ObservableObject {
         return reviews
     }
     
-    public func GetAfterDate(date: Date) async throws -> [ReviewModel] {
-        let reviews = try await reviewsRepository.GetAfter(date: date)
+    public func GetRecentReviews() async throws -> [ReviewModel] {
+        let reviews = try await reviewsRepository.GetRecent()
         return reviews
     }
 }

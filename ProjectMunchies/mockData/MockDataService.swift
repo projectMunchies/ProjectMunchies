@@ -491,14 +491,17 @@ enum MockDataService {
             "timeStamp": Date()
         ])
     }
-
+    // 50/484
+    
+    // 50/82
     public func addNewVenuesChineseCusineType() {
         let docRefs = db.collection("venues")
              
+        //got details
         let id = UUID().uuidString
         docRefs.document(id).setData([
             "id": id,
-            "name": "Oriental Express Chinese Sushu Restaurant",
+            "name": "Oriental Express Chinese Sushi Restaurant",
             "address": "510 E Jackson St, Tampa, FL 33602",
             "venueType": "restaurant",
             "rating": 0,
@@ -512,6 +515,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        //no details
         let id2 = UUID().uuidString
         docRefs.document(id2).setData([
             "id": id2,
@@ -529,6 +533,8 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        
+        // no details
         let id3 = UUID().uuidString
         docRefs.document(id3).setData([
             "id": id3,
@@ -546,6 +552,8 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        
+        // no details; lunch specials on some websites but not all venues
         let id4 = UUID().uuidString
         docRefs.document(id4).setData([
             "id": id4,
@@ -562,24 +570,8 @@ enum MockDataService {
             "happyHourType": [],
             "brunchType": []
         ])
-        
-        let id5 = UUID().uuidString
-        docRefs.document(id5).setData([
-            "id": id5,
-            "name": "China Wok",
-            "address": "4058 Fiesta Plaza, Unit 104, Tampa, FL 33607",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+
+        // no details
         let id6 = UUID().uuidString
         docRefs.document(id6).setData([
             "id": id6,
@@ -597,6 +589,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id7 = UUID().uuidString
         docRefs.document(id7).setData([
             "id": id7,
@@ -614,6 +607,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details; new specials only on this location and there dishes so not really specials
         let id8 = UUID().uuidString
         docRefs.document(id8).setData([
             "id": id8,
@@ -631,6 +625,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id9 = UUID().uuidString
         docRefs.document(id9).setData([
             "id": id9,
@@ -648,6 +643,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id10 = UUID().uuidString
         docRefs.document(id10).setData([
             "id": id10,
@@ -665,23 +661,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id11 = UUID().uuidString
-        docRefs.document(id11).setData([
-            "id": id11,
-            "name": "China 1",
-            "address": "2535 N Dale Mabry Hwy, Tampa, FL 33607",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id12 = UUID().uuidString
         docRefs.document(id12).setData([
             "id": id12,
@@ -699,6 +679,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id13 = UUID().uuidString
         docRefs.document(id13).setData([
             "id": id13,
@@ -716,6 +697,8 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        
+        // no details; and this location just closed
         let id14 = UUID().uuidString
         docRefs.document(id14).setData([
             "id": id14,
@@ -733,23 +716,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id15 = UUID().uuidString
-        docRefs.document(id15).setData([
-            "id": id15,
-            "name": "Yummy House China Bistro - Tampa",
-            "address": "2620 E Hillsborough Ave, Tampa, FL 33610",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id16 = UUID().uuidString
         docRefs.document(id16).setData([
             "id": id16,
@@ -767,6 +734,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id17 = UUID().uuidString
         docRefs.document(id17).setData([
             "id": id17,
@@ -784,6 +752,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id18 = UUID().uuidString
         docRefs.document(id18).setData([
             "id": id18,
@@ -801,6 +770,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details.. sorta. wrong location as well
         let id19 = UUID().uuidString
         docRefs.document(id19).setData([
             "id": id19,
@@ -818,6 +788,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id20 = UUID().uuidString
         docRefs.document(id20).setData([
             "id": id20,
@@ -835,6 +806,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id21 = UUID().uuidString
         docRefs.document(id21).setData([
             "id": id21,
@@ -852,23 +824,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id22 = UUID().uuidString
-        docRefs.document(id22).setData([
-            "id": id22,
-            "name": "Top China",
-            "address": "2525 E Hillsborough Ave, Tampa, FL 33610",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id23 = UUID().uuidString
         docRefs.document(id23).setData([
             "id": id23,
@@ -886,6 +842,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id24 = UUID().uuidString
         docRefs.document(id24).setData([
             "id": id24,
@@ -903,6 +860,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id25 = UUID().uuidString
         docRefs.document(id25).setData([
             "id": id25,
@@ -920,6 +878,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id26 = UUID().uuidString
         docRefs.document(id26).setData([
             "id": id26,
@@ -937,6 +896,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id27 = UUID().uuidString
         docRefs.document(id27).setData([
             "id": id27,
@@ -954,6 +914,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id28 = UUID().uuidString
         docRefs.document(id28).setData([
             "id": id28,
@@ -971,6 +932,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details; sorta.. its a image not text
         let id29 = UUID().uuidString
         docRefs.document(id29).setData([
             "id": id29,
@@ -988,57 +950,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id30 = UUID().uuidString
-        docRefs.document(id30).setData([
-            "id": id30,
-            "name": "Taste Of China",
-            "address": "8476 Sheldon Rd, Tampa, FL 33615",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id31 = UUID().uuidString
-        docRefs.document(id31).setData([
-            "id": id31,
-            "name": "Hong Kong Chinese Restaurant",
-            "address": "7026 W Waters Ave, Tampa, FL 33634",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id32 = UUID().uuidString
-        docRefs.document(id32).setData([
-            "id": id32,
-            "name": "China Wok",
-            "address": "8490 W Hillsborough Ave, Tampa, FL 33615",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        //no details
         let id33 = UUID().uuidString
         docRefs.document(id33).setData([
             "id": id33,
@@ -1056,40 +968,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id34 = UUID().uuidString
-        docRefs.document(id34).setData([
-            "id": id34,
-            "name": "Chine Garden Chinese Restaurant",
-            "address": "1550 N McMullen Booth Rd, Clearwater, FL 33759",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id35 = UUID().uuidString
-        docRefs.document(id35).setData([
-            "id": id35,
-            "name": "China King Chinese Restaurant",
-            "address": "3163 Curlew Rd, Unit 3, Oldsmar, FL 34677",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        //no details
         let id36 = UUID().uuidString
         docRefs.document(id36).setData([
             "id": id36,
@@ -1107,23 +986,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id37 = UUID().uuidString
-        docRefs.document(id37).setData([
-            "id": id37,
-            "name": "Wok-N-Roll",
-            "address": "2519 N McMullen Booth Rd, Unit 206, Clearwater, FL 33761",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id38 = UUID().uuidString
         docRefs.document(id38).setData([
             "id": id38,
@@ -1141,6 +1004,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id39 = UUID().uuidString
         docRefs.document(id39).setData([
             "id": id39,
@@ -1158,6 +1022,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        //no details
         let id40 = UUID().uuidString
         docRefs.document(id40).setData([
             "id": id40,
@@ -1175,6 +1040,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id41 = UUID().uuidString
         docRefs.document(id41).setData([
             "id": id41,
@@ -1192,6 +1058,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id42 = UUID().uuidString
         docRefs.document(id42).setData([
             "id": id42,
@@ -1209,23 +1076,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id43 = UUID().uuidString
-        docRefs.document(id43).setData([
-            "id": id43,
-            "name": "Chef Li",
-            "address": "4013 Tampa Rd, Unit 16, Oldsmar, FL 34677",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id44 = UUID().uuidString
         docRefs.document(id44).setData([
             "id": id44,
@@ -1243,6 +1094,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
+        // no details
         let id45 = UUID().uuidString
         docRefs.document(id45).setData([
             "id": id45,
@@ -1260,57 +1112,7 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id46 = UUID().uuidString
-        docRefs.document(id46).setData([
-            "id": id46,
-            "name": "YHS China Bistro",
-            "address": "302 N Dale Mabry Hwy, Tampa, FL 33609",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id47 = UUID().uuidString
-        docRefs.document(id47).setData([
-            "id": id47,
-            "name": "China One",
-            "address": "3665 E Bay Dr, Largo, FL 33771",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id48 = UUID().uuidString
-        docRefs.document(id48).setData([
-            "id": id48,
-            "name": "Wok n Roll",
-            "address": "2802 W Kennedy Blvd, Tampa, FL 33609",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
+        // no details
         let id49 = UUID().uuidString
         docRefs.document(id49).setData([
             "id": id49,
@@ -1328,22 +1130,6 @@ enum MockDataService {
             "brunchType": []
         ])
         
-        let id50 = UUID().uuidString
-        docRefs.document(id50).setData([
-            "id": id50,
-            "name": "Oriental Express Chinese Sushi Restaurant",
-            "address": "510 E Jackson St, Tampa, FL 33602",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
         
         let id51 = UUID().uuidString
         docRefs.document(id51).setData([
@@ -1401,23 +1187,6 @@ enum MockDataService {
             "id": id54,
             "name": "China Wok Clearwater",
             "address": "1506 Gulf to Bay Blvd, Clearwater, FL 33755",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": [],
-            "cuisineType": ["Chinese"],
-            "drinkType": [],
-            "happyHourType": [],
-            "brunchType": []
-        ])
-        
-        let id55 = UUID().uuidString
-        docRefs.document(id55).setData([
-            "id": id55,
-            "name": "China 1",
-            "address": "33389 US Highway 19 N, Palm Harbor, FL 34684",
             "venueType": "restaurant",
             "rating": 0,
             "cost": "",
@@ -1889,7 +1658,7 @@ enum MockDataService {
             "brunchType": []
         ])
     }
-    
+    // 0/90
     public func addNewVenuesAmericanCusineType() {
         let docRefs = db.collection("venues")
              
@@ -3509,7 +3278,7 @@ enum MockDataService {
         ])
         
     }
-    
+    // 0/74
     public func addNewVenuesMexicanCusineType() {
         let docRefs = db.collection("venues")
              
@@ -4771,7 +4540,7 @@ enum MockDataService {
             "brunchType": []
         ])
     }
-
+    // 0/25
     public func addNewVenuesJapaneseCusineType() {
         let docRefs = db.collection("venues")
              
@@ -4845,19 +4614,6 @@ enum MockDataService {
             "id": id6,
             "name": "Koya",
             "address": "807 W Platt St, Tampa, FL 33606",
-            "venueType": "restaurant",
-            "rating": 0,
-            "cost": "",
-            "portion": "",
-            "popularTimes": "",
-            "deals": []
-        ])
-        
-        let id7 = UUID().uuidString
-        docRefs.document(id7).setData([
-            "id": id7,
-            "name": "Oriental Express Chinese Sushi Restaurant",
-            "address": "510 E Jackson St, Tampa, FL 33602",
             "venueType": "restaurant",
             "rating": 0,
             "cost": "",
@@ -5100,7 +4856,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesIndianCusineType() {
         let docRefs = db.collection("venues")
              
@@ -5429,7 +5185,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesItalianCusineType() {
         let docRefs = db.collection("venues")
              
@@ -5758,7 +5514,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesThaiCusineType() {
         let docRefs = db.collection("venues")
              
@@ -6087,7 +5843,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/24
     public func addNewVenuesFrenchCusineType() {
         let docRefs = db.collection("venues")
              
@@ -6403,7 +6159,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesJuiceDrinkType() {
         let docRefs = db.collection("venues")
              
@@ -6732,7 +6488,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesSmoothieDrinkType() {
         let docRefs = db.collection("venues")
              
@@ -7061,7 +6817,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/13
     public func addNewVenuesSodaDrinkType() {
         let docRefs = db.collection("venues")
              
@@ -7234,7 +6990,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/24
     public func addNewVenuesTeaDrinkType() {
         let docRefs = db.collection("venues")
              
@@ -7550,7 +7306,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/25
     public func addNewVenuesCoffeeDrinkType() {
         let docRefs = db.collection("venues")
              
@@ -7879,7 +7635,7 @@ enum MockDataService {
             "deals": []
         ])
     }
-    
+    // 0/2
     public func addNewVenuesHotChocolateDrinkType() {
         let docRefs = db.collection("venues")
              

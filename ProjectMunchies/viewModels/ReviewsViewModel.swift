@@ -24,8 +24,8 @@ class ReviewsViewModel: ObservableObject {
         self.reviews = reviews
     }
     
-    public func GetRecentReviews(date: Date) async throws {
-        let recentReviews = try await service.GetAfterDate(date: date)
+    public func GetRecentReviews() async throws {
+        let recentReviews = try await service.GetRecentReviews()
         self.recentReviews = recentReviews
     }
 }

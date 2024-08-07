@@ -145,8 +145,7 @@ struct HomeView: View {
     
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
-//         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
-         locationManager.search(value: "Chipotle")
+         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
     }
     
     private func displayMapMarkers() {

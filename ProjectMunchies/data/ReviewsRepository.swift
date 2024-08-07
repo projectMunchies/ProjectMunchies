@@ -60,11 +60,12 @@ class ReviewsRepository: ObservableObject{
         return reviews
     }
     
-    public func GetAfter(date: Date) async throws -> [ReviewModel] {
+    public func GetRecent() async throws -> [ReviewModel] {
         var reviews: [ReviewModel] = []
         
         let snapshot = try await db.collection("reviews")
-            .whereField("timeStamp", isGreaterThan: date)
+            .whereField("id", isNotEqualTo: "")
+            .order(by: "timeStamp", descending: true)
             .limit(to: 10)
             .getDocuments()
         

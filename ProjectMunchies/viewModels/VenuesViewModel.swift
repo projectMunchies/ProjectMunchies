@@ -31,9 +31,7 @@ class VenuesViewModel: ObservableObject {
     }
     
     public func GetMapAlerts() async throws {
-        let twoWeeksAgo = Date().previous(.monday, considerToday: true)
-        
-        try await reviewsViewModel.GetRecentReviews(date: twoWeeksAgo)
+        try await reviewsViewModel.GetRecentReviews()
         try await specialsViewModel.GetRecentSpecials()
         
         var reviewVenueIds: [String] = []
