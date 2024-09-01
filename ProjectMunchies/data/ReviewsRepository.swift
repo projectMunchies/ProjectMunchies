@@ -66,7 +66,7 @@ class ReviewsRepository: ObservableObject{
         let snapshot = try await db.collection("reviews")
             .whereField("id", isNotEqualTo: "")
             .order(by: "timeStamp", descending: true)
-            .limit(to: 10)
+            .limit(to: 3)
             .getDocuments()
         
         snapshot.documents.forEach { documentSnapshot in

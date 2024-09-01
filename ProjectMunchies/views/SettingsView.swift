@@ -19,7 +19,7 @@ struct SettingsView: View {
     @State private var showHamburgerMenu: Bool = false
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+ 
         Button(action: {
             self.sheetIndents = [.height(60), .medium, .large]
             self.activeTab = .filter
@@ -34,9 +34,6 @@ struct SettingsView: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
-        
-        
-        
         
 //        GeometryReader { geoReader in
 //            ZStack {

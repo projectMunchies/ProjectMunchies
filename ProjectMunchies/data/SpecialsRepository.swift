@@ -66,7 +66,7 @@ class SpecialsRepository: ObservableObject{
         let snapshot = try await db.collection("specials")
             .whereField("id", isNotEqualTo: "")
             .order(by: "creationDate", descending: true)
-            .limit(to: 10)
+            .limit(to: 3)
             .getDocuments()
         
         snapshot.documents.forEach { documentSnapshot in

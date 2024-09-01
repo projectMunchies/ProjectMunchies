@@ -146,6 +146,7 @@ struct HomeView: View {
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
          locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
+        locationManager.search(value: venuesViewModel.specialVenues.first!.name)
     }
     
     private func displayMapMarkers() {
@@ -184,7 +185,6 @@ struct HomeView: View {
             let annotation = MKPointAnnotation()
             annotation.coordinate = venueDTO.coordinates
             annotation.title = venueDTO.name
-            
             annotations.append(annotation)
         }
         

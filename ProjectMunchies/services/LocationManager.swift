@@ -97,7 +97,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         let annotation = MKPointAnnotation()
 
         annotation.coordinate = coordinate
-        annotation.title = "WHat is this title for?"
+//      annotation.title = "WHat is this title for?"
         mapView.addAnnotation(annotation)
         mapView.addAnnotations(annotations)
     }
@@ -108,7 +108,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         marker.isDraggable = true
         marker.canShowCallout = false
         marker.animatesWhenAdded = true
-        marker.markerTintColor = .yellow
+        marker.markerTintColor = .red
         
         return marker
     }
