@@ -34,7 +34,7 @@ struct SearchView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("Fine locations here", text: $locationManager.searchText)
+                TextField("Fine locations here", text: $locationManager.searchModel.searchText)
             }
             .padding(.vertical,12)
             .padding(.horizontal)
@@ -44,69 +44,69 @@ struct SearchView: View {
             }
             .padding(.vertical,10)
             
-            if let places = locationManager.fetchedPlaces,!places.isEmpty{
-                List{
-                    ForEach(places,id: \.self){place in
-                        Button{
-                            // MARK: Setting map region
-                            if let coordinate = place.location?.coordinate{
-                                locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                                locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-                                locationManager.addDraggablePin(coordinate: coordinate)
-                                locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                                
-                                // MARK: Navigating to MapView
-                                navigationTag = "MAPVIEW"
-                            }
-                            
-                         
-                        } label: {
-                            HStack(spacing: 15){
-                                Image(systemName: "mappin.circle.fill")
-                                    .font(.title2)
-                                    .foregroundColor(.gray)
-                                
-                                VStack(alignment: .leading, spacing: 6) {
-                                    Text(place.name ?? "")
-                                        .font(.title3.bold())
-                                        .foregroundColor(.primary)
-                                    
-                                    Text(place.locality ?? "")
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                    }
-                }
-                .listStyle(.plain)
-            }
-            else {
-                // MARK: Live Location Button
-                Button{
-                    
-                    // MARK: Setting map region
-                    if let coordinate = locationManager.userLocation?.coordinate{
-                        locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-                        locationManager.addDraggablePin(coordinate: coordinate)
-                        locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                    }
-                    
-                    // MARK: Navigating to MapView
-                    navigationTag = "MAPVIEW"
-                    
-                } label: {
-                    Label {
-                        Text("Use Current Location")
-                            .font(.callout)
-                    } icon: {
-                        Image(systemName: "location.north.circle.fill")
-                    }
-                    .foregroundColor(.green)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-          
-            }
+//            if let places = locationManager.fetchedPlaces,!places.isEmpty{
+//                List{
+//                    ForEach(places,id: \.self){place in
+//                        Button{
+//                            // MARK: Setting map region
+//                            if let coordinate = place.location?.coordinate{
+//                                locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+//                                locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+//                                locationManager.addDraggablePin(coordinate: coordinate)
+//                                locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
+//                                
+//                                // MARK: Navigating to MapView
+//                                navigationTag = "MAPVIEW"
+//                            }
+//                            
+//                         
+//                        } label: {
+//                            HStack(spacing: 15){
+//                                Image(systemName: "mappin.circle.fill")
+//                                    .font(.title2)
+//                                    .foregroundColor(.gray)
+//                                
+//                                VStack(alignment: .leading, spacing: 6) {
+//                                    Text(place.name ?? "")
+//                                        .font(.title3.bold())
+//                                        .foregroundColor(.primary)
+//                                    
+//                                    Text(place.locality ?? "")
+//                                        .font(.caption)
+//                                        .foregroundColor(.gray)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                .listStyle(.plain)
+//            }
+//            else {
+//                // MARK: Live Location Button
+//                Button{
+//                    
+//                    // MARK: Setting map region
+//                    if let coordinate = locationManager.userLocation?.coordinate{
+//                        locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+//                        locationManager.addDraggablePin(coordinate: coordinate)
+//                        locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
+//                    }
+//                    
+//                    // MARK: Navigating to MapView
+//                    navigationTag = "MAPVIEW"
+//                    
+//                } label: {
+//                    Label {
+//                        Text("Use Current Location")
+//                            .font(.callout)
+//                    } icon: {
+//                        Image(systemName: "location.north.circle.fill")
+//                    }
+//                    .foregroundColor(.green)
+//                }
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//          
+//            }
            
         }
         .padding()

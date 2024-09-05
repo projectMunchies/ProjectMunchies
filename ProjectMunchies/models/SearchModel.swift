@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct SearchModel: Identifiable, Equatable {
+    var id: String
+    var searchText: String
+    var mapAlertType: String?
+}

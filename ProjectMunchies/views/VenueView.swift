@@ -60,6 +60,9 @@ struct VenueView: View {
                         .foregroundColor(.white)
                 }
             }
+            .task {
+                sheetIndent = [.height(180), .medium, .large]
+            }
             .padding()
             .background{
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
