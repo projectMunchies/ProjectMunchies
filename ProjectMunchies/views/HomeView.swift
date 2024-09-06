@@ -58,7 +58,8 @@ struct HomeView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
+//                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
+                    
                     SheetViews(activeTab: locationManager.activeTab)
                     
                 })

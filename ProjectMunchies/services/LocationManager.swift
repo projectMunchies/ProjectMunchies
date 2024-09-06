@@ -20,6 +20,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
     @Published var activeTab: NavBarTabsModel = .liveReviews
+    @Published var venueTitle: String = ""
+    @Published var venueAlertType: String = ""
     
     override init() {
         super.init()
@@ -137,7 +139,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     // MARK: When you select a pin on MapView
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let newLocation = view.annotation?.coordinate else{return}
-        
+        self.venueTitle = (view.annotation?.title!)!
+        self.venueAlertType = (view.annotation?.subtitle!)!
         self.activeTab = .venue
         self.pickedLocation = .init(latitude: newLocation.latitude, longitude: newLocation.longitude)
         updatePlacemark(location: .init(latitude: newLocation.latitude, longitude: newLocation.longitude))
