@@ -7,51 +7,75 @@
 
 import SwiftUI
 import CoreLocation
+import AVKit
 
 struct VenueView: View {
     @EnvironmentObject var locationManager: LocationManager
     @Binding var sheetIndent: Set<PresentationDetent>
     @Binding var activeTab: NavBarTabsModel
+    @State private var player = AVPlayer(url:  Bundle.main.url(forResource: "exampleMp4", withExtension: "mp4")!)
     
     var body: some View {
         if let place = locationManager.pickedPlaceMark{
-            VStack(spacing: 15){
-                headerSetion(place: place)
+            GeometryReader{ geoReader in
                 
-                Divider()
-                    .foregroundColor(.white)
-                
-                reviewsView()
-                
-                Divider()
-                    .foregroundColor(.white)
-                
-                specialsView()
+                VStack(spacing: 10){
+                    headerSection(place: place)
+                        .multilineTextAlignment(.leading)
+                    
+                    Divider()
+                        .foregroundColor(.white)
+                    
+                    reviewsView()
+                    
+                    Divider()
+                        .foregroundColor(.white)
+                    
+                    specialsView()
+                }
+                .task {
+                    sheetIndent = [.height(260), .medium, .large]
+                }
+                .padding()
+                .frame(maxHeight: .infinity, alignment: .bottom)
             }
-            .task {
-                sheetIndent = [.height(180), .medium, .large]
-            }
-            .padding()
-            .frame(maxHeight: .infinity, alignment: .bottom)
         }
     }
     
     @ViewBuilder
-    private func headerSetion(place: CLPlacemark) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(locationManager.venueTitle ?? "")
-                .font(.system(size: 30))
+    private func headerSection(place: CLPlacemark) -> some View {
+        VStack{
+            HStack{
+                ForEach(0..<2){ _ in
+                    venueTabsView()
+                }
+            }
+            .padding(.bottom, 30)
+            
+            VideoPlayer(player: player)
+                .frame(height: 100)
+                .cornerRadius(10)
+                .onAppear {
+                                         player.seek(to: .zero)
+                                         player.play()
+                }
+                .onDisappear {
+                    player.pause()
+                }
+            
+            Text(locationManager.venueTitle)
+                .font(.system(size: 20))
                 .foregroundColor(.white)
             
             Text(place.name ?? "")
-                .font(.title3)
+                .font(.system(size: 10))
                 .foregroundColor(.white)
         }
     }
     
     @ViewBuilder
     private func reviewsView() -> some View {
-        VStack(alignment: .leading){
+        VStack{
             HStack{
                 if (locationManager.venueAlertType == "reviews") {
                     Text("New")
@@ -161,6 +185,7 @@ struct VenueView: View {
             }
         }
     }
+    
 }
 
 #Preview {
