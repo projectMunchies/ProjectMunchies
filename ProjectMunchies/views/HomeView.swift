@@ -16,7 +16,6 @@ struct HomeView: View {
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
     @State private var isCreateReviewOverlay: Bool = false
-    @State private var activeTab: NavBarTabsModel = .filter
     @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
     
     var body: some View {
@@ -44,7 +43,7 @@ struct HomeView: View {
                 }
                 
                 try await getNewMapAlerts()
-
+                
             } catch {
                 // HANDLE ERROR
             }
@@ -55,12 +54,13 @@ struct HomeView: View {
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
                 VStack(alignment: .leading, spacing: 15, content: {
-                    Text(activeTab.rawValue)
+                    Text(locationManager.activeTab.rawValue)
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
-                    SheetViews(activeTab: self.activeTab)
+//                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
+                    
+                    SheetViews(activeTab: locationManager.activeTab)
                     
                 })
                 .padding()
@@ -87,7 +87,7 @@ struct HomeView: View {
             ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
                 // filters out views not in the navBar
                 if(tab != .bunchies && tab != .venue) {
-                    Button(action: { activeTab = tab }, label: {
+                    Button(action: { locationManager.activeTab = tab }, label: {
                         VStack(spacing: 2){
                             Image(systemName: tab.symbol)
                                 .font(.title2)
@@ -95,7 +95,7 @@ struct HomeView: View {
                             Text(tab.rawValue)
                                 .font(.caption2)
                         }
-                        .foregroundStyle(activeTab == tab ? Color.accentColor : .gray)
+                        .foregroundStyle(locationManager.activeTab == tab ? Color.accentColor : .gray)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .contentShape(.rect)
                     })
@@ -108,7 +108,7 @@ struct HomeView: View {
     @ViewBuilder
     private func SubHeaderSection() -> some View {
         HStack {
-            Header(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+            Header(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
         }
     }
     
@@ -133,11 +133,11 @@ struct HomeView: View {
                     )
                 ))))
             case .bunchies:
-                BunchiesView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+                BunchiesView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .profile:
-                ProfileView(sheetIndents: self.$sheetIndents, activeTab: self.$activeTab)
+                ProfileView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .venue:
-                VenueView(sheetIndent: self.$sheetIndents, activeTab: self.$activeTab)
+                VenueView(sheetIndent: self.$sheetIndents, activeTab: $locationManager.activeTab)
                     .environmentObject(locationManager)
             }
         }
@@ -145,37 +145,20 @@ struct HomeView: View {
     
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
-         locationManager.search(value: venuesViewModel.reviewVenues.first!.name)
-        locationManager.search(value: venuesViewModel.specialVenues.first!.name)
+    
+        locationManager.search(value: venuesViewModel.reviewVenues.first!.name, alertType: "reviews")
+        
+        locationManager.search(value: venuesViewModel.specialVenues.first!.name, alertType: "specials")
     }
     
     private func displayMapMarkers() {
         if let places = locationManager.fetchedPlaces,!places.isEmpty {
-            
-            let venueDTOS = createVenueDTOs(places: places)
-            let annotations = createAnnotations(venueDTOS: venueDTOS)
+            let annotations = createAnnotations(venueDTOS: places)
             
             if (!annotations.isEmpty) {
                 plotPoints(coordinate: annotations.first!, annotations: annotations)
             }
-            
-            self.activeTab = .venue
         }
-    }
-    
-    private func createVenueDTOs(places: [CLPlacemark]) -> [VenueModelDTO] {
-        var venueDTOs: [VenueModelDTO] = []
-        
-        for place in places  {
-            let venueDTO = VenueModelDTO(
-                id: "",
-                name: place.name!,
-                coordinates: place.location!.coordinate
-            )
-            venueDTOs.append(venueDTO)
-        }
-        
-        return venueDTOs
     }
     
     private func createAnnotations(venueDTOS: [VenueModelDTO]) -> [MKPointAnnotation] {
@@ -183,8 +166,11 @@ struct HomeView: View {
         
         for venueDTO in venueDTOS {
             let annotation = MKPointAnnotation()
-            annotation.coordinate = venueDTO.coordinates
+            annotation.coordinate = venueDTO.coordinates ?? CLLocationCoordinate2D()
             annotation.title = venueDTO.name
+            // we need the mapAlertType but not sure what
+            // else to set it to
+            annotation.subtitle = venueDTO.mapAlertType
             annotations.append(annotation)
         }
         
@@ -199,7 +185,7 @@ struct HomeView: View {
         let closestPlace = CLPlacemark(placemark: placeMark)
         
         if let coordinate = closestPlace.location?.coordinate{
-            //                    locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
             //                    locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
             locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
             //                    locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))

@@ -8,8 +8,10 @@
 import Foundation
 import MapKit
 
-struct VenueModelDTO: Identifiable {
+struct VenueModelDTO: Identifiable, Equatable {
     var id: String
     var name: String
-    var coordinates: CLLocationCoordinate2D
+    var coordinates: CLLocationCoordinate2D?
+    var fetchedPlace: CLPlacemark?
+    var mapAlertType: String?
 }
