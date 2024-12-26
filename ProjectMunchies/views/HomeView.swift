@@ -54,9 +54,10 @@ struct HomeView: View {
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
                 VStack(alignment: .leading, spacing: 15, content: {
-                    Text(locationManager.activeTab.rawValue)
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                    
+                        Text(locationManager.activeTab.rawValue)
+                            .font(.title2)
+                            .fontWeight(.semibold)
                     
 //                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     
@@ -84,7 +85,7 @@ struct HomeView: View {
     @ViewBuilder
     func TabBar() -> some View {
         HStack(spacing: 0) {
-            ForEach(NavBarTabsModel.allCases, id: \.rawValue) { tab in
+            ForEach(NavBarTabsModel.mainCases, id: \.rawValue) { tab in
                 // filters out views not in the navBar
                 if(tab != .bunchies && tab != .venue) {
                     Button(action: { locationManager.activeTab = tab }, label: {
@@ -136,6 +137,8 @@ struct HomeView: View {
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .profile:
                 ProfileView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
+            case .settings:
+                SettingsView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .venue:
                 VenueView(sheetIndent: self.$sheetIndents, activeTab: $locationManager.activeTab)
                     .environmentObject(locationManager)

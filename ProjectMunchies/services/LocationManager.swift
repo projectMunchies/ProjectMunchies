@@ -69,6 +69,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Handle Error
+        print("error in locationManager:")
+        print(error)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -89,7 +91,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
     
     func handleLocationError() {
-        
+        print("error in locationManager: you're not authorized")
     }
     
     func search(value: String, alertType: String) {
