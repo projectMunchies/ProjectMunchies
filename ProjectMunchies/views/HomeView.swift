@@ -116,6 +116,8 @@ struct HomeView: View {
     public func SheetViews(activeTab: NavBarTabsModel) -> some View {
         VStack{
             switch (activeTab) {
+            case .home:
+                MainView()
             case .filter:
                 FilterView()
             case .liveReviews:

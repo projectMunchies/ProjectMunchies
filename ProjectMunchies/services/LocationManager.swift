@@ -19,7 +19,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var fetchedPlaces: [VenueModelDTO]?
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
-    @Published var activeTab: NavBarTabsModel = .liveReviews
+    @Published var activeTab: NavBarTabsModel = .home
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
     
