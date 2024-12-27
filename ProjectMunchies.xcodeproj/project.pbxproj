@@ -71,7 +71,7 @@
 		7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0202B67822F00652687 /* SpecialsViewModel.swift */; };
 		7772A0272B6943F200652687 /* PacmanAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0262B6943F200652687 /* PacmanAnimation.swift */; };
 		7772A0292B6944B800652687 /* SpinningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0282B6944B800652687 /* SpinningView.swift */; };
-		77B247902D1E8B330030ABBF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B2478F2D1E8B330030ABBF /* MainView.swift */; };
+		77B247902D1E8B330030ABBF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B2478F2D1E8B330030ABBF /* HomeView.swift */; };
 		77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB42B6380F600EE6A42 /* ReviewModel.swift */; };
 		77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */; };
 		77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */; };
@@ -98,7 +98,7 @@
 		77EBA5192C052C9E00437FCE /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5182C052C9E00437FCE /* VenuesService.swift */; };
 		77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA51A2C052D2300437FCE /* VenuesRepository.swift */; };
 		77EBA51D2C067EB900437FCE /* AutoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA51C2C067EB900437FCE /* AutoScrollView.swift */; };
-		77EBA5222C08AB6900437FCE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5212C08AB6900437FCE /* HomeView.swift */; };
+		77EBA5222C08AB6900437FCE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5212C08AB6900437FCE /* MainView.swift */; };
 		77EBA5242C08ABA200437FCE /* NavBarTabsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5232C08ABA200437FCE /* NavBarTabsModel.swift */; };
 		77EBA5262C08ADF500437FCE /* BottomSheetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5252C08ADF500437FCE /* BottomSheetHelper.swift */; };
 		77EBA5282C08D69000437FCE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5272C08D69000437FCE /* FilterView.swift */; };
@@ -162,7 +162,7 @@
 		7772A0202B67822F00652687 /* SpecialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsViewModel.swift; sourceTree = "<group>"; };
 		7772A0262B6943F200652687 /* PacmanAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacmanAnimation.swift; sourceTree = "<group>"; };
 		7772A0282B6944B800652687 /* SpinningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningView.swift; sourceTree = "<group>"; };
-		77B2478F2D1E8B330030ABBF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		77B2478F2D1E8B330030ABBF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		77B97AB42B6380F600EE6A42 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialModel.swift; sourceTree = "<group>"; };
 		77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircle.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 		77EBA5182C052C9E00437FCE /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
 		77EBA51A2C052D2300437FCE /* VenuesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesRepository.swift; sourceTree = "<group>"; };
 		77EBA51C2C067EB900437FCE /* AutoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoScrollView.swift; sourceTree = "<group>"; };
-		77EBA5212C08AB6900437FCE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		77EBA5212C08AB6900437FCE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		77EBA5232C08ABA200437FCE /* NavBarTabsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarTabsModel.swift; sourceTree = "<group>"; };
 		77EBA5252C08ADF500437FCE /* BottomSheetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetHelper.swift; sourceTree = "<group>"; };
 		77EBA5272C08D69000437FCE /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
@@ -359,7 +359,7 @@
 				388855112B6ED30400DB1D53 /* SecurityPrivacyView.swift */,
 				3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */,
 				3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */,
-				77EBA5212C08AB6900437FCE /* HomeView.swift */,
+				77EBA5212C08AB6900437FCE /* MainView.swift */,
 				774157112C0C2AE30076C73D /* SearchView.swift */,
 				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
 				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
@@ -375,7 +375,7 @@
 				7736A5922C1262EC00842D0D /* VenueView.swift */,
 				7752C14F2C8E2ADD004E9856 /* LoopingVIdeoPlayerView.swift */,
 				7752C1512C8EBF1D004E9856 /* venueTabsView.swift */,
-				77B2478F2D1E8B330030ABBF /* MainView.swift */,
+				77B2478F2D1E8B330030ABBF /* HomeView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -601,7 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7752C1522C8EBF1D004E9856 /* venueTabsView.swift in Sources */,
-				77B247902D1E8B330030ABBF /* MainView.swift in Sources */,
+				77B247902D1E8B330030ABBF /* HomeView.swift in Sources */,
 				7752C1502C8E2ADD004E9856 /* LoopingVIdeoPlayerView.swift in Sources */,
 				7753346F2B4FD5670078564B /* CategoryModel.swift in Sources */,
 				3888550E2B6C1E2000DB1D53 /* BunchiesView.swift in Sources */,
@@ -635,7 +635,7 @@
 				772BA6942B7492B6003C08BE /* Particle.swift in Sources */,
 				772D044B2B57A9780099859D /* VideoModel.swift in Sources */,
 				774157072C0A190C0076C73D /* ReviewsView.swift in Sources */,
-				77EBA5222C08AB6900437FCE /* HomeView.swift in Sources */,
+				77EBA5222C08AB6900437FCE /* MainView.swift in Sources */,
 				77EBA5132C04DCAD00437FCE /* ProfilesRepository.swift in Sources */,
 				77EBA5242C08ABA200437FCE /* NavBarTabsModel.swift in Sources */,
 				7772A01A2B67811400652687 /* VenuesViewModel.swift in Sources */,

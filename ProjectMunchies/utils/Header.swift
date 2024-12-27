@@ -82,5 +82,5 @@ struct Header: View {
 }
 
 #Preview {
-    HomeView()
+    MainView()
 }
