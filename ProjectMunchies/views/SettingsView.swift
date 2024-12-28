@@ -13,63 +13,27 @@ struct SettingsView: View {
     @Binding var activeTab: NavBarTabsModel
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var homeViewModel = ProfilesViewModel()
-    @State private var showSheet = false
-    @State private var editInfo = false
-    @State var isLargeImageAlert: Bool = false
-    @State private var showHamburgerMenu: Bool = false
+//    @State private var showSheet = false
+//    @State private var isEditingInfo = false
+//    @State var isLargeImageAlert: Bool = false
+//    @State private var showHamburgerMenu: Bool = false
 
     var body: some View {
-//        VStack{
-//            
-//        }
-//    }
-//}
-//        
-        GeometryReader { geoReader in
-            ZStack {
-                Color.purple
-                    .ignoresSafeArea()
-
                 VStack {
-                    imageSection(for: geoReader)
-
+//                    imageSection()
+//                    
+//                    if isEditingInfo {
+//                        EditProfileView()
+//                    }
                     Spacer()
-                        .frame(height: geoReader.size.height * 0.08)
-
-                    mainButtons(for: geoReader)
+                    mainButtons()
+                    Spacer()
                 }
-                .position(x: geoReader.frame(in: .local).midX, y: geoReader.size.height * 0.5)
-                .sheet(isPresented: $showSheet) {
-                    ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
-                        .background(Color.white.cornerRadius(20))
-                        .padding()
-                }
-
-                Text("Settings")
-                    .bold()
-                    .foregroundColor(.black)
-                    .font(.largeTitle)
-                    .position(x: geoReader.size.width * 0.2, y: geoReader.size.height * 0.02)
-            }
-            .position(x: geoReader.frame(in: .local).midX, y: geoReader.frame(in: .local).midY)
-            .disabled(showHamburgerMenu)
-
-            // Display HamburgerMenu
-            if self.showHamburgerMenu {
-                HamburgerMenu(showHamburgerMenu: self.$showHamburgerMenu, geoReader: geoReader)
-                    .frame(width: geoReader.size.width / 2)
-                    .padding(.trailing, geoReader.size.width * 0.5)
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-          //  homeViewModel.getUserProfile
-            //{ userProfile in
-//                if userProfile.id != "" {
-////                    homeViewModel.getImageStorageFile(profileId: userProfileId)
+//                .sheet(isPresented: $showSheet) {
+//                    ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
+//                        .background(Color.white.cornerRadius(20))
+//                        .padding()
 //                }
-            // }
-        }
     }
 
     private func deleteUser() {
@@ -94,118 +58,122 @@ struct SettingsView: View {
         }
         viewRouter.currentPage = .signinPage
     }
-
-    private func imageSection(for geoReader: GeometryProxy) -> some View {
-        VStack {
-            Image(uiImage: homeViewModel.profileImage)
-                .resizable()
-                .frame(width: 250, height: 250)
-                .background(Color.black.opacity(0.2))
-                .aspectRatio(contentMode: .fill)
-                .clipShape(Circle())
-
-            if editInfo {
-                Button(action: {
-                    showSheet = true
-                }) {
-                    Text("Upload Image")
-                        .font(.headline)
-                        .frame(width: geoReader.size.width * 0.4, height: geoReader.size.height * 0.04)
-                        .background(Color.blue)
-                        .cornerRadius(geoReader.size.height * 0.04)
-                        .foregroundColor(Color.white)
-                }
-            }
-                    
-            // Horizontal circular buttons
-            HStack {
-                Button(action: {
-                    // Handle "My Bunchies" action
-                }) {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.white)
-                        .background(Color.gray)
-                        .clipShape(Circle())
-                }
-                .padding()
-                .sheet(isPresented: $showSheet) {
-                   // BunchiesView()
-                }
-
-                Button(action: {
-                    // Handle "Privacy and Security" action
-                }) {
-                    Image(systemName: "lock.fill")
-                        .resizable()
-                        .frame(width: 38, height: 38)
-                        .font(.system(size: 1))
-                        .foregroundColor(Color(red: 255/255, green: 215/255, blue: 100/255))
-                        .background(Color.black)
-                        .clipShape(Circle())
-                        .overlay(
-                                        Circle()
-                                            .stroke(Color.white, lineWidth: 3)
-                                    )                }
-                .padding()
-
-                Button(action: {
-                    // Handle "My Reviews" action
-                }) {
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .frame(width: 38, height: 38)
-                        .foregroundColor(.white)
-                        .background(Color.gray)
-                        .clipShape(Circle())
-                        .overlay(
-                                        Circle()
-                                            .stroke(Color.white, lineWidth: 3)
-                                    )
-                }
-                .padding()
-            }
-        }
-    }
-    private func mainButtons(for geoReader: GeometryProxy) -> some View {
-        VStack {
-            Button(action: {
-                if editInfo {
-//                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
-//                        if message == "image too large" {
-//                            isLargeImageAlert.toggle()
-//                        }
+//
+//    private func imageSection() -> some View {
+//        VStack {
+//            ZStack{
+//                Image(uiImage: homeViewModel.profileImage)
+//                    .resizable()
+//                    .frame(width: 200, height: 200)
+//                    .background(Color.black.opacity(0.2))
+//                    .aspectRatio(contentMode: .fill)
+//                    .clipShape(Circle())
+//
+//                
+//                if isEditingInfo {
+//                    Button(action: {
+//                        showSheet = true
+//                    }) {
+//                        Image(systemName: "pencil.circle.fill")
+//                            .resizable()
+//                            .frame(width: 40, height: 40)
 //                    }
+//                    .position(x: 250, y: 180)
+//                }
+//            }
+//                    
+////            // Horizontal circular buttons
+////            HStack {
+////                Button(action: {
+////                    // Handle "My Bunchies" action
+////                }) {
+////                    Image(systemName: "plus.circle")
+////                        .resizable()
+////                        .frame(width: 40, height: 40)
+////                        .foregroundColor(.white)
+////                        .background(Color.gray)
+////                        .clipShape(Circle())
+////                }
+////                .padding()
+////                .sheet(isPresented: $showSheet) {
+////                   // BunchiesView()
+////                }
+////
+////                Button(action: {
+////                    // Handle "Privacy and Security" action
+////                }) {
+////                    Image(systemName: "lock.fill")
+////                        .resizable()
+////                        .frame(width: 38, height: 38)
+////                        .font(.system(size: 1))
+////                        .foregroundColor(Color(red: 255/255, green: 215/255, blue: 100/255))
+////                        .background(Color.black)
+////                        .clipShape(Circle())
+////                        .overlay(
+////                                        Circle()
+////                                            .stroke(Color.white, lineWidth: 3)
+////                                    )                }
+////                .padding()
+////
+////                Button(action: {
+////                    // Handle "My Reviews" action
+////                }) {
+////                    Image(systemName: "star.fill")
+////                        .resizable()
+////                        .frame(width: 38, height: 38)
+////                        .foregroundColor(.white)
+////                        .background(Color.gray)
+////                        .clipShape(Circle())
+////                        .overlay(
+////                                        Circle()
+////                                            .stroke(Color.white, lineWidth: 3)
+////                                    )
+////                }
+////                .padding()
+////            }
+//        }
+//    }
+    
+    private func mainButtons() -> some View {
+        VStack {
+//                        Button(action: {
+//                            if isEditingInfo {
+            //                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
+            //                        if message == "image too large" {
+            //                            isLargeImageAlert.toggle()
+            //                        }
+            //                    }
+//                            }
+//                            isEditingInfo.toggle()
+//                        }) {
+//                            Text(isEditingInfo ? "Save Profile" : "Edit Profile")
+//                                .frame(width: 360, height: 50)
+//                                .foregroundColor(.white)
+//                                .background(Color.gray)
+//                                .cornerRadius(10)
+//                        }
+            
+                Button(action: {
+                    signOutUser()
+                }) {
+                    Text("Sign Out")
+                        .frame(width: 360, height: 50)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
-                editInfo.toggle()
-            }) {
-                Text(editInfo ? "Save Profile" : "Edit Profile")
-                    .foregroundColor(.white)
-                    .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
-                    .background(Color.gray)
-                    .cornerRadius(geoReader.size.width * 0.06)
-            }
-
-            Button(action: {
-                signOutUser()
-            }) {
-                Text("Sign Out")
-                    .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
-                    .background(Color.gray)
-                    .cornerRadius(geoReader.size.width * 0.06)
-                    .foregroundColor(.white)
-            }
-
-            Button(action: {
-                deleteUser()
-            }) {
-                Text("Delete Account")
-                    .frame(width: geoReader.size.width * 0.8, height: geoReader.size.height * 0.08)
-                    .background(Color.gray)
-                    .cornerRadius(geoReader.size.width * 0.06)
-                    .foregroundColor(.white)
-            }
+    
+                Button(action: {
+                    deleteUser()
+                }) {
+                    Text("Delete Account")
+                        .frame(width: 360, height: 50)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                }
+        
+            
         }
     }
 }

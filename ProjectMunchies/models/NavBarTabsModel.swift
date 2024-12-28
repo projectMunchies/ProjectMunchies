@@ -14,7 +14,6 @@ enum NavBarTabsModel: String, CaseIterable {
     case liveReviews = "Live Reviews"
     case explore = "Explore"
     case crunchAI = "CrunchAI"
-    case profile = "Profile"
     case settings = "Settings"
     case home = "Home"
     
@@ -34,8 +33,6 @@ enum NavBarTabsModel: String, CaseIterable {
             "circle.grid.2x2.fill"
         case .bunchies:
             "circle.grid.2x2.fill"
-        case .profile:
-            "person.fill"
         case .settings:
             "gearshape.circle"
         case .venue:
@@ -47,5 +44,5 @@ enum NavBarTabsModel: String, CaseIterable {
     }
     
     // add cases to this once new features are complete
-    static let mainCases: [NavBarTabsModel] = [.home, .liveReviews, .profile, .settings, .venue]
+    static let mainCases: [NavBarTabsModel] = [.home, .liveReviews, .settings, .venue]
 }

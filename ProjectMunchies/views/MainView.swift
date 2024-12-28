@@ -58,7 +58,7 @@ struct MainView: View {
                         Text(locationManager.activeTab.rawValue)
                             .font(.title2)
                             .fontWeight(.semibold)
-                    
+                            .padding(.leading)
 //                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     
                     SheetViews(activeTab: locationManager.activeTab)
@@ -114,10 +114,11 @@ struct MainView: View {
     }
     
     public func SheetViews(activeTab: NavBarTabsModel) -> some View {
-        VStack{
+        HStack{
+            Spacer()
             switch (activeTab) {
             case .home:
-                HomeView()
+                HomeView(sheetIndents: self.$sheetIndents)
             case .filter:
                 FilterView()
             case .liveReviews:
@@ -137,14 +138,13 @@ struct MainView: View {
                 ))))
             case .bunchies:
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
-            case .profile:
-                ProfileView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .settings:
                 SettingsView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .venue:
                 VenueView(sheetIndent: self.$sheetIndents, activeTab: $locationManager.activeTab)
                     .environmentObject(locationManager)
             }
+            Spacer()
         }
     }
     
