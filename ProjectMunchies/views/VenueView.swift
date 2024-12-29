@@ -189,5 +189,5 @@ struct VenueView: View {
 }
 
 #Preview {
-    HomeView()
+    MainView()
 }

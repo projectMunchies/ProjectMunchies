@@ -19,7 +19,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var fetchedPlaces: [VenueModelDTO]?
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
-    @Published var activeTab: NavBarTabsModel = .liveReviews
+    @Published var activeTab: NavBarTabsModel = .home
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
     
@@ -69,6 +69,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Handle Error
+        print("error in locationManager:")
+        print(error)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -89,7 +91,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
     
     func handleLocationError() {
-        
+        print("error in locationManager: you're not authorized")
     }
     
     func search(value: String, alertType: String) {

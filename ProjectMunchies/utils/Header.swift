@@ -14,7 +14,6 @@ struct Header: View {
     @State private var showIntroPopover: Bool = false
     @State private var isSettingsPresented: Bool = false
     @State private var selectedView: Int?
-    @State var navigationTag: String?
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -24,15 +23,13 @@ struct Header: View {
                 HStack{
                     Spacer()
                     logoWithText(for: geoReader)
-                    Spacer()
-                    searchButton(for: geoReader)
-                    Spacer()
-                    messageIcon(for: geoReader)
-                   
+//                    Spacer()
+//                    searchButton(for: geoReader)
+//                    Spacer()
+//                    messageIcon(for: geoReader)
                 }
             }
         }
-     
     }
     
     public func logoWithText(for geoReader: GeometryProxy) -> some View {
@@ -85,5 +82,5 @@ struct Header: View {
 }
 
 #Preview {
-    HomeView()
+    MainView()
 }

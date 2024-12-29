@@ -30,7 +30,7 @@ struct ContentView: View {
 //            GeometryReader{ geoReader in
 //                ZStack{
                     //                HomeView(searchText: self.$searchText, startSearch: self.$startSearch, position: $position)
-                    HomeView()
+                    MainView()
                         .tag(0)
                         .toolbar(.hidden, for: .tabBar)
 //                }
