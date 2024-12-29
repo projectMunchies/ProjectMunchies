@@ -14,12 +14,12 @@ class VenuesService: ObservableObject {
     private let venuesRepository = VenuesRepository()
     
     public func GetVenue(venueId: String) async throws -> VenueModel {
-       var venue = try await venuesRepository.Get(venueId: venueId)
+        let venue = try await venuesRepository.Get(venueId: venueId)
         return venue
     }
     
     public func GetVenues(venueIds: [String]) async throws -> [VenueModel] {
-       var venues = try await venuesRepository.Get(venueIds: venueIds)
+        let venues = try await venuesRepository.Get(venueIds: venueIds)
         return venues
     }
 }
