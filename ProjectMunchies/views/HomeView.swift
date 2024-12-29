@@ -9,14 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
+    @Binding var settingsDetent: PresentationDetent
     
     var body: some View {
         VStack{
-                ProfileView(sheetIndents: $sheetIndents)
+                ProfileView(sheetIndents: $sheetIndents, settingsDetent: $settingsDetent)
         }
     }
 }
 
 #Preview {
-    HomeView(sheetIndents: .constant([.height(60),.medium, .large]))
+    HomeView(sheetIndents: .constant([.height(60),.medium, .large]),settingsDetent: .constant(.height(60)))
 }

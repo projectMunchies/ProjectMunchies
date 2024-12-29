@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
+    @Binding var settingsDetent: PresentationDetent
     @StateObject private var homeViewModel = ProfilesViewModel()
     @State private var showSheet = false
     @State private var isEditingInfo = false
@@ -22,7 +23,7 @@ struct ProfileView: View {
     var body: some View {
         ZStack{
             
-            Color.gray.ignoresSafeArea()
+            //  Color.gray.ignoresSafeArea()
             VStack{
                 imageSection()
                 
@@ -33,6 +34,11 @@ struct ProfileView: View {
                 }
                 
                 mainButtons()
+            }
+            .sheet(isPresented: $showSheet) {
+                ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
+                    .background(Color.white.cornerRadius(20))
+                    .padding()
             }
         }
     }
@@ -134,7 +140,6 @@ struct ProfileView: View {
                     .cornerRadius(15)
             }
             .padding(.bottom)
-            
         }
     }
     
@@ -148,23 +153,24 @@ struct ProfileView: View {
                     .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
                 
-            
-                    Button(action: {
-                        if isEditingInfo {
-                            showSheet = true
-                        }
-                      
-                        if !isEditingInfo {
-                            isEditingInfo.toggle()
-                        }
-                      
-                    }) {
-                        Image(systemName: isEditingInfo ? "plus.circle.fill" : "pencil.circle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40)
+                
+                Button(action: {
+                    if isEditingInfo {
+                        showSheet = true
                     }
-                    .padding(.top,120)
-                    .padding(.leading,90)
+                    
+                    if !isEditingInfo {
+                        isEditingInfo.toggle()
+                        settingsDetent = .large
+                    }
+                    
+                }) {
+                    Image(systemName: isEditingInfo ? "plus.circle.fill" : "pencil.circle.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                }
+                .padding(.top,120)
+                .padding(.leading,90)
             }
         }
     }
@@ -173,12 +179,13 @@ struct ProfileView: View {
         VStack {
             if isEditingInfo {
                 Button(action: {
-                        //                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
-                        //                        if message == "image too large" {
-                        //                            isLargeImageAlert.toggle()
-                        //                        }
-                        //                    }
+                    //                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
+                    //                        if message == "image too large" {
+                    //                            isLargeImageAlert.toggle()
+                    //                        }
+                    //                    }
                     isEditingInfo.toggle()
+                    settingsDetent = .medium
                 }) {
                     Text("Save Profile")
                         .frame(width: 360, height: 50)
@@ -187,11 +194,10 @@ struct ProfileView: View {
                         .cornerRadius(10)
                 }
             }
-         
         }
     }
 }
 
 #Preview {
-    ProfileView(sheetIndents: .constant([.height(60),.medium, .large]))
+    ProfileView(sheetIndents: .constant([.height(60),.medium, .large]), settingsDetent: .constant(.height(60)))
 }

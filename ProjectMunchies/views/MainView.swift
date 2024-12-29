@@ -17,6 +17,7 @@ struct MainView: View {
     @State private var ignoreTabBar: Bool = true
     @State private var isCreateReviewOverlay: Bool = false
     @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
+    @State private var settingsDetent: PresentationDetent = .height(60)
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -67,7 +68,7 @@ struct MainView: View {
                 .padding()
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .presentationDetents(self.sheetIndents)
+            .presentationDetents(self.sheetIndents, selection: self.$settingsDetent)
             .presentationCornerRadius(20)
             .presentationBackground(.regularMaterial)
             .presentationBackgroundInteraction(.enabled(upThrough: .large))
@@ -118,7 +119,7 @@ struct MainView: View {
             Spacer()
             switch (activeTab) {
             case .home:
-                HomeView(sheetIndents: self.$sheetIndents)
+                HomeView(sheetIndents: self.$sheetIndents,settingsDetent: self.$settingsDetent)
             case .filter:
                 FilterView()
             case .liveReviews:
@@ -139,7 +140,8 @@ struct MainView: View {
             case .bunchies:
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .settings:
-                SettingsView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
+                SettingsView(sheetIndents: self.$sheetIndents,
+                             settingsDetent: self.$settingsDetent, activeTab: $locationManager.activeTab)
             case .venue:
                 VenueView(sheetIndent: self.$sheetIndents, activeTab: $locationManager.activeTab)
                     .environmentObject(locationManager)
