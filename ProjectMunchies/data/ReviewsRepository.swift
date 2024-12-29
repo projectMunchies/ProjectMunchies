@@ -51,7 +51,7 @@ class ReviewsRepository: ObservableObject{
             review.title = documentData["title"] as! String
             review.profileId = documentData["userId"] as! String
             review.venueId = documentData["venueId"] as! String
-            let timeStamp = documentData["timeStamp"] as! Timestamp
+            let timeStamp = documentData["creationDate"] as! Timestamp
             review.timeStamp = timeStamp.dateValue()
             review.activityId = documentData["activityId"] as? String ?? ""
             
@@ -79,7 +79,7 @@ class ReviewsRepository: ObservableObject{
             review.title = documentData["title"] as! String
             review.profileId = documentData["profileId"] as! String
             review.venueId = documentData["venueId"] as! String
-            let timeStamp = documentData["timeStamp"] as! Timestamp
+            let timeStamp = documentData["creationDate"] as! Timestamp
             review.timeStamp = timeStamp.dateValue()
             review.activityId = documentData["activityId"] as? String ?? ""
             

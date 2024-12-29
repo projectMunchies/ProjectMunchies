@@ -9,39 +9,23 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
-   // @EnvironmentObject var viewRouter: ViewRouter
-    
-//    @State private var searchText: String = ""
-//    @State private var startSearch: Bool = false
-//    @State private var position: MapCameraPosition = MapCameraPosition
-//        .region (MKCoordinateRegion(
-//            center: CLLocationCoordinate2D(
-//                latitude: 27.9506,
-//                longitude: -82.4572
-//            ),
-//            span: MKCoordinateSpan(
-//                latitudeDelta: 0.1,
-//                longitudeDelta: 0.1
-//            )
-//        ))
-    
+    @EnvironmentObject var viewRouter: ViewRouter
+
     var body: some View {
         NavigationView{
-//            GeometryReader{ geoReader in
-//                ZStack{
-                    //                HomeView(searchText: self.$searchText, startSearch: self.$startSearch, position: $position)
-                    MainView()
-                        .tag(0)
-                        .toolbar(.hidden, for: .tabBar)
-//                }
-//            }
+            if viewRouter.currentPage == .homePage {
+                MainView()
+                    .tag(0)
+                    .toolbar(.hidden, for: .tabBar)
+            } else {
+                SignInView()
+            }
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-//        ContentView().environmentObject(ViewRouter())
-        ContentView()
+        ContentView().environmentObject(ViewRouter())
     }
 }
