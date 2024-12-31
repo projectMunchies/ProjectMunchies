@@ -12,7 +12,6 @@ struct MainView: View {
     @StateObject var locationManager: LocationManager = .init()
     @StateObject private var venuesViewModel = VenuesViewModel()
     
-    @State var navigationTag: String?
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
     @State private var isCreateReviewOverlay: Bool = false
@@ -141,7 +140,7 @@ struct MainView: View {
                 BunchiesView(sheetIndents: self.$sheetIndents, activeTab: $locationManager.activeTab)
             case .settings:
                 SettingsView(sheetIndents: self.$sheetIndents,
-                             settingsDetent: self.$settingsDetent, activeTab: $locationManager.activeTab)
+                             settingsDetent: self.$settingsDetent)
             case .venue:
                 VenueView(sheetIndent: self.$sheetIndents, activeTab: $locationManager.activeTab)
                     .environmentObject(locationManager)

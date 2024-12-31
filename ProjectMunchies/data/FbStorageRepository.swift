@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import FirebaseStorage
 
-class FbStorageRepository: ObservableObject {
+class FbStorageRepository {
     let storage = Storage.storage()
     
     public func Get(profileId: String) async throws -> UIImage {

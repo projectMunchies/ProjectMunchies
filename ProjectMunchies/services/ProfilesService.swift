@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 
-class ProfilesService: ObservableObject {
+class ProfilesService {
     private let profilesRespository = ProfilesRepository()
     private let fbStorageRespository = FbStorageRepository()
     

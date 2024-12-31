@@ -344,7 +344,6 @@
 		77EBA50E2C04D94100437FCE /* services */ = {
 			isa = PBXGroup;
 			children = (
-				774157152C0C2CF10076C73D /* LocationManager.swift */,
 				77EBA5162C05082500437FCE /* ProfilesService.swift */,
 				77EBA5182C052C9E00437FCE /* VenuesService.swift */,
 				7741570C2C0B224E0076C73D /* SpecialsService.swift */,
@@ -402,6 +401,7 @@
 		77EBA5112C04D96400437FCE /* viewModels */ = {
 			isa = PBXGroup;
 			children = (
+				774157152C0C2CF10076C73D /* LocationManager.swift */,
 				7772A01E2B67821600652687 /* ReviewsViewModel.swift */,
 				7772A0192B67811400652687 /* VenuesViewModel.swift */,
 				7772A0202B67822F00652687 /* SpecialsViewModel.swift */,

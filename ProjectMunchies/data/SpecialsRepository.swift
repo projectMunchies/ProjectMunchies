@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class SpecialsRepository: ObservableObject{
+class SpecialsRepository {
     let db = Firestore.firestore()
     
     public func Get(specialId: String) async throws -> SpecialModel {

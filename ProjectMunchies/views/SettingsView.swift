@@ -11,9 +11,7 @@ import Firebase
 struct SettingsView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var settingsDetent: PresentationDetent
-    @Binding var activeTab: NavBarTabsModel
     @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var homeViewModel = ProfilesViewModel()
     
     var body: some View {
         VStack {
@@ -73,6 +71,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(sheetIndents: .constant([.height(60),.medium, .large]),settingsDetent: .constant(.height(60)), activeTab: .constant(.settings))
+        SettingsView(sheetIndents: .constant([.height(60),.medium, .large]),settingsDetent: .constant(.height(60)))
     }
 }

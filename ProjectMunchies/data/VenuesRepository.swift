@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class VenuesRepository: ObservableObject{
+class VenuesRepository {
     let db = Firestore.firestore()
     
     public func Get(venueId: String) async throws -> VenueModel {
