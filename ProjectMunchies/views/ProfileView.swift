@@ -11,7 +11,7 @@ struct ProfileView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var settingsDetent: PresentationDetent
     @Binding var isEditProfile: Bool
-    @StateObject private var profilesViewModel = ProfilesViewModel()
+    @EnvironmentObject var profilesViewModel: ProfilesViewModel
     @State private var showSheet = false
     @State var isLargeImageAlert: Bool = false
     @State private var userName: String = ""
@@ -199,4 +199,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(sheetIndents: .constant([.height(60),.medium, .large]), settingsDetent: .constant(.height(60)), isEditProfile: .constant(false))
+        .environmentObject(ProfilesViewModel())
 }

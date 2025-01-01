@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Firebase
 
-class ProfilesViewModel: ObservableObject {
+@MainActor class ProfilesViewModel: ObservableObject {
     private let service = ProfilesService()
     
     @Published var profileImage: UIImage = UIImage()
@@ -18,11 +18,10 @@ class ProfilesViewModel: ObservableObject {
     
     public func GetUserProfile() async throws {
         let userProfile =  try await service.GetProfile(profileId: Auth.auth().currentUser?.uid ?? "")
-        
         if(userProfile.id != "") {
             self.userProfile = userProfile
         } else {
-            if self.isNewUser {
+            if isNewUser {
                 try await CreateUserProfile()
             }
         }
