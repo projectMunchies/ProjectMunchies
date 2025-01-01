@@ -14,12 +14,17 @@ class ProfilesViewModel: ObservableObject {
     
     @Published var profileImage: UIImage = UIImage()
     @Published var userProfile: ProfileModel = emptyProfileModel
+    @Published var isNewUser: Bool = false
     
     public func GetUserProfile() async throws {
         let userProfile =  try await service.GetProfile(profileId: Auth.auth().currentUser?.uid ?? "")
         
         if(userProfile.id != "") {
             self.userProfile = userProfile
+        } else {
+            if self.isNewUser {
+                try await CreateUserProfile()
+            }
         }
     }
     

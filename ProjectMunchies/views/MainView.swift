@@ -11,6 +11,7 @@ import MapKit
 struct MainView: View {
     @StateObject var locationManager: LocationManager = .init()
     @StateObject private var venuesViewModel = VenuesViewModel()
+    @EnvironmentObject var profilesViewModel: ProfilesViewModel
     
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
@@ -41,7 +42,7 @@ struct MainView: View {
                 if !isCreateReviewOverlay {
                     showSheet = true
                 }
-                
+                try await profilesViewModel.GetUserProfile()
                 try await getNewMapAlerts()
                 
             } catch {
@@ -55,11 +56,11 @@ struct MainView: View {
             ScrollView(.vertical, content: {
                 VStack(alignment: .leading, spacing: 15, content: {
                     
-                        Text(locationManager.activeTab.rawValue)
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .padding(.leading)
-//                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
+                    Text(locationManager.activeTab.rawValue)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .padding(.leading)
+                    //                    Toggle("Ignore Tab Bar", isOn: $ignoreTabBar)
                     
                     SheetViews(activeTab: locationManager.activeTab)
                     
@@ -151,7 +152,7 @@ struct MainView: View {
     
     private func getNewMapAlerts() async throws {
         try await venuesViewModel.GetMapAlerts()
-    
+        
         locationManager.search(value: venuesViewModel.reviewVenues.first!.name, alertType: "reviews")
         
         locationManager.search(value: venuesViewModel.specialVenues.first!.name, alertType: "specials")

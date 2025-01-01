@@ -15,16 +15,16 @@ class ProfilesService {
     
     public func GetProfile(profileId: String) async throws -> ProfileModel {
         let responseProfile = try await profilesRespository.Get(profileId: profileId)
-        let profileImage = try await fbStorageRespository.Get(profileId: responseProfile.id)
+//        let profileImage = try await fbStorageRespository.Get(profileId: responseProfile.id)
         
         var result = responseProfile
-        result.profileImage = profileImage
+     //   result.profileImage = profileImage
         return result
     }
     
     public func CreateProfile() async throws -> ProfileModel {
         let id = UUID().uuidString
-        var newProfile = ProfileModel(
+        let newProfile = ProfileModel(
             id: id,
             fullName: Auth.auth().currentUser?.displayName ?? "",
             location: "",
