@@ -144,12 +144,22 @@ struct ProfileView: View {
     private func imageSection() -> some View {
         VStack {
             ZStack{
-                Image(uiImage: profilesViewModel.userProfile.profileImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 120, height: 120)
-                    .background(Color.black.opacity(0.2))
-                    .clipShape(Circle())
+                if profilesViewModel.userProfile.profileImage.size.width > 0 {
+                    Image(uiImage: profilesViewModel.userProfile.profileImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120, height: 120)
+                        .background(Color.black.opacity(0.2))
+                        .clipShape(Circle())
+                    
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120, height: 120)
+                        .foregroundColor(.gray)
+                        .clipShape(Circle())
+                }
                 
                 Button(action: {
                     if isEditProfile {

@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Firebase
-
 import FirebaseStorage
 
 @MainActor class ProfilesViewModel: ObservableObject {
