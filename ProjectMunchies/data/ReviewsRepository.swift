@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class ReviewsRepository: ObservableObject{
+class ReviewsRepository {
     let db = Firestore.firestore()
     
     public func Get(reviewId: String) async throws -> ReviewModel {

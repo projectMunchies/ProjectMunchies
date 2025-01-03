@@ -93,7 +93,6 @@
 		77E3834B2A738D480084B8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834A2A738D480084B8A6 /* Extensions.swift */; };
 		77E3834D2A74E36A0084B8A6 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */; };
 		77EBA5132C04DCAD00437FCE /* ProfilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */; };
-		77EBA5152C05001B00437FCE /* FbStorageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5142C05001B00437FCE /* FbStorageRepository.swift */; };
 		77EBA5172C05082500437FCE /* ProfilesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5162C05082500437FCE /* ProfilesService.swift */; };
 		77EBA5192C052C9E00437FCE /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA5182C052C9E00437FCE /* VenuesService.swift */; };
 		77EBA51B2C052D2300437FCE /* VenuesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBA51A2C052D2300437FCE /* VenuesRepository.swift */; };
@@ -187,7 +186,6 @@
 		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		77E383502A75B78F0084B8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesRepository.swift; sourceTree = "<group>"; };
-		77EBA5142C05001B00437FCE /* FbStorageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FbStorageRepository.swift; sourceTree = "<group>"; };
 		77EBA5162C05082500437FCE /* ProfilesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesService.swift; sourceTree = "<group>"; };
 		77EBA5182C052C9E00437FCE /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
 		77EBA51A2C052D2300437FCE /* VenuesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesRepository.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */,
-				77EBA5142C05001B00437FCE /* FbStorageRepository.swift */,
 				77EBA51A2C052D2300437FCE /* VenuesRepository.swift */,
 				774157082C0AE0AE0076C73D /* ReviewsRepository.swift */,
 				7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */,
@@ -344,7 +341,6 @@
 		77EBA50E2C04D94100437FCE /* services */ = {
 			isa = PBXGroup;
 			children = (
-				774157152C0C2CF10076C73D /* LocationManager.swift */,
 				77EBA5162C05082500437FCE /* ProfilesService.swift */,
 				77EBA5182C052C9E00437FCE /* VenuesService.swift */,
 				7741570C2C0B224E0076C73D /* SpecialsService.swift */,
@@ -402,6 +398,7 @@
 		77EBA5112C04D96400437FCE /* viewModels */ = {
 			isa = PBXGroup;
 			children = (
+				774157152C0C2CF10076C73D /* LocationManager.swift */,
 				7772A01E2B67821600652687 /* ReviewsViewModel.swift */,
 				7772A0192B67811400652687 /* VenuesViewModel.swift */,
 				7772A0202B67822F00652687 /* SpecialsViewModel.swift */,
@@ -656,7 +653,6 @@
 				77E3830D2A7225470084B8A6 /* ProjectMunchiesApp.swift in Sources */,
 				7741570B2C0B1FA10076C73D /* SpecialsRepository.swift in Sources */,
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
-				77EBA5152C05001B00437FCE /* FbStorageRepository.swift in Sources */,
 				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
 				774157122C0C2AE30076C73D /* SearchView.swift in Sources */,

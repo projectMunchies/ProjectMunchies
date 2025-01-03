@@ -11,6 +11,8 @@ import Firebase
 struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @EnvironmentObject var profilesViewModel: ProfilesViewModel
+    
     
     var body: some View {
         GeometryReader{ geoReader in
@@ -85,6 +87,8 @@ struct SignUpView: View {
             if error != nil {
                 print(error?.localizedDescription ?? "")
             }else{
+                profilesViewModel.isNewUser = true
+                
                 print("successfully signed up")
             }
         }
