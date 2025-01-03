@@ -22,7 +22,7 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack{
-             // Color.gray.ignoresSafeArea()
+            // Color.gray.ignoresSafeArea()
             VStack{
                 imageSection()
                 
@@ -35,7 +35,7 @@ struct ProfileView: View {
                 mainButtons()
             }
             .sheet(isPresented: $showSheet) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $profilesViewModel.profileImage)
+                ImagePicker(sourceType: .photoLibrary, selectedImage: $profilesViewModel.userProfile.profileImage)
                     .background(Color.white.cornerRadius(20))
                     .padding()
             }
@@ -87,7 +87,6 @@ struct ProfileView: View {
                     .cornerRadius(15)
             }
             .padding(.bottom)
-            
             
             VStack{
                 Text("Email:")
@@ -145,13 +144,12 @@ struct ProfileView: View {
     private func imageSection() -> some View {
         VStack {
             ZStack{
-                Image(uiImage: profilesViewModel.profileImage)
+                Image(uiImage: profilesViewModel.userProfile.profileImage)
                     .resizable()
+                    .scaledToFill()
                     .frame(width: 120, height: 120)
                     .background(Color.black.opacity(0.2))
-                    .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
-                
                 
                 Button(action: {
                     if isEditProfile {

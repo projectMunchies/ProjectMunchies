@@ -12,10 +12,10 @@ import Firebase
 class ProfilesRepository {
     let db = Firestore.firestore()
     
-    public func Get(profileId: String) async throws -> ProfileModel {
+    public func Get(userID: String) async throws -> ProfileModel {
         var profile = emptyProfileModel
         let snapshot = try await db.collection("profiles")
-            .whereField("userId", isEqualTo: profileId as String)
+            .whereField("userId", isEqualTo: userID as String)
             .getDocuments()
         
         snapshot.documents.forEach { documentSnapshot in
