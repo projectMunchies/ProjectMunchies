@@ -26,6 +26,7 @@ struct MainView: View {
                 .navigationBarHidden(true)
                 .preferredColorScheme(.dark)
                 .disabled(isCreateReviewOverlay)
+          
             
             SubHeaderSection()
                 .position(x: 200, y: 10)
@@ -33,6 +34,17 @@ struct MainView: View {
             TabBar()
                 .frame(height: 49)
                 .background(.regularMaterial)
+            
+            
+            Text("\(locationManager.userLocation?.coordinate.latitude ?? 0)")
+                .foregroundColor(.red)
+                .font(.system(size: 40))
+                .position(x: 200, y: 100)
+            
+            Text("\(locationManager.userLocation?.coordinate.longitude ?? 0)")
+                .foregroundColor(.red)
+                .font(.system(size: 40))
+                .position(x: 200, y: 160)
         }
         .task() {
             do {
