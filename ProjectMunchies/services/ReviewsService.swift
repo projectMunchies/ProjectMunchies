@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ReviewsService: ObservableObject {
+class ReviewsService {
     private let reviewsRepository = ReviewsRepository()
     
     public func GetReview(reviewId: String) async throws -> ReviewModel {

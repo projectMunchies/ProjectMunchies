@@ -10,9 +10,9 @@ import SwiftUI
 struct ProfileView: View {
     @Binding var sheetIndents: Set<PresentationDetent>
     @Binding var settingsDetent: PresentationDetent
-    @StateObject private var homeViewModel = ProfilesViewModel()
+    @Binding var isEditProfile: Bool
+    @EnvironmentObject var profilesViewModel: ProfilesViewModel
     @State private var showSheet = false
-    @State private var isEditingInfo = false
     @State var isLargeImageAlert: Bool = false
     @State private var userName: String = ""
     @State private var name: String = ""
@@ -22,12 +22,11 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack{
-            
-            //  Color.gray.ignoresSafeArea()
+            // Color.gray.ignoresSafeArea()
             VStack{
                 imageSection()
                 
-                if isEditingInfo {
+                if isEditProfile {
                     editProfileView()
                 } else {
                     profileView()
@@ -36,7 +35,7 @@ struct ProfileView: View {
                 mainButtons()
             }
             .sheet(isPresented: $showSheet) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $homeViewModel.profileImage)
+                ImagePicker(sourceType: .photoLibrary, selectedImage: $profilesViewModel.userProfile.profileImage)
                     .background(Color.white.cornerRadius(20))
                     .padding()
             }
@@ -45,7 +44,7 @@ struct ProfileView: View {
     
     private func profileView() -> some View {
         VStack{
-            Text("dotZ3r0")
+            Text("\(profilesViewModel.userProfile.fullName)")
                 .font(.system(size: 30))
                 .foregroundColor(.white)
                 .opacity(0.6)
@@ -88,7 +87,6 @@ struct ProfileView: View {
                     .cornerRadius(15)
             }
             .padding(.bottom)
-            
             
             VStack{
                 Text("Email:")
@@ -146,45 +144,54 @@ struct ProfileView: View {
     private func imageSection() -> some View {
         VStack {
             ZStack{
-                Image(uiImage: homeViewModel.profileImage)
-                    .resizable()
-                    .frame(width: 150, height: 150)
-                    .background(Color.black.opacity(0.2))
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-                
+                if profilesViewModel.userProfile.profileImage.size.width > 0 {
+                    Image(uiImage: profilesViewModel.userProfile.profileImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120, height: 120)
+                        .background(Color.black.opacity(0.2))
+                        .clipShape(Circle())
+                    
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120, height: 120)
+                        .foregroundColor(.gray)
+                        .clipShape(Circle())
+                }
                 
                 Button(action: {
-                    if isEditingInfo {
+                    if isEditProfile {
                         showSheet = true
                     }
                     
-                    if !isEditingInfo {
-                        isEditingInfo.toggle()
+                    if !isEditProfile {
+                        isEditProfile.toggle()
                         settingsDetent = .large
                     }
                     
                 }) {
-                    Image(systemName: isEditingInfo ? "plus.circle.fill" : "pencil.circle.fill")
+                    Image(systemName: isEditProfile ? "plus.circle.fill" : "pencil.circle.fill")
                         .resizable()
                         .frame(width: 40, height: 40)
                 }
-                .padding(.top,120)
-                .padding(.leading,90)
+                .padding(.top,90)
+                .padding(.leading,80)
             }
         }
     }
     
     private func mainButtons() -> some View {
         VStack {
-            if isEditingInfo {
+            if isEditProfile {
                 Button(action: {
                     //                    homeViewModel.uploadStorageFile(image: homeViewModel.profileImage, profileId: homeViewModel.userProfile.id) { message in
                     //                        if message == "image too large" {
                     //                            isLargeImageAlert.toggle()
                     //                        }
                     //                    }
-                    isEditingInfo.toggle()
+                    isEditProfile.toggle()
                     settingsDetent = .medium
                 }) {
                     Text("Save Profile")
@@ -199,5 +206,6 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(sheetIndents: .constant([.height(60),.medium, .large]), settingsDetent: .constant(.height(60)))
+    ProfileView(sheetIndents: .constant([.height(60),.medium, .large]), settingsDetent: .constant(.height(60)), isEditProfile: .constant(false))
+        .environmentObject(ProfilesViewModel())
 }

@@ -49,16 +49,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct ProjectMunchiesApp: App {
     @StateObject var viewRouter: ViewRouter
+    @StateObject var profilesviewModel: ProfilesViewModel
     
     init() {
         FirebaseApp.configure()
         
         let viewRouter = ViewRouter()
         _viewRouter = StateObject(wrappedValue: viewRouter)
+        
+        let profilesviewModel = ProfilesViewModel()
+        _profilesviewModel = StateObject(wrappedValue: profilesviewModel)
     }
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(viewRouter)
+                .environmentObject(profilesviewModel)
         }
     }
 }

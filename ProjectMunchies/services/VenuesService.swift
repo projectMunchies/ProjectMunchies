@@ -10,7 +10,7 @@ import Firebase
 import MapKit
 
 
-class VenuesService: ObservableObject {
+class VenuesService {
     private let venuesRepository = VenuesRepository()
     
     public func GetVenue(venueId: String) async throws -> VenueModel {

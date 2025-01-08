@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SpecialsService: ObservableObject {
+class SpecialsService {
     private let specialsRepository = SpecialsRepository()
     
     public func GetSpecial(specialId: String) async throws -> SpecialModel {
