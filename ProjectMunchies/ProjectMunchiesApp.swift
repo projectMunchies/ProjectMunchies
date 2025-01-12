@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import CoreLocation
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -36,6 +37,11 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    var locationManager: CLLocationManager?
+    var notificationCenter: UNUserNotificationCenter?
+    
+    
     func application(_ application: UIApplication,
                      configurationForConnecting connectingSceneSession: UISceneSession,
                      options: UIScene.ConnectionOptions) ->  UISceneConfiguration {
@@ -44,7 +50,86 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         sceneConfig.delegateClass = SceneDelegate.self
         return sceneConfig
     }
+    
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        self.locationManager = CLLocationManager()
+        self.locationManager!.delegate = self
+        
+        //get singleton object
+        self.notificationCenter = UNUserNotificationCenter.current()
+        
+        //register as delegate
+        notificationCenter?.delegate = self
+        
+        
+        // define what do you need permission to use
+        let options: UNAuthorizationOptions = [.alert, .sound]
+        
+        // request permission
+        notificationCenter!.requestAuthorization(options: options) { (granted, error) in
+            if !granted {
+                print("Permission not granted")
+            }
+        }
+        
+        return true
+    }
 }
+
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handleEvent(forRegion: region)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handleEvent(forRegion: region)
+        }
+       
+    }
+    
+    
+    func handleEvent(forRegion region: CLRegion!) {
+        let content = UNMutableNotificationContent()
+        content.title = "Title bitch"
+        content.body = "Well-crafted body message"
+        content.sound = UNNotificationSound.default
+        
+        //when the notification will be triggered
+        var timeInSeconds: TimeInterval = (60 * 15) //60s * 15 = 15min
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInSeconds, repeats: false)
+        
+        // same as the region to avoid duplication
+        let identifier = region.identifier
+        
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter!.add(request, withCompletionHandler: { (error) in
+            if error != nil {
+                print("Error adding notification with identifier: \(identifier)")
+            }
+        })
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let identifer =  response.notification.request.identifier
+        
+        //do stuff
+    }
+}
+
 
 @main
 struct ProjectMunchiesApp: App {
@@ -52,6 +137,7 @@ struct ProjectMunchiesApp: App {
     @StateObject var profilesviewModel: ProfilesViewModel
     
     init() {
+        // do I have to do this again??
         FirebaseApp.configure()
         
         let viewRouter = ViewRouter()

@@ -18,6 +18,8 @@ struct MainView: View {
     @State private var isCreateReviewOverlay: Bool = false
     @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
     @State private var settingsDetent: PresentationDetent = .height(60)
+    @State private var locationsInRegion: [CLLocation] = [CLLocation(latitude: -82, longitude: 20.0),
+        CLLocation(latitude: -82, longitude: 20.0)]
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -26,7 +28,6 @@ struct MainView: View {
                 .navigationBarHidden(true)
                 .preferredColorScheme(.dark)
                 .disabled(isCreateReviewOverlay)
-          
             
             SubHeaderSection()
                 .position(x: 200, y: 10)

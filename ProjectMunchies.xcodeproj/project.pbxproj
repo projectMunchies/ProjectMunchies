@@ -71,6 +71,7 @@
 		7772A0212B67822F00652687 /* SpecialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0202B67822F00652687 /* SpecialsViewModel.swift */; };
 		7772A0272B6943F200652687 /* PacmanAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0262B6943F200652687 /* PacmanAnimation.swift */; };
 		7772A0292B6944B800652687 /* SpinningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772A0282B6944B800652687 /* SpinningView.swift */; };
+		7775E1D42D32D551006E53EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7775E1D32D32D551006E53EC /* InfoPlist.strings */; };
 		77B247902D1E8B330030ABBF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B2478F2D1E8B330030ABBF /* HomeView.swift */; };
 		77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB42B6380F600EE6A42 /* ReviewModel.swift */; };
 		77B97AB72B669BFB00EE6A42 /* SpecialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */; };
@@ -150,6 +151,7 @@
 		774157112C0C2AE30076C73D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		774157152C0C2CF10076C73D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		774157172C0FB0500076C73D /* CreateReviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewOverlay.swift; sourceTree = "<group>"; };
+		7752821A2D33D4BC00E94D16 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../projectDate/projectDate/Info.plist; sourceTree = "<group>"; };
 		7752C14D2C899256004E9856 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		7752C14F2C8E2ADD004E9856 /* LoopingVIdeoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVIdeoPlayerView.swift; sourceTree = "<group>"; };
 		7752C1512C8EBF1D004E9856 /* venueTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venueTabsView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		7772A0202B67822F00652687 /* SpecialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsViewModel.swift; sourceTree = "<group>"; };
 		7772A0262B6943F200652687 /* PacmanAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacmanAnimation.swift; sourceTree = "<group>"; };
 		7772A0282B6944B800652687 /* SpinningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningView.swift; sourceTree = "<group>"; };
+		7775E1D32D32D551006E53EC /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		77B2478F2D1E8B330030ABBF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		77B97AB42B6380F600EE6A42 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		77B97AB62B669BFB00EE6A42 /* SpecialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialModel.swift; sourceTree = "<group>"; };
@@ -184,7 +187,6 @@
 		77E383482A7388F50084B8A6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		77E3834A2A738D480084B8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		77E3834C2A74E36A0084B8A6 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
-		77E383502A75B78F0084B8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77EBA5122C04DCAD00437FCE /* ProfilesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesRepository.swift; sourceTree = "<group>"; };
 		77EBA5162C05082500437FCE /* ProfilesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesService.swift; sourceTree = "<group>"; };
 		77EBA5182C052C9E00437FCE /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		77E383002A7225470084B8A6 = {
 			isa = PBXGroup;
 			children = (
+				7775E1D32D32D551006E53EC /* InfoPlist.strings */,
 				77DC3AE42B064ECA009F2B9A /* exampleMp4.mp4 */,
 				77E3830B2A7225470084B8A6 /* ProjectMunchies */,
 				77E3831C2A7225490084B8A6 /* ProjectMunchiesTests */,
@@ -287,8 +290,8 @@
 				77F3E0A42A8608CD00BC3791 /* utils */,
 				77E3830C2A7225470084B8A6 /* ProjectMunchiesApp.swift */,
 				77E383102A7225490084B8A6 /* Assets.xcassets */,
-				77E383502A75B78F0084B8A6 /* Info.plist */,
 				770AD05B2A76C0F1004CA5D2 /* GoogleService-Info.plist */,
+				7752821A2D33D4BC00E94D16 /* Info.plist */,
 				77E383122A7225490084B8A6 /* Preview Content */,
 			);
 			path = ProjectMunchies;
@@ -571,6 +574,7 @@
 				77E383142A7225490084B8A6 /* Preview Assets.xcassets in Resources */,
 				77E383112A7225490084B8A6 /* Assets.xcassets in Resources */,
 				770AD05C2A76C0F1004CA5D2 /* GoogleService-Info.plist in Resources */,
+				7775E1D42D32D551006E53EC /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,7 +828,9 @@
 				INFOPLIST_FILE = ProjectMunchies/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CrunchBunch;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "always and when in use description from ios target";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "always in use description from ios target";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "when in use description from ios target";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -837,7 +843,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -861,7 +867,9 @@
 				INFOPLIST_FILE = ProjectMunchies/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CrunchBunch;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "always and when in use description from ios target";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "always in use description from ios target";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "when in use description from ios target";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -874,7 +882,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dotz3r0.ProjectMunchies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
