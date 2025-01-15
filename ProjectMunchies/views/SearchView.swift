@@ -50,8 +50,7 @@ struct SearchView: View {
 //                        Button{
 //                            // MARK: Setting map region
 //                            if let coordinate = place.location?.coordinate{
-//                                locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
-//                                locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+//                                                        locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
 //                                locationManager.addDraggablePin(coordinate: coordinate)
 //                                locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
 //                                
@@ -193,7 +192,6 @@ struct MapViewSelection: View{
 //            }
         }
         .onDisappear {
-            locationManager.pickedLocation = nil
             locationManager.pickedPlaceMark = nil
             locationManager.mapView.removeAnnotations(locationManager.mapView.annotations)
         }

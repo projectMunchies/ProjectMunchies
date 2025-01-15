@@ -10,19 +10,26 @@ import MapKit
 import Combine
 
 class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocationManagerDelegate {
-    var cancellable: AnyCancellable?
-    @Published var searchModel: SearchModel = SearchModel(id: "", searchText: "", mapAlertType: "")
-    @Published var userLocation: CLLocation?
-    @Published var pickedLocation: CLLocation?
-    @Published var pickedPlaceMark: CLPlacemark?
-    @Published var fetchedPlaces: [VenueModelDTO]?
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
+    @Published var userLocation: CLLocation?
+    @Published var pickedPlaceMark: CLPlacemark?
+    @Published var fetchedPlaces: [VenueModelDTO]?
     @Published var activeTab: NavBarTabsModel = .home
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
-
+    @Published var searchModel: SearchModel = SearchModel(id: "", searchText: "", mapAlertType: "")
+//    @Published var footest: Bool = UserDefaults.standard.bool(forKey: "footest") {
+//        didSet {
+//            startFoo()
+//        }
+//    }
+    
+    var cancellable: AnyCancellable?
     let appleParkLocation = CLLocationCoordinate2D(latitude: 28.067267962618835,longitude: -82.7075608858218)
+    private var notificationCenter = UNUserNotificationCenter.current()
+    private var notificationContent = UNMutableNotificationContent()
+    
     
     override init() {
         super.init()
@@ -30,18 +37,33 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         manager.delegate = self
         mapView.delegate = self
         
-        // MARK: Search Textfield Watching
+        mapView.region = .downtownTampa
+        
+        manager.requestAlwaysAuthorization()
+        
+        // MARK: Notification Authorization
+        Task {
+            try await notificationCenter.requestAuthorization(options: [.badge])
+        }
+
+        
+        // MARK: SearchModel Textfield Watching
         cancellable = $searchModel
             .removeDuplicates()
             .sink(receiveValue: { value in
                 if value.searchText != "" {
-                    
                     self.fetchPlaces(value: value)
                 }
                 else {
                     self.fetchedPlaces = nil
                 }
             })
+    }
+    
+    // MARK: Fires Sink Subscriber in init()
+    func search(value: String, alertType: String) {
+        let search = SearchModel(id: "", searchText: value, mapAlertType: alertType)
+        searchModel = search
     }
     
     func fetchPlaces(value: SearchModel) {
@@ -52,6 +74,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
                 request.region = .downtownTampa
                 
                 let response = try await MKLocalSearch(request: request).start()
+                
                 await MainActor.run(body: {
                     self.fetchedPlaces = response.mapItems.compactMap({ item -> VenueModelDTO in
                         return VenueModelDTO(id: "", name: item.name ?? "", coordinates: item.placemark.coordinate, fetchedPlace: item.placemark, mapAlertType: value.mapAlertType)
@@ -59,26 +82,22 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
                 })
             }
             catch{
-                // HANDLE ERROR
+                // HANDLE ERROR; place logger
             }
         }
     }
     
+    // MARK: Handling location errors
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Handle Error
         print("error in locationManager:")
         print(error)
     }
     
+    // MARK: When your location updates
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.last else{return}
         self.userLocation = currentLocation
-        mapView.region = .downtownTampa
-    }
-    
-    func search(value: String, alertType: String) {
-        var search = SearchModel(id: "", searchText: value, mapAlertType: alertType)
-        searchModel = search
     }
     
     // MARK: Add draggable pin to MapView
@@ -91,42 +110,12 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         mapView.addAnnotations(annotations)
     }
     
-    // MARK: Enabling dragging
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "DELIVERYPIN")
-        marker.isDraggable = true
-        marker.canShowCallout = false
-        marker.animatesWhenAdded = true
-        
-        // change color based on mapAlertType
-        // we set it to subtitle couldnt find better property in annotation
-        if annotation.subtitle == "reviews" {
-            marker.markerTintColor = .red
-        } else if annotation.subtitle == "specials" {
-            marker.markerTintColor = .yellow
-        }
-        else {
-            marker.markerTintColor = .black
-        }
-        
-        return marker
-    }
-    
-    // MARK: When you drag a pin on MapView
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
-        guard let newLocation = view.annotation?.coordinate else{return}
-        self.pickedLocation = .init(latitude: newLocation.latitude, longitude: newLocation.longitude)
-        updatePlacemark(location: .init(latitude: newLocation.latitude, longitude: newLocation.longitude))
-    }
-    
     // MARK: When you select a pin on MapView
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let newLocation = view.annotation?.coordinate else{return}
         self.venueTitle = (view.annotation?.title!)!
         self.venueAlertType = (view.annotation?.subtitle!)!
         self.activeTab = .venue
-        self.pickedLocation = .init(latitude: newLocation.latitude, longitude: newLocation.longitude)
         updatePlacemark(location: .init(latitude: newLocation.latitude, longitude: newLocation.longitude))
     }
     
@@ -144,7 +133,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         }
     }
     
-    // MARK: Displaying new location data
     func reverseLocationCoordinate(location: CLLocation)async throws -> CLPlacemark?{
         let place = try await CLGeocoder().reverseGeocodeLocation(location).first
         return place

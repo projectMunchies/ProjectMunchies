@@ -55,6 +55,9 @@ struct MainView: View {
                 if !isCreateReviewOverlay {
                     showSheet = true
                 }
+                
+                locationManager.manager.requestLocation()
+                
                 try await profilesViewModel.GetUserProfile()
                 try await getNewMapAlerts()
                 
@@ -176,7 +179,7 @@ struct MainView: View {
             let annotations = createAnnotations(venueDTOS: places)
             
             if (!annotations.isEmpty) {
-                plotPoints(coordinate: annotations.first!, annotations: annotations)
+                plotPoints(annotations: annotations)
             }
         }
     }
@@ -197,7 +200,7 @@ struct MainView: View {
         return annotations
     }
     
-    private func plotPoints(coordinate: MKPointAnnotation, annotations: [MKPointAnnotation]) {
+    private func plotPoints(annotations: [MKPointAnnotation]) {
         let placeMark = MKPlacemark(
             coordinate: annotations.first!.coordinate,
             addressDictionary: ["name": "What is in Mkplaemark?"]
@@ -205,7 +208,6 @@ struct MainView: View {
         let closestPlace = CLPlacemark(placemark: placeMark)
         
         if let coordinate = closestPlace.location?.coordinate{
-            locationManager.pickedLocation = .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
             //                    locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
             locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
             //                    locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
