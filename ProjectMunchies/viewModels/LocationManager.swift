@@ -21,15 +21,14 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var activeTab: NavBarTabsModel = .home
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
+
+    let appleParkLocation = CLLocationCoordinate2D(latitude: 28.067267962618835,longitude: -82.7075608858218)
     
     override init() {
         super.init()
         
         manager.delegate = self
         mapView.delegate = self
-        
-        // manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        // manager.allowsBackgroundLocationUpdates = true
         
         // MARK: Search Textfield Watching
         cancellable = $searchModel
@@ -75,61 +74,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         guard let currentLocation = locations.last else{return}
         self.userLocation = currentLocation
         mapView.region = .downtownTampa
-    }
-    
-    // MARK: Location Authorization
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus{
-        case .authorizedAlways: setUpGeoFencing()
-            // case .authorizedAlways: manager.requestLocation()
-        case .authorizedWhenInUse: manager.requestLocation()
-            // case .authorizedWhenInUse: manager.requestLocation()
-        case .denied: handleLocationError()
-        case .notDetermined: manager.requestAlwaysAuthorization()
-        default: break
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        guard let region = region as? CLCircularRegion else { return }
-        print("GeoFencing is not supported on this device")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        guard let region = region as? CLCircularRegion else { return }
-        print("GeoFencing is not supported on this device")
-    }
-    
-    private func setUpGeoFencing() {
-        print("in geofencing")
-        guard CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else {
-            print("GeoFencing isMonitoringAvailable is not supported")
-            return
-        }
-        
-        guard manager.authorizationStatus == .authorizedAlways else {
-            print("GeoFencing is not supported: authorizationStatus does not = authorizedAlways")
-            return
-        }
-        
-         startMonitoring()
-    }
-    
-    private func startMonitoring() {
-        print("start monitoring begins...")
-        if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
-            let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 28.062320984004483, longitude: -82.70961132806377), radius: 50, identifier: "test1 should be publix notification")
-            
-            region.notifyOnExit = true
-            region.notifyOnEntry = true
-            
-            // this is deprecated need to update
-            manager.startMonitoring(for: region)
-        }
-    }
-    
-    func handleLocationError() {
-        print("error in locationManager: you're not authorized")
     }
     
     func search(value: String, alertType: String) {
