@@ -19,17 +19,11 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
     @Published var searchModel: SearchModel = SearchModel(id: "", searchText: "", mapAlertType: "")
-//    @Published var footest: Bool = UserDefaults.standard.bool(forKey: "footest") {
-//        didSet {
-//            startFoo()
-//        }
-//    }
     
     var cancellable: AnyCancellable?
     let appleParkLocation = CLLocationCoordinate2D(latitude: 28.067267962618835,longitude: -82.7075608858218)
     private var notificationCenter = UNUserNotificationCenter.current()
     private var notificationContent = UNMutableNotificationContent()
-    
     
     override init() {
         super.init()
@@ -46,7 +40,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
             try await notificationCenter.requestAuthorization(options: [.badge])
         }
 
-        
         // MARK: SearchModel Textfield Watching
         cancellable = $searchModel
             .removeDuplicates()
@@ -104,8 +97,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     func addDraggablePin(coordinate: CLLocationCoordinate2D, annotations: [MKPointAnnotation] = []) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        //      annotation.title = "WHat is this title for?"
-        //  mapView.addAnnotation(annotation)
         
         mapView.addAnnotations(annotations)
     }

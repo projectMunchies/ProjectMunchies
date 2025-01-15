@@ -23,7 +23,7 @@ struct MainView: View {
     
     var body: some View {
         ZStack(alignment: .bottom){
-            MapViewSelection()
+            MapViewHelper()
                 .environmentObject(locationManager)
                 .navigationBarHidden(true)
                 .preferredColorScheme(.dark)
@@ -191,8 +191,6 @@ struct MainView: View {
             let annotation = MKPointAnnotation()
             annotation.coordinate = venueDTO.coordinates ?? CLLocationCoordinate2D()
             annotation.title = venueDTO.name
-            // we need the mapAlertType but not sure what
-            // else to set it to
             annotation.subtitle = venueDTO.mapAlertType
             annotations.append(annotation)
         }
@@ -208,9 +206,7 @@ struct MainView: View {
         let closestPlace = CLPlacemark(placemark: placeMark)
         
         if let coordinate = closestPlace.location?.coordinate{
-            //                    locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
             locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
-            //                    locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
         }
     }
 }

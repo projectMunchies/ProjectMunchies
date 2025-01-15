@@ -57,7 +57,7 @@
 		7741570B2C0B1FA10076C73D /* SpecialsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */; };
 		7741570D2C0B224E0076C73D /* SpecialsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570C2C0B224E0076C73D /* SpecialsService.swift */; };
 		7741570F2C0B22580076C73D /* ReviewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741570E2C0B22580076C73D /* ReviewsService.swift */; };
-		774157122C0C2AE30076C73D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157112C0C2AE30076C73D /* SearchView.swift */; };
+		774157122C0C2AE30076C73D /* MapViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157112C0C2AE30076C73D /* MapViewHelper.swift */; };
 		774157162C0C2CF10076C73D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157152C0C2CF10076C73D /* LocationManager.swift */; };
 		774157182C0FB0500076C73D /* CreateReviewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774157172C0FB0500076C73D /* CreateReviewOverlay.swift */; };
 		7752C14E2C899256004E9856 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752C14D2C899256004E9856 /* SearchModel.swift */; };
@@ -148,7 +148,7 @@
 		7741570A2C0B1FA10076C73D /* SpecialsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsRepository.swift; sourceTree = "<group>"; };
 		7741570C2C0B224E0076C73D /* SpecialsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsService.swift; sourceTree = "<group>"; };
 		7741570E2C0B22580076C73D /* ReviewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsService.swift; sourceTree = "<group>"; };
-		774157112C0C2AE30076C73D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		774157112C0C2AE30076C73D /* MapViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelper.swift; sourceTree = "<group>"; };
 		774157152C0C2CF10076C73D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		774157172C0FB0500076C73D /* CreateReviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewOverlay.swift; sourceTree = "<group>"; };
 		7752821A2D33D4BC00E94D16 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../projectDate/projectDate/Info.plist; sourceTree = "<group>"; };
@@ -359,7 +359,6 @@
 				3888550F2B6ED2E700DB1D53 /* LiveReviewsView.swift */,
 				3888550D2B6C1E2000DB1D53 /* BunchiesView.swift */,
 				77EBA5212C08AB6900437FCE /* MainView.swift */,
-				774157112C0C2AE30076C73D /* SearchView.swift */,
 				77DC3ADF2B034CC9009F2B9A /* VideoPlayerHomeView.swift */,
 				770AD0572A76BBC0004CA5D2 /* SignInView.swift */,
 				77E3830E2A7225470084B8A6 /* ContentView.swift */,
@@ -428,6 +427,7 @@
 				772BA6912B74922C003C08BE /* ParticleEffect.swift */,
 				772BA6932B7492B6003C08BE /* Particle.swift */,
 				77BC66BF2B78F8F0008C81EE /* PulsingCircle.swift */,
+				774157112C0C2AE30076C73D /* MapViewHelper.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -659,7 +659,7 @@
 				77BC66C02B78F8F0008C81EE /* PulsingCircle.swift in Sources */,
 				388855122B6ED30400DB1D53 /* SecurityPrivacyView.swift in Sources */,
 				770AD0582A76BBC0004CA5D2 /* SignInView.swift in Sources */,
-				774157122C0C2AE30076C73D /* SearchView.swift in Sources */,
+				774157122C0C2AE30076C73D /* MapViewHelper.swift in Sources */,
 				77B97AB52B6380F600EE6A42 /* ReviewModel.swift in Sources */,
 				77BC66C22B793C7B008C81EE /* LiveReviewTabsModel.swift in Sources */,
 				7772A0272B6943F200652687 /* PacmanAnimation.swift in Sources */,

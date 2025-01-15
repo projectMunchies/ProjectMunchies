@@ -66,19 +66,6 @@ struct Header: View {
         .padding(.horizontal, 16)
         .padding(.top, 16)
     }
-    
-    
-    public func searchButton(for geoReader: GeometryProxy) -> some View {
-        VStack{
-            NavigationLink(destination: SearchView()){
-                Image(systemName: "magnifyingglass.circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.white)
-            }
-            .position(x:geoReader.size.width * 0.37, y:geoReader.size.height * 0.51)
-        }
-    }
 }
 
 #Preview {
