@@ -15,6 +15,7 @@ struct MainView: View {
     
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
+    @State private var isNotifcation: Bool = false
     @State private var isCreateReviewOverlay: Bool = false
     @State private var sheetIndents: Set<PresentationDetent> = [.height(60), .medium, .large]
     @State private var settingsDetent: PresentationDetent = .height(60)
@@ -32,20 +33,23 @@ struct MainView: View {
             SubHeaderSection()
                 .position(x: 200, y: 10)
             
+                Button(action: {
+                    self.isNotifcation = true
+            }) {
+                Text("send notification")
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .position(x: 200, y: 250)
+            
+            
             TabBar()
                 .frame(height: 49)
                 .background(.regularMaterial)
-            
-            
-            Text("\(locationManager.userLocation?.coordinate.latitude ?? 0)")
-                .foregroundColor(.red)
-                .font(.system(size: 40))
-                .position(x: 200, y: 100)
-            
-            Text("\(locationManager.userLocation?.coordinate.longitude ?? 0)")
-                .foregroundColor(.red)
-                .font(.system(size: 40))
-                .position(x: 200, y: 160)
         }
         .task() {
             do {
@@ -56,8 +60,6 @@ struct MainView: View {
                     showSheet = true
                 }
                 
-                locationManager.manager.requestLocation()
-                
                 try await profilesViewModel.GetUserProfile()
                 try await getNewMapAlerts()
                 
@@ -67,6 +69,17 @@ struct MainView: View {
         }
         .onChange(of: locationManager.fetchedPlaces) {
             displayMapMarkers()
+        }
+        .onChange(of: self.isNotifcation) {
+            Task {
+                do {
+                  locationManager.launchNotification()
+                } catch {
+                    
+                }
+            }
+            
+        
         }
         .sheet(isPresented: $showSheet) {
             ScrollView(.vertical, content: {
@@ -207,6 +220,23 @@ struct MainView: View {
         
         if let coordinate = closestPlace.location?.coordinate{
             locationManager.addDraggablePin(coordinate: coordinate, annotations: annotations)
+        }
+    }
+    
+    struct ErrorView: View {
+        @State var errorMessage: String
+        
+        var body: some View {
+            GroupBox {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                    Text(errorMessage)
+                }
+            }
+            .padding(20)
+            .cornerRadius(1)
         }
     }
 }

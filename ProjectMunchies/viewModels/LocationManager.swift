@@ -9,6 +9,7 @@ import CoreLocation
 import MapKit
 import Combine
 
+@MainActor
 class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocationManagerDelegate {
     @Published var mapView: MKMapView = .init()
     @Published var manager: CLLocationManager = .init()
@@ -19,11 +20,14 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var venueTitle: String = ""
     @Published var venueAlertType: String = ""
     @Published var searchModel: SearchModel = SearchModel(id: "", searchText: "", mapAlertType: "")
+    @Published var lastDiagnosticUpdate: CLServiceSession.Diagnostic?
+    @Published var authSessionActive: Bool = true
     
+    private var authSession: CLServiceSession?
     var cancellable: AnyCancellable?
     let appleParkLocation = CLLocationCoordinate2D(latitude: 28.067267962618835,longitude: -82.7075608858218)
-    private var notificationCenter = UNUserNotificationCenter.current()
-    private var notificationContent = UNMutableNotificationContent()
+     var notificationCenter = UNUserNotificationCenter.current()
+     var notificationContent = UNMutableNotificationContent()
     
     override init() {
         super.init()
@@ -33,7 +37,12 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
         
         mapView.region = .downtownTampa
         
-        manager.requestAlwaysAuthorization()
+        notificationContent.title = "Blah BLah test"
+        notificationContent.body = "body blah blah example"
+        notificationContent.sound = UNNotificationSound.default
+        notificationContent.subtitle = "test sbutitle"
+        
+        startAuthSession()
         
         // MARK: Notification Authorization
         Task {
@@ -51,6 +60,28 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
                     self.fetchedPlaces = nil
                 }
             })
+    }
+    
+    func launchNotification(){
+        Task {
+            do {
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+                let notification = UNNotificationRequest(identifier: "com.example.myNotification", content: notificationContent, trigger: trigger)
+                try await notificationCenter.add(notification)
+            } catch {
+                
+            }
+        }
+    }
+    
+    func startAuthSession() {
+        Task {
+            print("Listening to session disgnostics")
+            authSession = CLServiceSession(authorization: .always, fullAccuracyPurposeKey: "montior")
+            for try await diagnostics in authSession!.diagnostics {
+                lastDiagnosticUpdate = diagnostics
+            }
+        }
     }
     
     // MARK: Fires Sink Subscriber in init()
