@@ -10,9 +10,10 @@ import Firebase
 import CoreLocation
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
+    var locationManager = LocationManager()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        locationManager.startMonitoringConditions()
         return true
     }
 }

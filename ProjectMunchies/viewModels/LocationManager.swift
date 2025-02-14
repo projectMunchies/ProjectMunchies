@@ -22,7 +22,9 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     @Published var searchModel: SearchModel = SearchModel(id: "", searchText: "", mapAlertType: "")
     @Published var lastDiagnosticUpdate: CLServiceSession.Diagnostic?
     @Published var authSessionActive: Bool = true
+    @Published var UIRows: [String: [CLMonitor.Event]] = [:]
     
+    public var monitor: CLMonitor?
     private var authSession: CLServiceSession?
     var cancellable: AnyCancellable?
     let appleParkLocation = CLLocationCoordinate2D(latitude: 28.067267962618835,longitude: -82.7075608858218)
@@ -76,7 +78,6 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     
     func startAuthSession() {
         Task {
-            print("Listening to session disgnostics")
             authSession = CLServiceSession(authorization: .always, fullAccuracyPurposeKey: "montior")
             for try await diagnostics in authSession!.diagnostics {
                 lastDiagnosticUpdate = diagnostics
@@ -158,5 +159,45 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     func reverseLocationCoordinate(location: CLLocation)async throws -> CLPlacemark?{
         let place = try await CLGeocoder().reverseGeocodeLocation(location).first
         return place
+    }
+    
+    func getCircularGepgrpahicCondition() -> CLMonitor.CircularGeographicCondition {
+        return CLMonitor.CircularGeographicCondition(center: appleParkLocation, radius: 0.1)
+    }
+    
+    func startMonitoringConditions() {
+        Task {
+            monitor = await CLMonitor("monitorTest1")
+            
+            await monitor!.add(getCircularGepgrpahicCondition(), identifier: "testLocation")
+            
+            for identifier in await monitor!.identifiers {
+                guard let lastEvent = await monitor!.record(for: identifier)?.lastEvent else { continue }
+                
+                UIRows[identifier] = [lastEvent]
+            }
+
+            for try await event in await monitor!.events {
+                guard let lastEvent = await monitor!.record(for: event.identifier)?.lastEvent else { continue }
+                
+                if event.state == lastEvent.state {
+                    continue
+                }
+                
+                // then launch notification
+                
+                
+                UIRows[event.identifier] = [event]
+                UIRows[event.identifier]?.append(lastEvent)
+            }
+        }
+    }
+    
+    func updateRecords() async {
+        UIRows = [:]
+        for identifier in await monitor?.identifiers ?? [] {
+            guard let lastEvent = await monitor!.record(for: identifier)?.lastEvent else { continue }
+            UIRows[identifier] = [lastEvent]
+        }
     }
 }

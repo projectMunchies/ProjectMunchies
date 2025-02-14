@@ -11,7 +11,8 @@ import MapKit
 struct MainView: View {
     @StateObject var locationManager: LocationManager = .init()
     @StateObject private var venuesViewModel = VenuesViewModel()
-    @EnvironmentObject var profilesViewModel: ProfilesViewModel
+    @EnvironmentObject var profilesViewModel:
+    ProfilesViewModel
     
     @State private var showSheet: Bool = false
     @State private var ignoreTabBar: Bool = true
@@ -51,6 +52,59 @@ struct MainView: View {
                 .frame(height: 49)
                 .background(.regularMaterial)
         }
+  
+//            VStack {
+//                ScrollView {
+//                    VStack {
+//                        ForEach(locationManager.UIRows.keys.sorted(), id: \.self) {condition in
+//                            HStack(alignment: .top) {
+//                                Button(action: {
+//                                    Task {
+//                                        await locationManager.monitor?.remove(condition)
+//                                        await locationManager.updateRecords()
+//                                    }
+//                                }) {
+//                                    Image(systemName: "xmark.circle")
+//                                }
+//                                Text(condition)
+//                                ScrollViewReader {reader in
+//                                    ScrollView {
+//                                        VStack {
+//                                            ForEach((locationManager.UIRows[condition] ?? []).indices, id: \.self) {index in
+//                                                HStack {
+//                                                    switch locationManager.UIRows[condition]![index].state {
+//                                                    case .satisfied: Text("Satisfied")
+//                                                    case .unsatisfied: Text("Unsatisfied")
+//                                                    case .unknown: Text("Unknown")
+//                                                    case .unmonitored: Text("Unmonitored")
+//                                                    @unknown default:
+//                                                        fatalError()
+//                                                    }
+//                                                    Text(locationManager.UIRows[condition]![index].date, style: .time)
+//                                                }
+//                                            }
+//                                            Text("")
+//                                                .frame(height: 5)
+//                                                .id("lastElement")
+//                                        }
+//                                    }
+//                                    .frame(height: 40)
+//                                    .onChange(of: locationManager.UIRows[condition]?.count) {
+//                                        reader.scrollTo("lastElement")
+//                                        Task {
+//                                            sleep(1)
+//                                            withAnimation(.easeInOut(duration: 3)) {
+//                                                reader.scrollTo(0)
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        .padding(20)
+//                    }
+//                }
+//            }
         .task() {
             do {
                 // fixes bug on startup for bottomMaskForSheet()
